@@ -1,0 +1,1184 @@
+DEBUG:root:type(url): <type 'str'> END type(url)
+DEBUG:root:type(html): <type 'str'> END type(html)
+DEBUG:root:type(soup): <class 'bs4.BeautifulSoup'> END type(soup)
+DEBUG:root:soup: 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:pas="http://contribute.sfgate.com/2009/pluckApplicationServer"><head>
+<script>var HDN = HDN || {}; HDN.t_firstbyte = Number(new Date());</script>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<!-- generated at 2012-07-27 09:23:38 on prodWCM6 running v2.7.8p1.15291 -->
+<meta content="sfc" name="adwiz-site"/>
+<meta content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" name="SKYPE_TOOLBAR"/>
+<script type="text/javascript">
+			// &lt;![CDATA[
+			// document.domain = "hearstnp.com";
+			var requestTime = new Date(1343399018 * 1000);
+
+																				
+								
+				
+				// bizobject variables
+				var omni_channelPath = "News";
+				var omni_title = "US economic growth slowed to 1.5 pct. rate in Q2";
+				var omni_bizObjectId = "3740379";
+				var omni_className = "article";
+				var omni_publicationDate = "2012-07-27 13:13:27";
+				var omni_sourceSite="ap";
+
+				// article specific variables
+				var omni_authorName = "MARTIN CRUTSINGER";
+				var omni_authorTitle = "AP Economics Writer";
+				var omni_pageNumber = "0";
+				var omni_breakingNewsFlag = "0";
+				var omni_localNewsFlag = "0";
+
+                
+				var omni_premiumStatus = "free";
+				var omni_premiumEndDate = "";
+                			
+            			// ]]&gt;
+		</script>
+<!--[if IE 6]><script type="text/javascript" src="/js/hdn/utils/DD_belatedPNG_0.0.8a-min.js"></script><![endif]-->
+<!-- templates/hearst/home/pluckHeadCSS.tpl -->
+<link href="http://contribute.sfgate.com/ver1.0/pluck/social/social.css" rel="stylesheet" type="text/css"/>
+<link href="http://contribute.sfgate.com/ver1.0/pluck/comments/comments.css" rel="stylesheet" type="text/css"/>
+<link href="http://contribute.sfgate.com/ver1.0/pluck/pluck.css" rel="stylesheet" type="text/css"/>
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" href="http://contribute.sfgate.com/ver1.0/pluck/social/social.ie6.css" />
+<link rel="stylesheet" type="text/css" href="http://contribute.sfgate.com/ver1.0/pluck/comments/comments.ie6.css" />
+<link rel="stylesheet" type="text/css" href="http://contribute.sfgate.com/ver1.0/pluck/pluck.ie6.css" />
+<![endif]-->
+<link href="/css/hdn/modules/pluckphotos.css" media="all" rel="stylesheet" type="text/css"/>
+<!-- templates/hearst/home/pluckHeadCSS.tpl -->
+<link href="/external/css/global.shared.2.7.8p1.15291.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="/external/css/global.site.2.7.8p1.15291.css" media="all" rel="stylesheet" type="text/css"/>
+<!-- templates/hearst/home/pluckHeadJS.tpl -->
+<meta content="US economic growth slowed to 1.5 pct. rate in Q2" name="title"/>
+<meta content="Along with a reduction in the actual amount of money companies were able to make, it's no wonder the unemployment rate cannot move lower.  The lackluster economy is raising pressure on President Barack Obama in his re-election fight with Mitt Romney, the presumptive Republican presidential nominee.  Paul Dales, senior U.S. economist at Capital Economics, said that the sluggish second-quarter growth rate is probably not weak enough to trigger more action by the Federal Reserve when it meets next week.  Congress could strengthen growth and job creation by adopting President Barack Obama's plan to extend expiring tax cuts for all but the wealthiest Americans, Krueger said.  The 1.5 percent growth rate in the second quarter was the weakest since the economy, as measured by the gross domestic product, expanded at a 1.3 percent rate in the July-September quarter last year.  Consumer spending, which accounts for 70 percent of economic activity, was offset somewhat by a slightly smaller drag from the government.  The Great Recession officially ended in June 2009.  [...] a few weeks ago, many economists had been predicting that growth would accelerate in the final six months of the year." name="description"/>
+<script src="http://contribute.sfgate.com/ver1.0/Content/ua/scripts/pluckApps.js" type="text/javascript"></script>
+<!-- This replaces collected.js we could remove these js if pluck provides code (json.app call) to submit comment to twitter -->
+<script src="http://contribute.sfgate.com/ver1.0/content/direct/scripts/yahoo-min.js" type="text/javascript"></script>
+<script src="http://contribute.sfgate.com/ver1.0/content/direct/scripts/json-min.js" type="text/javascript"></script>
+<script src="http://contribute.sfgate.com/ver1.0/content/direct/scripts/pork.iframe.js" type="text/javascript"></script>
+<script src="http://contribute.sfgate.com/ver1.0/content/direct/scripts/requestbatch.js" type="text/javascript"></script>
+<script src="http://contribute.sfgate.com/ver1.0/content/direct/scripts/requesttypes.js" type="text/javascript"></script>
+<!-- /This replaces collected.js -->
+<script src="http://contribute.sfgate.com/ver1.0/Direct/SocialProxy.js" type="text/javascript"></script>
+<script type="text/javascript">
+&lt;!--
+// define common vars (with templates values) known by functions
+
+  var HDNPluck = HDNPluck || {};
+
+  HDNPluck['serverUrl_host']  = 'http://contribute.sfgate.com';
+  HDNPluck['serverUrl']       = HDNPluck['serverUrl_host']+'/ver1.0/Direct/Process';
+  var serverUrl               = HDNPluck['serverUrl'];  
+  HDNPluck['file']            = 'sfgate-article-3740379';
+  HDNPluck['file_pag']        = HDNPluck['file'];
+  HDNPluck['isActive']        = '1';
+  HDNPluck['full_filepath']   = '/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php';
+  HDNPluck['success_page']    = '/news/articleComments/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php';
+  HDNPluck['artcontxt']       = 'article';
+  HDNPluck['artsec']          = 'article';
+  HDNPluck['categories']      = 'News'.split(',');
+  HDNPluck['categories'].unshift('article');
+// --&gt;
+</script>
+<!-- templates/hearst/home/pluckHeadJS.tpl -->
+<script src="/external/js/global.header.2.7.8p1.15291.js" type="text/javascript"></script>
+<title>US economic growth slowed to 1.5 pct. rate in Q2 - SFGate</title>
+<link href="/favicon.ico" rel="SHORTCUT ICON"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php" rel="canonical"/>
+<meta content="Along with a reduction in the actual amount of money companies were able to make, it's no wonder the unemployment rate cannot move lower.  The lackluster economy is raising pressure on President Barack Obama in his re-election fight with Mitt Romney, the presumptive Republican presidential nominee.  Paul Dales, senior U.S. economist at Capital Economics, said that the sluggish second-quarter growth rate is probably not weak enough to trigger more action by the Federal Reserve when it meets next week.  Congress could strengthen growth and job creation by adopting President Barack Obama's plan to extend expiring tax cuts for all but the wealthiest Americans, Krueger said.  The 1.5 percent growth rate in the second quarter was the weakest since the economy, as measured by the gross domestic product, expanded at a 1.3 percent rate in the July-September quarter last year.  Consumer spending, which accounts for 70 percent of economic activity, was offset somewhat by a slightly smaller drag from the government.  The Great Recession officially ended in June 2009.  [...] a few weeks ago, many economists had been predicting that growth would accelerate in the final six months of the year." name="description"/>
+<meta content="economy,growth rate,annual rate,unemployment rate,growth,tax cuts,economic growth,second-quarter growth rate,rate,Consumer spending,lower gas prices,savings rate,money companies,quarter,fighter jets,expiring tax cuts,spending,Retail sales,economist,budget agreement,job creation,policy meeting,unemployment,budget deficits,interest rates,government,gross domestic product,sluggish second-quarter growth,companies,americans,federal spending,business investment,economic,re-election fight,report,chief economic strategist,presidential nominee,congress,growth estimates,economic adviser,consumer,lackluster economy,cuts,industrial average,tax,straight quarter,economic activity,estimate,financial crisis,sluggish,spending cuts,auto,actual amount,expectations,fiscal cliff,services,long-lasting manufactured goods,crisis,republican,budget" name="keywords"/>
+<meta content="MARTIN CRUTSINGER, AP Economics Writer" name="author.name"/>
+<meta content="" name="author.title"/>
+<meta content="2012/27/07" name="date.release"/>
+<meta content="6:13" name="time.release"/>
+<meta content="Associated Press" name="publisher"/>
+<meta content="News" name="sections"/>
+<meta content="unemployment,market and exchange,state budget and tax,industrial production,corporate performance" name="subject"/>
+<meta content="US economic growth slowed to 1.5 pct. rate in Q2" property="og:title"/>
+<meta content="Along with a reduction in the actual amount of money companies were able to make, it's no wonder the unemployment rate cannot move lower.  The lackluster economy is raising pressure on President Barack Obama in his re-election fight with Mitt Romney, the presumptive Republican presidential nominee.  Paul Dales, senior U.S. economist at Capital Economics, said that the sluggish second-quarter growth rate is probably not weak enough to trigger more action by the Federal Reserve when it meets next week.  Congress could strengthen growth and job creation by adopting President Barack Obama's plan to extend expiring tax cuts for all but the wealthiest Americans, Krueger said.  The 1.5 percent growth rate in the second quarter was the weakest since the economy, as measured by the gross domestic product, expanded at a 1.3 percent rate in the July-September quarter last year.  Consumer spending, which accounts for 70 percent of economic activity, was offset somewhat by a slightly smaller drag from the government.  The Great Recession officially ended in June 2009.  [...] a few weeks ago, many economists had been predicting that growth would accelerate in the final six months of the year." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php#src=fb" property="og:url"/>
+<meta content="http://ww1.hdnux.com/photos/14/30/13/3244736/3/150x150.jpg" property="og:image"/>
+<meta content="SFGate" property="og:site_name"/>
+<meta content="United States" property="og:country-name"/>
+<!-- /business/templates/hearst/home/header_fbpage.tpl-->
+<meta content="105702905593" property="fb:page_id"/>
+<meta content="653226748,681491972,1561585996,100001146826482,100001539234772,601331469,653226748,58963564,710213297" property="fb:admins"/>
+<script id="adPositionManagerScriptTag" src="http://aps.hearstnp.com/Scripts/loadAds.js" type="text/javascript"></script>
+<!-- Olive e-Edition -->
+<link href="http://digitaldoor.subscriberconcierge.com/css/modal.css" rel="stylesheet" type="text/css">
+<script src="http://digitaldoor.subscriberconcierge.com/js/jquery.digitaldoor.js" type="text/javascript"></script>
+</link></head>
+<body class="body news hst-article">
+<script src="/external/js/global.top.2.7.8p1.15291.js" type="text/javascript"></script>
+<!-- ux/sfgate/tmpl/article_omniture.php -->
+<script src="/js/omniture/analyticsconfig.js" type="text/javascript"></script>
+<script src="/js/hdn/omniture/s_code.js" type="text/javascript"></script>
+<script src="/js/hdn/omniture/analyticswcm.js" type="text/javascript"></script>
+<!-- e ux/sfgate/tmpl/article_omniture.php -->
+<div class="container">
+<!-- ux/sfgate/tmpl/site_first_content.php -->
+<script type="text/javascript">
+if ( typeof iPadShowPromos=='function' ) {
+    iPadShowPromos();
+}
+</script>
+<!-- end ux/sfgate/tmpl/site_first_content.php -->
+<!-- business/templates/hearst/home/navigation.tpl -->
+<div class="hst-siteheader">
+<p class="skip">(<a href="#skip">skip this header</a>)</p>
+<div class="row1 clearfix">
+<div class="buttonone" id="buttonone1">
+<div class="creative">
+<div class="ad_deferrable" id="A120"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("A120"); /*]]&gt;*/</script></div> </div>
+</div>
+<div class="leaderboard" id="leaderboard1">
+<div class="creative">
+<!-- ux/sfgate leaderboard.tpl -->
+<div class="ad_deferrable" id="A728"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("A728"); /*]]&gt;*/</script></div>
+<!-- ux/sfgate leaderboard.tpl -->
+</div>
+</div>
+<div class="hst-topzone">
+<a border="0" href="https://www.subscriber-services.com/sfchron/NSPromotions/subscribe1.aspx?pid=95" target="_blank"><img src="/img/modules/siteheader/chron_we_promo.gif"/></a>
+</div>
+<style>
+.hst-siteheader .buttonone {
+  width: 0;
+  height: 0;
+  background: none;
+  float: left;
+  margin: 0 10px;
+}
+.hst-siteheader .leaderboard {
+  width: 728px;
+  height: 90px;
+  float: right;
+  margin-right:10px;
+}
+.hst-topzone {
+  float: left;
+  width: 242px;
+  height: 90px;
+  background: none !important;
+  margin: 0 10px;
+  position: static;
+  top: 0;
+  left: 0;
+}
+</style> </div>
+<!-- ux/sfgate/templates/hearst/home/header_branding.tpl -->
+<!-- .row2b -->
+<script>$("#buttonone1").attr("href", "https://www.subscriber-services.com/sfchron/NSPromotions/subscribe1.aspx?pid=90");</script>
+<div class="row2b clearfix" id="row2">
+<!--  .midsection -->
+<div class="midsection">
+<div class="usertools" id="usertools1">
+</div>
+<!-- noGen: item_site_links -->
+<div class="weather clearfix png" id="weatherbg">
+<div class="brand">
+<a href="/"><img alt="SFGate" class="png" src="/img/modules/siteheader/brand.png"/></a>
+<p class="tagline">Friday Jul 27, 2012 7:23 AM PT</p>
+</div>
+<div class="conds">
+<div class="degree">°<span class="weatherscale" id="weatherscale"></span></div>
+<a href="/weather/" id="weathertemp"></a>
+</div>
+<div class="location">
+<div class="cityname">
+<a class="cityname" href="/weather/" id="weatherloc"></a>
+<span class="change">(<a href="javascript:void(0);" id="cityChange">change</a>)</span>
+</div>
+<span class="cond" id="weathercond"></span>
+<div class="row clearfix">
+<div class="day1" id="weatherTodayClass">
+<p>Today</p>
+<p class="temps"><span class="low" id="weatherTodayLow"></span>/<span class="high" id="weatherTodayHigh"></span></p>
+</div>
+<div class="day2" id="weatherTomorrowClass">
+<p id="weatherTomorrowDay"></p>
+<p class="temps"><span class="low" id="weatherTomorrowLow"></span>/<span class="high" id="weatherTomorrowHigh"></span></p>
+</div>
+</div>
+</div>
+<div class="links">
+<span id="weatherFiveDay"></span>
+<!--
+				<a href="http://www.sfgate.com/weather/San_Jose" class="forecast" id="HwLink"><img src="/img/modules/siteheader/wea001/arrow.gif"> <span id="HwFDF">5 Day Forecast</span></a>
+-->
+<a class="traffic" href="/traffic"><img src="/img/modules/siteheader/wea001/arrow.gif"> Traffic</img></a>
+</div>
+</div>
+<div class="halfbanner">
+<div class="creative">
+<div class="ad_deferrable" id="A234">
+<script type="text/javascript">
+						/*&lt;![CDATA[*/
+						hearstPlaceAd("A234");
+						/*]]&gt;*/
+					</script>
+</div>
+</div>
+</div>
+<div id="weatherPopupMenu">
+<div class="menu">
+<a href="javascript:void(0);">
+<img alt="close" class="closeBtn close" src="/img/modules/siteheader/closeBtn.gif">
+</img></a>
+<span style="display:inline block"><a class="close" href="javascript:void(0);">(change your city)</a></span>
+<div class="list">
+<p><input checked name="weatherBtn" type="radio" value="94101">San Francisco</input></p>
+<p><input name="weatherBtn" type="radio" value="95401">Santa Rosa</input></p>
+<p><input name="weatherBtn" type="radio" value="94559">Napa</input></p>
+<p><input name="weatherBtn" type="radio" value="94518">Concord</input></p>
+<p><input name="weatherBtn" type="radio" value="94601">Oakland</input></p>
+<p><input name="weatherBtn" type="radio" value="94550">Livermore</input></p>
+<p><input name="weatherBtn" type="radio" value="94541">Hayward</input></p>
+<p><input name="weatherBtn" type="radio" value="94070">San Carlos</input></p>
+<p><input name="weatherBtn" type="radio" value="94301">Palo Alto</input></p>
+<p><input name="weatherBtn" type="radio" value="95101">San Jose</input></p>
+<p><input name="weatherBtn" type="radio" value="94533">Fairfield</input></p>
+<p><input name="weatherBtn" type="radio" value="94040">Mountain View</input></p>
+<p><input name="weatherBtn" type="radio" value="93940">Monterey</input></p>
+</div>
+</div>
+</div>
+</div>
+<!-- /.midsection -->
+<!-- .searchtools -->
+<div class="searchtools">
+<form action="/search/?" method="get" target="_top">
+<input name="action" type="hidden" value="search"/>
+<input name="channel" type="hidden" value="news"/>
+<input name="search" type="hidden" value="1"/>
+<input name="firstRequest" type="hidden" value="1"/>
+<div class="searchtermbar">
+<input class="textInputNote" name="query" type="text" value="">
+<input id="searchbtn" src="/img/modules/siteheader/searchbar_btn.gif" type="image" value="">
+</input></input></div>
+<table><tbody><tr>
+<td class="searchoption_radio first"><input checked="checked" name="searchindex" type="radio" value="property"/></td>
+<td class="searchoption">sfgate.com</td>
+<td class="searchoption_radio"><input name="searchindex" type="radio" value="yahoo"/></td>
+<td class="searchoption">Web Search by <span class="yahoo">YAHOO!</span></td>
+<td class="searchoption_radio"><input name="searchindex" type="radio" value="businesses"/></td>
+<td class="searchoption">Businesses</td>
+</tr></tbody></table>
+</form>
+</div>
+<!-- /.searchtools -->
+<p class="user_tools">
+<script type="text/javascript">
+			// &lt;![CDATA[
+			if ( typeof window.print_sfgate_un != "undefined" ) {
+				print_sfgate_un();
+			}
+			// ]]&gt;
+		</script>
+</p>
+</div>
+<!--/.row2b -->
+<!-- /ux/sfgate/templates/hearst/home/header_branding.tpl -->
+<!-- NAV MENU START -->
+<script type="text/javascript">
+    var defaultSiteNavId = '978';
+</script>
+<!-- hearst/sitemenu/dynamic.tpl -->
+<!-- ux/sfgate menuSiteNav.tpl -->
+<div class="sitenav clearfix" id="menu_sitenav">
+<ul class="list1"><li class="first" id="sitenav_979"></li><a href="/">Home</a><li class="" id="sitenav_978"></li><a href="/news/">News</a><li class="" id="sitenav_980"></li><a href="/sports/">Sports</a><li class="" id="sitenav_981"></li><a href="/business/">Business</a><li class="" id="sitenav_982"></li><a href="/entertainment/">Entertainment</a><li class="" id="sitenav_983"></li><a href="/food/">Food</a><li class="" id="sitenav_984"></li><a href="/living/">Living</a><li class="" id="sitenav_985"></li><a href="/travel/">Travel</a><li class="" id="sitenav_986"></li><a href="/columns/">Columns</a><li class="last" id="sitenav_987"></li><a href="http://findnsave.sfgate.com/">Shopping</a></ul>
+<ul class="list3">
+<li id="sitenav_0"><a class="list3_index" href="/index/" id="index">Index ▼</a></li>
+</ul>
+<ul class="list2"><li class="first" id="sitenav_990"></li><a href="/cars/">Cars</a><li class="" id="sitenav_988"></li><a href="/jobs/">Jobs</a><li class="last" id="sitenav_989"></li><a href="/realestate/">Real Estate</a></ul>
+</div>
+<!-- ux/sfgate menuSiteNav.tpl -->
+<div class="sponsor"><a href="/circular/target/"><img height="29px" src="/img/partners/target/target_weekly_ad_animated.gif" width="86px"/></a></div>
+<div class="hst-navIndex" id="navIndex">
+<div class="content">
+<div class="title clearfix">
+<div class="indexheader"><a href="#" id="navIndex-close">Close [X]</a></div>
+            Quick links to other pages on this site <span class="pipe">|</span> Still can't find it? see <a href="/index/">Site Index</a>
+</div>
+<div class="columns" id="navIndex-columns">
+<div class="clear"></div>
+</div>
+<!--/.columns-->
+</div>
+<!--/.content-->
+</div>
+<div class="subnav clearfix hidden" id="subnav_979"><ul class="list1"><li class="label">Don't Miss:</li><li class="first"><a href="http://blog.sfgate.com/sfmoms/2012/07/26/fifth-graders-same-sex-marriage-speech-goes-viral-on-youtube/">Boy's viral same-sex speech</a></li><li><a href="http://www.sfgate.com/olympics/slideshow/Top-20-most-memorable-Olympic-moments-46521.php#photo-3238676">Pics: Memorable Olympic moments</a></li><li><a href="http://blog.sfgate.com/mlasalle/2012/07/26/robert-pattinson-doesnt-deserve-this/">Pattinson doesn’t deserve this</a></li><li><a href="http://blog.sfgate.com/sfmoms/2012/07/26/an-8-year-old-girls-thoughts-on-why-women-are-awesome/">Girl’s cute list on females</a></li><li><a href="http://blog.sfgate.com/hottopics/2012/07/26/strange-sea-creature-or-intestines-found-in-the-baltic-sea/">'Loch Ness Condom'</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_978"><ul class="list1"><li class="first"><a href="/bayarea/">Bay Area &amp; State</a></li><li><a href="/nation/">Nation</a></li><li><a href="/world/">World</a></li><li><a href="/politics/">Politics</a></li><li><a href="/crime/">Crime</a></li><li><a href="/technology/">Tech</a></li><li><a href="http://www.legacy.com/obituaries/sfgate/">Obituaries</a></li><li><a href="/education/">Education</a></li><li><a href="/green/">Green</a></li><li><a href="/science/">Science</a></li><li><a href="/health/">Health</a></li><li><a href="/weird/">Weird</a></li><li><a href="/opinion/">Opinion</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_980"><ul class="list1"><li class="first"><a href="http://blog.sfgate.com/49ers/">49ers</a></li><li><a href="/raiders/">Raiders</a></li><li><a href="/giants/">Giants</a></li><li><a href="/athletics/">A's</a></li><li><a href="/olympics/">Olympics</a></li><li><a href="/warriors/">Warriors</a></li><li><a href="/sharks/">Sharks</a></li><li><a href="/quakes/">Quakes</a></li><li><a href="http://stats.sfgate.com/fb/front.asp">NFL</a></li><li><a href="http://stats.sfgate.com/mlb/front.asp">MLB</a></li><li><a href="http://stats.sfgate.com/nba/front.asp">NBA</a></li><li><a href="http://stats.sfgate.com/nhl/front.asp">NHL</a></li><li><a href="/collegesports/">College</a></li><li><a href="/preps/">Preps</a></li><li><a href="http://stats.sfgate.com/golf/front.asp">Golf</a></li><li><a href="/outdoors/">Outdoors</a></li><li><a href="/other/">Other</a></li><li><a href="/sports/tv/">On TV</a></li><li><a href="http://seatgeek.com/san-francisco-california-sports-tickets">Tickets</a></li><li><a href="http://fanshop.sfgate.com/?sourceid=navlink">Shop</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_981"><ul class="list1"><li class="first"><a href="/technology/">Technology</a></li><li><a href="http://finance.sfgate.com/hearst?Account=sfgate">Markets</a></li><li><a href="/realestate/">Real Estate</a></li><li><a href="http://homeguides.sfgate.com/">Home Guides</a></li><li><a href="/business/press-releases/">Press Releases</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_982"><ul class="list1"><li class="first"><a href="/movies/">Movies</a></li><li><a href="/music/">Music &amp; Nightlife</a></li><li><a href="/performance/">Performance</a></li><li><a href="/art/">Art</a></li><li><a href="http://events.sfgate.com/">Events</a></li><li><a href="/books/">Books</a></li><li><a href="/tv/">TV &amp; Radio</a></li><li><a href="/horoscope/">Horoscope</a></li><li><a href="/comics/">Comics</a></li><li><a href="/games/">Games</a></li><li><a href="/thingstodo/">Things To Do</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_983"><ul class="list1"><li class="first"><a href="/restaurants/">Restaurants</a></li><li><a href="/recipes/">Recipes</a></li><li><a href="/wine/">Wine</a></li><li><a href="/food/top100/2012/">Top 100 Restaurants</a></li><li><a href="/wine/top100/">Top 100 Wines</a></li><li><a href="/food/bargainbites/2011/">Bargain Bites</a></li><li><a href="http://www.opentable.com/start.aspx?m=4&amp;ref=7801">Reservations</a></li><li><a href="http://insidescoopsf.sfgate.com/">Inside Scoop SF</a></li><li><a href="http://healthyeating.sfgate.com/">Healthy Eating</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_984"><ul class="list1"><li class="first"><a href="/homeandgarden/">Home &amp; Garden</a></li><li><a href="/style/">Style</a></li><li><a href="/outdoors/">Outdoors</a></li><li><a href="/skiing/">Ski &amp; Snow</a></li><li><a href="/health/">Health</a></li><li><a href="/green/">Green</a></li><li><a href="/lgbt/">LGBT</a></li><li><a href="http://sfgate.houzz.com">Houzz</a></li><li><a href="http://dating.sfgate.com">Dating</a></li><li><a href="/magazine/">Magazine</a></li><li><a href="/moms/">Moms</a></li><li><a href="/pets/">Pets</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_985"><ul class="list1"><li class="first"><a href="/getaways/">Weekend Getaways</a></li><li><a href="/sfguide/">SF Guide</a></li><li><a href="/neighborhoods/">Neighborhoods</a></li><li><a href="/winecountry/">Wine Country</a></li><li><a href="/monterey-carmel/">Monterey-Carmel</a></li><li><a href="/renotahoe/">Reno-Tahoe</a></li><li><a href="/hawaii/">Hawaii</a></li><li><a href="/mexico/">Mexico</a></li><li><a href="/travelfeatures/">Travel Features</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_986"></div>
+<div class="subnav clearfix hidden" id="subnav_987"></div>
+<div class="subnav clearfix hidden" id="subnav_990"><ul class="list1"><li class="first"><a href="/news_research/">News &amp; Research</a></li><li><a href="http://auto.sfgate.com/dealers.aspx">Dealers</a></li><li><a href="/cars/sellyourcar/">Sell Your Car</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_988"><ul class="list1"><li class="first"><a href="http://career-advice.local-jobs.monster.com/resumes-cover-letters/careers.aspx?ch=sanfranchron">Career Advice</a></li><li><a href="http://www.bizbuysell.com/partner/san-francisco-businesses-for-sale">Be Your Own Boss</a></li><li><a href="http://events.sfgate.com/search?acat=&amp;new=n&amp;sort=0&amp;srad=50&amp;srss=10&amp;ssrss=5&amp;st=event&amp;svt=text&amp;swhat=&amp;swhen=&amp;swhere=San+Francisco%2CCA&amp;trim=1&amp;cat=1111">Job Events</a></li><li><a href="http://www.monster-match.com/jobs/index.html?pid=310">Monster Match</a></li><li><a href="/jobs/placeanad/">Advertise</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_989"><ul class="list1"><li class="first"><a href="/newhomes/">New Homes</a></li><li><a href="/openhomes/">Open Homes</a></li><li><a href="http://homeresearch.sfgate.com/">Research</a></li><li><a href="/luxuryhomes/">Luxury</a></li><li><a href="/rentals/">Rentals</a></li><li><a href="/mortgagerates/">Mortgage Rates</a></li><li><a href="http://www.loopnet.com/looplink/sfgate/searchpage.aspx">Commercial</a></li><li><a href="http://www.landsofamerica.com/landsconnector/san-francisco-chronicle/">Land</a></li><li><a href="/realestate/advertise/">Place an ad</a></li><li><a href="http://homeguides.sfgate.com/">Home Guides</a></li><li><a href="http://www.sfgate.com/webdb/homesales">Homesales</a></li><li><a href="http://www.sfgate.com/webdb/foreclosures">Foreclosures</a></li></ul></div>
+<div class="subnav clearfix hidden" id="subnav_0"></div>
+<!-- e hearst/sitemenu/dynamic.tpl --><!-- hearst/common/channel_subnav.tpl -->
+<!-- e hearst/common/channel_subnav.tpl -->
+<!-- NAV MENU END -->
+</div>
+<!--/.siteheader -->
+<div class="hst-billboard">
+<div class="ad_deferrable" id="RM"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("RM"); /*]]&gt;*/</script></div>
+<div class="ad_deferrable" id="A951"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("A951"); /*]]&gt;*/</script></div>
+</div>
+<!-- e business/templates/hearst/home/navigation.tpl -->
+<div class="pagecontent faux-21 hst-articlecontent">
+<!-- templates/design/article/story_page.tpl -->
+<div class="faux-21 clearfix">
+<div class="span-21b clearfix">
+<!-- hearst/article/types/story.tpl -->
+<table class="hst-articleprinter">
+<tr>
+<td class="print"><form><input onclick="print();return false;" type="submit" value="Print This Article"/></form></td>
+<td class="back"><a href="/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php">« Back to Article</a></td>
+</tr>
+</table>
+<div class="hst-printable-ad" id="hst-printable-ad">
+</div><div class="hnews hentry item">
+<!-- src/business/templates/hearst/article/types/standard_title.tpl -->
+<div class="hst-articletitle articletitle">
+<p class="brand"><!--  BRAND  --></p>
+<!-- src/business/templates/hearst/article/headline.tpl -->
+<h1 class="headline entry-title">US economic growth slowed to 1.5 pct. rate in Q2</h1>
+<!-- e src/business/templates/hearst/article/headline.tpl -->
+<!-- src/business/templates/hearst/article/types/byline.tpl -->
+<div style="display:none">
+<!-- MARTIN CRUTSINGER, AP Economics Writer -->
+<span class="author vcard"><span class="fn">MARTIN CRUTSINGER</span></span>, <span class="source-org vcard"><span class="org fn">Associated Press</span></span>
+<!-- src/business/templates/hearst/article/news_registry/beacon.tpl -->
+<img alt="" height="1" src="http://analytics.apnewsregistry.com/analytics/v2/image.svc/AP/RWS/sfgate.com/MAI/3740379/E/prod/AT/A" style="display:none;" width="1"/>
+<a href="#license-5012a46abc168" id="license-5012a46abc168" rel="item-license" style="display:none;">Copyright 2012 Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed.</a>
+<!-- e src/business/templates/hearst/article/news_registry/beacon.tpl --> </div>
+<h5 class="byline"><span class="name">MARTIN CRUTSINGER, AP Economics Writer</span></h5>
+<!-- e src/business/templates/hearst/article/types/byline.tpl -->
+<h5 class="timestamp updated" title="2012-07-27T07:18:11Z">
+                Updated 07:18 a.m., Friday, July 27, 2012
+            </h5>
+</div>
+<!-- e src/business/templates/hearst/article/types/standard_title.tpl -->
+<!-- design/gallery/main.tpl -->
+<div class="hst-galleryitem clearfix">
+<div class="header clearfix">
+</div>
+<ul class="clearfix">
+<li id="hst_galleryitem_index1">
+<a><img alt="FILE - In this Tuesday, May 1, 2012, file photo, worker Maria Contrero, of Boston, removes an elite running shoe from a sole press during the assembly process at the New Balance Athletic Shoe, Inc. factory in Boston. A U.S. economy that plodded along in the first three months of the year likely grew even less in the April-June quarter. And most economists no longer think growth will strengthen much in the second half of 2012. Photo: Steven Senne / AP" id="sfgate-photo-3244736" src="http://ww1.hdnux.com/photos/14/30/13/3244736/3/628x471.jpg"/></a>
+<!-- src/business/templates/design/gallery/caption.tpl -->
+<div class="caption">
+			FILE - In this Tuesday, May 1, 2012, file photo, worker Maria Contrero, of Boston, removes an elite running shoe from a sole press during the assembly process at the New Balance Athletic Shoe, Inc. factory in Boston. A U.S. economy that plodded along in the first three months of the year likely grew even less in the April-June quarter. And most economists no longer think growth will strengthen much in the second half of 2012.
+							Photo: Steven Senne
+										/ AP
+								</div><div id="sfgate-photo-3244736-caption" style="display:none;">FILE - In this Tuesday, May 1, 2012, file photo, worker Maria...</div>
+<!-- /src/business/templates/design/gallery/caption.tpl -->
+</li>
+</ul>
+</div><!--/.hst-galleryitem-->
+<p> </p>
+<!-- e design/gallery/main.tpl -->
+<script type="text/javascript">
+    jQuery(function($) {
+        $.storySlideshow(354);
+    });
+    </script>
+<script src="/js/hdn/slideshow/refresh.js?2.7.8p1.15291" type="text/javascript"></script>
+<iframe id="galleryrefresher" name="galleryrefresher" src="/tmpl/slideshow_empty.html" style="display:none;"></iframe>
+<iframe id="gallery_pos_refresher" name="gallery_pos_refresher" src="/tmpl/slideshow_empty.html" style="display:none;"></iframe>
+<script>HDN.doRefresh = 1;</script>
+<div class="hst-articlebox">
+<!-- temporary inline style, don't judge me! -->
+<link href="http://static.ak.fbcdn.net/connect.php/css/share-button-css" media="all" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+.fb_share_count_wrapper {
+  width: 52px;
+}
+.FBConnectButton_Small .FBConnectButton_Text {
+  padding:2px 2px 3px 3px;
+}
+.FBConnectButton_Small, .FBConnectButton_RTL_Small {
+  font-size:9px;
+  line-height:10px;
+}
+.print_link {
+  height: 25px;
+}
+</style>
+<div class="hst-articletools">
+<div id="tweetmeme_1" style="float: left;">
+<a class="twitter-share-button" data-count="vertical" data-url="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php?cmpid=twitter" data-via="SFGate" href="http://twitter.com/share">Tweet</a><script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+</div>
+<div style="float: left; width:45px; padding-left:8px;">
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.sfgate.com%2Fnews%2Farticle%2FUS-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php%3Fcmpid%3Dfb&amp;layout=box_count&amp;show_faces=false&amp;width=50&amp;action=like&amp;font=tahoma&amp;colorscheme=light&amp;height=65" style="border:none; overflow:hidden; width:50px; height:65px;"></iframe>
+</div>
+<div style="float: left; padding-left: 8px;margin-right:8px;">
+<g:plusone href="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php?cmpid=gplus" size="tall"></g:plusone>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<div style="float: left; width:60px;">
+<script type="text/javascript">
+		window.name = window.name || 'blah';
+	</script>
+<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+<script data-counter="top" type="IN/Share"></script>
+</div>
+<div style="clear:both; padding-bottom:10px;"></div>
+<table style="float:left; width:50%;">
+<tr>
+<td class="size print">
+<a href="/news/articleComments/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php?gta=commentlistpos"><img alt="" src="/img/pages/article/tools_comments.gif"/>Comments (<span class="HDNPluck_comment_results_count_np">0</span>)</a>
+</td>
+</tr>
+<tr>
+<td class="size">
+<img alt="" src="/img/pages/article/tools_size.gif"/>
+<a class="larger" href="javascript:hst_chsize('plus')">Larger</a> | <a class="text" href="javascript:hst_chsize('minus')">Smaller</a>
+</td>
+</tr>
+<tr>
+<td class="print print_link">
+<a href="javascript:hst_print();"><img alt="" src="/img/pages/article/tools_print.gif"/>Printable Version</a>
+</td>
+</tr>
+</table>
+<table style="float:left; width:45%;">
+<tr>
+<td class="print size">
+<a href="#" onclick="popup('/?controllerName=emailThis&amp;sitename=sfgate&amp;object=article&amp;objectid=3740379&amp;site=15&amp;title=US+economic+growth+slowed+to+1.5+pct.+rate+in+Q2&amp;url=http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php'); return false;"><img alt="" src="http://www.newstimes.com/img/pages/article/tools_mail.gif"/>Email This</a>
+</td>
+</tr>
+<tr>
+<td class="print size"><div class="poplaunch"><div class="toolspop fontpop" id="hst_articletools_fontpop" onmouseout="popHide(this.id);" onmouseover="popShow(this.id);" style="display:none;"><form action="#"><p class="choice"><input checked="checked" id="font_radio_georgia" name="font_radio" onclick="hst_chfont('georgia');" type="radio" value="1"/> <span class="georgia">Georgia <span class="isdefault">(default)</span></span></p><p class="choice"><input id="font_radio_verdana" name="font_radio" onclick="hst_chfont('verdana');" type="radio" value="2"/> <span class="verdana">Verdana</span></p><p class="choice"><input id="font_radio_times" name="font_radio" onclick="hst_chfont('times');" type="radio" value="3"/> <span class="times">Times New Roman</span></p><p class="choice"><input id="font_radio_arial" name="font_radio" onclick="hst_chfont('arial');" type="radio" value="4"/> <span class="arial">Arial</span></p></form></div><a href="#" onclick="popShow('hst_articletools_fontpop', this); return false;"><img alt="" src="http://www.newstimes.com/img/pages/article/tools_dropdown.gif"/>Font</a></div></td>
+<td class="ad">
+<div class="hst-microbar">
+<div class="ad_deferrable" id="A88"><script type="text/javascript"> /*&lt;![CDATA[*/ hearstPlaceAd("A88"); /*]]&gt;*/ </script></div>
+</div> </td>
+</tr>
+</table>
+<div style="clear:both;"></div>
+</div><!--/.hst-articletools-->
+</div>
+<div class="hst-articlepager-report" id="articlepagerreport">Page 1 of 1</div>
+<div class="hst-articletext"><div class="georgia md" id="fontprefs_top">
+<div class="entry-content" id="text">
+<p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">WASHINGTON (AP) — The U.S. economy grew at an annual rate of just 1.5 percent from April through June, as Americans cut back sharply on spending. The slowdown in growth adds to worries that the economy could be stalling three years after the recession ended.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">The <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Commerce+Department%22">Commerce Department</a> also said Friday that the economy grew a little better than previously thought in the January-March quarter. It raised its estimate to a 2 percent rate, up from 1.9 percent.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Growth at or below 2 percent isn't enough to lower the unemployment rate, which was 8.2 percent last month. And most economists don't expect growth to pick up much in the second half of the year. Europe's financial crisis and a looming budget crisis in the U.S. are expected to slow business investment further.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">"The main take away from today's report, the specifics aside, is that the U.S. economy is barely growing," said <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Dan+Greenhaus%22">Dan Greenhaus</a>, chief economic strategist at <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22BTIG%22">BTIG</a> LLC. "Along with a reduction in the actual amount of money companies were able to make, it's no wonder the unemployment rate cannot move lower."</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Stocks opened higher as investors appeared to shrug off the weak U.S growth and focus on a pledge from the European Central Bank president to keep the euro together. The <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Dow+Jones+industrial+average%22">Dow Jones industrial average</a> gained 70 points in the first hour of trading, and broader indexes also increased.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">The lackluster economy is raising pressure on President <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Barack+Obama%22">Barack Obama</a> in his re-election fight with <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Mitt+Romney%22">Mitt Romney</a>, the presumptive Republican presidential nominee.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">But few think the Fed, the White House or Congress can or will do anything soon that might rejuvenate the economy quickly. Many lawmakers, for example, refuse to increase federal spending in light of historically large budget deficits.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm"><a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Paul+Dales%22">Paul Dales</a>, senior U.S. economist at <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Capital+Economics%22">Capital Economics</a>, said that the sluggish second-quarter growth rate is probably not weak enough to trigger more action by the Federal Reserve when it meets next week.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Many economists, however, believe the Fed will launch another round of bond buying at its September policy meeting. The aim is to drive long-term interest rates lower and encourage more borrowing and spending.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm"><a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Glenn+Hubbard%22">Glenn Hubbard</a>, economic adviser for Romney, said Friday's report on growth was largely what economists were expecting. "But those expectations themselves and the report itself were actually quite disappointing," he noted.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">"At that pattern, the economy simply will never return to full employment," he said.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm"><a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22Alan+Krueger%22">Alan Krueger</a>, chairman of the <a href="/?controllerName=search&amp;action=search&amp;channel=news&amp;search=1&amp;inlineLink=1&amp;query=%22White+House+Council+of+Economic+Advisers%22">White House Council of Economic Advisers</a>, said the report showed the economy grew for the 12th straight quarter.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Congress could strengthen growth and job creation by adopting President Barack Obama's plan to extend expiring tax cuts for all but the wealthiest Americans, Krueger said.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Republicans want the tax cuts extended for all Americans.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">The 1.5 percent growth rate in the second quarter was the weakest since the economy, as measured by the gross domestic product, expanded at a 1.3 percent rate in the July-September quarter last year. GDP measures the country's total output of goods and services, from the purchase of a cup of coffee to the sale of fighter jets.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Current-dollar GDP increased at an annual rate of $117.6 billion in the second quarter to $15.6 trillion.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Growth was weaker mostly because consumer spending slowed to a growth rate of just 1.5 percent. That's down from 2.4 percent in the first quarter. Americans bought fewer autos, computers and other long-lasting manufactured goods. Spending on services increased.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">They also saved more. The savings rate increased to 4 percent, up from 3.6 percent in the first quarter.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Consumer spending, which accounts for 70 percent of economic activity, was offset somewhat by a slightly smaller drag from the government. Spending by governments fell at an annual rate of 1.4 percent in the second quarter, just half of the 3 percent rate of decline in the first quarter.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">The Commerce Department also revised its growth estimates for the past three years.  Those revisions showed that the economy contracted 3.1 percent in 2009, slightly less than the 3.5 percent previously reported. Growth in 2010 was put at 2.4 percent, down from 3 percent, with growth in 2011 at 1.8 percent instead of 1.7 percent.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">The U.S. economy has never been so sluggish this long into a recovery. The Great Recession officially ended in June 2009.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Until a few weeks ago, many economists had been predicting that growth would accelerate in the final six months of the year. They pointed to gains in manufacturing, home and auto sales and lower gas prices.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">But threats to the U.S. economy have left consumers too anxious to spend freely. Jobs are tight. Pay isn't keeping up with inflation. Retail sales fell in June for a third straight month. Manufacturing has weakened in most areas of the country.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">Fear is also growing that the economy will fall off a "fiscal cliff" at year's end. That's when tax increases and deep spending cuts will take effect unless Congress reaches a budget agreement.</p><p xmlns="http://www.w3.org/2005/Atom" xmlns:apcm="http://ap.org/schemas/03/2005/apcm" xmlns:apnm="http://ap.org/schemas/03/2005/apnm">All that is making companies reluctant to expand and hire much.</p>
+</div>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('#text').paginator('.hst-articlepager', $('.hst-articlebox').height());
+  });
+  </script>
+</div></div><!--/.hst-articletext-->
+</div>
+<div class="hst-articlefooter">
+<!-- temporary inline style below, don't judge me! -->
+<div class="hst-articletools2">
+<div class="arbox print first">
+<a href="javascript:hst_print();"><img alt="" src="/img/pages/article/tools_print.gif" style="vertical-align: middle;"/> Printable Version</a>
+</div>
+<div class="arbox print">
+<a href="#" onclick="popup('/?controllerName=emailThis&amp;sitename=sfgate&amp;object=article&amp;objectid=3740379&amp;site=15&amp;title=US+economic+growth+slowed+to+1.5+pct.+rate+in+Q2&amp;url=http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php'); return false;"><img alt="" src="/img/pages/article/tools_mail.gif" style="vertical-align: middle;"/> Email This</a>
+</div>
+<!-- need to remove yahoo badge
+        <div style="float: left; margin-right: 20px;">
+            <script type="text/javascript" src="http://d.yimg.com/ds/badge2.js" badgetype="small">/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php</script>
+        </div>
+	 -->
+<div class="arbox facebook">
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.sfgate.com%2Fnews%2Farticle%2FUS-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php%3Fcmpid%3Dfb&amp;layout=button_count&amp;show_faces=true&amp;width=50&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" style="border:none; overflow:hidden; width:50px; height:21px;"></iframe>
+</div>
+<div class="arbox">
+<a class="twitter-share-button" data-count="horizontal" data-url="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php?cmpid=twitter" data-via="SFGate" href="http://twitter.com/share">Tweet</a><script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+</div>
+<div class="arbox">
+<g:plusone href="http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php?cmpid=gplus" size="medium"></g:plusone>
+</div>
+<script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
+<div class="arbox last">
+<script type="text/javascript">
+                //hack to fix linkedin JS bug
+                window.name=window.name || "";
+       	    </script>
+<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+<script data-counter="right" type="IN/Share"></script>
+</div>
+</div>
+<!--/.hst-articletools2-->
+<div class="hst-freeform">
+<script language="JavaScript">
+
+var OB_permalink = document.URL;
+var OB_widgetId = 'AR_1';
+var OB_Template = "sfgate";
+var OB_langJS = 'http://widgets.outbrain.com/lang_en.js';
+if (typeof(OB_Script)!='undefined' )
+OutbrainStart();
+else
+{
+var OB_Script = true;
+var str = "&lt;script src='http://widgets.outbrain.com/outbrainWidget.js' type='text/javascript'&gt;&lt;/" +"script&gt;";
+document.write(str);
+}
+</script>
+</div>
+<div class="hst-freeform">
+<script type="text/javascript">
+	function formsubmit () {
+		var location = "https://www.subscriber-services.com/sfchron/NSPromotions/Subscribe1.aspx?pid";
+		var length = document.sfg_formsubmit.subscribe.length;
+		for (var i = 0; i &lt; length; i++) {
+			if (document.sfg_formsubmit.subscribe[i].checked) {
+				var selected = document.sfg_formsubmit.subscribe[i].value;
+			} else {
+				document.location.href=location;
+			}
+		}
+		document.location.href=location + "=" + selected;
+	}
+</script>
+<div class="hr" style="background: url('http://imgs.sfgate.com/graphics/article/tools/dotted.gif') repeat-x scroll 0 0 transparent; height: 1px; width: 640px;"></div>
+<div id="subscribe">
+<a href="https://www.subscriber-services.com/sfchron/NSPromotions/Subscribe1.aspx?pid=97" target="_blank"><img alt="Subscribe to the San Francisco Chronicle" src="http://extras.sfgate.com/templates/types/article/graphics/subscribeToChronicle_with_ipad.gif"/></a>
+<div class="packages" id="subscribe">
+<form name="sfg_formsubmit">
+<fieldset>
+<div class="subscribeheader">Subscribe to the San Francisco Chronicle and receive access to the Chronicle for iPad App and a gift:</div>
+<ul>
+<li class="clearfix"><input id="op1" name="subscribe" type="radio" value="110"/><label for="option1">Sunday +<div class="reg"> a </div>$15 <div class="reg">gift card</div></label></li>
+<li class="clearfix"><input id="op2" name="subscribe" type="radio" value="109"/><label for="option2">Fri-Sun +<div class="reg"> a </div>$15 <div class="reg">gift card</div></label></li>
+<li class="clearfix"><input id="op3" name="subscribe" type="radio" value="111"/><label for="option3">Mon-Sun +<div class="reg"> a </div>$25 <div class="reg">gift card</div></label></li>
+<li><input class="btn" id="submit" onclick="formsubmit(); return false;" style="font-size:11px;" type="submit" value="Select an offer"/></li>
+</ul>
+</fieldset>
+</form>
+</div>
+</div>
+</div>
+<!-- business/templates/hearst/article/pluckcomments.tpl -->
+<div class="hnews hentry item">
+<div class="entry-title" id="HDNPluck_page_title" style="display: none">US economic growth slowed to 1.5 pct. rate in Q2</div>
+<!-- src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<div style="display:none">
+<span class="author source-org vcard"><span class="org fn">Associated Press</span></span>
+<!-- src/business/templates/hearst/article/news_registry/beacon.tpl -->
+<img alt="" height="1" src="http://analytics.apnewsregistry.com/analytics/v2/image.svc/AP/RWS/sfgate.com/MAI/3740379/E/prod/AT/HL" style="display:none;" width="1"/>
+<a href="#license-5012a46acee32" id="license-5012a46acee32" rel="item-license" style="display:none;">Copyright 2012 Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed.</a>
+<!-- e src/business/templates/hearst/article/news_registry/beacon.tpl --> <h5 class="timestamp updated" title="2012-07-27T07:18:11Z">
+    	Updated 07:18 a.m., Friday, July 27, 2012
+  	</h5>
+</div>
+<!-- e src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<div class="entry-summary" id="HDNPluck_article_paratext" style="display: none;">Along with a reduction in the actual amount of money companies were able to make, it's no wonder the unemployment rate cannot move lower.
+
+The lackluster economy is raising pressure on President Barack Obama in his re-election fight with Mitt Romney, the presumptive Republican presidential...</div>
+</div>
+<div class="HDNPluck_appLoading" style="text-align:center;"><img src="http://contribute.sfgate.com/ver1.0/Content/ua/images/throbber.gif"/></div>
+<div id="pluckCommentsContainer">
+<script id="sort_script_tag" language="javascript" type="text/javascript">
+    // &lt;![CDATA[
+      HDNPluck.page_title = document.getElementById('HDNPluck_page_title').innerHTML;
+      HDNPluck.article_paratext = document.getElementById('HDNPluck_article_paratext').innerHTML;
+
+      var cso_cookie_tval = GetCookie('comment_sort_order');
+      var cpp_cookie_tval = GetCookie('comments_per_page');
+            document.write('&lt;pas:pluck_comments plckCommentOnKeyType="article" plckCommentOnKey="'+HDNPluck.file+'" plckShortList="true" plckRefreshPage="true" plckDiscoverySection="'+(HDNPluck.artsec ? HDNPluck.artsec : '')+'" plckDiscoveryCategories="'+(HDNPluck.categories ? HDNPluck.categories.join(',') : '')+'" plckSort="ThumbsDescending" plckItemsPerPage="'+cpp_cookie_tval+'" plckArticleUrl="http://'+window.location.host+HDNPluck.full_filepath+'" HDNPluck_refreshBaseURL="'+HDNPluck.success_page+'" HDNPluck_regUrl="'+HDN.regUrl+'"&gt;&lt;/pas:pluck_comments&gt;');
+          // ]]&gt;
+    </script>
+</div>
+<script type="text/javascript">
+(function($) {
+/**
+ * This function will either show an already loaded comment stream with the
+ * given XID or will load it and show it.
+ *
+ * XID's take the form of: chron-photo-2333128
+ * 
+ * @param xidValue the xid of the comment stream
+ */
+showPluckCommentBlock = function (xidValue) {
+    $(".HDNPluck_appLoading").show();
+    HDNPluck['file'] = xidValue;
+    var cso_cookie_tval = GetCookie('comment_sort_order');
+    var cpp_cookie_tval = GetCookie('comments_per_page');
+
+    if (HDNPluck['artcontxt'] == 'slideshow') {	    	    
+	    
+	    if (HDNPluck.success_page.indexOf('?') &gt; -1) {
+		HDNPluck.success_page = HDNPluck.success_page.substring(0,HDNPluck.success_page.indexOf('?'));
+	    }
+	    HDNPluck.success_page += '?pid='+xidValue;
+	    HDNPluck.full_filepath = HDNPluck.success_page;
+	    HDNPluck.file = xidValue;
+	    HDNPluck.page_title = document.title;
+	    try{document.getElementById('HDNPluck_page_title').innerHTML = document.title;} catch (e) {}
+    }    
+    if (!(!document.getElementById("pluckCommentsContainer"))) { document.getElementById("pluckCommentsContainer").innerHTML = '&lt;pas:pluck_comments plckCommentOnKeyType="article" plckCommentOnKey="'+HDNPluck['file']+'" plckShortList="false" plckDiscoverySection="'+(HDNPluck.artsec ? HDNPluck.artsec : '')+'" plckDiscoveryCategories="'+(HDNPluck.categories ? HDNPluck.categories.join(',') : '')+'" plckSort="'+cso_cookie_tval+'" plckItemsPerPage="'+cpp_cookie_tval+'" plckArticleUrl="http://'+window.location.host+HDNPluck.full_filepath+'" HDNPluck_refreshBaseURL="'+HDNPluck['success_page']+'" HDNPluck_regUrl="'+HDN.regUrl+'"&gt;&lt;/pas:pluck_comments&gt;'; pluckAppProxy.replaceTag("pluck_comments"); } else { alert('setTimeout'); }
+}
+})(jQuery);
+</script>
+<!-- e business/templates/hearst/article/pluckcomments.tpl -->
+<!-- src/business/widgets/hearst/collection/widget.tpl -->
+<div class="hide-rss-link">
+<!-- hearst/collections/promo_gallery.tpl -->
+<!-- collection.promo_gallery.13257 -->
+<div class="hst-spwide"><div class="edge2"><div class="edge3"><div class="edge4 clearfix">
+<!-- templates/design/collection/promo_gallery/single_zone.tpl  -->
+<div class="header clearfix">
+<!-- zone1 -->
+<!-- widgets/hearst/module_header/widget.tpl -->
+<h2>Inside SFGate</h2>
+<!-- e widgets/hearst/module_header/widget.tpl --> <!-- e zone1 -->
+<p class="nav hidden"><a class="prev" href="#"><img alt="" src="/img/modules/slideshow/promo/wide/button-prev.gif"/></a><a class="next" href="#"><img alt="" src="/img/modules/slideshow/promo/wide/button-next.gif"/></a></p>
+<span class="rss">
+<a class="collection-rss-link" href="/home/collectionRss/story-slideprow-inside-13257.php" target="_blank" type="application/rss+xml">
+<img alt="Click to View RSS Feed" src="/img/utils/rss_icon.png"/>
+</a>
+</span>
+</div>
+<!-- hearst/collections/promo_gallery_body.tpl -->
+<!-- collection.promo_gallery.13257 -->
+<ul class="clearfix">
+<div class="tab">
+<li class="item">
+<p class="illo"><a href="/bayarea/article/Missing-San-Rafael-hiker-found-dead-3737729.php"><img alt="" src="http://ww2.hdnux.com/photos/14/27/43/3242177/3/landscape_gallery_promo.jpg"/></a></p>
+<h4><a href="/bayarea/article/Missing-San-Rafael-hiker-found-dead-3737729.php">Missing San Rafael hiker found dead</a></h4>
+</li>
+<li class="item">
+<p class="illo"><a href="http://blog.sfgate.com/hottopics/2012/07/26/auto-tuned-bob-ross-video-is-internet-sensation/"><img alt="" src="http://ww4.hdnux.com/photos/14/27/56/3242927/3/landscape_gallery_promo.jpg"/></a></p>
+<h4><a href="http://blog.sfgate.com/hottopics/2012/07/26/auto-tuned-bob-ross-video-is-internet-sensation/">Auto-tuned Bob Ross video is a sensation</a></h4>
+</li>
+<li class="item">
+<p class="illo"><a href="/politics/article/Romneys-get-ribbed-over-Olympian-horse-3736017.php"><img alt="" src="http://ww2.hdnux.com/photos/14/27/44/3242297/3/landscape_gallery_promo.jpg"/></a></p>
+<h4><a href="/politics/article/Romneys-get-ribbed-over-Olympian-horse-3736017.php">Romneys ribbed over Olympian horse</a></h4>
+</li>
+<li class="item last">
+<p class="illo"><a href="/entertainment/article/Ex-DJ-M-Dung-plugging-aaywaay-on-podcast-3735480.php"><img alt="" src="http://ww1.hdnux.com/photos/14/25/42/3233928/3/landscape_gallery_promo.jpg"/></a></p>
+<h4><a href="/entertainment/article/Ex-DJ-M-Dung-plugging-aaywaay-on-podcast-3735480.php">Catch up with ex-KFOG DJ Mike Slavko</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/26/50/3238456/4/landscape_gallery_promo.png">
+<h4><a href="/columnists/fiore/item/Fiore-Gun-Safety-10086.php">Fiore: Gun lobby safety</a></h4>
+</li>
+<li class="item" img="http://ww4.hdnux.com/photos/14/26/32/3237555/3/landscape_gallery_promo.jpg">
+<h4><a href="/news/article/Un-becomes-2-North-Korea-confirms-Kim-is-married-3733679.php">Kim Jong-un gets married</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/26/33/3237582/3/landscape_gallery_promo.jpg">
+<h4><a href="/health/article/Staying-fit-while-aging-an-Olympian-feat-3732352.php">Staying fit while aging an Olympian feat</a></h4>
+</li>
+<li class="item last" img="http://ww4.hdnux.com/photos/14/10/72/3182227/6/landscape_gallery_promo.jpg">
+<h4><a href="http://blog.sfgate.com/morford">Morford: A rampage of shocking kindness</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/25/46/3234232/3/landscape_gallery_promo.jpg">
+<h4><a href="/homeandgarden/home/hearstmagazines/article/Your-Most-Pressing-Dog-Questions-Answered-3730854.php">Your most-pressing dog questions, answered</a></h4>
+</li>
+<li class="item" img="http://ww1.hdnux.com/photos/14/24/54/3230496/3/landscape_gallery_promo.jpg">
+<h4><a href="/health/article/Volleyball-Olympian-s-workout-evolution-3732344.php">Volleyball Olympian's workout evolution</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/24/70/3231238/3/landscape_gallery_promo.jpg">
+<h4><a href="/tv/article/Fox-s-fall-lineup-sits-in-holding-pattern-3732043.php">Fox's fall lineup sits in holding pattern</a></h4>
+</li>
+<li class="item last" img="http://ww3.hdnux.com/photos/14/22/22/3220638/3/landscape_gallery_promo.jpg">
+<h4><a href="/living/article/Rockridge-barber-offers-classic-cuts-3729066.php">Rockridge barber offers classic cuts</a></h4>
+</li>
+</div>
+</ul>
+<script type="text/javascript">
+    //&lt;![CDATA[
+	jQuery(function($) {
+		jQuery('.hst-spwide').slideshow();
+	});
+    //]]&gt;
+  </script>
+<!-- e hearst/collections/promo_gallery_body.tpl -->
+<!-- e templates/design/collection/promo_gallery/single_zone.tpl --> </div></div></div></div><!--/.hst-spwide-->
+<!-- e hearst/collections/promo_gallery.tpl --> </div>
+<!-- e src/business/widgets/hearst/collection/widget.tpl --></div>
+<div class="sfg_ysm001"><h3><a href="http://searchmarketing.yahoo.com/srch/contentmatch.php" target="_new">Ads by Yahoo!</a></h3>
+<!-- ux/sfgate/tmpl/ysm_contextual.php -->
+<div class="hst-ysm">
+<script src="http://images.chron.com/CDC/elf/js/ysmwrapper.js" type="text/javascript"></script>
+</div>
+<!-- e ux/sfgate/tmpl/ysm_contextual.php -->
+</div><!-- e hearst/article/types/story.tpl -->
+</div><!--/.span-21b-->
+<!-- templates/hearst/article/types/story_right.tpl  -->
+<div class="span-10 last">
+<!-- src/business/widgets/hearst/collection/widget.tpl -->
+<div class="hide-rss-link">
+<!-- hearst/collections/promo_slideshow.tpl -->
+<!-- collection.promo_slideshow.13261 -->
+<div class="hst-slideshowpromo"><div class="edge2"><div class="edge3"><div class="edge4 clearfix">
+<!-- templates/design/collection/promo_slideshow/single_zone.tpl  -->
+<div class="header clearfix">
+<!-- zone1 -->
+<!-- widgets/hearst/module_header/widget.tpl -->
+<h2>Photo Galleries</h2>
+<!-- e widgets/hearst/module_header/widget.tpl --> <!-- e zone1 -->
+<span>
+<a class="collection-rss-link" href="/home/collectionRss/story-slidepro-13261.php" target="_blank" type="application/rss+xml">
+<img alt="Click to View RSS Feed" src="/img/utils/rss_icon.png"/>
+</a>
+</span>
+<p class="nav hidden"><a class="prev" href="#"><img alt="" src="/img/modules/slideshow/promo/wide/button-prev.gif"/></a><a class="next" href="#"><img alt="" src="/img/modules/slideshow/promo/wide/button-next.gif"/></a></p>
+</div>
+<!-- hearst/collections/promo_slideshow_body.tpl -->
+<!-- collection.promo_slideshow.13261 -->
+<ul class="clearfix">
+<div class="tab">
+<li class="item">
+<p class="illo"><a href="/news/slideshow/Favorite-dishes-7-27-2012-46606.php"><img alt="" src="http://ww2.hdnux.com/photos/14/30/33/3245821/3/square_horiz_promo.jpg"/></a></p>
+<h4><a href="/news/slideshow/Favorite-dishes-7-27-2012-46606.php">Favorite dishes 7/27/2012</a></h4>
+</li>
+<li class="item">
+<p class="illo"><a href="/news/slideshow/Famous-female-movie-stars-and-their-definitive-46604.php"><img alt="" src="http://ww2.hdnux.com/photos/14/30/32/3245701/3/square_horiz_promo.jpg"/></a></p>
+<h4><a href="/news/slideshow/Famous-female-movie-stars-and-their-definitive-46604.php">Famous female movie stars and their definitive films</a></h4>
+</li>
+<li class="item last">
+<p class="illo"><a href="/bayarea/slideshow/SoMa-plan-under-review-by-SF-officials-46603.php"><img alt="" src="http://ww2.hdnux.com/photos/14/26/70/3239457/3/square_horiz_promo.jpg"/></a></p>
+<h4><a href="/bayarea/slideshow/SoMa-plan-under-review-by-SF-officials-46603.php">SoMa plan under review by SF officials</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww4.hdnux.com/photos/14/26/71/3239507/5/square_horiz_promo.jpg">
+<h4><a href="/bayarea/slideshow/New-state-water-plan-tunnels-under-delta-46602.php">New state water plan: tunnels under delta</a></h4>
+</li>
+<li class="item" img="http://ww2.hdnux.com/photos/14/30/22/3245233/3/square_horiz_promo.jpg">
+<h4><a href="/olympics/slideshow/Mexico-vs-South-Korea-Olympics-soccer-match-46601.php">Mexico vs. South Korea Olympics soccer match</a></h4>
+</li>
+<li class="item last" img="http://ww1.hdnux.com/photos/14/30/22/3245208/3/square_horiz_promo.jpg">
+<h4><a href="/olympics/slideshow/Senegal-vs-Britain-in-2012-Olympic-soccer-46600.php">Senegal vs. Britain in 2012 Olympic soccer</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww4.hdnux.com/photos/14/30/21/3245171/3/square_horiz_promo.jpg">
+<h4><a href="/sports/golf/slideshow/Senior-PGA-tournament-begins-in-UK-46599.php">Senior PGA tournament begins in UK</a></h4>
+</li>
+<li class="item" img="http://ww4.hdnux.com/photos/14/30/04/3244335/3/square_horiz_promo.jpg">
+<h4><a href="/olympics/slideshow/A-s-do-lose-it-turns-out-in-Toronto-46598.php">A's do lose, it turns out in Toronto</a></h4>
+</li>
+<li class="item last" img="http://ww1.hdnux.com/photos/14/30/10/3244580/3/square_horiz_promo.jpg">
+<h4><a href="/sports/slideshow/Sumo-South-American-style-46597.php">Sumo South American style</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/30/20/3245116/3/square_horiz_promo.jpg">
+<h4><a href="/nation/slideshow/East-Coast-Storms-Ground-Planes-Cut-Power-to-46596.php">East Coast Storms Ground Planes, Cut Power to Tens of Thousands</a></h4>
+</li>
+<li class="item" img="http://ww1.hdnux.com/photos/14/27/74/3243832/3/square_horiz_promo.jpg">
+<h4><a href="/nation/slideshow/Colorado-victims-remembered-46595.php">Colorado victims remembered</a></h4>
+</li>
+<li class="item last" img="http://ww2.hdnux.com/photos/14/30/17/3244997/3/square_horiz_promo.jpg">
+<h4><a href="/nation/slideshow/Nation-in-Focus-46593.php">Nation in Focus</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww4.hdnux.com/photos/14/27/73/3243715/5/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/South-Korea-s-enemy-cemetery-neglected-46594.php">South Korea's 'enemy cemetery' neglected</a></h4>
+</li>
+<li class="item" img="http://ww1.hdnux.com/photos/14/27/72/3243668/3/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/Cuba-willing-to-sit-down-talk-with-U-S-46592.php">Cuba willing to sit down, talk with U.S.</a></h4>
+</li>
+<li class="item last" img="http://ww1.hdnux.com/photos/14/30/14/3244816/3/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/World-in-Focus-46591.php">World in Focus</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww2.hdnux.com/photos/14/27/53/3242713/3/square_horiz_promo.jpg">
+<h4><a href="/style/slideshow/Mercedes-Benz-Fashion-Week-swim-2013-46573.php">Mercedes-Benz Fashion Week swim 2013</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/27/52/3242642/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Mozzeria-46572.php">Mozzeria</a></h4>
+</li>
+<li class="item last" img="http://ww3.hdnux.com/photos/14/27/37/3241970/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/J-K-Rowling-children-039-s-fantastic-46565.php">J.K. Rowling children's fantastic castle-like playground</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww3.hdnux.com/photos/14/27/43/3242226/3/square_horiz_promo.jpg">
+<h4><a href="/entertainment/dayinpictures/slideshow/SFGate-Day-in-Pictures-July-26-2012-46578.php">SFGate: Day in Pictures, July 26, 2012</a></h4>
+</li>
+<li class="item" img="http://ww2.hdnux.com/photos/14/27/25/3241301/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Cable-cars-46559.php">Cable cars</a></h4>
+</li>
+<li class="item last" img="http://ww2.hdnux.com/photos/07/57/44/2029849/11/square_horiz_promo.jpg">
+<h4><a href="/bayarea/slideshow/Education-leaders-call-for-modernization-46557.php">Education leaders call for modernization</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww2.hdnux.com/photos/14/26/74/3239689/3/square_horiz_promo.jpg">
+<h4><a href="/bayarea/slideshow/Parole-realignment-working-data-suggest-46556.php">Parole realignment working, data suggest</a></h4>
+</li>
+<li class="item" img="http://ww4.hdnux.com/photos/14/26/70/3239435/3/square_horiz_promo.jpg">
+<h4><a href="/bayarea/slideshow/MTC-votes-8-7-not-to-fund-free-Muni-plan-46555.php">MTC votes 8-7 not to fund free-Muni plan</a></h4>
+</li>
+<li class="item last" img="http://ww4.hdnux.com/photos/14/27/02/3240107/3/square_horiz_promo.jpg">
+<h4><a href="/nation/slideshow/Annual-mass-to-anoint-the-sick-46554.php">Annual mass to anoint the sick</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/27/03/3240188/3/square_horiz_promo.jpg">
+<h4><a href="/bayarea/slideshow/Ponies-auctioned-to-benefit-volunteer-fire-company-46553.php">Ponies auctioned to benefit volunteer fire company</a></h4>
+</li>
+<li class="item" img="http://ww4.hdnux.com/photos/14/27/05/3240283/3/square_horiz_promo.jpg">
+<h4><a href="/nation/slideshow/Nation-in-Focus-46551.php">Nation in Focus</a></h4>
+</li>
+<li class="item last" img="http://ww4.hdnux.com/photos/14/26/63/3239159/3/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/Beijing-mayor-set-for-promotion-amid-flood-scandal-46550.php">Beijing mayor set for promotion amid flood scandal</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww2.hdnux.com/photos/14/26/72/3239601/3/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/Clowns-gather-in-Guatemala-City-46548.php">Clowns gather in Guatemala City</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/27/10/3240482/3/square_horiz_promo.jpg">
+<h4><a href="/sports/slideshow/MLS-All-Stars-top-Chelsea-3-2-in-exhibition-game-46547.php">MLS All-Stars top Chelsea 3-2 in exhibition game</a></h4>
+</li>
+<li class="item last" img="http://ww1.hdnux.com/photos/14/26/67/3239364/5/square_horiz_promo.jpg">
+<h4><a href="/olympics/slideshow/USA-Women-Open-Olympics-with-a-Come-From-Behind-46546.php">USA Women Open Olympics with a Come From Behind Win</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/27/05/3240264/3/square_horiz_promo.jpg">
+<h4><a href="/athletics/slideshow/Spiderman-Reddick-helps-A-s-toast-Jays-46545.php">'Spiderman' Reddick helps A's toast Jays</a></h4>
+</li>
+<li class="item" img="http://ww2.hdnux.com/photos/14/26/71/3239549/5/square_horiz_promo.jpg">
+<h4><a href="/giants/slideshow/Giants-Tim-Lincecum-loses-to-Padres-46544.php">Giants' Tim Lincecum loses to Padres</a></h4>
+</li>
+<li class="item last" img="http://ww2.hdnux.com/photos/14/27/02/3240085/3/square_horiz_promo.jpg">
+<h4><a href="/world/slideshow/World-in-Focus-46542.php">World in Focus</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww1.hdnux.com/photos/14/26/71/3239512/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Top-cities-for-vegetarians-46531.php">Top cities for vegetarians</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/26/61/3239026/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Raptors-First-flight-46528.php">Raptors: First flight</a></h4>
+</li>
+<li class="item last" img="http://ww1.hdnux.com/photos/14/26/60/3238920/7/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Hakkasan-San-Francisco-46524.php">Hakkasan San Francisco</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww3.hdnux.com/photos/14/26/54/3238674/3/square_horiz_promo.jpg">
+<h4><a href="/olympics/slideshow/Top-20-most-memorable-Olympic-moments-46521.php">Top 20 most memorable Olympic moments</a></h4>
+</li>
+<li class="item" img="http://ww3.hdnux.com/photos/14/26/54/3238698/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/Down-syndrome-kids-grace-print-ads-46517.php">Down syndrome kids grace print ads</a></h4>
+</li>
+<li class="item last" img="http://ww3.hdnux.com/photos/14/26/42/3238038/3/square_horiz_promo.jpg">
+<h4><a href="/entertainment/slideshow/Short-hair-vs-long-46512.php">Short hair vs. long</a></h4>
+</li>
+</div>
+<div class="tab hidden">
+<li class="item" img="http://ww3.hdnux.com/photos/14/26/45/3238262/3/square_horiz_promo.jpg">
+<h4><a href="/news/slideshow/USA-Women-open-Olympics-with-win-over-France-46513.php">USA Women open Olympics with win over France</a></h4>
+</li>
+</div>
+</ul>
+<script type="text/javascript">
+    //&lt;![CDATA[
+	jQuery(function($) {
+		jQuery('.hst-slideshowpromo').slideshow();
+	});
+    //]]&gt;
+  </script>
+<!-- e hearst/collections/promo_slideshow_body.tpl -->
+<!-- e templates/design/collection/promo_slideshow/single_zone.tpl --> </div></div></div></div><!--/.hst-slideshowpromo-->
+<!-- e hearst/collections/promo_slideshow.tpl --> </div>
+<!-- e src/business/widgets/hearst/collection/widget.tpl -->
+<!-- ux/sfgate/tmpl/subscribe_promo.php -->
+<!-- e ux/sfgate/tmpl/subscribe_promo.php -->
+<!-- ux/sfgate medium_rectangle_ad_first.tpl -->
+<div class="hst-mediumrectangle clearfix" id="hst-mediumrectangle1">
+<div class="ad_deferrable" id="A300"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("A300"); /*]]&gt;*/</script></div>
+<div class="ad_deferrable" id="A300x600"><script type="text/javascript">/*&lt;![CDATA[*/ hearstPlaceAd("A300x600"); /*]]&gt;*/</script></div>
+</div>
+<!-- e ux/sfgate medium_rectangle_ad_first.tpl -->
+<!--.hst-mostpopular-->
+<div class="hst-mostpopular tab-set"><div class="edge2"><div class="edge3"><div class="edge4 clearfix">
+<ul class="nav-tabs clearfix">
+<li><a href="#">Most Read</a></li>
+<li class="lim">|</li> <li><a href="#">Most Commented</a></li>
+<li class="lim">|</li> <li><a href="#">Most Emailed</a></li>
+</ul>
+<div class="content-tab"><ol>
+<li>
+<a href="/bayarea/article/Human-waste-shuts-down-BART-escalators-3735981.php" title="Human waste shuts down BART escalators">Human waste shuts down BART escalators</a>
+</li>
+<li>
+<a href="/news/article/Temecula-mom-charged-for-leaving-naked-girl-in-car-3739062.php" title="Temecula mom charged for leaving naked girl in car">Temecula mom charged for leaving naked girl in car</a>
+</li>
+<li>
+<a href="/entertainment/article/Billie-Joe-Armstrong-joins-NBC-s-Voice-as-mentor-3739400.php" title="Billie Joe Armstrong joins NBC's 'Voice' as mentor">Billie Joe Armstrong joins NBC's 'Voice' as mentor</a>
+</li>
+<li>
+<a href="/sports/article/Former-Indiana-basketball-player-Neil-Reed-dies-3739280.php" title="Former Indiana basketball player Neil Reed dies">Former Indiana basketball player Neil Reed dies</a>
+</li>
+<li>
+<a href="/news/article/Manhunt-over-after-2-Ind-police-officers-shot-3740140.php" title="Bystander dies, 2 Ind. officers hit in shooting">Bystander dies, 2 Ind. officers hit in shooting</a>
+</li>
+<li>
+<a href="/bayarea/article/Oakland-police-radios-fail-during-Obama-visit-3736022.php" title="Oakland police radios fail during Obama visit">Oakland police radios fail during Obama visit</a>
+</li>
+<li class="last">
+<a href="/news/article/Councilman-pleads-not-guilty-to-sex-offenses-3738950.php" title="Orange County CEO resigns amid sex scandal">Orange County CEO resigns amid sex scandal</a>
+</li>
+</ol></div>
+<div class="content-tab"><ol>
+<li>
+<a href="http://www.sfgate.com/bayarea/article/Human-waste-shuts-down-BART-escalators-3735981.php" title="Human waste shuts down BART escalators">Human waste shuts down BART escalators</a>
+</li>
+<li>
+<a href="http://www.sfgate.com/politics/article/Romneys-get-ribbed-over-Olympian-horse-3736017.php" title="Romneys get ribbed over Olympian horse">Romneys get ribbed over Olympian horse</a>
+</li>
+<li>
+<a href="http://www.sfgate.com/bayarea/nevius/article/1-dissenting-voice-holds-up-park-upgrade-3736021.php" title="1 dissenting voice holds up park upgrade">1 dissenting voice holds up park upgrade</a>
+</li>
+<li>
+<a href="http://www.sfgate.com/news/article/Chik-fil-A-sandwiches-become-a-political-symbol-3738255.php" title="Chik-fil-A sandwiches become a political symbol">Chik-fil-A sandwiches become a political symbol</a>
+</li>
+<li>
+<a href="http://www.sfgate.com/business/bloomberg/article/Romney-Riles-Londoners-With-Comments-on-Olympic-3738629.php" title="Romney Riles Londoners With Comments on Olympic Games Readiness">Romney Riles Londoners With Comments on Olympic Games Readiness</a>
+</li>
+<li>
+<a href="http://www.sfgate.com/bayarea/article/MTC-votes-8-7-not-to-fund-free-Muni-plan-3735978.php" title="MTC votes 8-7 not to fund free-Muni plan">MTC votes 8-7 not to fund free-Muni plan</a>
+</li>
+<li class="last">
+<a href="http://www.sfgate.com/news/article/Obama-Romney-swap-sharp-foreign-policy-criticism-3732629.php" title="Obama, Romney swap sharp foreign policy criticism">Obama, Romney swap sharp foreign policy criticism</a>
+</li>
+</ol></div>
+<div class="content-tab"><ol>
+<li>
+<a href="/politics/article/California-GOP-faces-money-woes-3739415.php" title="California GOP faces money woes">California GOP faces money woes</a>
+</li>
+<li>
+<a href="/bayarea/article/Human-waste-shuts-down-BART-escalators-3735981.php" title="Human waste shuts down BART escalators">Human waste shuts down BART escalators</a>
+</li>
+<li>
+<a href="/news/article/California-gun-purchases-nearing-record-3739037.php" title="California gun purchases nearing record">California gun purchases nearing record</a>
+</li>
+<li>
+<a href="/giants/article/Parking-plan-puts-squeeze-on-Giants-fans-3739425.php" title="Parking plan puts squeeze on Giants fans">Parking plan puts squeeze on Giants fans</a>
+</li>
+<li>
+<a href="/business/bloomberg/article/Romney-Riles-Londoners-With-Comments-on-Olympic-3738629.php" title="Romney Riles Londoners With Comments on Olympic Games Readiness">Romney Riles Londoners With Comments on Olympic Games Readiness</a>
+</li>
+<li>
+<a href="/news/article/Calif-deputies-shoot-mountain-lion-after-break-in-3739109.php" title="Calif. deputies shoot mountain lion after break-in">Calif. deputies shoot mountain lion after break-in</a>
+</li>
+<li class="last">
+<a href="/sports/ostler/article/The-Knowledge-is-only-a-cab-ride-away-3739387.php" title="The Knowledge is only a cab ride away">The Knowledge is only a cab ride away</a>
+</li>
+</ol></div>
+</div></div></div></div>
+<!-- Social Activity for SeattlePI -->
+<script type="text/javascript">
+    // &lt;![CDATA[
+    jQuery().ready(function() {
+        jQuery('.tab-set').rot(1);
+    });
+    // ]]&gt;
+    </script>
+<!--/.hst-mostpopular--> <div class="hst-freeform">
+<div id="nimbleBuyWidget10281">loading...</div>
+<a href="http://www.nimblebuy.com" id="key10281" style="display:none;"></a>
+<script id="nimbleBuyWidgetScript10281" src="http://us2widget.nimblecommerce.com/widget.action?wId=10281"></script>
+</div>
+<div class="hst-freeform">
+<iframe frameborder="no" height="250" marginheight="0px" marginwidth="0px" noresize scrolling="no" src="http://embed.newsinc.com/thumbnail/iframe.html?wid=10984" width="300"></iframe>
+</div>
+<div class="hst-mediumrectangle clearfix" id="hst-mediumrectangle2">
+<div class="ad_deferrable" id="B300"><script type="text/javascript"> /*&lt;![CDATA[*/ hearstPlaceAd("B300"); /*]]&gt;*/ </script></div>
+</div>
+<!-- src/business/widgets/hearst/collection/widget.tpl -->
+<div class="hide-rss-link">
+<!-- hearst/collections/blockstates_vertical.tpl -->
+<div class="hst-blockstates hst-blockstates-vertical"><div class="edge2"><div class="edge3"><div class="edge4 clearfix">
+<!-- widgets/hearst/module_header/widget.tpl -->
+<h2>From our homepage</h2>
+<!-- e widgets/hearst/module_header/widget.tpl -->
+<a class="collection-rss-link" href="/home/collectionRss/story-blocks-13260.php" target="_blank" type="application/rss+xml">
+<img alt="Click to View RSS Feed" src="/img/utils/rss_icon.png"/>
+</a>
+<div class="tabcontent">
+<!-- hearst/collections/blockstates_tab.tpl -->
+<ul>
+<li class="item first hnews hentry item">
+<p class="illo"><a href="/news/article/California-gun-purchases-nearing-record-3739037.php"><img alt="" src="http://ww3.hdnux.com/photos/14/27/71/3243638/3/blockstates.jpg"/></a>
+<br/><span class="credit">Michael Short, Special To The Chronicle / SF</span></p>
+<!-- src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<!-- e src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<h4><a class="entry-title" href="/news/article/California-gun-purchases-nearing-record-3739037.php">Guns sales are booming</a></h4>
+<div class="detail entry-summary"><p>Californians are expected to buy 725,000 firearms in 2012, nearly twice as many as 2007.</p>
+</div>
+</li>
+</ul>
+<!-- e hearst/collections/blockstates_tab.tpl --> </div>
+<div class="tabcontent">
+<!-- hearst/collections/blockstates_tab.tpl -->
+<ul>
+<li class="item first hnews hentry item">
+<p class="illo"><a href="http://blog.sfgate.com/mlasalle/2012/07/27/the-actresses-definitive-films/"><img alt="" src="http://ww3.hdnux.com/photos/14/30/32/3245702/3/blockstates.jpg"/></a>
+</p>
+<h4><a class="entry-title" href="http://blog.sfgate.com/mlasalle/2012/07/27/the-actresses-definitive-films/">Actresses' signature films</a></h4>
+<div class="detail entry-summary"><p>These roles best show who they are and what they can do. Check out these picks and send us yours.</p>
+</div>
+</li>
+</ul>
+<!-- e hearst/collections/blockstates_tab.tpl --> </div>
+<div class="tabcontent last">
+<!-- hearst/collections/blockstates_tab.tpl -->
+<ul>
+<li class="item first hnews hentry item">
+<p class="illo"><a href="/realestate/walkthrough/article/Walter-Ratcliff-designed-Tudor-in-Berkeley-3738204.php"><img alt="" src="http://ww4.hdnux.com/photos/14/27/44/3242295/5/blockstates.jpg"/></a>
+<br/><span class="credit">Liz Rusby / SF</span></p>
+<!-- src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<!-- e src/business/templates/hearst/article/news_registry/hidden.tpl -->
+<h4><a class="entry-title" href="/realestate/walkthrough/article/Walter-Ratcliff-designed-Tudor-in-Berkeley-3738204.php">Tudor home in Berkeley</a></h4>
+<div class="detail entry-summary"><p>Walter Ratcliff-designed house was built in 1912 and has 5 bedrooms, 3.5 baths. Asking $2.8M.</p>
+</div>
+</li>
+</ul>
+<!-- e hearst/collections/blockstates_tab.tpl --> </div>
+</div></div></div></div><!--/.hst-blockstates-vertical -->
+<!-- e hearst/collections/blockstates_vertical.tpl --> </div>
+<!-- e src/business/widgets/hearst/collection/widget.tpl -->
+</div><!--/.span-10-->
+<!-- e templates/hearst/article/types/story_right.tpl  --></div><!--/.faux-21-->
+<!-- e templates/design/article/story_page.tpl -->
+</div><!--/.content-->
+<script>
+ 	var HDN = HDN || {};
+  
+ 	HDN.ping( {
+ 	  	"id": 3740379,
+  		"site": "sfgate",
+  	  	"type": "article"
+  	});
+  	
+</script>
+<div class="hst-sitefooter clearfix">
+<div id="footernav">
+<ul class="main">
+<li><a href="/">Home</a></li>
+<li><a href="/news/">News</a></li>
+<li><a href="/sports/">Sports</a></li>
+<li><a href="/business/">Business</a></li>
+<li><a href="/entertainment/">Entertainment</a></li>
+<li><a href="/food/">Food</a></li>
+<li><a href="/living/">Living</a></li>
+<li><a href="/travel/">Travel</a></li>
+<li><a href="http://shopping.sfgate.com">Shopping</a></li>
+<li><a href="http://jobsearch.local-jobs.monster.com/Search.aspx?wt.mc_n=hjnpsearch&amp;ch=sanfranchron&amp;q=&amp;where=San%20Francisco,%20CA&amp;re=130&amp;cy=us&amp;brd=1">Find Bay Area Jobs</a></li>
+<li><a href="/realestate/">Real Estate</a></li>
+<li><a href="/cars/">Cars</a></li>
+<li class="last"><a href="/index/">Site Index</a></li>
+</ul>
+<div class="sub">
+<div>
+<div class="footeritem">Company Info:</div>
+<ul>
+<li><a href="/chronicle-contacts/">Contact Us</a></li>
+<li><a href="http://www.hearst.com/">Hearst Corp.</a></li>
+<li><a href="/privacy-policy/">Privacy Policy</a></li>
+<li><a href="/termsandconditions/">Terms and Conditions</a></li>
+<li><a href="http://www.sfgate.com/chronicle/hr/">Work for Us</a></li>
+<li><a href="http://cie.sfchron.com/sfc_nes_portal/">Chronicle in Education</a></li>
+<li><a href="/chronicle/events/">Events &amp; Promotions</a></li>
+<li class="last"><a href="/submissions/">Submissions</a></li>
+</ul>
+</div>
+<div>
+<div class="footeritem">Advertising Services:</div>
+<ul>
+<li><a href="/chronicle/adsite/">Advertise with us</a></li>
+<li><a href="http://sfgate.kaango.com//">Place a Classified</a></li>
+<li><a href="/privacy/">About Our Ads</a></li>
+<li><a href="http://www.legalnotice.org/pl/SFGate/landing1.aspx">Public Notices</a></li>
+<li class="last"><a href="http://local.sfgate.com">Local Businesses: Business Directory</a></li>
+</ul>
+</div>
+<div>
+<div class="footeritem">Reader Services:</div>
+<ul>
+<li><a href="https://www.subscriber-services.com/sfchron/ns/nssplash.asp?pid=20">Home Delivery</a></li>
+<li><a href="https://www.subscriber-services.com/sfchron/SplashScreen.asp">Subscribers</a></li>
+<li><a href="/ipad/">iPad</a></li>
+<li><a href="http://eedition.sfchronicle.com">E-Edition</a></li>
+<li><a href="/mobile/">Mobile</a></li>
+<li><a href="/rss/">RSS Feeds</a></li>
+<li><a href="/cgi-bin/newsletter/services/main">Newsletters</a></li>
+<li><a href="/feedback/">Feedback</a></li>
+<!-- <li><a href="/gallery/buyphotos/">Buy Photos</a></li> -->
+<li><a href="/faq/">FAQ</a></li>
+<li><a href="/corrections/">Corrections</a></li>
+<li class="last"><a href="/getus">Get Us</a></li>
+</ul>
+</div>
+<div>
+<div class="footeritem">Local Services:</div>
+<ul>
+<li><a href="http://local.sfgate.com/airconditioningcontractors.html">Air Conditioning Contractors</a></li>
+<li><a href="http://local.sfgate.com/cardealerships.html">Car Dealerships</a></li>
+<li><a href="http://local.sfgate.com/cleaningservice.html">Cleaning Services</a></li>
+<li><a href="http://local.sfgate.com/familydoctor.html">Family Doctors</a></li>
+<li><a href="http://local.sfgate.com/furniturestores.html">Furniture Stores</a></li>
+<li><a href="http://local.sfgate.com/injuryattorney.html">Injury Attorneys</a></li>
+<li><a href="http://local.sfgate.com/restaurants.html">Local Restaurants</a></li>
+<li><a href="http://local.sfgate.com/newcardealer.html">New Car Dealers</a></li>
+<li><a href="http://local.sfgate.com/realestateagents.html">Real Estate Agents</a></li>
+<li class="last"><a href="http://local.sfgate.com/realestateattorney.html">Real Estate Attorneys</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div><!--/.hst-sitefooter--></div><!--/.container-->
+<!-- ux/sfgate footer_branding.tpl -->
+<p id="sitecopyright">
+<a href="/chronicle/info/copyright/">© 2012 Hearst Communications Inc.</a>
+<br/>
+<img alt="Hearst Newspapers" src="http://imgs.sfgate.com/graphics/utils/hearst_logo.gif"/>
+</p>
+<!-- ux/sfgate footer_branding.tpl -->
+<!-- /src/business/templates/hearst/common/opengraph_load.tpl -->
+<!-- /src/business/templates/hearst/common/outbrain_silent_tag.tpl -->
+<!-- src/business/templates/hearst/common/footer_bottom.tpl -->
+<!-- e src/business/templates/hearst/common/footer_bottom.tpl -->
+<script src="/external/js/global.bottom.2.7.8p1.15291.js" type="text/javascript"></script>
+</body>
+</html><!-- ssaux hearst/article/main.tpl --> END soup
+DEBUG:root:doc_title: US economic growth slowed to 1.5 pct. rate in Q2 - SFGate END doc_title
+DEBUG:root:keywords: economy,growth rate,annual rate,unemployment rate,growth,tax cuts,economic growth,second-quarter growth rate,rate,Consumer spending,lower gas prices,savings rate,money companies,quarter,fighter jets,expiring tax cuts,spending,Retail sales,economist,budget agreement,job creation,policy meeting,unemployment,budget deficits,interest rates,government,gross domestic product,sluggish second-quarter growth,companies,americans,federal spending,business investment,economic,re-election fight,report,chief economic strategist,presidential nominee,congress,growth estimates,economic adviser,consumer,lackluster economy,cuts,industrial average,tax,straight quarter,economic activity,estimate,financial crisis,sluggish,spending cuts,auto,actual amount,expectations,fiscal cliff,services,long-lasting manufactured goods,crisis,republican,budget END keywords
+DEBUG:root:title: no data END title
+DEBUG:root:img_text: no data END img_text
+DEBUG:root:intro: Inside SFGate END intro

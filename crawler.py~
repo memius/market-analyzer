@@ -1,0 +1,51 @@
+#denne kan salvages til en slags crawler som foelger alle hrefs paa et domene:
+
+def ose_news(http,headers):
+    url = 'http://hopey.netfonds.no/ppaper.php?paper=STL.OSE'
+    response, content = http.request(url, 'GET', headers=headers)
+    page = BeautifulSoup(content) #parser html'en
+    # return 'page in fetch: ', page
+    # all_news = page.findAll(attrs = {'href' : 'release.php?id=20110405.Hegnar.592941'})
+    # all_news = page.findAll(attrs = {'href' : 'release.php?id=([*])'})
+    all_news = page.findAll(attrs = {'id' : 'updatetable7'} )
+    # print 'all_news in fetch',all_news
+    try:
+        first_news_item = all_news[0].findAll('a')[0]
+        # print 'first news item in fetch: ', first_news_item
+        link = first_news_item['href']
+        # return 'link in fetch', link
+        url = 'http://hopey.netfonds.no/' + link
+        # return 'url in fetch',url
+
+        # fetches the page of this news item, containing the teaser text, but not the whole article:
+        response, content = http.request(url, 'GET', headers=headers)
+        page = BeautifulSoup(content)
+        # return 'news item page in fetch: ', page
+        textbox = page.findAll(attrs = {'class' : 'hcontent'})
+        # return 'textbox in fetch',textbox
+
+        #  # attempts to fetch the whole article - fails because of bad html at hegnar.no
+        #  link = textbox[0].findAll('a')[1]
+        # url = link['href']
+        # # return url
+        # http = httplib2.Http()
+        # headers = {}
+        # response, content = http.request(url, 'GET', headers=headers)
+        # # return content
+        # page = BeautifulSoup(content)
+        # return 'article page in fetch: ', page # gets 'htmlparseerror: bad end tag' at hegnar.no
+
+        try:
+            text = ''.join(textbox[0].findAll(text=True)) # includes some formatting crap at the beginning
+            # print 'news box in fetch: ',text
+            # return 'text type in fetch',type(text)
+            stripped = text.strip()
+            #print 'stripped: ',stripped
+            return stripped
+        except IndexError:
+            stripped = first_news_item.string.strip()
+            return stripped
+        
+    except IndexError:
+        return "Variable 'all_news' empty."
+

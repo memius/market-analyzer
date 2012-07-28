@@ -1,0 +1,86 @@
+husk å catre til det asiatiske markedet. bruk asiatiske news sites, og
+ha med asiatiske selskaper og børser.
+
+du navigerer til siden.
+
+dersom du er logget inn i google blir du hilst på, og sendt rett inn
+(hvis ikke må du logge inn).
+
+der inne ser du dine picks. stl og aapl.
+
+du ser en dial etter hver av disse. den viser sell/buy/hold med graden
+av confidence.
+
+du kan klikke på dialen, og få se artiklene som danner grunnlaget for
+analysen.
+
+etter hver artikkel er det en buy- og en sell-, men ikke en
+hold--knapp. dersom du trykker på en av dem blir artikkelen trent som
+det tilsvarende.
+
+tjenesten henter nye artikler hvert kvarter. den siler og analyserer
+artiklene fortløpende, og pusher resultatene med en gang den er
+ferdig.
+
+selv om du ikke refresher browseren vil anbefalingen altså forandre
+seg som et resultat av ny analyse i bakgrunnen. men bare hvert
+kvarter. dette er godt nok i begynnelsen.
+
+
+
+-crawler: ser på alle artikler på en side.
+
+-grovsiler: finner ut om de er duplikater av ting du har.
+
+-siler: finner ut om de er relevante for hvert selskap. crm binær. samme
+ rutine, med to chs-filer for hvert selskap.
+
+-lagrer: leverer relevante artikler til db'en til tjenesten. her kan
+ det oppstå duplikater dersom en artikkel er relevant for flere
+ selskaper. det er greit? skal jeg heller lage en stor db med
+ relevante artikler, og la selskap(er) være en av attributtene.
+
+-analysator: henter artikler fra db'en, og finner ut om de er positive
+eller negative eller nøytrale for hvert selskap.
+
+-presentør: viser anbefalingen, knappene og de relevante artiklene til
+ brukeren.
+
+
+
+
+
+
+dashboard for customer:
+-list of stocks.
+
+-a dial that shows the confidence of the conclusion 0%-100% not just a
+ 'sell' or 'buy' tag/button.
+
+-when you click on the dial, you can see the news it's based on. each
+ article has a 'buy' button and a 'sell' button. when you click these,
+ the article is tranied as what you clicked. if you click one, then
+ the other, the article should be trained as the other a few times, or
+ something like that.
+
+-en tekstfil med avsnitt med søketermer for hvert selskap. 
+
+-del inn i skraping, lagring, henting, relevansvurdering(stl/not),
+ boilerplate-extraction, analyse(sell/buy), presentasjon...
+
+du kan IKKE lagre alle artikler som finnes. du må sile ut de relevante
+først, og da putter du dem i den korrekte db'en. du trenger altså bare
+en db pr. selskap, ikke en sentral db for alle artikler.
+
+det er mengden (hypotetiske) penger tjent på de anbefalte handlingene
+som er målet på hvor accurate analysen av nyheten var. dvs. at vi
+kjører simulering av handel, samme som bank db'en min (kall den noe
+annet), og måler hvor mye penger vi ville tjent på den eller den
+handlingen (alle tre må måles). dersom mengden penger tjent på å gjøre
+noe annet enn det som ble anbefalt er større, trener man om
+igjen. bruk keyword --refute, som finnes, eller kommer til å finnes, i
+crm.
+
+selektorene i gyris filer kan komprimeres til noen få lange
+funksjoner, med mange elif'er. tror jeg. det er mulig det vil lage
+krøll, og at if'ene må kjøres på riktig avis for å funke.

@@ -1,0 +1,266 @@
+sjekk (i morgen igjen) at cron backupene har gått på kryss av
+maskinene. bbg sin funket, og de interne funket. min eksterne funket
+ikke.
+
+dev_appserver.py får ikke tak i logging-modulen. det er muligens
+fordi du har gått over til python 2.7 og ennå ikke har skrevet om
+main.py for å reflektere dette. 
+
+prøv med innlogging fra news.google.
+
+har fra news.google uten innlogging. 
+
+linker som ikke er til artikler
+fører til krasj.
+
+
+stripp teksten, og bruk regexer for å finne selve artikklen. beware at
+teksten (bloomberg) inneholder instruksjoner og notater til
+webutviklerne: "bruk cookie, sett cookien til i morgen."
+
+
+
+
+
+
+
+
+
+
+
+
+
+begynn med en ny side (news.google.com), og prøv å kode slik at det
+virker der. deretter tar du yahoo finance. yahoo først, siden google
+krever login for å få din egen side med finansnyheter. det er sikkert
+lett, gitt at google appengine sin login-funksjon funker. da kan jeg
+lese fra min google-konto sin nyhetsside, og legge det inn i db'en.
+
+enkle ad hoc-regex-regler som er greie å begynne med (før den
+generelle regex-silingen):
+if man finner dette, bruk det, hvis ikke, sil med regex:
+dagbladet begynner alltid teksten i artikkelen med "(Dagbladet):"
+vg begynner med "(VG nett)"
+bloomberg ikke.
+dn ikke.
+yahoo finance ikke.
+ofte står det faktisk (Bloomberg), (Reuters), etc., spesielt dersom
+storyen er sakset derfra. Du kan se etter disse.
+
+dersom du skal ha med yahoo finance og google news er det lurt å
+begynne med dem, siden de er aggregater av andre nyhetssteder. Dvs. at
+det er meningsløst å ta dem med sent, når du allerede har de andre på
+plass.
+
+
+
+
+hva med å fjerne alle html-tags(med innhold) som IKKE inneholder minst
+ett punktum med space bak (altså minst to setninger)? vha regex,
+selvfølgelig, ikke ad hoc.
+
+
+
+
+
+
+
+
+
+
+få til å putte artikkeldelene i db'en.
+
+
+
+
+
+du har nå lagt inn logging statements i fetch.py som skriver til
+fetch.log. det virker ikke med mindre man starter programmet fra kommandolinjen.
+
+nå har du en greie som samler alle artiklene og printer på skjermen,
+men den klarer ikke å trekke ut tittel, brødtekst osv. i det hele
+tatt.
+
+
+
+
+se på terminaloutputen også når du loader siden (urlfetch bla bla, etc.)
+
+
+
+
+
+
+
+
+
+last opp workspace/market_analyzer/ til git.
+
+
+
+
+
+prøv å bruke en deferred eller asynchronous kommando til å kjøre
+nåværende vb.py fra web appen.
+
+så lager du en enkel crawler som kan gi url'er til ovenstående.
+
+så kan du lage en lagrer, som lagrer de innsamlede artiklene (uten
+ordentlig siling, ja - du kan jo lagre hver tiende eller noe slikt).
+
+
+
+
+
+i utgangspunktet funker det å slå sammen vg.py og db.py (i
+vb.py). dagbladets titler blir uansett ikke samlet inn for tiden.
+
+et senere steg blir å samle alle selektorene i ett script, og prøve det på
+både de norske, og forskjellige internasjonale nettsider.
+
+
+kan se ut som om shell-appen i eksemplene er en måte å kjøre ting på i
+bakgrunnen, uavhengig av brukerne. goodie good!
+
+se også på asynchronous requests (url fetching) du har et vindu åpent
+på det.
+
+også background work with the deferred library. vindu åpent på det.
+
+e24 og kapital og de andre pengeavisene (finansavisen, dine penger,
+dn.no) har rss feeds.
+
+
+
+
+
+
+
+sjekk hvilke news sites som har api for innsamling av artikler.
+
+sjekk yahoo finance, google news, nyse news, london stock exchange,
+forbes, bloomberg, kapital, wall street journal, nyt, techcrunch,
+nasdaq, reddit, digg, hacker news, ikke 4chan ennå. hvor har du
+skrevet mer om dette? det er flere et sted.
+
+yahoo finance har. nyse også.
+
+twitter har. det finnes også en python-twitter pakke for ubuntu.
+
+nyt har, for bruker-generert innhold. kan sikkert hackes til å virke
+for artikler også.
+
+snakk med magnus om opinion-børser, hva de heter, hvordan de
+fungerer...
+
+
+
+husk at det er data i /home/tmh/django-something i tillegg til det som
+er lastet opp til git. disse kan du bruke som grunnlag til å lage nye
+admin- og app-templates.
+
+gå gjennom den blå notatboken, samt todo-listen i chrome, todo-listen
+på telefonen, 
+
+-lag script som går gjennom prosedyren for å legge til et
+ selskap. søketermene manuelt, resten bør være automatisk. først
+ prosedyre, på sikt script.
+
+simon i frankrike, magnus, eskil bør være blant alfa-testerne.
+
+chs-filene boostes etter en stunds trening. dette må automatiseres.
+
+
+
+
+DONE:
+
+sjekk status på teab din maskin vs. teab lap og teab på
+git. synkroniser, slik at din maskin er oppdatert. done. oppdatert
+
+snakk med eskil. fortell ham at du kutter teab, men starter et
+spin-off prosjekt alene. done.
+
+sjekk om lynx og w3m > fil blir bedre enn vb.py. det ble det ikke -
+alle linker og denslags er med, uten infoen man får fra
+taggene. vanskeligere å parse.
+
+problemet ligger i vb.py. den forårsaker 'illegal seek'. kommenter ut
+linjer til du finner hvor feilen ligger. se gjerne gjennom filen
+først, for a se om du ser noe åpenbart.
+
+det er bugs i get_Atext, som gjør at teksten fra db ikke kommer med,
+og vg gir error - men drit i det. neste steg er som nevnt under å lage
+en crawler som samler url'er, og leverer dem til main, som leverer dem
+til fetch.py
+
+kan se ut som om du bare trenger en liten kodesnutt som ligner på den
+vi brukte i teab til å følge linker. du følger alle hrefs på en side,
+og ser hva som skjer. dersom du starter på førstesiden vil du vel til
+slutt ha tatt alle linkene på domenet.
+
+se også på hva knut skriver om wget-scriptet sitt.
+
+du har skrevet et script som kjører rdiff-backup, og sender deg en
+mail hvis det feiler. det virker antakelig. kjør en gang til og sjekk
+at mailen sendes. legg scriptet inn i crontab, både til /media/bck og
+til bbg@hjemme.
+
+kjør keygen og ssh copy id begge veier. tri har ekstern ip adresse som
+hjemme kan benytte seg av.
+
+
+
+
+
+
+
+du holder på med backups.
+finn ut hvordan du gjør rdiff-backup til bbg@hjemme. passord og
+slikt. skriv det ned i doc/vikt/rdiff-backup
+
+gjør /bck på hjemme
+eid av bbg, og /media/bck eid av tmh.
+
+du fjerner ting fra /bck, og putter dem i /media/bck.
+
+gjør en rdiff-bck fra /home/tmh/ til /media/bck/tmh/ og en fra
+/home/bbg/ til /bck/bbg først.
+
+sett locale globalt. det er mulig det hjelper at hele maskinen er klar
+for utf-8.
+
+sørg også for å encode til utf-8 før du sender til replace osv.
+
+du har en u på begynnelsen av href-url'ene. kanskje det er den som
+lager error?
+
+kanskje den blir fjernet av replace_characters? det er i
+alle fall der den burde ligge, tror jeg. encode rett før du sender til
+replace, og rett etter at du får ting tilbake derfra.
+
+jeg lurer på om grunnen til at alle gyris scripts har sluttet å virke
+er at jeg bruker python 2.5.
+
+i så fall gjør jeg følgende: les på hvor mature python 2.7 er for
+google appengine. dersom den er ok, bruk den. hvis ikke, skriv om
+beautifulsoup-koden slik at den virker for python 2.5.
+
+bs4 har soup.get_text()!!!!! dersom den virker noenlunde bra er det
+himmelsk!
+
+det virker som om python2.7 funker i appengine naa. dessuten blir du
+raadet til aa bruke django heller enn webapp templates, which is A
+Good Thing.
+
+
+
+nå får du tak i brødteksten fra dagbladet vha. editableBodyText
+(get_text() er kanskje ikke særlig nyttig likevel). ok,
+men teksten forsvinner i løpet av behandlingen av teksten. drit i det,
+fokuser på google news med innlogging.
+
+jeg kjører nå python 2.7 og bs4. sjekk om fetch.py funker. putt
+deretter inn get_text() og hent news.google.com (i fetch.py) med login
+fra mechanize (i crawl.py).
+

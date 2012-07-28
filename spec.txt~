@@ -1,0 +1,33 @@
+dashboard for customer:
+-list of stocks.
+
+-a dial that shows the confidence of the conclusion 0%-100% not just a
+ 'sell' or 'buy' tag/button.
+
+-when you click on the dial, you can see the news it's based on. each
+ article has a 'buy' button and a 'sell' button. when you click these,
+ the article is tranied as what you clicked. if you click one, then
+ the other, the article should be trained as the other a few times, or
+ something like that.
+
+-en tekstfil med avsnitt med søketermer for hvert selskap. 
+
+-del inn i skraping, lagring, henting, relevansvurdering(stl/not),
+ boilerplate-extraction, analyse(sell/buy), presentasjon...
+
+du kan IKKE lagre alle artikler som finnes. du må sile ut de relevante
+først, og da putter du dem i den korrekte db'en. du trenger altså bare
+en db pr. selskap, ikke en sentral db for alle artikler.
+
+det er mengden (hypotetiske) penger tjent på de anbefalte handlingene
+som er målet på hvor accurate analysen av nyheten var. dvs. at vi
+kjører simulering av handel, samme som bank db'en min (kall den noe
+annet), og måler hvor mye penger vi ville tjent på den eller den
+handlingen (alle tre må måles). dersom mengden penger tjent på å gjøre
+noe annet enn det som ble anbefalt er større, trener man om
+igjen. bruk keyword --refute, som finnes, eller kommer til å finnes, i
+crm.
+
+
+
+

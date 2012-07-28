@@ -1,0 +1,109 @@
+#!/usr/bin/python
+# coding: utf-8
+
+import sys
+import string
+import re
+
+def replace_characters(s):
+    s = re.sub("(?P<id1><X>)(?P<id2>\s*)(?P<id3></X>)", "", s)
+    s = s.replace("&ndash;", "")
+    s = s.replace("&mdash;", "-")
+    #s = s.replace("&ndash;", "-") #da
+    s = s.replace("&nbsp;", " ")
+    s = s.replace("R&amp;B", "RogB")
+    s = s.replace("&amp;", " og ")
+    s = s.replace("&sect;", "§")
+    s = s.replace("", "")
+    s = s.replace("", "-")
+    s = s.replace("&bull;", "-")
+    s = s.replace("<b>", "")
+    s = s.replace("</b>", "")
+    s = s.replace("<br />", "") #fv, nl
+    s = s.replace("<br>", "") #fv
+    s = s.replace("<br/>", "") #fv, nl
+    s = s.replace("<b>", "") #fv
+    s = s.replace("</b>", "") #fv
+    s = s.replace("<i>", "")
+    s = s.replace("</i>", "")
+    s = s.replace("<strong>", "")
+    s = s.replace("</strong>", "")
+    s = s.replace("<h2>", "")
+    s = s.replace("</h2>", "")
+    s = s.replace("ï¿½", "å")
+    s = s.replace("\n", " ")
+    s = s.replace("Ã¦", "æ") 
+    s = s.replace("Ã¥", "å")
+    s = s.replace("Ã¸", "ø") 
+    s = s.replace("&aelig;", "æ")
+    s = s.replace("&oslash;", "ø")
+    s = s.replace("&aring;", "å")
+    s = s.replace("&#229;", "å") #da
+    s = s.replace("&#230;", "æ") #da
+    s = s.replace("&#248;", "ø") #da
+    s = s.replace("&AElig;", "Æ")
+    s = s.replace("Ã¸", "ø")
+    s = s.replace("Ã&tilde;", "Ø")
+    s = s.replace("&ocirc;", "ô")
+    s = s.replace("&ouml;", "ö")
+    s = s.replace("&uuml;", "ü")
+    s = s.replace("&eacute;", "é")
+    s = s.replace("&oacute;", "ó")
+    s = s.replace("&Oslash;", "Ø")
+    s = s.replace("&Aring;", "Å")
+    s = s.replace("&Eacute;", "É")
+    s = s.replace("&auml;", "ä") 
+    s = s.replace("&laquo;", "«")
+    s = s.replace("&raquo;", "»")
+    s = s.replace("&rdquo;", "\"")
+    s = s.replace("&rsquo;", "’")
+    s = s.replace('&quot;', '"')
+    s = s.replace("&#8217;", "'")
+    s = s.replace("&#8211;", "-")
+    s = s.replace("&#034;", "\"")
+    s = s.replace("â??", "-")
+    s = s.replace("Â«", "«")
+    s = s.replace("&lt;", "<")
+    s = s.replace("&gt;", ">")
+    s = s.replace("&copy;", "©")
+    s = s.replace("&copy", "©")
+    s = s.replace(" & ", " og ")
+    ##
+    s = s.replace("<!--  START -->", "")
+    s = s.replace("<!--  SLUTT -->", "")
+    s = s.replace("<!-- 0-->", "") #da
+    s = s.replace("<!-- googleon: index -->", "")
+    s = s.replace("<!-- googleoff: index -->", "")
+    s = s.replace("<!-- googleon: snippet -->", "")
+    s = s.replace("<!-- googleoff: snippet -->", "")
+    s = s.replace("<!-- Google Maps Element Code -->", "")
+    
+    s = s.replace("<em><strong>Les flere nyheter.no</strong></em></s>", "")
+    s = s.replace("<em><strong>Til forsiden</strong></em></s>", "")
+    s = re.sub("<span style=\"font-size:", "", s) #span inside other span (font-size specs)
+    s = re.sub("[0-9][0-9]px;\">", "", s) # --"--
+    s = s.replace("</span>", "")
+    s = s.replace("<s></s>", "")
+    s = re.sub("(?P<id1><s>[0-9])(?P<id2><s>)", "\g<id1> ", s)
+    s = s.replace(":</s>", "")
+    ##
+    s = re.sub("( {2,})", " ", s) #replace multiple spaces with one
+    s = s.lstrip()
+    s = s.rstrip()
+    return s
+    #print s
+    
+if __name__ == '__main__':
+    import sys
+    replace_characters(open(sys.argv[1]).read())
+    #replace_characters(sys.argv[1])
+    
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+#from google.appengine.api import urlfetch
+#import string
+
+#btw: the u' in front means the string is unicode.
+
+import logging
+
+import fetch, crawl
+
+logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
+
+print '' #needed to get anything printed on screen
+
+#debugging only:
+urls = crawl.links("http://news.google.com")
+
+logging.debug('urls: %s END urls',urls)
+
+# for url in urls:
+# #    url = unicode(url,'utf-8',errors='replace')
+# #    url = url.encode('utf-8')
+#     print ''
+#     print url
+
+# #debugging only:
+# urls = [urls[11],urls[12]]
+# print 'urls[0]: ',urls[0]
+
+for url in urls:
+#     #print 'link: ', link
+#     #url = link['href']
+    try:
+        doc_title, keywords, title, img_txt, intro, text = fetch.article(url)
+        print 'doc_title: ', doc_title
+        print 'keywords: ', keywords
+        print 'title: ', title
+        print 'img_txt: ', img_txt
+        print 'intro: ', intro
+        print 'text: ', text
+    except:
+        print 'no content'
+
+
+
+# for å kunne bruke python 2.7:
+
+# import webapp2
+
+# class MainPage(webapp2.RequestHandler):
+#   def get(self):
+#     self.response.headers['Content-Type'] = 'text/plain'
+#     self.response.out.write('Hello, WebApp World!')
+
+#     #from hellow world appengine:
+#     self.response.out.write("urls in response: ")#, urls, "")
+
+# app = webapp2.WSGIApplication([('/', MainPage)])

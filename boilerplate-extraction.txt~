@@ -1,0 +1,6 @@
+compare all the articles from one site with each other. take all the
+identical elements, and remove them. this will clean away all the ads,
+links to other articles, etc.
+
+it might even remove duplicate articles, but you should do some work
+to ensure your crawler does not crawl recursively.

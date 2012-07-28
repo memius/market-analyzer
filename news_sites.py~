@@ -1,0 +1,3 @@
+news_sites = {
+    'db':'www.dagbladet.no',
+    'vg':'www.vg.no'}

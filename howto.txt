@@ -1,0 +1,95 @@
+for å installere appengine:
+
+last ned filen, og ekstraher den. putt den i /opt/google/ folderen.
+
+
+
+
+for å få google appengine til å bruke python2.5:
+
+forandre første linje i dev_appserver.py til:
+
+#!/usr/bin/env python2.5
+
+
+
+
+for å slippe å skrive /opt/google/google_appengine/dev_appserver.py
+hver gang:
+
+emacs .bashrc, og legg til
+
+export PATH=$PATH:/opt/google/google_appengine/
+
+på slutten av filen.
+
+reload .bashrc med:
+
+source .bashrc
+
+
+
+
+
+
+start server:
+
+/opt/google/google_appengine/dev_appserver.py /home/tmh/workspace/helloworldappengine/
+
+
+update app:
+
+/opt/google/google_appengine/appcfg.py update helloworldappengine/
+
+to ensure appengine does not read from indices that haven't been
+updated yet, give each new update a version number, and have that
+version go live only after some time.
+
+
+update indexes only (avoids same problem as above):
+
+/opt/google/google_appengine/appcfg.py update_indexes helloworldappengine/
+
+
+update, but stay on old version:
+
+
+
+
+
+uploading data (not for high replication data store):
+
+https://developers.google.com/appengine/docs/python/tools/uploadingdata
+
+
+
+
+
+for å installere python2.5:
+
+wget http://python.org/ftp/python/X.X.X/Python-X.X.X.tgz
+tar xvfz Python-X.X.X.tgz
+cd Python-X.X.X
+./configure --prefix=/opt/pythonX.X
+make
+sudo make install
+
+sikkert lurt:
+sudo apt-get build-dep python2.5
+
+
+
+
+for å få på plass python-beautifulsoup for python2.5:
+
+skaff deg setuptools, som antakelig inneholder easy_install (setuptools
+er på 0.6.11 pr. juli 2012):
+
+wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.X.tar.gz
+tar xvfz setuptools-0X.tar.gz
+cd setuptools-0.X
+sudo python2.5 setup.py install
+
+sudo easy_install-2.5 -f http://www.crummy.com/software/BeautifulSoup/bs3/download//3.x/ -U "BeautifulSoup==3.0.7a"
+
+sudo easy_install-2.5 BeautifulSoup #bare kanskje nødvendig

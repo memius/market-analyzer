@@ -1,0 +1,12 @@
+compare all the articles from one site with each other. take all the
+identical elements, and remove them. this will clean away all the ads,
+links to other articles, etc.
+
+it might even remove duplicate articles, but you should do some work
+to ensure your crawler does not crawl recursively.
+
+et tekststykke med minst to setninger (tekst fulgt av punktum eller
+annen tegnsetting) er antakelig brødteksten i artikkelen. denne common
+sense statiske regelen er grei å bruke, siden dette ikke vil forandre
+seg. den er dermed ikke ad hoc.
+

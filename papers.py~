@@ -1,0 +1,4 @@
+names = {
+    'db':'http://.dagbladet.no',
+    'dn':'http://dn.no',
+    'vg':'http://.vg.no'}

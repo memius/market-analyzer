@@ -1,0 +1,6 @@
+du har forandret første linje i
+/opt/google/google_appengine/dev_appserver.py til #!/usr/bin/env python2.7
+
+du har forandret app.yaml, og main.py for å passe til python 2.7.
+
+du har ikke logget fram til du byttet fra python 2.5 til python 2.7.

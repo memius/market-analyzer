@@ -1,0 +1,10 @@
+DEBUG:root:type(url): <type 'str'> END type(url)
+DEBUG:root:type(html): <type 'str'> END type(html)
+DEBUG:root:type(soup): <type 'instance'> END type(soup)
+DEBUG:root:doc_title: no doc title END doc_title
+DEBUG:root:keywords: no keywords END keywords
+DEBUG:root:title: no data END title
+DEBUG:root:img_text: no data END img_text
+DEBUG:root:intro: no data END intro
+DEBUG:root:no data
+DEBUG:root:text: no data END text

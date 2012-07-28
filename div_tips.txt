@@ -1,0 +1,5 @@
+bruk en user agent string. fortell nettsiden at du er en recent
+firefox eller chrome, f.eks., slik at du får gjennomtenkt html levert,
+i stedet for html som virker for lowest common denominator.
+
+use error handling well, to avoid spamming the sites you are scraping.

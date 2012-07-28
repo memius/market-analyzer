@@ -1,0 +1,29 @@
+for å installere appengine:
+
+last ned filen, og ekstraher den. putt den i /opt/google/ folderen.
+
+
+
+
+for å få google appengine til å bruke python2.5:
+
+forandre første linje i dev_appserver.py til:
+
+#!/usr/bin/env python2.5
+
+
+
+
+for å slippe å skrive /opt/google/google_appengine/dev_appserver.py
+hver gang:
+
+emacs .bashrc, og legg til
+
+export PATH=$PATH:/opt/google/google_appengine/
+
+på slutten av filen.
+
+reload .bashrc med:
+
+source .bashrc
+
