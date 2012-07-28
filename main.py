@@ -130,9 +130,9 @@ class MainPage(webapp2.RequestHandler):
 
 class Companies(webapp2.RequestHandler):
   def post(self):
-    companies_name = "international business machines" #duplicated definition from main page class
+    companies_name = "apple" #duplicated definition from main page class
     one_company = Company(parent=companies_key(companies_name))
-    one_company.ticker = "ibm"
+    one_company.ticker = "aapl"
 
     one_company.put()
     self.redirect('/?' + urllib.urlencode({'companies_name': companies_name}))
