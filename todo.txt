@@ -3,10 +3,16 @@ maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
+få main til å vise company name og ticker uten noe annet dill. 
 
-prøv med innlogging fra news.google.
+lagre til, og hente fra, db.
+
+
+så prøver du med innlogging fra news.google.
+
 
 har fra news.google uten innlogging. 
+
 
 linker som ikke er til artikler
 fører til krasj.
