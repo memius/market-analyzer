@@ -1,0 +1,16 @@
+<html>
+  <body>
+    {% for company in companies %}
+    <b>{{ company.ticker }}</b>
+    <blockquote>{{ company.name|escape }}</blockquote>
+    {% endfor %}
+
+    <form action="/comp" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+  </body>
+</html>

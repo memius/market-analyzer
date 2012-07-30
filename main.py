@@ -51,10 +51,13 @@
 
 
 
-import webapp2, cgi, urllib
+import webapp2, cgi, urllib, jinja2, os
 
 from google.appengine.api import users
 from google.appengine.ext import db
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 
 class Article(db.Model):
@@ -84,32 +87,45 @@ def companies_key(companies_name=None):
 
 class MainPage(webapp2.RequestHandler):
     def get(self): #handles get requests from the intarwebs
-
-
         user = users.get_current_user()
         if user:
-            self.response.out.write('Logged in as ' + user.nickname())
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = "Logout"
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            url = users.create_login_url(self.request.uri)
+            url_linktext = "Login"
 
+        #companies_name = self.request.get('companies_name') from tutorial
+        companies_name="sinsen" #debugging only
+        companies_ticker = "arb"
+        
 
-        companies_name="statoil" #debugging only
-        companies_ticker = "stl"
-
+        # company = Company(parent = companies_key('statoil'))
+        # company.name = "statoil"
+        # company.ticker = "stl"
+        # company.put()
 
         #printing the companies: (some duplicated definitions here:)
-        self.response.out.write('<html><body>')
-
         
-        #fetching from db. not used yet
-        several_companies = db.GqlQuery("SELECT * "
-                                "FROM Company "
-                                "WHERE ANCESTOR IS :1 "
-                                "ORDER BY date DESC LIMIT 10",
-                                companies_key(companies_name)) #try to get entire list of companies rather than one
+        #fetching from db. returns empty
+        # several_companies = db.GqlQuery("SELECT * "
+        #                         "FROM Company "
+        #                         "WHERE ANCESTOR IS :1 "
+        #                         "ORDER BY date DESC LIMIT 10",
+        #                         companies_key(companies_name)) #try to get entire list of companies rather than one
+
+        # several_companies = Company.gql("WHERE ANCESTOR IS :1 LIMIT 10",
+        #                      companies_key(companies_name))
+        # self.response.out.write('several comps: %s' % several_companies)
+
+        companies_query = Company.all().ancestor(
+            companies_key(companies_name))
+        companies = companies_query.fetch(2)
+
 
         # for one_company in several_companies:
-        #     one_company.ticker = 'stl'
+        #     #one_company.ticker = 'stl'
+        #     self.response.out.write('starting')
         #     if one_company.ticker:
         #         self.response.out.write(
         #             '<b>%s</b> ticker:' % one_company.ticker)
@@ -117,25 +133,37 @@ class MainPage(webapp2.RequestHandler):
         #         self.response.out.write('name:')
         #         self.response.out.write('<blockquote>%s</blockquote>' %
         #                                 cgi.escape(one_company.name))
-
-        self.response.out.write("""
-          <form action="/sign?%s" method="post">
+        #     self.response.out.write('ending')
 
 
-          
-          <form>company name: <input value="%s" name="companies_name">
 
-        </body>
-      </html>""" % (urllib.urlencode({'companies_name': companies_name}),cgi.escape(companies_name)))
+      #   self.response.out.write("""
+      #       %s, %s
+      #   </body>
+      # </html>""" % (companies_ticker,companies_name))
+
+        template_values = {
+            'companies' : companies,
+            'url' : url,
+            'url_linktext' : url_linktext,
+            }
+
+        template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render(template_values))
 
 class Companies(webapp2.RequestHandler):
   def post(self):
-    companies_name = "apple" #duplicated definition from main page class
-    one_company = Company(parent=companies_key(companies_name))
-    one_company.ticker = "aapl"
+      #companies_name = self.request.get('companies_name') from tutorial
+      companies_name = "apple" #debugging only
+      one_company = Company(parent=companies_key(companies_name))
+      one_company.ticker = "msft" #debugging only
+      #one_company.ticker = self.request.get('ticker')
+      one_company.name = "Microsoft"
+      #one_company.name = self.request.get('name')
 
-    one_company.put()
-    self.redirect('/?' + urllib.urlencode({'companies_name': companies_name}))
+      one_company.put()
+      self.redirect('/?' + urllib.urlencode({'companies_name': companies_name}))
 
 
-app = webapp2.WSGIApplication([('/', MainPage)], debug=True) #remove debug in production
+app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/comp', Companies)], debug=True) #remove debug in production

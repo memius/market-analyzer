@@ -1,0 +1,3 @@
+gi jinja et faktisk versjonsnummer i app.yaml før production.
+
+fjern debug output.
