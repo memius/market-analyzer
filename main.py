@@ -98,49 +98,15 @@ class MainPage(webapp2.RequestHandler):
         #companies_name = self.request.get('companies_name') from tutorial
         companies_name="sinsen" #debugging only
         companies_ticker = "arb"
-        
 
         # company = Company(parent = companies_key('statoil'))
         # company.name = "statoil"
         # company.ticker = "stl"
         # company.put()
 
-        #printing the companies: (some duplicated definitions here:)
-        
-        #fetching from db. returns empty
-        # several_companies = db.GqlQuery("SELECT * "
-        #                         "FROM Company "
-        #                         "WHERE ANCESTOR IS :1 "
-        #                         "ORDER BY date DESC LIMIT 10",
-        #                         companies_key(companies_name)) #try to get entire list of companies rather than one
-
-        # several_companies = Company.gql("WHERE ANCESTOR IS :1 LIMIT 10",
-        #                      companies_key(companies_name))
-        # self.response.out.write('several comps: %s' % several_companies)
-
         companies_query = Company.all().ancestor(
             companies_key(companies_name))
-        companies = companies_query.fetch(2)
-
-
-        # for one_company in several_companies:
-        #     #one_company.ticker = 'stl'
-        #     self.response.out.write('starting')
-        #     if one_company.ticker:
-        #         self.response.out.write(
-        #             '<b>%s</b> ticker:' % one_company.ticker)
-        #     else:
-        #         self.response.out.write('name:')
-        #         self.response.out.write('<blockquote>%s</blockquote>' %
-        #                                 cgi.escape(one_company.name))
-        #     self.response.out.write('ending')
-
-
-
-      #   self.response.out.write("""
-      #       %s, %s
-      #   </body>
-      # </html>""" % (companies_ticker,companies_name))
+        companies = companies_query.fetch(60)
 
         template_values = {
             'companies' : companies,
