@@ -95,18 +95,13 @@ class MainPage(webapp2.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_linktext = "Login"
 
-        #companies_name = self.request.get('companies_name') from tutorial
-        companies_name="" #debugging only
-        #companies_ticker = "arb"
-
         # stores one company to the db:
         # company = Company(parent=companies_key('orkla'))
         # company.name = "orkla"
         # company.ticker = "ork"
         # company.put()
 
-        companies_query = Company.all()#.ancestor(
-            #companies_key(companies_name))
+        companies_query = Company.all()
         companies = companies_query.fetch(60)
 
         template_values = {
@@ -118,20 +113,5 @@ class MainPage(webapp2.RequestHandler):
 
         template = jinja_environment.get_template('index.html')
         self.response.out.write(template.render(template_values))
-
-# handles a post request. not needed for now.
-# class Companies(webapp2.RequestHandler):
-#   def post(self):
-#       #companies_name = self.request.get('companies_name') from tutorial
-#       companies_name = "apple" #debugging only
-#       one_company = Company(parent=companies_key(companies_name))
-#       one_company.ticker = "msft" #debugging only
-#       #one_company.ticker = self.request.get('ticker')
-#       one_company.name = "Microsoft"
-#       #one_company.name = self.request.get('name')
-
-#       one_company.put()
-#       self.redirect('/?' + urllib.urlencode({'companies_name': companies_name}))
-
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True) #remove debug in production
