@@ -40,8 +40,8 @@ def links(url):
     html = urllib2.urlopen(url).read()
     soup = BeautifulSoup(html)
 
-    #follows all the links (soup('a')) on the front page once.
-    links = soup.findAll('a', attrs={'href': re.compile("^http://")})
+    #follows all the links on the front page once.
+    links = soup.findAll('a', attrs={'href': re.compile("^http://")}) #regex matches lines that start with http://
     for link in links:
         url = link['href']
         logging.debug("link url: %s", url)
@@ -52,7 +52,9 @@ def links(url):
 
     return urls
 
-#links("https://www.google.com/finance?q=aapl")
+
+
+
 
 # stuff from weekend codes:
 # # Open some site, let's pick a random one, the first that pops in mind:

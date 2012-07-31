@@ -324,9 +324,31 @@ def text(soup):
     return text
         
 
+# def news_page(): #uses the urls from crawl to get to news pages containing articles, to be handled later, by article()
+#     div = soup.find("div", {"id" : "Article*"}) > -1:
+
+
 #debugging only:
 #article('bla bla dot no')
 
 
-links = crawl.links("https://www.google.com/finance?q=aapl")
-article = article(links[4])
+
+
+ticker = 'aapl'
+url = "https://www.google.com/finance/company_news?q=NASDAQ:" + ticker + "&start=10&num=10"
+
+du er her. prøv å finne nyhetslinkene. de har div id Article1, Article2, osv.
+
+links = crawl.links(url)
+article = article(links[19])
+
+
+
+
+
+#     elif soup.find("div", {"id" : "Article*"}) > -1:
+
+
+# the work of getting hold of the article text (before actually fetching the article) belongs in this module, since crawl only returns links.
+
+# this means that this module has to handle businessweek, which has an extra link which simply says 'go to businessweek' on a separate page before you actually get there. it also has to handle every other gotcha that shows up. 
