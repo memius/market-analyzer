@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 #my own modules:
 from replace_characters import replace_characters
 
+import crawl
+
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
 logging.basicConfig(filename='fetch.log', filemode='w', level=logging.DEBUG)
@@ -43,7 +45,7 @@ def article(url):
     # rpc = urlfetch.create_rpc()
 
     #debugging only:
-    url = "http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php"
+#    url = "http://www.sfgate.com/news/article/US-economic-growth-slowed-to-1-5-pct-rate-in-Q2-3740379.php"
 #    url = "http://www.dagbladet.no/2012/07/19/kultur/film/the_dark_knight_rises/christopher_nolan/premiere/22599777/"
 #    url = "http://www.vg.no/nyheter/innenriks/artikkel.php?artid=10059206"
 #    url = "http://www.dagensit.no/article2439589.ece"
@@ -73,7 +75,7 @@ def article(url):
     soup = BeautifulSoup(html)
     logging.debug('type(soup): %s END type(soup)',type(soup))
 
-    logging.debug('soup: %s END soup', soup)
+#    logging.debug('soup: %s END soup', soup)
 
     dt = doc_title(soup) #.strip()
     k = keywords(soup)
@@ -86,6 +88,12 @@ def article(url):
     # except:
     #     print '404 or 403 or something.'
 
+    logging.debug('doc_title: %s END doc_title', doc_title)
+    logging.debug('keywords: %s END keywords', keywords)
+    logging.debug('title: %s END title', title)
+    logging.debug('img_text: %s END img_text', img_text)
+    logging.debug('intro: %s END intro', intro)
+    logging.debug('txt: %s END txt', txt)
 
 
     return dt, k, t, it, i, txt
@@ -317,4 +325,8 @@ def text(soup):
         
 
 #debugging only:
-article('bla bla dot no')
+#article('bla bla dot no')
+
+
+links = crawl.links("https://www.google.com/finance?q=aapl")
+article = article(links[4])

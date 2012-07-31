@@ -23,13 +23,16 @@ def sites():
     for url in papers.names.values():
         logging.debug('trying url: %s', url)
         urls = links(url) #use deferred here, i think.
+        logging.debug('urls: %s', urls)
         all_urls.extend(urls) #puts urls in all_urls
+        logging.debug('all urls: %s', all_urls)
         #store returned links to db
         logging.info('added leaf urls to db')
 
     return all_urls
 
 def links(url):
+    logging.debug("url: %s", url)
 
     followed = [] #this needs to be a persistent db, to be used next time you crawl.
     urls = [] #regenerated each time.
@@ -41,6 +44,7 @@ def links(url):
     links = soup.findAll('a', attrs={'href': re.compile("^http://")})
     for link in links:
         url = link['href']
+        logging.debug("link url: %s", url)
 #        url = replace_characters(url) causes error
         url = url.encode('utf-8')
 #        url = url.replace()
@@ -48,6 +52,7 @@ def links(url):
 
     return urls
 
+#links("https://www.google.com/finance?q=aapl")
 
 # stuff from weekend codes:
 # # Open some site, let's pick a random one, the first that pops in mind:

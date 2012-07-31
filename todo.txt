@@ -2,25 +2,31 @@ sjekk (i morgen igjen) at cron backupene har gått på kryss av
 maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
-google.com/finance har relevante nyheter for hver selskap! d'oh. bruk
+
+
+google.com/finance har relevante nyheter for hver selskap! bruk
 det. finn 'a', finn 'lead_story_url:', strengene som kommer etter
 det er linker til relevante stories, hi hi.
+
+
+
+
+
 
 kanskje ha en refresh knapp på siden, og bare la ting oppdatere seg
 når de kommer, og når de refresher. det er enkelt.
 
 
-du må sende en post request ved navn 'comp' ('sign') til Companies
-handleren for å få lagret ting. dette kan antakelig gjøres enklere
-siden du ikke trenger å handle et knappeklikk og tekst i en inputboks.
 
-
-
-få main til å vise company name og ticker uten noe annet dill. 
-
-lagre til, og hente fra, db.
 
 så prøver du med innlogging fra news.google.
+
+
+
+
+
+
+
 
 
 har fra news.google uten innlogging. 
@@ -285,4 +291,12 @@ fordi du har gått over til python 2.7 og ennå ikke har skrevet om
 main.py for å reflektere dette. 
 
 drit i github for now. du har lokal git, og du har backup. det holder.
+
+du må sende en post request ved navn 'comp' ('sign') til Companies
+handleren for å få lagret ting. dette kan antakelig gjøres enklere
+siden du ikke trenger å handle et knappeklikk og tekst i en inputboks.
+
+få main til å vise company name og ticker uten noe annet dill. 
+
+lagre til, og hente fra, db.
 

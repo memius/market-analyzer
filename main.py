@@ -51,10 +51,14 @@
 
 
 
-import webapp2, cgi, urllib, jinja2, os
+import webapp2, cgi, urllib, jinja2, os, logging
 
 from google.appengine.api import users
 from google.appengine.ext import db
+
+import utils, crawl
+
+logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -89,26 +93,40 @@ class MainPage(webapp2.RequestHandler):
     def get(self): #handles get requests from the intarwebs
         user = users.get_current_user()
         if user:
+            query = db.GqlQuery("SELECT * FROM UserPrefs WHERE userid = :1", user.user_id())
+            user_id = query.get() #not used for now. used for filtering which companies to show, etc.
             url = users.create_logout_url(self.request.uri)
             url_linktext = "Logout"
         else:
+            user_id = "None" 
             url = users.create_login_url(self.request.uri)
             url_linktext = "Login"
 
         # stores one company to the db:
-        # company = Company(parent=companies_key('orkla'))
-        # company.name = "orkla"
-        # company.ticker = "ork"
+        # company = Company(parent=companies_key())
+        # company.name = "Google"
+        # company.ticker = "GOOGL"
         # company.put()
 
-        companies_query = Company.all()
-        companies = companies_query.fetch(60)
+        companies = Company.all().ancestor(
+            companies_key())
+        #companies = companies.fetch(60)
+        #db.delete(companies) #removes all entries from db
+
+
+        for comp in companies:
+            url = "https://www.google.com/finance?q=" + comp.ticker
+            logging.debug("url: %s",url)
+            links = crawl.links(url)
+
 
         template_values = {
             'user' : user,
+            'user_id' : user_id,
             'companies' : companies,
             'url' : url,
             'url_linktext' : url_linktext,
+            'links': links
             }
 
         template = jinja_environment.get_template('index.html')

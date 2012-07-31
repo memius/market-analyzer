@@ -93,3 +93,11 @@ sudo python2.5 setup.py install
 sudo easy_install-2.5 -f http://www.crummy.com/software/BeautifulSoup/bs3/download//3.x/ -U "BeautifulSoup==3.0.7a"
 
 sudo easy_install-2.5 BeautifulSoup #bare kanskje nødvendig
+
+
+for å fjerne python 2.5: fjern alt som har med python 2.5 å gjøre fra
+/usr/bin og usr/local/bin.
+
+for å installere bs4:
+
+

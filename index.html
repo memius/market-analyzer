@@ -4,19 +4,19 @@
   </head>
 
   <body>
-    <b>{{user}}</b>
+    {{user}}
     <p>
-    <a href="{{ url }}">{{ url_linktext }}</a>
+      <a href="{{ url }}">{{ url_linktext }}</a>
     <p>
 
+      {% for company in companies %}
+      {{ company.ticker }}
+      {{ company.name }}
+    <p>
+      {% endfor %}
 
-    {% for company in companies %}
-    <b>{{ company.ticker }}</b>
-    <blockquote>{{ company.name|escape }}</blockquote>
-    {% endfor %}
 
-
-
+      {{links}}
 
   </body>
 </html>
