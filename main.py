@@ -153,7 +153,6 @@ class MainPage(webapp2.RequestHandler):
 
 class Companies(webapp2.RequestHandler):
   def post(self):
-      #some comment on this line
       #companies_name = self.request.get('companies_name') from tutorial
       companies_name = "apple" #debugging only
       one_company = Company(parent=companies_key(companies_name))
