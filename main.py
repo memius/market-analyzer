@@ -56,7 +56,7 @@ import webapp2, cgi, urllib, jinja2, os, logging
 from google.appengine.api import users
 from google.appengine.ext import db
 
-import utils, crawl
+import utils, crawl, tmp
 
 logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
 
@@ -104,8 +104,8 @@ class MainPage(webapp2.RequestHandler):
 
         # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Google"
-        # company.ticker = "GOOGL"
+        # company.name = "Microsoft"
+        # company.ticker = "MSFT"
         # company.put()
 
         companies = Company.all().ancestor(
@@ -114,10 +114,13 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
+        all_links = []
         for comp in companies:
-            url = "https://www.google.com/finance?q=" + comp.ticker
-            logging.debug("url: %s",url)
-            links = crawl.links(url)
+        #     url = "https://www.google.com/finance?q=" + comp.ticker
+        #     logging.debug("url: %s",url)
+        #     links = crawl.links(url)
+            links = tmp.gf(comp.ticker)
+            all_links.extend(links)
 
 
         template_values = {
@@ -126,7 +129,7 @@ class MainPage(webapp2.RequestHandler):
             'companies' : companies,
             'url' : url,
             'url_linktext' : url_linktext,
-            'links': links
+            'links': all_links
             }
 
         template = jinja_environment.get_template('index.html')

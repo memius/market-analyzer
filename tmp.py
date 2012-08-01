@@ -12,6 +12,7 @@ def gf(ticker):
     #divs = soup.find_all("div", {"id" : div_id})
     div_class = re.compile("^g-section.*")
     divs = soup.find_all("div", {"class" : div_class})
+    links = []
     for div in divs:
         a = unicode(div.find('a', attrs={'href': re.compile("^http://")})) 
         link_regex = re.search("(http://.*?)\"",a)
@@ -23,12 +24,15 @@ def gf(ticker):
             link = "None"
 
         print 'the link: ',link
+        links.append(link)
+
+    return links
 
 
 
 
 
-gf('aapl')
+#gf('aapl')
 
 
 

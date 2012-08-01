@@ -1,3 +1,15 @@
+hver bruker må ha sin portfolio med selskaper han følger. disse har
+han betalt for, og disse får han news analyser av.
+
+han har en home page, der hans selskaper er vist. han kan klikke 'add
+to portfolio' for å komme til en side der alle selskaper er listet, og
+han kan klikke på ett, eller merke flere, for å legge dem til i
+portfolioen.
+
+
+
+
+
 husk å catre til det asiatiske markedet. bruk asiatiske news sites, og
 ha med asiatiske selskaper og børser.
 
@@ -16,15 +28,18 @@ analysen.
 
 etter hver artikkel er det en buy- og en sell-, men ikke en
 hold--knapp. dersom du trykker på en av dem blir artikkelen trent som
-det tilsvarende.
+det tilsvarende. etterhvert må det komme en not-sell og en
+not-buy-knapp.
 
-tjenesten henter nye artikler hvert kvarter. den siler og analyserer
-artiklene fortløpende, og pusher resultatene med en gang den er
-ferdig.
 
-selv om du ikke refresher browseren vil anbefalingen altså forandre
-seg som et resultat av ny analyse i bakgrunnen. men bare hvert
-kvarter. dette er godt nok i begynnelsen.
+tjenesten henter nye artikler hver gang brukeren oppdaterer siden. den
+siler og analyserer artiklene fortløpende, og pusher resultatene med
+en gang den er ferdig.
+
+hver kvarter er bedre, men vanskeligere. gjør det etterpå. selv om du
+ikke refresher browseren vil anbefalingen altså forandre seg som et
+resultat av ny analyse i bakgrunnen. men bare hvert kvarter. dette er
+godt nok i begynnelsen.
 
 
 
