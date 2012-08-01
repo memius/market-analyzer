@@ -1,29 +1,34 @@
+# coding: utf-8
+
 import urllib2,re
 
 from bs4 import BeautifulSoup
 
-def gf():
-    ticker = 'aapl'
+def gf(ticker):
     url = "https://www.google.com/finance/company_news?q=NASDAQ:" + ticker + "&start=10&num=10"
     html = urllib2.urlopen(url).read()
     soup = BeautifulSoup(html)
-    div_id = re.compile("Article[0-9*]")
-    divs = soup.find_all("div", {"id" : div_id})
+    #div_id = re.compile("Article[0-9*]")
+    #divs = soup.find_all("div", {"id" : div_id})
+    div_class = re.compile("^g-section.*")
+    divs = soup.find_all("div", {"class" : div_class})
     for div in divs:
-        a = unicode(div.find('a', attrs={'href': re.compile("^http://")})) #matches first line starting with http://
-        result = re.search("(http://.*?)\"",a)
+        a = unicode(div.find('a', attrs={'href': re.compile("^http://")})) 
+        link_regex = re.search("(http://.*?)\"",a)
         
         try:
-            link = result.group(1)
-            print 'the link: ',link
+            link = link_regex.group(1)
+
         except:
             link = "None"
 
+        print 'the link: ',link
 
-the href i want, which corresponds to the title of each news item, is somehow above the 'article1' tag, or something like that.
 
 
-gf()
+
+
+gf('aapl')
 
 
 
