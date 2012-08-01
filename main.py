@@ -56,7 +56,7 @@ import webapp2, cgi, urllib, jinja2, os, logging
 from google.appengine.api import users
 from google.appengine.ext import db
 
-import utils, crawl, tmp
+import utils, crawl, tmp, fetch
 
 logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
 
@@ -120,6 +120,10 @@ class MainPage(webapp2.RequestHandler):
         #     logging.debug("url: %s",url)
         #     links = crawl.links(url)
             links = tmp.gf(comp.ticker)
+            for link in links:
+                if link is not "None":
+                    article = fetch.article(link)
+
             all_links.extend(links)
 
 

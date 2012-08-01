@@ -2,14 +2,14 @@
 # coding: utf-8
 
 #python modules
-import sys, os, string, re, urllib2, logging
+import sys, os, string, re, urllib2, logging, string
 
 from bs4 import BeautifulSoup
 
 #my own modules:
 from replace_characters import replace_characters
 
-import crawl
+import crawl, block
 
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
@@ -77,27 +77,55 @@ def article(url):
 
 #    logging.debug('soup: %s END soup', soup)
 
-    dt = doc_title(soup) #.strip()
-    k = keywords(soup)
-    t = title(soup)
-    it = img_text(soup)
-    i = intro(soup)
+    # dt = doc_title(soup) #.strip()
+    # k = keywords(soup)
+    # t = title(soup)
+    # it = img_text(soup)
+    # i = intro(soup)
     txt = text(soup)
     #     except TypeError:
     #         print "input error when trying to make soup"
     # except:
     #     print '404 or 403 or something.'
 
-    logging.debug('doc_title: %s END doc_title', doc_title)
-    logging.debug('keywords: %s END keywords', keywords)
-    logging.debug('title: %s END title', title)
-    logging.debug('img_text: %s END img_text', img_text)
-    logging.debug('intro: %s END intro', intro)
+    # logging.debug('doc_title: %s END doc_title', doc_title)
+    # logging.debug('keywords: %s END keywords', keywords)
+    # logging.debug('title: %s END title', title)
+    # logging.debug('img_text: %s END img_text', img_text)
+    # logging.debug('intro: %s END intro', intro)
     logging.debug('txt: %s END txt', txt)
 
 
-    return dt, k, t, it, i, txt
+    return txt #dt, k, t, it, i, txt
 
+#any non-whitespace character, followed by
+#any character, followed by
+#at least one more of any character, not greedy, followed by
+#a dot, an exclamation mark or a question mark
+#all of the above only if followed by
+#any whitespace character or the end of a line.
+def text(soup):
+    #text = soup.get_text()
+    text = block.string2
+    tag = re.compile("<.*?>")
+    text_no_tags = re.sub(tag, "\n", text)
+    #sentence = re.compile("(.*?\.)+")
+    sentence = re.compile("(\S.+?[.!?])(?=\s|$|\")")
+    #sentence = re.compile("(\S.+?[.!?])(?=\s+|$)") #any sentence
+    
+    content = re.findall(sentence, text_no_tags)
+    #return text_no_tags
+    return content
+
+print article("http://www.businessweek.com/news/2012-07-31/microsoft-says-it-s-open-to-patent-peace-with-google-s-motorola")
+
+#print article("http://www.newstodaydigest.com/google-inc-goog-added-the-google-hangouts-feature-in-place-of-gmail-video-chats/121550/")
+
+#print article("http://www.businessweek.com/news/2012-07-31/apple-paddy-power-perdue-netflix-intellectual-property")
+
+#print article("http://www.valuewalk.com/2012/07/q2-earnings-preview-from-the-tech-behemoths-google-inc-goog-and-microsoft-corporation-msft/")
+
+#print article("http://www.valuewalk.com/2012/07/apple-inc-aapl-boasts-three-million-mountain-lion-downloads-within-four-days/")
 
 #document title
 def doc_title(soup):
@@ -108,7 +136,7 @@ def doc_title(soup):
         doc_title = soup.find("meta", {"name" : "title"})
         doc_title = doc_title["content"]
     else:
-        doc_title = "no doc title"
+        doc_title = "None"
     #doc_title = replace_characters(doc_title)
     logging.debug('doc_title: %s END doc_title',doc_title)
     return doc_title
@@ -233,7 +261,7 @@ def intro(soup):
     logging.debug('intro: %s END intro',intro)
     return intro
 
-def text(soup):    
+def old_text(soup):    
     if soup.find("p", {"id" : "brodtekst_uten_bilde"}) > -1:
         text = soup.find("p", {"id" : "brodtekst_uten_bilde"}) 
         for tag in text.findAll('a'):
@@ -331,16 +359,6 @@ def text(soup):
 #debugging only:
 #article('bla bla dot no')
 
-
-
-
-ticker = 'aapl'
-url = "https://www.google.com/finance/company_news?q=NASDAQ:" + ticker + "&start=10&num=10"
-
-du er her. prøv å finne nyhetslinkene. de har div id Article1, Article2, osv.
-
-links = crawl.links(url)
-article = article(links[19])
 
 
 
