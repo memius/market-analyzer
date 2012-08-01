@@ -3,6 +3,12 @@ maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
+du holder på med regex for setninger. du har funnet et par stykker, og
+den siste ser ut til å funke på dem som den første ikke funket
+på. finn et par til og se.
+
+
+
 
 google.com/finance har relevante nyheter for hver selskap! bruk
 det. finn 'a', finn 'lead_story_url:', strengene som kommer etter
