@@ -3,6 +3,42 @@ maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
+you have good enough texts. making them better is optimizing.
+
+store the articles to db with their respective companies and
+datetimes.
+
+why does it fetch 3 copies of the first article? (3 copies of the
+first article link.)
+
+
+correct the display of 'user'. this was due to the two debug entries
+in fetch.py, where you fetched and printed text from block.py
+
+
+
+main displays companies from db.
+
+crawl does nothing
+
+sites gives me the links from gf
+
+fetch takes a url (link), reads the article and returns the text
+
+clean cleans the text (called by fetch)
+
+must store junk-cleaned text to db. du er her. let main do this. make
+sure the chain from main to sites to fetch and back to main is good.
+
+later, retrieve text from db, clean strict and send to crm. main does
+this too.
+
+later, store crm's conclusion to db. and main does this.
+
+later, let main display conclusion with company.
+
+
+
 fjern litt javascript i replace characters, ved å fjerne alle ord som
 inneholder åpenbare tegn på at de er kode. se fetch.py for detaljer.
 

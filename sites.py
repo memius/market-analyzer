@@ -23,7 +23,7 @@ def gf(ticker):
         except:
             link = "None"
 
-        print 'the link: ',link
+        #print 'the link: ',link
         links.append(link)
 
     return links
@@ -36,3 +36,4 @@ def gf(ticker):
 
 
 
+ 

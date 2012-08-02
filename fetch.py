@@ -106,9 +106,9 @@ def article(url):
 #any whitespace character or the end of a line.
 def text(soup):
 
-    #text = soup.get_text()
+    text = soup.get_text()
     #debugging only:
-    text = block.string1
+    #text = block.string5
 
     #this works well, but takes fewer sentences than the other one
     #sentence = re.compile("(\S.+?[.!?])(?=\s+|$|\")")
@@ -136,13 +136,15 @@ def text(soup):
 
     sentences = re.findall(sentence, text)
 
+    #junk cleaning before storing in db:
     content = clean.junk(sentences)
+    #strict cleaning before sending to crm (so it should be moved to the file that does that):
     content = clean.strict(content)
 
     #return text_no_tags
     return content
 
-print article("http://www.businessweek.com/news/2012-07-31/microsoft-says-it-s-open-to-patent-peace-with-google-s-motorola")
+#print article("http://www.businessweek.com/news/2012-07-31/microsoft-says-it-s-open-to-patent-peace-with-google-s-motorola")
 
 #print article("http://www.newstodaydigest.com/google-inc-goog-added-the-google-hangouts-feature-in-place-of-gmail-video-chats/121550/")
 

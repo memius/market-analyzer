@@ -104,8 +104,8 @@ class MainPage(webapp2.RequestHandler):
 
         # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Microsoft"
-        # company.ticker = "MSFT"
+        # company.name = "Facebook"
+        # company.ticker = "FB"
         # company.put()
 
         companies = Company.all().ancestor(
@@ -114,26 +114,25 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
-        all_links = []
+        articles = []
         for comp in companies:
         #     url = "https://www.google.com/finance?q=" + comp.ticker
         #     logging.debug("url: %s",url)
         #     links = crawl.links(url)
-            links = tmp.gf(comp.ticker)
+            links = sites.gf(comp.ticker)
             for link in links:
                 if link is not "None":
                     article = fetch.article(link)
 
-            all_links.extend(links)
+                    articles.append(article)
 
 
         template_values = {
             'user' : user,
-            'user_id' : user_id,
-            'companies' : companies,
             'url' : url,
             'url_linktext' : url_linktext,
-            'links': all_links
+            'companies' : companies,
+            'articles': articles
             }
 
         template = jinja_environment.get_template('index.html')
