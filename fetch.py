@@ -108,9 +108,7 @@ def text(soup):
 
     #text = soup.get_text()
     #debugging only:
-    text = block.string4
-
-    text = clean.junk(text)
+    text = block.string1
 
     #this works well, but takes fewer sentences than the other one
     #sentence = re.compile("(\S.+?[.!?])(?=\s+|$|\")")
@@ -134,7 +132,13 @@ def text(soup):
     #     (?=\s|$)"         # only if followed by whitespace or eol
     # """, re.VERBOSE)
 
-    content = re.findall(sentence, text)
+
+
+    sentences = re.findall(sentence, text)
+
+    content = clean.junk(sentences)
+    content = clean.strict(content)
+
     #return text_no_tags
     return content
 
