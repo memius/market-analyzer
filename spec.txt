@@ -1,10 +1,17 @@
 hver bruker må ha sin portfolio med selskaper han følger. disse har
 han betalt for, og disse får han news analyser av.
 
-han har en home page, der hans selskaper er vist. han kan klikke 'add
-to portfolio' for å komme til en side der alle selskaper er listet, og
-han kan klikke på ett, eller merke flere, for å legge dem til i
-portfolioen.
+han har en home page, der hans selskaper er vist. 'the portfolio'.
+
+han kan klikke 'pick companies' for å komme til en side der alle
+selskaper er listet, og han kan klikke på ett, eller merke flere, for
+å legge dem til i portfolioen. selskapene er vist med både navn og
+ticker, så man kan søke på begge. de er vist med verdi, volum,
+oppgang/nedgang siste uke/dag, slik at man kan vurdere - og sortere -
+dem ut fra disse tallene.
+
+hent selskaper ikke bare fra nse, men også ose, lse, nikkei,
+osv. appen er ikke børsavhengig, og skal kunne brukes av alle overalt.
 
 
 

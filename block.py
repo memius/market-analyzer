@@ -163,3 +163,8 @@ string3 = """ <div class="ss" style="width: 680px;"><p><img class="alignleft siz
 <p>Google Inc. (NASDAQ: GOOG) says that it is rolling this new feature of Hangouts in Gmail starting today, but the complete rollout could take a few weeks. Below you can see the video of Google+ hangout feature in Gmail.</p>
 <p><iframe src="http://www.youtube.com/embed/Ra8HG6MkOXY" frameborder="0" width="560" height="315"></iframe></p>
 </div>"""
+
+
+string4 = """
+"We are gathered here today," said the decrepit priest called "Belsum", "to 'honor' the sanctity of marriage." Thus endeth the lesson's end.
+"""

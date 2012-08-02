@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 #my own modules:
 from replace_characters import replace_characters
 
-import crawl, block
+import crawl, clean, block
 
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
@@ -105,20 +105,22 @@ def article(url):
 #all of the above only if followed by
 #any whitespace character or the end of a line.
 def text(soup):
-    text = soup.get_text()
-    #text = block.string1
-    tag = re.compile("<.*?>")
 
-#    du er her
+    #text = soup.get_text()
+    #debugging only:
+    text = block.string4
 
-    text_no_tags = re.sub(tag, "\n", text) #this should go to replace_characters, as should sub("\n","") and others, like stripping quotes from the beginning and end of words, and removing words that contain :, ;, (), dot.notation, \, {, } etc, which are probably javascript or something.
+    text = clean.junk(text)
+
+    #this works well, but takes fewer sentences than the other one
+    #sentence = re.compile("(\S.+?[.!?])(?=\s+|$|\")")
 
 
-    sentence = re.compile("(\S.+?[.!?])(?=\s+|$|\")")
     #sentence = re.compile("(?<=[.?!]|^).*?(?=([.?!])\s{0,3}[A-Z]|$)")
     #sentence = re.compile("(?:\s[a-z]\.(?:[a-z]\.)?|.)+?[.?!]+") #php attempt. uncommented.
 
-    #sentence = re.compile("[^.!?\s][^.!?]*(?:[.!?](?!['\"]?\s|$)[^.!?]*)*[.!?]?['\"]?(?=\s|$)") #works better
+    #works better, but takes more sentences (junk) than the other one.
+    sentence = re.compile("[^.!?\s][^.!?]*(?:[.!?](?!['\"]?\s|$)[^.!?]*)*[.!?]?['\"]?(?=\s|$)") 
     # sentence = re.compile("""
     #     [^\.!?\s]         # first char is not punct or whitespace
     #     [^\.!?]*          # greedily consume until punct
@@ -132,7 +134,7 @@ def text(soup):
     #     (?=\s|$)"         # only if followed by whitespace or eol
     # """, re.VERBOSE)
 
-    content = re.findall(sentence, text_no_tags)
+    content = re.findall(sentence, text)
     #return text_no_tags
     return content
 

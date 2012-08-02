@@ -56,7 +56,7 @@ import webapp2, cgi, urllib, jinja2, os, logging
 from google.appengine.api import users
 from google.appengine.ext import db
 
-import utils, crawl, tmp, fetch
+import utils, crawl, sites, fetch
 
 logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
 
