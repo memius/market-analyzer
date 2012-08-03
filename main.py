@@ -51,7 +51,7 @@
 
 
 
-import webapp2, cgi, urllib, jinja2, os, logging
+import webapp2, cgi, urllib, jinja2, os, logging, itertools
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -64,15 +64,22 @@ jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 
+# grandparent
+# class User(db.Model): avoid this - grandparents costs a lot of writes to the db.
+#     nick = db.StringProperty()
+#     companies = 
+
 class Article(db.Model):
-    content = db.StringProperty(multiline=True)
-    datetime = db.DateTimeProperty()
+    content = db.TextProperty()
+    datetime = db.DateTimeProperty(auto_now_add=True)
     companies = db.ListProperty(db.Key) #the companies for which the article is relevant
+    url = db.StringProperty()
 
 #parent
 class Company(db.Model):
     name = db.StringProperty() #show this in the web app
     ticker = db.StringProperty() #show only this in the android app
+    exchange = db.StringProperty()
     price = db.FloatProperty()
     movement = db.BooleanProperty()  #whether it went up or down since yesterday. if no value -> no movement.
     articles = db.ReferenceProperty(Article) #not needed: do this: articles = company.article_set.get()
@@ -83,10 +90,14 @@ class Company(db.Model):
     def articles(self):
         return Article.gql("WHERE companies = :1", self.key()) #the articles that are relevant for the company
 
-
 def companies_key(companies_name=None):
   """Constructs a Datastore key for a Companies entity with companies_name."""
   return db.Key.from_path('Companies', companies_name or 'default_companies')
+
+def articles_key(articles_name=None):
+  return db.Key.from_path('Articles', articles_name or 'default_articles')
+
+
 
 
 class MainPage(webapp2.RequestHandler):
@@ -104,28 +115,35 @@ class MainPage(webapp2.RequestHandler):
 
         # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Facebook"
-        # company.ticker = "FB"
+        # company.name = "Samsung"
+        # company.ticker = "005930"
+        # company.exchange = "KRX"
         # company.put()
 
-        companies = Company.all().ancestor(
-            companies_key())
+        companies = Company.all().ancestor(companies_key())
         #companies = companies.fetch(60)
         #db.delete(companies) #removes all entries from db
 
 
-        articles = []
-        for comp in companies:
-        #     url = "https://www.google.com/finance?q=" + comp.ticker
-        #     logging.debug("url: %s",url)
-        #     links = crawl.links(url)
-            links = sites.gf(comp.ticker)
-            for link in links:
-                if link is not "None":
-                    article = fetch.article(link)
+# #        articles = []
+#         for company in companies:
+#             links = sites.gf(company.ticker)
+#             for link in links:
+#                 if link is not "None":
+#                     article = Article(parent = articles_key())  #must have an if not already exists here
+#                     content = fetch.article(link) # list of strings
+#                     text = ' '.join(content)
+#                     # text = ""
+#                     # for sentence in content:
+#                     #     text = sentence + text # maybe + " " +
+#                     article.content = text
+#                     article.url = link
+#                     article.companies.append(company.key())
+#                     article.put()
 
-                    articles.append(article)
+# #                    articles.append(article.content)
 
+        articles = Article.all().ancestor(companies_key())
 
         template_values = {
             'user' : user,

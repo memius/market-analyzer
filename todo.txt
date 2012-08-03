@@ -3,17 +3,14 @@ maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
-you have good enough texts. making them better is optimizing.
-
 store the articles to db with their respective companies and
-datetimes.
+datetimes. urls as well. 
+
+
+
 
 why does it fetch 3 copies of the first article? (3 copies of the
 first article link.)
-
-
-correct the display of 'user'. this was due to the two debug entries
-in fetch.py, where you fetched and printed text from block.py
 
 
 
@@ -345,4 +342,16 @@ google.com/finance har relevante nyheter for hver selskap! bruk
 det. finn 'a', finn 'lead_story_url:', strengene som kommer etter
 det er linker til relevante stories, hi hi.
 
+
+correct the display of 'user'. this was due to the two debug entries
+in fetch.py, where you fetched and printed text from block.py
+
+
+you have good enough texts. making them better is optimizing.
+
+that way, when they want to read the article, you first show them the
+text you put into crm with the link, and if they want to read that,
+they click the link. perhaps you can even track that, and look at the
+articles for which they click the link, so you can see why they
+weren't happy just reading the text for crm.
 

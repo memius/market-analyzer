@@ -1,3 +1,5 @@
+import googlevoice for å sende sms'er.
+
 hver bruker må ha sin portfolio med selskaper han følger. disse har
 han betalt for, og disse får han news analyser av.
 

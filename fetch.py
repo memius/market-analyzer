@@ -118,19 +118,24 @@ def text(soup):
     #sentence = re.compile("(?:\s[a-z]\.(?:[a-z]\.)?|.)+?[.?!]+") #php attempt. uncommented.
 
     #works better, but takes more sentences (junk) than the other one.
-    sentence = re.compile("[^.!?\s][^.!?]*(?:[.!?](?!['\"]?\s|$)[^.!?]*)*[.!?]?['\"]?(?=\s|$)") 
+    #sentence = re.compile("[^.!?\s][^.!?]*(?:[.!?](?!['\"]?\s|$)[^.!?]*)*[.!?]?['\"]?(?=\s|$)") 
+    sentence = re.compile("[^.!?\s][^.!?]*(?:[.!?](?!['\"]?\s|$)[^.!?]*)*[.!?]?['\"]?(?=\s|$|\")") #includes quote at end.
     # sentence = re.compile("""
-    #     [^\.!?\s]         # first char is not punct or whitespace
-    #     [^\.!?]*          # greedily consume until punct
-    #     (?:               # group for unrolling the loop
-    #     [\.!?]             # (special) inner punct ok if
-    #     (?!['\"]?\s|$)    # not followed by quotes, whitespace or eol
+    #     [^.!?\s]          # first char is not punct or whitespace
+    #     [^.!?]*           # greedily consume until punct
+    #     (?:               # 
+    #     [.!?]             # (special) inner punct ("D.C") ok if
+    #     (?!['\"]?\s|$)    # not followed by optional quotes, then whitespace or eol (so not "D.C. ")
+
     #     [^.!?]*           # greedily consume until punct
     #     )*                # zero or more (special normal)*)
-    #     [\.!?]?            # optional ending punct
+    #     [.!?]?            # optional ending punct
     #     ['\"]?            # optional closing quote
-    #     (?=\s|$)"         # only if followed by whitespace or eol
+    #     (?=['\"]?\s|$)"   # only if followed by optional quotes, then whitespace or eol
     # """, re.VERBOSE)
+
+    # ignore this - no problem:
+    #     (?=\s['\"]?[A-Z])   # or if followed by whitespace, then capital letter or quote (combine with (?!['\"]?\s|$) somehow) this is not a problem! crm doesn't care where the sentences are cut anyway!
 
 
 

@@ -1,3 +1,19 @@
+import googlevoice for å sende sms'er.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 for å installere appengine:
 
 last ned filen, og ekstraher den. putt den i /opt/google/ folderen.

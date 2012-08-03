@@ -166,7 +166,7 @@ string3 = """ <div class="ss" style="width: 680px;"><p><img class="alignleft siz
 
 
 string4 = """
-"We are gathered ValueWalk } } } } } } } { { { { { img } } } img } li li img } } } } } body Arial here today," said the decrepit & {}modal-box-h1 'broken' priest #D4DDE90 10px called "Belsum", "to 'honor' the sanctity of marriage." Thus endeth {// chromeif-1 } the @ lesson's  Inc',u"Kontera= 'undefined')Kontera", endful end.
+"Dear Harry S. Truman! You live in the U.S. The U.S. is a nice origVideo place. As for the U.S.SS.R. 'attitude', f.ex., Harry S. Truman would never approve. We are gathered ValueWalk } } } word } } word } } } { { { { { img } } } img } li li img } } } } } body Arial here today," said the decrepit & {}modal-box-h1 'broken' priest #D4DDE90 10px called "Belsum", "to 'honor' the sanctity of marriage." Thus endeth {// chromeif-1 } the @ lesson's  Inc',u"Kontera= 'undefined')Kontera", endful end.
 """
 
 
