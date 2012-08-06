@@ -1,6 +1,52 @@
+bruk yahoo data til å få tak i kurser og slikt:
+http://www.gummy-stuff.org/Yahoo-data.htm
+
+
+
 sjekk (i morgen igjen) at cron backupene har gått på kryss av
 maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
+
+
+
+
+
+
+plugg inn crm nå. 
+
+drit i adm og optimeringsting, som hvem som har
+tilgang, og om ting blir duplisert, og om teksten er perfekt.
+
+
+
+
+
+bygg opp databasen til to selskaper. ikke mer. nå er databasen
+tom. done.
+
+
+
+
+
+
+
+du får ikke news om selskaper på andre børser enn us. ikke europa, og
+ikke asia, f.eks. krx, der samsung er.
+
+du får printet ting mellom hver a. ha ha, du har fikset det. content =
+articles.content osv. 
+
+
+
+
+
+make sure the articles are stored to the db. delete everything in db,
+and start over.
+
+
+
+bruk url'en til hver artikkel til å sjekke duplikasjon. google
+"checking for duplicated content gae put()" or something.
 
 
 store the articles to db with their respective companies and

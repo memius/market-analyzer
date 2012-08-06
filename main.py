@@ -56,7 +56,7 @@ import webapp2, cgi, urllib, jinja2, os, logging, itertools
 from google.appengine.api import users
 from google.appengine.ext import db
 
-import utils, crawl, sites, fetch
+import utils, crawl, sites, fetch, crm
 
 logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
 
@@ -115,9 +115,9 @@ class MainPage(webapp2.RequestHandler):
 
         # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Samsung"
-        # company.ticker = "005930"
-        # company.exchange = "KRX"
+        # company.name = "Apple"
+        # company.ticker = "AAPL"
+        # company.exchange = "NASDAQ"
         # company.put()
 
         companies = Company.all().ancestor(companies_key())
@@ -125,6 +125,7 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
+# #       adds articles to the db, relevant to 'companies'.
 # #        articles = []
 #         for company in companies:
 #             links = sites.gf(company.ticker)
@@ -140,17 +141,24 @@ class MainPage(webapp2.RequestHandler):
 #                     article.url = link
 #                     article.companies.append(company.key())
 #                     article.put()
-
 # #                    articles.append(article.content)
 
-        articles = Article.all().ancestor(companies_key())
+        articles = Article.all().ancestor(articles_key())
+        content = []
+        for article in articles:
+            text = article.content
+            #recommendation = crm.classify(text) #this must be put to company.recommendation
+            #content.append(recommendation)
+            content.append(text)
+
+        #db.delete(articles) #removes all entries from db
 
         template_values = {
             'user' : user,
             'url' : url,
             'url_linktext' : url_linktext,
             'companies' : companies,
-            'articles': articles
+            'articles': content
             }
 
         template = jinja_environment.get_template('index.html')

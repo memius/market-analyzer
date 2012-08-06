@@ -1,0 +1,48 @@
+#this file only classifies, it does not learn.
+#takes argument two as filename.
+
+window <bychunk> {
+
+    call /:read-file:/ [:*:_arg2:] (:conclusion:)
+    # output /conclusion in news classifier: :*:conclusion: END conclusion\n/
+    # output /Done!\n/
+    {
+    	{
+    	    match /news_buy/ [:conclusion:]
+    	    exit /1/ #returns 256
+    	}
+    	alius
+    	{
+    	    match /news_sell/ [:conclusion:]
+    	    exit /2/ #returns 512
+    	}
+    	alius
+    	{
+    	    exit /3/ #returns 768
+    	}
+    }
+}
+
+:read-file: (:filename:)
+{
+    input (:contents:) [:*:filename:] 
+    output /contents of news.txt in read-file: :*:contents:\n/
+    call /:read-news:/ [:*:contents:] (:conclusion:)
+    # output /conclusion in read-file: :*:conclusion: END conclusion\n/
+    return /:*:conclusion:/
+}
+
+:read-news: (:news:)
+{
+    isolate (:stats:)
+    # output /news: :*:news: END news\n/
+
+    isolate (:path:) /\/home\/tmh\/workspace\/market_analyzer\//
+    classify <hyperspace unique> [:news:] (:*:path:news_buy.chs :*:path:news_sell.chs :*:path:news_hold.chs) (:stats:)
+    match (:: :conclusion:) [:stats:] / \((.*?)\.chs/ 
+    match (:: :pR:) [:stats:] /Best match.*: (.*)  \nTotal/
+    # output /conclusion in read-news: :*:conclusion: END conclusion\n/
+    # output /pR: :*:pR: END pR\n/
+    return /:*:conclusion:/
+}
+

@@ -1,0 +1,50 @@
+#this file learns by training examples it gets wrong.
+#it takes the text to be learned and a decision about what it should be classfied as. 
+
+window <bychunk>
+{
+
+#maa faa inn company ticker her, i tillegg til filename og decision:
+
+
+    match (:: :filename: :decision:) [:_arg2:] /(.*?)-_-_-(.*)/
+    # output /filename in news learner: :*:filename:\n/
+    # output /decision in news learner: :*:decision:\n/
+    {
+	call /:read-file:/ [:*:filename:] (:file-contents:)
+	# the trap stuff doesn't work, probably wrong syntax. doesn't matter.
+	# trap /unable to read-open the file/ # if an error message containing the defined string appears, the following happens:
+	# output /Couldn't read :*:filename:!\n/
+	# return
+	# trap /program has overflowed/
+	# output /File too big!\n/
+	# return
+    }
+    isolate (:text-and-decision:) /:*:file-contents:-_-_-:*:decision:/
+    output /text and decision: :*:text-and-decision: END text and decision\n/
+    call /:read-news:/ [:*:text-and-decision:] #(:conclusion:)
+    # output /Done!\n/
+    exit
+}
+
+:read-file: (:filename:)
+{
+    input (:contents:) [:*:filename:] 
+    # output /contents in read-file: :*:contents:\n/
+    return /:*:contents:/
+}
+
+
+
+# maa forandre chs-filnavn til aa inneholde company ticker.
+
+:read-news: (:text-and-decision:)
+{
+    match (:: :text: :decision:) [:text-and-decision:] /(.*?)-_-_-(.*)/
+    isolate (:decision-file:) /\/home\/tmh\/workspace\/market-analyzer\/news_:*:decision:.chs/
+    # output /text in read-news: :*:text:\n/
+    # output /decision in read-news: :*:decision:\n/
+    output /decision-file in read-news: :*:decision-file:\n/
+    learn <hyperspace unique> [:text:] (:*:decision-file:)
+    return
+}
