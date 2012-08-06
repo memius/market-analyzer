@@ -10,6 +10,10 @@ ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
 
+du har problemer med subprocess-modulen, som tilsynelatende ikke har
+en call() funksjon, selv om den skal ha det.
+
+
 
 
 plugg inn crm nå. 

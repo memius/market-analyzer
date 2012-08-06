@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8
 
-import sys, os
+import sys, subprocess, os
 
 # reload(sys) #these two lines crash something
 # sys.setdefaultencoding('utf-8')
@@ -16,18 +16,16 @@ import sys, os
 
 def classify(news):
     print 'news in crm.classify:',news,'END news\n'
-    # puts the news in a file called 'news.txt', to be read by crm programs. this avoids nested quote problems:
-    textfile = os.open('/home/tmh/workspace/market_analyzer/news.txt',777)
-    os.write(textfile,news) # completely overwrites previous text in the file
-    os.close(textfile)
 
-    # textfile-in function open() is apparently better:
-    # text = open('/home/tmh/documents/projects/trading/teab/stocks/news.txt',w)
-    # who knows what should happen here.
-    
-    command = 'crm /home/tmh/workspace/market_analyzer/classify.crm /home/tmh/workspace/market_analyzer/news.txt'
+    #writing to a file not allowed in gae. use db instead, like you do now.
+    # # puts the news in a file called 'news.txt', to be read by crm programs. this avoids nested quote problems:
+    # textfile = open('/home/tmh/workspace/market_analyzer/news.txt','w') # 'w' overwrites
+    # textfile.write(news) 
+    # textfile.close
+
+    command = '"""' + 'crm /home/tmh/workspace/market_analyzer/classify.crm ' + news + '"""'
     # print '3: command in logic.classify: ',command, 'END command'
-    conclusion = os.system(command)
+    conclusion = subprocess.check_call(command)
     # print conclusion
     if conclusion == 256:
         conclusion = 'news_buy'
@@ -41,9 +39,9 @@ def classify(news):
 # classify("Statoil's shares are legion")
 
 def learn(news,decision):
-    textfile = os.open('/home/tmh/workspace/market_analyzer/news.txt',777)
-    os.write(textfile,news) # completely overwrites previous text in the file
-    os.close(textfile)
+    textfile = open('/home/tmh/workspace/market_analyzer/news.txt','w')
+    textfile.write(news) 
+    textfile.close
 
     command = 'crm /home/tmh/workspace/market_analyzer/learn.crm '
     command += '"'

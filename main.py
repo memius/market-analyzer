@@ -134,6 +134,8 @@ class MainPage(webapp2.RequestHandler):
 #                     article = Article(parent = articles_key())  #must have an if not already exists here
 #                     content = fetch.article(link) # list of strings
 #                     text = ' '.join(content)
+#                     text = text.decode('utf-8')
+#                     text = unicode(text)
 #                     # text = ""
 #                     # for sentence in content:
 #                     #     text = sentence + text # maybe + " " +
@@ -143,13 +145,14 @@ class MainPage(webapp2.RequestHandler):
 #                     article.put()
 # #                    articles.append(article.content)
 
+
         articles = Article.all().ancestor(articles_key())
         content = []
         for article in articles:
             text = article.content
-            #recommendation = crm.classify(text) #this must be put to company.recommendation
-            #content.append(recommendation)
-            content.append(text)
+            recommendation = crm.classify(text) #this must be put to company.recommendation
+            content.append(recommendation)
+            #content.append(text)
 
         #db.delete(articles) #removes all entries from db
 
