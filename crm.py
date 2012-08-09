@@ -1,7 +1,10 @@
 #!/usr/bin/python
 # coding: utf-8
 
-import sys, subprocess, os
+import sys, os 
+# import subprocess not allowed in gae
+
+#from subprocess import call
 
 # reload(sys) #these two lines crash something
 # sys.setdefaultencoding('utf-8')
@@ -36,7 +39,7 @@ def classify(news):
     print 'news conclusion: ',conclusion
     return conclusion
 
-# classify("Statoil's shares are legion")
+#classify("Statoil's shares are legion")
 
 def learn(news,decision):
     textfile = open('/home/tmh/workspace/market_analyzer/news.txt','w')

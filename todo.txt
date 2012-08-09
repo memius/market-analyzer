@@ -8,10 +8,35 @@ maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
+prøv om wrapperen til crm114 faktisk funker. antakelig ikke, men vær
+sikker før du antar!
+
+
+du bruker google sin prediction api. den kommer ikke til å koste deg
+noe med mindre dette går strålende, så det er greit. sjekk om det
+allerede finnes trenede good_business_news | bad_business_news om
+spesifikke selskaper, eller generelt om business.
+
+
+
+
+finn crm.py, laget av openvest development. putt den i folderen, og
+rename din egen crm.py til noe annet. se om det da går an å bruke
+den. (dersom openvest sin crm.py inneholder subprocess modulen, så vil
+det ikke gå. da må du finne på noe annet.
+
+
+
+
+
 
 
 du har problemer med subprocess-modulen, som tilsynelatende ikke har
-en call() funksjon, selv om den skal ha det.
+en call() funksjon, selv om den skal ha det. subprocesses not allowed
+in google appengine. d'oh.
+
+how to start crm114 then? some stupid wrap?
+
 
 
 
