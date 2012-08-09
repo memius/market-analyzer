@@ -1,15 +1,13 @@
-bruk yahoo data til å få tak i kurser og slikt:
-http://www.gummy-stuff.org/Yahoo-data.htm
-
-
-
 sjekk (i morgen igjen) at cron backupene har gått på kryss av
 maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
 
-prøv om wrapperen til crm114 faktisk funker. antakelig ikke, men vær
-sikker før du antar!
+bruk yahoo data til å få tak i kurser og slikt:
+http://www.gummy-stuff.org/Yahoo-data.htm
+
+
+
 
 
 du bruker google sin prediction api. den kommer ikke til å koste deg
@@ -20,28 +18,6 @@ spesifikke selskaper, eller generelt om business.
 
 
 
-finn crm.py, laget av openvest development. putt den i folderen, og
-rename din egen crm.py til noe annet. se om det da går an å bruke
-den. (dersom openvest sin crm.py inneholder subprocess modulen, så vil
-det ikke gå. da må du finne på noe annet.
-
-
-
-
-
-
-
-du har problemer med subprocess-modulen, som tilsynelatende ikke har
-en call() funksjon, selv om den skal ha det. subprocesses not allowed
-in google appengine. d'oh.
-
-how to start crm114 then? some stupid wrap?
-
-
-
-
-
-plugg inn crm nå. 
 
 drit i adm og optimeringsting, som hvem som har
 tilgang, og om ting blir duplisert, og om teksten er perfekt.
@@ -430,3 +406,28 @@ they click the link. perhaps you can even track that, and look at the
 articles for which they click the link, so you can see why they
 weren't happy just reading the text for crm.
 
+prøv om wrapperen til crm114 faktisk funker. antakelig ikke, men vær
+sikker før du antar!
+
+finn crm.py, laget av openvest development. putt den i folderen, og
+rename din egen crm.py til noe annet. se om det da går an å bruke
+den. (dersom openvest sin crm.py inneholder subprocess modulen, så vil
+det ikke gå. da må du finne på noe annet.
+
+
+
+
+
+
+
+du har problemer med subprocess-modulen, som tilsynelatende ikke har
+en call() funksjon, selv om den skal ha det. subprocesses not allowed
+in google appengine. d'oh.
+
+how to start crm114 then? some stupid wrap?
+
+
+
+
+
+plugg inn crm nå. 
