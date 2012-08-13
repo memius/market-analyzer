@@ -1,64 +1,17 @@
-#from google.appengine.api import urlfetch
-#import string
-
-#btw: the u' in front means the string is unicode.
-
-
-
-# import logging
-
-# import fetch, crawl
-
-# logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
-
-# print '' #needed to get anything printed on screen
-
-
-
-
-# #debugging only:
-# urls = crawl.links("http://news.google.com")
-
-# logging.debug('urls: %s END urls',urls)
-
-# # for url in urls:
-# # #    url = unicode(url,'utf-8',errors='replace')
-# # #    url = url.encode('utf-8')
-# #     print ''
-# #     print url
-
-# # #debugging only:
-# # urls = [urls[11],urls[12]]
-# # print 'urls[0]: ',urls[0]
-
-# for url in urls:
-# #     #print 'link: ', link
-# #     #url = link['href']
-#     try:
-#         doc_title, keywords, title, img_txt, intro, text = fetch.article(url)
-#         print 'doc_title: ', doc_title
-#         print 'keywords: ', keywords
-#         print 'title: ', title
-#         print 'img_txt: ', img_txt
-#         print 'intro: ', intro
-#         print 'text: ', text
-#     except:
-#         print 'no content'
-
-
-
-# for aa kunne bruke python 2.7:
-
-
+# coding: utf-8
 
 import webapp2, cgi, urllib, jinja2, os, logging, itertools
 
 from google.appengine.api import users
 from google.appengine.ext import db
+from apiclient.discovery import build
 
-import utils, crawl, sites, fetch, crm
+import utils, crawl, sites, fetch
+
 
 logging.basicConfig(filename='main.log', filemode='w', level=logging.DEBUG)
+
+service = build('prediction', 'v1.4', http=http)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -149,10 +102,10 @@ class MainPage(webapp2.RequestHandler):
         articles = Article.all().ancestor(articles_key())
         content = []
         for article in articles:
-            text = article.content
-            recommendation = crm.classify(text) #this must be put to company.recommendation
-            content.append(recommendation)
-            #content.append(text)
+            text = article.url
+            #recommendation = crm.classify(text) #this must be put to company.recommendation
+            #content.append(recommendation)
+            content.append(text)
 
         #db.delete(articles) #removes all entries from db
 

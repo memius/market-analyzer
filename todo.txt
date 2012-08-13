@@ -2,61 +2,65 @@ sjekk (i morgen igjen) at cron backupene har gått på kryss av
 maskinene. bbg sin funket, og de interne funket. min eksterne funket
 ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
 
-
-bruk yahoo data til å få tak i kurser og slikt:
-http://www.gummy-stuff.org/Yahoo-data.htm
-
-
+tweetdeck, eller en samling av forskjellige finanstweets, er en bra
+addon til google finance. fra twitter får man tidligere, og mer
+personlige, umiddelbare nyheter.
 
 
 
-du bruker google sin prediction api. den kommer ikke til å koste deg
-noe med mindre dette går strålende, så det er greit. sjekk om det
-allerede finnes trenede good_business_news | bad_business_news om
-spesifikke selskaper, eller generelt om business.
+-legg in prediction api. dersom de har fail categories, la neutral
+ være det. hvis ikke, la neutral være en egen kategori.
+
+-tren noen artikler.
+
+-se om sentiment classification hjelper deg på noen måte. siden den
+ kan bli tatt vekk når som helst må du ikke bli avhengig av den.
+
+-display conclusion om selskap.
+
+-legg inn telleverk som sjekker at antall artikler som blir trent ikke
+ er veldig ulikt. f.eks. maks femti artikler flere før du stopper
+ treningen.
+
+-legg inn at man bare får sin brukers selskaper.
+
+-legg inn at å legge til et selskap koster penger (dersom man allerede
+ har fem eller flere selskaper på listen sin). å legge til selskap
+ (til db'en) har du enkel kode for allerede, bare trekk det ut av
+ main, og legg det inn i en funksjon.
+
+
+-legg inn ambiguous articles (display 3 of fewer).
+
+-pynt på displayen av artikler, selskaper. hele siden.
+
+-la magnus, eric, erik evensen, erik aarebrot, thor henning, eskil,
+ geir, raymond alfa-teste. fortell dem at de kan kjøpe i vilden sky
+ (men tenke at det er ekte penger),
+ og at jeg vil kansellere alle innbetalingene deres.
+
+-legg websiden ut på reddit og la folk alfateste den.
+
+-lag app. websiden er gratis, appen koster fem euro. (ellers koster
+ ting det samme begge steder.)
 
 
 
 
 
-drit i adm og optimeringsting, som hvem som har
-tilgang, og om ting blir duplisert, og om teksten er perfekt.
 
-
-
-
-
-bygg opp databasen til to selskaper. ikke mer. nå er databasen
-tom. done.
-
-
-
-
+drit i adm og optimeringsting; f.eks. hvem som har
+tilgang, om ting blir duplisert og om teksten er perfekt.
 
 
 
 du får ikke news om selskaper på andre børser enn us. ikke europa, og
 ikke asia, f.eks. krx, der samsung er.
 
-du får printet ting mellom hver a. ha ha, du har fikset det. content =
-articles.content osv. 
-
-
-
-
-
-make sure the articles are stored to the db. delete everything in db,
-and start over.
-
 
 
 bruk url'en til hver artikkel til å sjekke duplikasjon. google
 "checking for duplicated content gae put()" or something.
-
-
-store the articles to db with their respective companies and
-datetimes. urls as well. 
-
 
 
 
@@ -431,3 +435,27 @@ how to start crm114 then? some stupid wrap?
 
 
 plugg inn crm nå. 
+bygg opp databasen til to selskaper. ikke mer. nå er databasen
+tom. done.
+
+
+
+du bruker google sin prediction api. den kommer ikke til å koste deg
+noe med mindre dette går strålende, så det er greit. sjekk om det
+allerede finnes trenede good_business_news | bad_business_news om
+spesifikke selskaper, eller generelt om business.
+
+
+du får printet ting mellom hver a. ha ha, du har fikset det. content =
+articles.content osv. 
+
+
+
+
+
+make sure the articles are stored to the db. delete everything in db,
+and start over.
+
+store the articles to db with their respective companies and
+datetimes. urls as well. 
+

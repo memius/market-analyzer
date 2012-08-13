@@ -1,3 +1,33 @@
+hver bruker får fem gratis selskaper han kan følge.
+
+du har en egen side med ambiguous articles. her blir artiklene
+presentert med tittel og litt tekst, slik som hos feedly. når brukeren
+klikker på tittelen eller teksten blir han tatt med til url'en, og får
+lese hele artikkelen. han kan trykke på positive eller negative i alle
+bildene.
+
+du lar tittel være en av attributtene til selskapet, og presenterer
+den i bold, med litt større skrift, slik som hos feedly. fin, friendly
+font, slik som hos feedly. se om alle, eller de fleste bruker 'title'
+som id i div'en til tittelen. det er godt mulig det bare er et par,
+tre forskjellige måter dette blir gjort på. eller kanskje seks, syv?
+samma, det. du fikser det også.
+
+ambiguous articles viser tre artikler, og de forsvinner etterhvert som
+en eller flere mennesker har vurdert dem. artikler som har en
+confindence under en treshold havner her.
+
+bruk bare pos og neg, drit i neutral. ikke tren neutral. artikler
+under en threshold havner i neutral. eller kanskje du må trene
+neutral, bare hold antall trente artikler i neutral nede på nivå med
+de to andre?
+
+du må også sørge for at antall trente artikler i pos og neg er omtrent
+likt.
+
+du henter nyhetene fra google finance, og nøkkeltall fra yahoo
+finance. eller kanskje google finance?
+http://www.gummy-stuff.org/Yahoo-data.htm
 
 
 hver bruker må ha sin portfolio med selskaper han følger. disse har
