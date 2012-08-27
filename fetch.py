@@ -13,6 +13,7 @@ import crawl, clean, block
 
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
+
 logging.basicConfig(filename='fetch.log', filemode='w', level=logging.DEBUG)
 
 
@@ -75,6 +76,9 @@ def article(url):
     soup = BeautifulSoup(html)
     logging.debug('type(soup): %s END type(soup)',type(soup))
 
+    # soup = soup.encode('utf-8') unicode object has no attribute get_text()
+    # soup = unicode(soup)
+
 #    logging.debug('soup: %s END soup', soup)
 
     # dt = doc_title(soup) #.strip()
@@ -107,6 +111,9 @@ def article(url):
 def text(soup):
 
     text = soup.get_text()
+    text = text.encode('utf-8')
+    text = text.decode('utf-8')
+    text = unicode(text)
     #debugging only:
     #text = block.string5
 
@@ -146,8 +153,26 @@ def text(soup):
     #strict cleaning before sending to crm (so it should be moved to the file that does that):
     content = clean.strict(content)
 
+    #ETTER CLEAN STRICT kan du, dersom noedvendig, dele setningene opp i ord/tokens, og sende dem til prediction api.
+    
+
+
+
+    # content = content.encode('utf-8')
+    # content = unicode(content)
+
+    #new_content = []
+    # for sentence in content:
+    #     # sentence = sentence.encode('utf-8')
+    #     # sentence = unicode(sentence)
+    #     # new_content.append(sentence)
+    #     new_content.append(unicode(sentence.encode('utf-8')))
+
+    text = ' '.join(content)
+
+
     #return text_no_tags
-    return content
+    return text
 
 #print article("http://www.businessweek.com/news/2012-07-31/microsoft-says-it-s-open-to-patent-peace-with-google-s-motorola")
 

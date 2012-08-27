@@ -1,12 +1,131 @@
-sjekk (i morgen igjen) at cron backupene har gått på kryss av
-maskinene. bbg sin funket, og de interne funket. min eksterne funket
-ikke. har rettet ndiff til rdiff. kanskje det virker nå? :)
-
-tweetdeck, eller en samling av forskjellige finanstweets, er en bra
-addon til google finance. fra twitter får man tidligere, og mer
-personlige, umiddelbare nyheter.
+du må putte tingene fra prediction api inn i templaten, og kalle
+templaten etter at du har gjort de tingene.
 
 
+
+
+
+
+
+
+
+
+
+
+
+du får ingen errors, men du får bare displayet 'tmh', selv om du ikke
+har slettet noe fra db'en. dvs. at db'en forsvinner hver gang du
+stopper serveren? hm. nei, ikke bare kutte serveren. hva da? mye
+forandring av kode? tviler litt på det. ny db pga. autorisering, etc?
+
+
+
+
+
+ok. login required løst ved å importere login_required. det er andre
+ting som også må importeres, f.eks. memcache, og kanskje
+flowsomething.
+
+nå får du 'tuple not callable' på ('/auth_return',AuthHandler)
+
+
+
+
+
+try-pred bruker python 27, så det er ikke der problemet ligger.
+
+
+det funket ikke å inkludere authhandler. hm. det er i alle fall noe
+muffens med webapp vs. webapp2. authhandler bruker webapp, og i følge
+gae så er det 'no module named webapp'.
+
+
+
+name 'login_required' is not defined. sjekk staving, hvor definert, og
+hvordan kalt.
+
+
+
+
+auth_return defineres i try-predictions MAIN.PY, som forteller hvilke
+klasser som skal handle hvilke url'er. det er authhandler, som nå
+ligger nederst i min main.py, som handler auth_return-url'en.
+
+dvs. at så lenge jeg får koblet authhandler på auth-return, så er vi i
+boks.
+
+
+
+
+
+
+
+du må ha mange predictors; en for hvert selskap. sjekk pricing.
+
+du må kanskje forandre tittelen til transfarmr? i hvert fall før du
+publiserer på nettet. gjør det, og test selv, deretter kan du finne på
+et annet navn etterhvert. bruk transfarmr som testbed.
+
+
+
+hvis ikke det under funker: kopier try-prediction-scriptet nøyaktig,
+og kjør det akkurat slik som beskrevet. se om det funker da, og ekstrapoler.
+
+
+
+du trenger antakelig authhandler, som er nederst i home.py. putt den i
+main.py, og sjekk at den blir kalt på en eller annen måte.
+
+du må finne ut hva '/auth_return' er for noe, hvor den er definert. se
+under: google tror at jeg vil bruke den, i alle fall. den defineres i
+if not credentials-seksjonen i main.py. callback = ...
+
+
+
+på nettsiden til google, som du havner på når du forsøker på
+oauth2client, står det at redirect uri'en er
+localhost:8080/auth_return, som du kanskje ikke har definert. har det
+noe med dette å gjøre?
+
+
+
+
+
+
+
+i tillegg: hva om scope er for stort? nå ber du jo om en read-write
+greie som du ikke har tilgang til, i tillegg til prediction.
+
+
+
+
+
+
+
+
+
+
+du må få definert redirect_url et eller annet sted. det er muligens
+det som gjør at auth requesten til google feiler med invalid
+client. eller kanskje du har skrevet inn id og secret feil?
+
+
+
+du holder på å lese basic steps, på
+https://developers.google.com/accounts/docs/OAuth2#scenarios
+
+der vil du få vite hvordan du skal skaffe deg et token.
+
+
+
+
+
+kanskje du må publishe appen på appengine for at prediction skal
+virke? den virker vel neppe lokalt, med mindre du har logget inn som
+thomas@dictatr.com, som du kanskje kan gjøre dersom du kommenterer inn
+igjen seksjonen om flow i main.py.
+
+-fiks oauth2client credentials
 
 -legg in prediction api. dersom de har fail categories, la neutral
  være det. hvis ikke, la neutral være en egen kategori.
@@ -43,6 +162,8 @@ personlige, umiddelbare nyheter.
 
 -lag app. websiden er gratis, appen koster fem euro. (ellers koster
  ting det samme begge steder.)
+
+
 
 
 
@@ -458,4 +579,8 @@ and start over.
 
 store the articles to db with their respective companies and
 datetimes. urls as well. 
+
+ok. nå spør den brukeren om permissions, som er fremskritt, men når
+den skal redirecte til auth_return, så får jeg 404. dvs. at
+auth_return er definert i f.eks. javascript.
 

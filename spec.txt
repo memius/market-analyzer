@@ -1,3 +1,23 @@
+konklusjonen er positive (company specific news) eller negative
+(company specific news). ikke up eller down, fordi det er et lag til
+med analyse for å bestemme om positive nyheter gjør at kursen går opp
+eller ned. slettes ikke buy eller sell, fordi det utgjør enda et lag
+med analyse.
+
+'the app will tell you if the news specific to a particular company
+are mostly positive, or mostly negative. it will also tell you its
+confidence level that its conclusion is sound.'
+
+
+tweetdeck, eller en samling av forskjellige finanstweets, er en bra
+addon til google finance. fra twitter får man tidligere, og mer
+personlige, umiddelbare nyheter.
+
+etterhvert vil du antakelig hente inn nyheter fra finance.yahoo.com i
+tillegg til google.com/finance, i tilfelle google legger ned finance,
+eller de er ute en dag, eller yahoo har bedre eller flere nyheter.
+
+
 hver bruker får fem gratis selskaper han kan følge.
 
 du har en egen side med ambiguous articles. her blir artiklene

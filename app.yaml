@@ -7,11 +7,15 @@ threadsafe: True
 
 handlers:
 - url: /stylesheets
-  static_dir: stylesheets
+  static_dir: static/stylesheets
 
 - url: /.*
   script: main.app
 
+
 libraries:
 - name: jinja2
   version: latest 
+
+- name: lxml
+  version: latest

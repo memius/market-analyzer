@@ -5,7 +5,15 @@ import googlevoice for å sende sms'er.
 
 
 
+for å installere prediction api:
+du må sudo dpkg -i to forskjellige pakker fra:
+http://code.google.com/p/google-api-python-client/downloads/detail?name=python-google-api-python-client_1.0c2-1_all.deb&can=2&q=
 
+api-python-client og python-oauth2client
+
+
+muligens også:
+sudo pip install --upgrade google-api-python-client
 
 
 
@@ -115,5 +123,16 @@ for å fjerne python 2.5: fjern alt som har med python 2.5 å gjøre fra
 /usr/bin og usr/local/bin.
 
 for å installere bs4:
+
+...
+
+
+
+
+
+andre ting som må installeres:
+python-gflags, python-bs4, gitk(?), 
+
+
 
 
