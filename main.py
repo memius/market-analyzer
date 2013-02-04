@@ -16,15 +16,13 @@ import utils, crawl, sites, fetch
 
 SCOPE = ('https://www.googleapis.com/auth/devstorage.read_write ' +
          'https://www.googleapis.com/auth/prediction')
-USER_AGENT = 'try-prediction/1.0' #shouldn't it be 1.4?
+USER_AGENT = 'try-prediction/1.0'
 #SECRETS_FILE = 'json/client_secrets.json'
 ID_FILE = 'static/txt/id.txt'
 SECRETS_FILE = 'static/txt/secret.txt'
-DEFAULT_MODEL = 'Language Detection'
+DEFAULT_MODEL = '402'
 
 logging.basicConfig(filename='logs/main.log', filemode='w', level=logging.DEBUG)
-
-#service = build('prediction', 'v1.4', http=http)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -55,6 +53,12 @@ class Company(db.Model):
     @property
     def articles(self):
         return Article.gql("WHERE companies = :1", self.key()) #the articles that are relevant for the company
+
+
+# you probably need this:
+# class User(db.Model):
+#     name = db.StringProperty()
+#     companies = db.ListProperty()
 
 def companies_key(companies_name=None):
   """Constructs a Datastore key for a Companies entity with companies_name."""
@@ -124,17 +128,6 @@ class MainPage(webapp2.RequestHandler):
 
         #db.delete(articles) #removes all entries from db
 
-        template_values = {
-            'user' : user,
-            'auth_url' : auth_url,
-            'auth_url_linktext' : auth_url_linktext,
-            'companies' : companies,
-            'articles': content
-            }
-
-        template = jinja_environment.get_template('index.html')
-        self.response.out.write(template.render(template_values))
-
 # definert på api console, og kan tilsynelatende ikke endres (burde være localhost:8080):
 # redirect url:
 # urn:ietf:wg:oauth:2.0:oob
@@ -164,20 +157,29 @@ class MainPage(webapp2.RequestHandler):
                                            user_agent=USER_AGENT,
                                            access_type = 'offline',
                                            approval_prompt='force')
-                callback = self.request.relative_url('/auth_return') #redirects to AuthHandler class
-                authorize_url = flow.step1_get_authorize_url(callback)
+            callback = self.request.relative_url('/auth_return') #redirects to AuthHandler class
+            authorize_url = flow.step1_get_authorize_url(callback)
                 # Save flow object in memcache for later retrieval on OAuth callback,
                 # and redirect this session to Google's OAuth 2.0 authorization site.
-                logging.info('saving flow for user ' + user.user_id())
-                memcache.set(user.user_id(), pickle.dumps(flow))
-                self.redirect(authorize_url)
+            logging.info('saving flow for user ' + user.user_id())
+            memcache.set(user.user_id(), pickle.dumps(flow))
+            self.redirect(authorize_url)
 
 
-            # Authorize HTTP session with server credentials and obtain  
-            # access to prediction API client library.
-            http = credentials.authorize(httplib2.Http())
-            service = build('prediction', 'v1.4', http=http)
-            papi = service.trainedmodels()
+        except Exception, err:
+            # Capture any API errors here and pass response from API back to
+            # Javascript client embedded in a special error indication tag.
+            err_str = str(err)
+            # if err_str[0:len(ERR_TAG)] != ERR_TAG:
+            #     err_str = ERR_TAG + err_str + ERR_END
+            self.response.out.write(err_str) #does this print anything, or is it trumped by the template?
+
+
+        # Authorize HTTP session with server credentials and obtain  
+        # access to prediction API client library.
+        http = credentials.authorize(httplib2.Http())
+        service = build('prediction', 'v1.5', http=http)
+        papi = service.trainedmodels()
     
             # Read and parse JSON model description data.
             #models = parse_json_file(MODELS_FILE)
@@ -185,7 +187,7 @@ class MainPage(webapp2.RequestHandler):
             # Get reference to user's selected model.
             #model_name = self.request.get('model')
             #model = 'Language Detection'
-            model = 'languages'
+        model = DEFAULT_MODEL
 
             # # Build prediction data (csvInstance) dynamically based on form input.
             # vals = []
@@ -195,22 +197,33 @@ class MainPage(webapp2.RequestHandler):
             # vals.append(val)
             # body = {'input' : {'csvInstance' : vals }}
             # logging.info('model:' + model_name + ' body:' + str(body))
-            vals = ['these','are','some','words','that','i','have','said']
-
+        vals = ['these are some words that i have said']
+        body = {'input' : {'csvInstance' : vals }}
             # Make a prediction and return JSON results to Javascript client.
-            ret = papi.predict(id=model, body=vals).execute()
-            self.response.out.write("yabbadabbadoo")
-            self.response.out.write(json.dumps(ret))
-
-        except Exception, err:
-            # Capture any API errors here and pass response from API back to
-            # Javascript client embedded in a special error indication tag.
-            err_str = str(err)
-            # if err_str[0:len(ERR_TAG)] != ERR_TAG:
-            #     err_str = ERR_TAG + err_str + ERR_END
-            self.response.out.write(err_str)
 
 
+        ret = papi.predict(id=model, body=body).execute()
+        #.insert() trains the model. .execute() classifies a sample.
+
+#            conclusion = json.dumps(ret)
+        conclusion = ret
+
+            # self.response.out.write("yabbadabbadoo")
+            # self.response.out.write(json.dumps(ret))
+
+
+
+        template_values = {
+            'user' : user,
+            'auth_url' : auth_url,
+            'auth_url_linktext' : auth_url_linktext,
+            'companies' : companies,
+            'articles': content,
+            'conclusion': conclusion
+            }
+
+        template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render(template_values))
 
 class AuthHandler(webapp2.RequestHandler):
   '''This class fields OAuth 2.0 web callback for the "Try Prediction" app.'''

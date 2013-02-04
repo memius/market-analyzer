@@ -120,7 +120,6 @@ def text(soup):
     #this works well, but takes fewer sentences than the other one
     #sentence = re.compile("(\S.+?[.!?])(?=\s+|$|\")")
 
-
     #sentence = re.compile("(?<=[.?!]|^).*?(?=([.?!])\s{0,3}[A-Z]|$)")
     #sentence = re.compile("(?:\s[a-z]\.(?:[a-z]\.)?|.)+?[.?!]+") #php attempt. uncommented.
 
@@ -144,8 +143,6 @@ def text(soup):
     # ignore this - no problem:
     #     (?=\s['\"]?[A-Z])   # or if followed by whitespace, then capital letter or quote (combine with (?!['\"]?\s|$) somehow) this is not a problem! crm doesn't care where the sentences are cut anyway!
 
-
-
     sentences = re.findall(sentence, text)
 
     #junk cleaning before storing in db:
@@ -154,9 +151,6 @@ def text(soup):
     content = clean.strict(content)
 
     #ETTER CLEAN STRICT kan du, dersom noedvendig, dele setningene opp i ord/tokens, og sende dem til prediction api.
-    
-
-
 
     # content = content.encode('utf-8')
     # content = unicode(content)
@@ -169,8 +163,6 @@ def text(soup):
     #     new_content.append(unicode(sentence.encode('utf-8')))
 
     text = ' '.join(content)
-
-
     #return text_no_tags
     return text
 

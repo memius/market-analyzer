@@ -1,3 +1,10 @@
+bruk kildekoden til wachaspati og wu:
+https://github.com/cathywu/Sentiment-Analysis/blob/master/classifier.py
+den er i python, og virker antakelig.
+
+
+
+
 import googlevoice for å sende sms'er.
 
 

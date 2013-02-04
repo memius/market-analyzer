@@ -1,3 +1,93 @@
+see if the code runs as it is now. you should get an error. remove the
+prediction and 0auth stuff, and get it running without that. it should
+be only in main.py. 
+
+
+
+
+
+
+
+
+
+
+
+get the apple bucket name, get it registered, and train it with an
+example.
+
+test it on the same article, and on another article.
+
+get a filter in place that ensures an article will only be stored and
+trained once.
+
+make the ui that enables you to train articles manually. show the
+text, and have four links: correct|pos|neutral|neg. let the next
+article pop up when you click one of these.
+
+
+
+
+make another bucket for google. do the same stuff with that.
+
+
+get the automation of creating a new bucket in place.
+
+get the access mechanics in place, so each user has his list of picks.
+
+get the buying in place so each user can add to his list.
+
+
+
+
+
+aaight, so i send all the articles to the same place - the sentiment
+is independent of the company, after all. that means i only need to
+register one model with google. the form is open in chrome already.
+
+you really should automate genarating a new predictor for each
+company, though. sigh. and you should use google, since you want their
+smooth scalability. crm would be your own thing, that you would have
+to tweak and incorporate and control, i guess.
+
+make the first one apple-specific, and write down every step of the
+way to making it work. that way, you know what you have to automate
+for the next ones.
+
+
+
+
+i sh-scriptene brukes en google key i stedet for 'language', etc.
+
+
+
+no model found. model must first be trained. feil navn på 'language',
+da, antakelig.
+
+du må altså finne riktig navn i url'en:
+
+https://www.googleapis.com/prediction/v1.4/trainedmodels/Language%20Identifier/predict?alt=json
+
+Language Identifier, Language Detection, languages, smsspam, languageidentifier og language funker ikke.
+
+etter det kan du bytte den ut med din egen, som du kan kalle news
+sentiment e.l. den må trenes før du kan querye den. finn ut hvordan
+man gjør det.
+
+
+
+
+det er en error i try credentials, men jeg kan ikke se den, fordi den
+printes ikke.
+
+se i predict.py om du har noenlunde samme kall og logikk og gang.
+
+du har byttet ut 'none' med err_str, men det hjalp ikke. ingenting
+printes nå.
+
+
+
+
+
 du må putte tingene fra prediction api inn i templaten, og kalle
 templaten etter at du har gjort de tingene.
 
