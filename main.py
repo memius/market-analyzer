@@ -125,7 +125,25 @@ class MainPage(webapp2.RequestHandler):
                     article = fetch.article(link)
 
             all_links.extend(links)
+#                     # text = ""
+#                     # for sentence in content:
+#                     #     text = sentence + text # maybe + " " +
+#                     article.content = text
+#                     article.url = link
+#                     article.companies.append(company.key())
+#                     article.put()
+# #                    articles.append(article.content)
 
+
+        articles = Article.all().ancestor(articles_key())
+        content = []
+        for article in articles:
+            text = article.content
+            #recommendation = crm.classify(text) #this must be put to company.recommendation
+            #content.append(recommendation)
+            content.append(text)
+
+        #db.delete(articles) #removes all entries from db
 
         template_values = {
             'user' : user,
