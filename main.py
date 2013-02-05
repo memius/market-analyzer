@@ -91,33 +91,33 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
-# #       adds articles to the db, relevant to 'companies'.
-# #        articles = []
-#         for company in companies:
-#             links = sites.gf(company.ticker)
-#             for link in links:
-#                 if link is not "None":
-#                     article = Article(parent = articles_key())  #must have an if not already exists here
-#                     text = fetch.article(link) # list of strings
+#       adds articles to the db, relevant to 'companies'.
+        articles = []
+        for company in companies:
+            links = sites.gf(company.ticker)
+            for link in links:
+                if link is not "None":
+                    article = Article(parent = articles_key())  #must have an if not already exists here
+                    text = fetch.article(link) # list of strings
 
 
-#                     # text = text.encode('utf-8')
-#                     # text = unicode(text)
+                    # text = text.encode('utf-8')
+                    # text = unicode(text)
 
-#                     # text = ""
-#                     # for sentence in content:
-#                     #     text = sentence + text # maybe + " " +
-#                     article.content = text
-#                     article.url = link
-#                     article.companies.append(company.key())
-#                     article.put()
-# #                    articles.append(article.content)
+                    # text = ""
+                    # for sentence in content:
+                    #     text = sentence + text # maybe + " " +
+                    article.content = text
+                    article.url = link
+                    article.companies.append(company.key())
+                    article.put()
+                    articles.append(article.content)
 
 
         articles = Article.all().ancestor(articles_key())
         content = []
         for article in articles:
-            text = article.url #.content
+            text = article.content
             #recommendation = crm.classify(text) #this must be put to company.recommendation
             #content.append(recommendation)
             content.append(text)
