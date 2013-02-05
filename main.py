@@ -117,7 +117,7 @@ class MainPage(webapp2.RequestHandler):
         articles = Article.all().ancestor(articles_key())
         content = []
         for article in articles:
-            text = article.url #.content
+            text = article.content
             #recommendation = crm.classify(text) #this must be put to company.recommendation
             #content.append(recommendation)
             content.append(text)
