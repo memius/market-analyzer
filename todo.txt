@@ -1,3 +1,20 @@
+checkout all the files. go backwards, not forwards. start a few steps
+back, when you know it will fail, and go back from there.
+
+make it work like it did, just displaying links!
+
+
+
+apparently, it doesn't work with any of the versions:
+
+git checkout 3421405pdgncvpa78
+/home/tmh/workspace/business_news/main.py
+
+so maybe there is a thing or two i've forgotten needs to be done
+before i can start the server.
+
+
+
 see if the code runs as it is now. you should get an error. remove the
 prediction and 0auth stuff, and get it running without that. it should
 be only in main.py. 
