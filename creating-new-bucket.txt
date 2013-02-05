@@ -1,0 +1,12 @@
+in 
+
+https://storage.cloud.google.com/?project=291640983723&pli=1
+
+click create new bucket.
+
+
+in
+
+https://storage.cloud.google.com/?project=291640983723&pli=1#apple-news-sentiment
+
+upload training material.
