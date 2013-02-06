@@ -22,7 +22,7 @@ ID_FILE = 'static/txt/id.txt'
 SECRETS_FILE = 'static/txt/secret.txt'
 DEFAULT_MODEL = 'Language Detection'
 
-logging.basicConfig(filename='logs/main.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='/home/tmh/workspace/business_news_analyzer/logs/main.log', filemode='w', level=logging.DEBUG)
 
 #service = build('prediction', 'v1.4', http=http)
 
@@ -98,6 +98,7 @@ class MainPage(webapp2.RequestHandler):
             links =  utils.remove_duplicates(links)
             for link in links:
                 if link is not "None":
+                    logging.debug('type(link): %s END type(link)', type(link))
                     article = Article(parent = articles_key())  #must have an if not already exists here
 
                     text = fetch.article(link) # returns one long unicode string
