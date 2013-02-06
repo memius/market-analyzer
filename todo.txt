@@ -1,3 +1,8 @@
+content er ikke tom, men fetch.article(link) henter ingenting. dersom
+du setter link til a være content, så funker det, så content blir
+stored dersom det er noe i den variabelen.
+
+
 ok, så article.content er faktisk tom. det funker med andre ting (url,
 "egen tekst"), så da er det rett og slett tomt i
 article.content. hvorfor blir ikke teksten lagret der, da? den blir jo

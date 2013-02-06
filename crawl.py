@@ -16,7 +16,7 @@ import papers
 
 from replace_characters import replace_characters
 
-logging.basicConfig(filename='crawl.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='logs/crawl.log', filemode='w', level=logging.DEBUG)
 
 def sites():
     all_urls = []

@@ -91,39 +91,40 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
-# #       adds articles to the db, relevant to 'companies'.
-# #        articles = []
-#         for company in companies:
-#             links = sites.gf(company.ticker)
-#             links =  utils.remove_duplicates(links)
-#             for link in links:
-#                 if link is not "None":
-#                     article = Article(parent = articles_key())  #must have an if not already exists here
+#       adds articles to the db, relevant to 'companies'.
+#        articles = []
+        for company in companies:
+            links = sites.gf(company.ticker)
+            links =  utils.remove_duplicates(links)
+            for link in links:
+                if link is not "None":
+                    article = Article(parent = articles_key())  #must have an if not already exists here
 
-#                     text = fetch.article(link) # list of strings
-#                     logging.debug('type(text): %s END type(text)', type(text))
+                    text = fetch.article(link) # returns one long unicode string
+                    logging.debug('type(text): %s END type(text)', type(text))
 
-#                     # text = text.encode('utf-8')
-#                     # text = unicode(text)
-#                     # text = ""
-#                     # for sentence in content:
-#                     #     text = sentence + text # maybe + " " +
-#                     article.content = text
-#                     article.url = link
-#                     article.companies.append(company.key())
-#                     article.put()
+                    # text = text.encode('utf-8')
+                    # text = unicode(text)
+                    text = link
+                    #text = str(text)
+                    # for sentence in content:
+                    #     text = sentence + text # maybe + " " +
+                    article.content = text
+                    article.url = link
+                    article.companies.append(company.key())
+                    article.put()
 
-# #                    articles.append(article.content) NOT needed (articles is fetched from db just below)
+#                    articles.append(article.content) NOT needed (articles is fetched from db just below)
 
         articles = Article.all().ancestor(articles_key())
         texts = []
         for article in articles:
-            text = article.url #content
+            text = article.content
             #recommendation = crm.classify(text) #this must be put to company.recommendation
             #content.append(recommendation)
             texts.append(text)
 
-#        db.delete(articles) #removes all entries from db
+        db.delete(articles) #removes all entries from db
 
         template_values = {
             'user' : user,
