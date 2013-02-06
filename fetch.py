@@ -14,7 +14,7 @@ import crawl, clean, block
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
 
-logging.basicConfig(filename='logs/fetch.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='fetch.log', filemode='w', level=logging.DEBUG)
 
 
 # eksempel fra 2009:
@@ -98,9 +98,14 @@ def article(url):
     # logging.debug('img_text: %s END img_text', img_text)
     # logging.debug('intro: %s END intro', intro)
     logging.debug('txt: %s END txt', txt)
+    
+    if txt is not "None":
+        return txt[2:10]
+        #return "donkey"
+    else:
+        return "giraffe"
+        #return txt #dt, k, t, it, i, txt
 
-
-    return txt #dt, k, t, it, i, txt
 
 #any non-whitespace character, followed by
 #any character, followed by
@@ -169,7 +174,6 @@ def text(soup):
     #     new_content.append(unicode(sentence.encode('utf-8')))
 
     text = ' '.join(content)
-
 
     #return text_no_tags
     return text
@@ -427,3 +431,10 @@ def old_text(soup):
 # the work of getting hold of the article text (before actually fetching the article) belongs in this module, since crawl only returns links.
 
 # this means that this module has to handle businessweek, which has an extra link which simply says 'go to businessweek' on a separate page before you actually get there. it also has to handle every other gotcha that shows up. 
+
+
+
+
+
+# #debugging only:
+# article("http://news.google.com/news/url?sa=T&ct=us/0-22-0&fd=S&url=http://www.insidermonkey.com/blog/facebook-inc-fbs-magical-revenue-stream-and-outlook-52560/&cid=0&ei=0ZoSUaCPL8SGwAOihwE&usg=AFQjCNHGq_y7kKdA51b9jJc1G71a3sae-g")

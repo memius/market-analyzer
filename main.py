@@ -81,8 +81,8 @@ class MainPage(webapp2.RequestHandler):
 
         # # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Facebook"
-        # company.ticker = "FB"
+        # company.name = "Microsoft"
+        # company.ticker = "MSFT"
         # company.exchange = "NASDAQ"
         # company.put()
 
@@ -101,12 +101,12 @@ class MainPage(webapp2.RequestHandler):
                     logging.debug('type(link): %s END type(link)', type(link))
                     article = Article(parent = articles_key())  #must have an if not already exists here
 
-                    text = fetch.article(link) # returns one long unicode string
+                    text = fetch.article(link) # should return one long unicode string. does it?
                     logging.debug('type(text): %s END type(text)', type(text))
 
-                    # text = text.encode('utf-8')
-                    # text = unicode(text)
-                    text = link
+                    #text = text.encode('utf-8')
+                    #text = unicode(text)
+                    #text = link
                     #text = str(text)
                     # for sentence in content:
                     #     text = sentence + text # maybe + " " +
@@ -125,7 +125,7 @@ class MainPage(webapp2.RequestHandler):
             #content.append(recommendation)
             texts.append(text)
 
-        db.delete(articles) #removes all entries from db
+#        #db.delete(articles) #removes all entries from db
 
         template_values = {
             'user' : user,
