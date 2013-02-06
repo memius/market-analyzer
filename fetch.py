@@ -14,7 +14,7 @@ import crawl, clean, block
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
 
-logging.basicConfig(filename='fetch.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='logs/fetch.log', filemode='w', level=logging.DEBUG)
 
 
 # eksempel fra 2009:

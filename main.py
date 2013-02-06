@@ -81,8 +81,8 @@ class MainPage(webapp2.RequestHandler):
 
         # # stores one company to the db:
         # company = Company(parent=companies_key())
-        # company.name = "Apple"
-        # company.ticker = "AAPL"
+        # company.name = "Facebook"
+        # company.ticker = "FB"
         # company.exchange = "NASDAQ"
         # company.put()
 
@@ -91,45 +91,46 @@ class MainPage(webapp2.RequestHandler):
         #db.delete(companies) #removes all entries from db
 
 
-#       adds articles to the db, relevant to 'companies'.
-        articles = []
-        for company in companies:
-            links = sites.gf(company.ticker)
-            for link in links:
-                if link is not "None":
-                    article = Article(parent = articles_key())  #must have an if not already exists here
-                    text = fetch.article(link) # list of strings
+# #       adds articles to the db, relevant to 'companies'.
+# #        articles = []
+#         for company in companies:
+#             links = sites.gf(company.ticker)
+#             links =  utils.remove_duplicates(links)
+#             for link in links:
+#                 if link is not "None":
+#                     article = Article(parent = articles_key())  #must have an if not already exists here
 
+#                     text = fetch.article(link) # list of strings
+#                     logging.debug('type(text): %s END type(text)', type(text))
 
-                    # text = text.encode('utf-8')
-                    # text = unicode(text)
+#                     # text = text.encode('utf-8')
+#                     # text = unicode(text)
+#                     # text = ""
+#                     # for sentence in content:
+#                     #     text = sentence + text # maybe + " " +
+#                     article.content = text
+#                     article.url = link
+#                     article.companies.append(company.key())
+#                     article.put()
 
-                    # text = ""
-                    # for sentence in content:
-                    #     text = sentence + text # maybe + " " +
-                    article.content = text
-                    article.url = link
-                    article.companies.append(company.key())
-                    article.put()
-                    articles.append(article.content)
-
+# #                    articles.append(article.content) NOT needed (articles is fetched from db just below)
 
         articles = Article.all().ancestor(articles_key())
-        content = []
+        texts = []
         for article in articles:
-            text = article.content
+            text = article.url #content
             #recommendation = crm.classify(text) #this must be put to company.recommendation
             #content.append(recommendation)
-            content.append(text)
+            texts.append(text)
 
-        #db.delete(articles) #removes all entries from db
+#        db.delete(articles) #removes all entries from db
 
         template_values = {
             'user' : user,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
             'companies' : companies,
-            'articles': content
+            'articles': texts
             }
 
         template = jinja_environment.get_template('index.html')

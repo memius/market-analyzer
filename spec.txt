@@ -1,3 +1,32 @@
+filter out duplicates, collect articles, and make sure every
+correction is stored, so you can run them again and again. 
+
+
+
+
+
+
+
+
+
+
+
+
+the you can
+plug in a simple bayesian or markovian, and see what works. forget
+about google predict. work on this over christmas, while the family is
+away. take time off from work before or after christmas, depending on
+when they leave for france.
+
+
+ensemble is better. you have access to implementations of svm, maxent
+and naive bayes. combine the three for a 3-4% accuracy boost.
+
+well, it's now after christmas. you work in a couple of weeks. do it
+now.
+
+
+
 konklusjonen er positive (company specific news) eller negative
 (company specific news). ikke up eller down, fordi det er et lag til
 med analyse for å bestemme om positive nyheter gjør at kursen går opp
