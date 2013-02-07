@@ -7,8 +7,8 @@ import math, re
 
 def count_tokens(text):
     #non-whitespace characters followed by a space, period, question mark or exclamation mark:
-    #now, it captures '' as well, which it shouldn't.
-    token = re.compile("\S*?(?= |\.|\?|!)") 
+    token = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)") 
+    #token = re.compile("\w+") not satisfactory
     tokens = re.findall(token,text)
     d = dict()
     for word in tokens:
@@ -41,7 +41,7 @@ def find_probability(token):
 
 
 
-text = "There were n0 c1ouds ;n th.e sky th(a)t particular ..::-- eVen|ng neither. Also, thomas@gmail.com large alien craft hovered over the landscapezzz. Busy me! Said whom?"
+text = "There were n0 c1ouds ;n th.e sky th(a)t particular ..::-- eVen|ng neither. Also, thomas@gmail.com large alien craft hovered over the landscapezzz. Well, this! Busy me! Said whom? For this; whom else were here? Well: him!"
 
 count_tokens(text)
 
