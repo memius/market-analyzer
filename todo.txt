@@ -5,7 +5,10 @@ tekst.
 det funket ikke: se på en som viser links, da, og se om du kan
 forandre bittelitt for å få tekster.
 
-
+når du har fått displayen tilbake, så kan du lage en naive bayes uten
+å involvere hele web-greia. bare for den noen tekster, og se at den
+gir konklusjoner. da kan du plugge den inn i web-greia, og trene den
+til større presisjon.
 
 
 
