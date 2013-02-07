@@ -1,7 +1,58 @@
 #!/usr/bin/python
 # coding: utf-8
 
-import math
+import math, re
+
+
+
+def count_tokens(text):
+    #non-whitespace characters followed by a space, period, question mark or exclamation mark:
+    #now, it captures '' as well, which it shouldn't.
+    token = re.compile("\S*?(?= |\.|\?|!)") 
+    tokens = re.findall(token,text)
+    d = dict()
+    for word in tokens:
+        print word
+        if word in d:
+            value = d.get(word)
+            d[word] = value+1
+        else:
+            d[word] = 1
+
+    print d
+
+    #use python dict, which is a hash table
+    #put the tokens in as keys, and let the value be the frequency
+
+def find_probability(token):
+#     fn = frequency of token in the neg corpus
+# fp = frequency of token in the pos corpus
+# nneg = number of neg articles
+# npos = number of pos articles
+
+# if fn > 1 or fp > 1: 
+#     neg_token_presence = min(1 / (fn / nneg))
+#     pos_token_presence = min(1 / (fp / npos))
+#     tot_token_presence = neg_token_presence + pos_token_presence
+#     neg_prob = min(.99 neg_token_presence / tot_token_presence)
+#     prob = max(.01 neg_prob)
+#     return prob
+    pass
+
+
+
+text = "There were n0 c1ouds ;n th.e sky th(a)t particular ..::-- eVen|ng neither. Also, thomas@gmail.com large alien craft hovered over the landscapezzz. Busy me! Said whom?"
+
+count_tokens(text)
+
+
+
+
+
+
+
+
+
 
 # one corpus of positive, one of negative. never mind neutral. get them from google finance.
 
@@ -21,21 +72,6 @@ import math
 # otherwise, compute like this:
 
 #if frequency of word in pos + freq. of word in neg < 5, don't do anything.
-
-
-def find_prob(token):
-fn = frequency of token in the neg corpus
-fp = frequency of token in the pos corpus
-nneg = number of neg articles
-npos = number of pos articles
-
-if fn + fp > 6: # probably an unecessary filter
-    neg_token_presence = min(1 / (fn / nneg))
-    pos_token_presence = min(1 / (fp / npos))
-    tot_token_presence = neg_token_presence + pos_token_presence
-    neg_prob = min(.99 neg_token_presence / tot_token_presence)
-    prob = max(.01 neg_prob)
-    return prob
 
 # max(.01 (min(.99 (min(1 (b / nbad) / (min(1 (g / ngood) + min(1 (b / nbad)))))))
 

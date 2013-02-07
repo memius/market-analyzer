@@ -14,7 +14,7 @@ import crawl, clean, block
 #reload(sys) # leads to illegal seek error (needs one reload to load page)
 #sys.setdefaultencoding('utf-8')
 
-logging.basicConfig(filename='fetch.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='logs/fetch.log', filemode='w', level=logging.DEBUG)
 
 
 # eksempel fra 2009:
@@ -100,10 +100,11 @@ def article(url):
     logging.debug('txt: %s END txt', txt)
     
     if txt is not "None":
-        #return txt[2:10]
-        return "boa constrictor"
+        #print type(txt)
+        return txt
+        #return u"bringer"
     else:
-        return "giraffe"
+        return "text is 'None' in fetch.article()"
         #return txt #dt, k, t, it, i, txt
 
 
@@ -436,5 +437,5 @@ def old_text(soup):
 
 
 
-# #debugging only:
-# article("http://news.google.com/news/url?sa=T&ct=us/0-22-0&fd=S&url=http://www.insidermonkey.com/blog/facebook-inc-fbs-magical-revenue-stream-and-outlook-52560/&cid=0&ei=0ZoSUaCPL8SGwAOihwE&usg=AFQjCNHGq_y7kKdA51b9jJc1G71a3sae-g")
+#debugging only, bottom:
+#article("http://news.google.com/news/url?sa=T&ct=us/0-17-2&fd=S&url=http://www.valuewalk.com/2013/02/facebook-inc-fb-will-soon-be-tracking-your-location/&cid=52778083148684&ei=wZMTUZjCEaSCwAPsUQ&usg=AFQjCNFwxqsZun1VzRbmRQWOYELqQG2sdA")

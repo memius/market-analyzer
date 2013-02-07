@@ -1,3 +1,8 @@
+work on bayes probabilities for a while. counting tokens is next.
+
+
+
+
 checkout in tidligere versjon; se at den virker. diff den og
 current. se hva forskjellen er, som gjør at den ikke vil displaye
 tekst.
