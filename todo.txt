@@ -2,6 +2,10 @@ checkout in tidligere versjon; se at den virker. diff den og
 current. se hva forskjellen er, som gjør at den ikke vil displaye
 tekst.
 
+det funket ikke: se på en som viser links, da, og se om du kan
+forandre bittelitt for å få tekster.
+
+
 
 
 
