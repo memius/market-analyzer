@@ -100,8 +100,8 @@ def article(url):
     logging.debug('txt: %s END txt', txt)
     
     if txt is not "None":
-        return txt[2:10]
-        #return "donkey"
+        #return txt[2:10]
+        return "boa constrictor"
     else:
         return "giraffe"
         #return txt #dt, k, t, it, i, txt

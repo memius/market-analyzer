@@ -1,3 +1,28 @@
+checkout in tidligere versjon; se at den virker. diff den og
+current. se hva forskjellen er, som gjør at den ikke vil displaye
+tekst.
+
+
+
+
+
+txt ut fra fetch.article(link) er ikke "None", men heller ikke tekst,
+selv om den skulle være unicode.
+
+finn ut hva den er. kjør f.eks. programmene uten alt web-pisset. bare
+kjør sites, fetch, classify, og når det funker, så putter du det inn i
+web-servicen.
+
+on the other hand, you won't have the db without the web engine...
+
+
+
+
+
+
+
+
+
 content er ikke tom, men fetch.article(link) henter ingenting. dersom
 du setter link til a være content, så funker det, så content blir
 stored dersom det er noe i den variabelen.
