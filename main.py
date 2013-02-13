@@ -37,7 +37,7 @@ jinja_environment = jinja2.Environment(
 
 class Article(db.Model):
     #content = db.TextProperty()
-    content = db.StringProperty(multiline=True)
+    content = db.TextProperty()
     datetime = db.DateTimeProperty(auto_now_add=True)
     companies = db.ListProperty(db.Key) #the companies for which the article is relevant
     url = db.StringProperty()
@@ -91,34 +91,35 @@ class MainPage(webapp2.RequestHandler):
         #companies = companies.fetch(60)
         #db.delete(companies) #removes all entries from db
 
-# #       adds articles to the db, relevant to 'companies'.
-#         #particles = []
-#         for company in companies:
-#             links = sites.gf(company.ticker)
-#             links =  utils.remove_duplicates(links)
-#             for link in links:
-#                 if link is not "None":
-#                     logging.debug('type(link): %s END type(link)', type(link))
-#                     article = Article(parent = articles_key())  #must have an if not already exists here
+#       adds articles to the db, relevant to 'companies'.
+#        particles = []
+        for company in companies:
+            links = sites.gf(company.ticker)
+            links =  utils.remove_duplicates(links)
+            for link in links:
+                if link is not "None":
+                    logging.debug('type(link): %s END type(link)', type(link))
+                    article = Article(parent = articles_key())  #must have an if not already exists here
 
-#                     text = fetch.article(link) # should return one long unicode string. does it?
-#                     #particles.append(text) #NOT needed (articles is fetched from db just below)
-#                     logging.debug('type(text): %s END type(text)', type(text))
+                    text = fetch.article(link) # should return one long unicode string. does it?
+#                    particles.append(text) #NOT needed (articles is fetched from db just below)
+                    logging.debug('type(text): %s END type(text)', type(text))
 
-#                     #text = text.encode('utf-8')
-#                     #text = unicode(text)
-#                     #text = link
-#                     #text = str(text)
-#                     # for sentence in content:
-#                     #     text = sentence + text # maybe + " " +
-#                     article.content = text
-#                     article.url = link
-#                     article.companies.append(company.key())
-#                     article.put()
+                    #text = text.encode('utf-8')
+                    #text = unicode(text)
+                    #text = link
+                    #text = str(text)
+                    # for sentence in content:
+                    #     text = sentence + text # maybe + " " +
+                    article.content = text
+                    article.url = link
+                    article.companies.append(company.key())
+                    article.put()
 
         articles = Article.all().ancestor(articles_key())
         texts = []
         for article in articles:
+#            text = article
             text = article.content #url
             #recommendation = crm.classify(text) #this must be put to company.recommendation
             #content.append(recommendation)

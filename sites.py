@@ -2,12 +2,12 @@
 
 import urllib2,re
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 
 def gf(ticker):
     url = "https://www.google.com/finance/company_news?q=NASDAQ:" + ticker + "&start=10&num=10"
     html = urllib2.urlopen(url).read()
-    soup = BeautifulSoup(html)
+    soup = bs(html)
     #div_id = re.compile("Article[0-9*]")
     #divs = soup.find_all("div", {"id" : div_id})
     div_class = re.compile("^g-section.*")
@@ -19,6 +19,9 @@ def gf(ticker):
         
         try:
             link = link_regex.group(1)
+            soup = bs(link) #yes, you can bs a unicode string
+            link = soup.get_text() #in order to remove html markup like &amp;
+
 
         except:
             link = "None"

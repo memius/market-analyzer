@@ -1,3 +1,17 @@
+you need to have the storing of the article text (and its tag
+(pos/neg) to the db in order to be able to work sensibly on the
+bayesian filtering.
+
+the reason why the links are empty is in sites.gf(). it returns empty
+links. nei, det er ikke det. det er at linkene som hentes fra sites er
+i unicode, og inneholder html-tags for & osv, og det klarer ikke fetch
+å bruke til noe vettugt. må vel rense linkene før de brukes, da? eller
+sørge for at teksten, og ikke html'en, hentes.
+
+
+
+
+
 work on bayes probabilities for a while. counting tokens is next.
 
 
