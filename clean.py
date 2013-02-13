@@ -3,7 +3,6 @@
 import re, string
 
 
-
 def junk(sentences):
     cleaned_sentences = []
     for sentence in sentences:

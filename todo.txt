@@ -1,3 +1,14 @@
+artiklene blir nå hentet skikkelig.
+
+du kan nå hente artikler fra databasen, og klassifisere
+dem. etterhvert som artiklene blir klassifisert, vil ordene i dem bli
+få en pos eller neg tag i valuelisten i artikkeldict'en til det
+selskapet.
+
+når klassifiseringen funker, men dårlig, legger du til brukerkorrigering.
+
+
+
 you need to have the storing of the article text (and its tag
 (pos/neg) to the db in order to be able to work sensibly on the
 bayesian filtering.

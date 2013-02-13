@@ -99,41 +99,32 @@ class MainPage(webapp2.RequestHandler):
 #             for link in links:
 #                 if link is not "None":
 #                     logging.debug('type(link): %s END type(link)', type(link))
-#                     article = Article(parent = articles_key())  #must have an if not already exists here
+#                     article_object = Article(parent = articles_key())  #must have an if not already exists here
 
-#                     text = fetch.article(link) # should return one long unicode string. does it?
-# #                    particles.append(text) #NOT needed (articles is fetched from db just below)
-#                     logging.debug('type(text): %s END type(text)', type(text))
+#                     article_text = fetch.article(link) # should return one long unicode string. does it?
+# #                    particles.append(article_text) #NOT needed (articles is fetched from db just below)
+#                     logging.debug('type(article_text): %s END type(article_text)', type(article_text))
 
-#                     #text = text.encode('utf-8')
-#                     #text = unicode(text)
-#                     #text = link
-#                     #text = str(text)
-#                     # for sentence in content:
-#                     #     text = sentence + text # maybe + " " +
-#                     article.content = text
-#                     article.url = link
-#                     article.companies.append(company.key())
-#                     article.put()
+#                     if utils.is_article(article_text):
+#                         article_object.content = article_text
+#                         article_object.url = link
+#                         article_object.companies.append(company.key())
+#                         article_object.put()
 
-        articles = Article.all().ancestor(articles_key())
-        texts = []
-        for article in articles:
-#            text = article
-            text = article.content #url
-            #recommendation = crm.classify(text) #this must be put to company.recommendation
-            #content.append(recommendation)
-            texts.append(text)
-#           texts.append(article)
+#         article_objects = Article.all().ancestor(articles_key())
+#         article_texts = []
+#         for article_object in article_objects:
+#             article_text = article_object.content #url
+#             article_texts.append(article_text)
 
-##        db.delete(articles) #removes all article entries from db
+##        db.delete(article_objects) #removes all article entries from db
 
         template_values = {
             'user' : user,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
             'companies' : companies,
-            'articles': texts
+            'articles': article_texts
             }
 
         template = jinja_environment.get_template('index.html')
