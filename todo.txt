@@ -1,9 +1,82 @@
+1. get corpus size from db. use the whole bunch of articles, never
+mind whether they are pos or neg. display it on the web page.
+
+count = modelname.all(keys_only=True).count()
+
+count = modelname.all(keys_only=True).count(some_upper_bound)
+
+
+
+2. use count tokens to get frequencies. divide in half to get npos and
+nneg, since the corpus is not divided in two (three) yet. display that
+too, on the web page.
+
+3. finish verdict(), which is described in the first paragraph
+below. display that too.
+
+when you pull a word out of the db, you check if it has a sentiment
+tag. if it doesn't, you run it through verdict and give it a
+tag. then you should send it to human correction.
+
+
+
+to calculate the prob. of a text, you need to know the probs of all
+the words in that text. is that simply the average of all the word
+probabilities, or what? what does bayes say?
+
+bayes says: the combined prob of a, b, and c is (a*b*c) / (a*b*c + (1 - a)(1 -
+b)(1 - c))
+
+in order to know the probs of all the words in the text, you need to
+know the four things (for each word):
+size of both corpuses.
+frequency of each word in both corpuses.
+
+so you want one function that takes a word, and the four things, and
+returns a prob for that word. this is find_probability()
+
+then, another function which takes all the probabilities for the
+currently relevant words, and calculates the total probability for the
+whole text. 
+
+in order to get word frequencies from the corpuses, use
+count_tokens().
+
+in order to get corpus sizes, use db syntax.
+
+after you have done this, you can start putting neg and pos tags into
+the db entry for each article when you store them. this bit is not
+needed for just cobbling together the calculating of probabilities.
+
+
+
+
+
+
+
+
+you can use the dict in naive bayes count tokens, and just add the
+probability to the value list.
+
+then, maybe store the whole dict somewhere.
+
+
+
+
+
+
+
+
+
+
+
+
 artiklene blir nå hentet skikkelig.
 
 du kan nå hente artikler fra databasen, og klassifisere
-dem. etterhvert som artiklene blir klassifisert, vil ordene i dem bli
-få en pos eller neg tag i valuelisten i artikkeldict'en til det
-selskapet.
+dem. etterhvert som artiklene blir klassifisert, vil ordene i dem 
+få en 0.01-0.99 verditag i valuelisten i artikkeldict'en til det
+selskapet. samtidig vil artikkelen få en pos/neg tag.
 
 når klassifiseringen funker, men dårlig, legger du til brukerkorrigering.
 

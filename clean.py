@@ -2,6 +2,8 @@
 
 import re, string
 
+#you don't get words like 'get and "We. make sure you get words that have a quote at the beginning.
+
 
 def junk(sentences):
     cleaned_sentences = []

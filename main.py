@@ -12,7 +12,7 @@ from oauth2client.appengine import StorageByKeyName
 from oauth2client.appengine import CredentialsModel
 from oauth2client.client import OAuth2WebServerFlow
 
-import utils, crawl, sites, fetch
+import utils, crawl, sites, fetch, naive_bayes
 
 SCOPE = ('https://www.googleapis.com/auth/devstorage.read_write ' +
          'https://www.googleapis.com/auth/prediction')
@@ -41,6 +41,7 @@ class Article(db.Model):
     datetime = db.DateTimeProperty(auto_now_add=True)
     companies = db.ListProperty(db.Key) #the companies for which the article is relevant
     url = db.StringProperty()
+    sentiment = db.ByteStringProperty() #negative, positive, neutral
 
 #parent
 class Company(db.Model):
@@ -89,7 +90,7 @@ class MainPage(webapp2.RequestHandler):
 
         companies = Company.all().ancestor(companies_key())
         #companies = companies.fetch(60)
-        #db.delete(companies) #removes all entries from db
+        #db.delete(companies) #removes all company entries from db
 
 # #       adds articles to the db, relevant to 'companies'.
 # #        particles = []
@@ -111,18 +112,39 @@ class MainPage(webapp2.RequestHandler):
 #                         article_object.companies.append(company.key())
 #                         article_object.put()
 
-#         article_objects = Article.all().ancestor(articles_key())
-#         article_texts = []
-#         for article_object in article_objects:
-#             article_text = article_object.content #url
-#             article_texts.append(article_text)
+
+        #fetches articles from db:
+        article_objects = Article.all().ancestor(articles_key())
+        article_texts = []
+        for article_object in article_objects:
+            article_text = article_object.content 
+            article_texts.append(article_text)
+
+
+        #how big is each corpus:
+        size_pos_neg = Article.all(keys_only=True).count(9000)
+        size_pos_neg = size_pos_neg / 2 #dev only
+
+        #finding token frequencies for the whole corpus:
+        long_text = ' '.join(article_texts)
+        freq_pos = naive_bayes.count_tokens(long_text)
+        freq_neg = {"down": 2,"loss": 3,"warning": 2,"warns": 5,"deep": 3,"recession": 7}
+
+        # finding probabilities for each word:
+        token_probs = naive_bayes.token_probs(long_text,freq_pos,freq_neg,size_pos_neg,size_pos_neg)
+
+        #finding prob for whole text:
+        article_prob = naive_bayes.verdict(token_probs)
 
 ##        db.delete(article_objects) #removes all article entries from db
+
+
 
         template_values = {
             'user' : user,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
+            'count' : size_pos_neg,
             'companies' : companies,
             'articles': article_texts
             }
