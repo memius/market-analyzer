@@ -81,12 +81,12 @@ class MainPage(webapp2.RequestHandler):
             auth_url = users.create_login_url(self.request.uri)
             auth_url_linktext = "Login"
 
-        # stores one company to the db:
-        company = Company(parent=companies_key())
-        company.name = "Microsoft"
-        company.ticker = "MSFT"
-        company.exchange = "NASDAQ"
-        company.put()
+        # # stores one company to the db:
+        # company = Company(parent=companies_key())
+        # company.name = "Google"
+        # company.ticker = "GOOGL"
+        # company.exchange = "NASDAQ"
+        # company.put()
 
         companies = Company.all().ancestor(companies_key())
         #companies = companies.fetch(60)
@@ -103,7 +103,7 @@ class MainPage(webapp2.RequestHandler):
                     logging.debug('type(link): %s END type(link)', type(link))
                     article_object = Article(parent = articles_key())  #must have an if not already exists here
 
-                    article_text = fetch.article(link) # should return one long unicode string. does it?
+                    article_text = fetch.article(link) # returns one long unicode string.
 #                    particles.append(article_text) #NOT needed (articles is fetched from db just below)
                     logging.debug('type(article_text): %s END type(article_text)', type(article_text))
 
@@ -130,17 +130,15 @@ class MainPage(webapp2.RequestHandler):
             article_text = article_object.content 
             article_texts.append(article_text)
 
-
-        #how big is each corpus:
-        size_pos_neg = Article.all(keys_only=True).count(9000)
-        size_pos = size_pos_neg / 2 #dev only
-        size_neg = size_pos_neg / 2 #dev only
-
         #finding token frequencies for the whole corpus:
         long_text = ' '.join(article_texts)
         freq_pos = naive_bayes.count_tokens(long_text)
         freq_neg = {"down": 2,"loss": 3,"warning": 2,"warns": 5,"deep": 3,"recession": 7}
 
+        #how big is each corpus:
+        size_pos_neg = Article.all(keys_only=True).count(9000)
+        size_pos = size_pos_neg / 2 #dev only
+        size_neg = size_pos_neg / 2 #dev only
 
         article_probs = []
         for article_text in article_texts:
@@ -156,7 +154,7 @@ class MainPage(webapp2.RequestHandler):
             'user' : user,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
-            'count' : size_pos_neg, #article_probs,
+            'count' : article_probs,
             'companies' : companies,
             'articles': article_texts
             }
