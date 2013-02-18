@@ -81,42 +81,52 @@ class MainPage(webapp2.RequestHandler):
             auth_url = users.create_login_url(self.request.uri)
             auth_url_linktext = "Login"
 
-        # # stores one company to the db:
-        # company = Company(parent=companies_key())
-        # company.name = "Microsoft"
-        # company.ticker = "MSFT"
-        # company.exchange = "NASDAQ"
-        # company.put()
+        # stores one company to the db:
+        company = Company(parent=companies_key())
+        company.name = "Microsoft"
+        company.ticker = "MSFT"
+        company.exchange = "NASDAQ"
+        company.put()
 
         companies = Company.all().ancestor(companies_key())
         #companies = companies.fetch(60)
         #db.delete(companies) #removes all company entries from db
 
-# #       adds articles to the db, relevant to 'companies'.
-# #        particles = []
-#         for company in companies:
-#             links = sites.gf(company.ticker)
-#             links =  utils.remove_duplicates(links)
-#             for link in links:
-#                 if link is not "None":
-#                     logging.debug('type(link): %s END type(link)', type(link))
-#                     article_object = Article(parent = articles_key())  #must have an if not already exists here
 
-#                     article_text = fetch.article(link) # should return one long unicode string. does it?
-# #                    particles.append(article_text) #NOT needed (articles is fetched from db just below)
-#                     logging.debug('type(article_text): %s END type(article_text)', type(article_text))
+#       adds articles to the db, relevant to 'companies'.
+#        particles = []
+        for company in companies:
+            links = sites.gf(company.ticker)
+            links =  utils.remove_duplicates(links)
+            for link in links:
+                if link is not "None":
+                    logging.debug('type(link): %s END type(link)', type(link))
+                    article_object = Article(parent = articles_key())  #must have an if not already exists here
 
-#                     if utils.is_article(article_text):
-#                         article_object.content = article_text
-#                         article_object.url = link
-#                         article_object.companies.append(company.key())
-#                         article_object.put()
+                    article_text = fetch.article(link) # should return one long unicode string. does it?
+#                    particles.append(article_text) #NOT needed (articles is fetched from db just below)
+                    logging.debug('type(article_text): %s END type(article_text)', type(article_text))
 
+                    if utils.is_prose(article_text):
+                        article_object.content = article_text
+                        article_object.url = link
+                        #check that the url is not a duplicate. that
+                        #might be enough. not really, though. you
+                        #should check the whole text.
+ #                       links = article_objects.filter('url')
+ #                       if is_duplicate(link,links)
+
+                        article_object.companies.append(company.key())
+                        article_object.put()
 
         #fetches articles from db:
         article_objects = Article.all().ancestor(articles_key())
+        positive_article_objects = article_objects.filter('tag =', 'positive')
+        negative_article_objects = article_objects.filter('tag =', 'negative')
+        ten_most_recent_article_objects = article_objects.order('-datetime').fetch(limit=10)
+        #put all articles fetched from db in a list:
         article_texts = []
-        for article_object in article_objects:
+        for article_object in ten_most_recent_article_objects:
             article_text = article_object.content 
             article_texts.append(article_text)
 
@@ -130,9 +140,6 @@ class MainPage(webapp2.RequestHandler):
         long_text = ' '.join(article_texts)
         freq_pos = naive_bayes.count_tokens(long_text)
         freq_neg = {"down": 2,"loss": 3,"warning": 2,"warns": 5,"deep": 3,"recession": 7}
-
-
-
 
 
         article_probs = []

@@ -16,7 +16,7 @@ def remove_duplicates(lst):
     return non_duplicate_lst
 
 #checks if the article contains natural language and actual semantic content, or just syntactic invocations:
-def is_article(text):
+def is_prose(text):
     if text is "None" or text is "":
         return False
 

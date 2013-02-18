@@ -1,6 +1,24 @@
+next up is total duplication filter, so that you don't have to empty
+your db all the time. you want to put articles in your db, and
+display them with three buttons/links: positive, neutral,
+negative. when you tag them, you want them to stay in your db.
+
+check whether the db is transferred when you upload your current
+version to the actual website, or if everything you do on localhost is
+lost. in that case, you have to do all your tagging online.
+
+
+
+
+
 you can use freq_pos and neg to see what words occur many times
 without being relevant, and then you can cut them away in
 clean.py. 
+
+before you break the sentences into tokens, you should remove
+everything that is not a sentence - that is, anything that does not
+end in .,?!: - perhaps avoid ;, since it is used in
+javascript. however, it is also often used in prose.
 
 
 
