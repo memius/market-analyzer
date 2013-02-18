@@ -123,28 +123,33 @@ class MainPage(webapp2.RequestHandler):
 
         #how big is each corpus:
         size_pos_neg = Article.all(keys_only=True).count(9000)
-        size_pos_neg = size_pos_neg / 2 #dev only
+        size_pos = size_pos_neg / 2 #dev only
+        size_neg = size_pos_neg / 2 #dev only
 
         #finding token frequencies for the whole corpus:
         long_text = ' '.join(article_texts)
         freq_pos = naive_bayes.count_tokens(long_text)
         freq_neg = {"down": 2,"loss": 3,"warning": 2,"warns": 5,"deep": 3,"recession": 7}
 
-        # finding probabilities for each word:
-        token_probs = naive_bayes.token_probs(long_text,freq_pos,freq_neg,size_pos_neg,size_pos_neg)
 
-        #finding prob for whole text:
-        article_prob = naive_bayes.verdict(token_probs)
+
+
+
+        article_probs = []
+        for article_text in article_texts:
+            # finding probabilities for each word:
+            token_probs = naive_bayes.token_probs(article_text,freq_pos,freq_neg,size_pos,size_neg)
+            # finding prob for whole text:
+            article_prob = naive_bayes.combined_prob(token_probs)
+            article_probs.append(article_prob)
 
 ##        db.delete(article_objects) #removes all article entries from db
-
-
 
         template_values = {
             'user' : user,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
-            'count' : size_pos_neg,
+            'count' : size_pos_neg, #article_probs,
             'companies' : companies,
             'articles': article_texts
             }

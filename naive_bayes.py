@@ -44,6 +44,9 @@ def token_probability(freq_pos,freq_neg,size_pos,size_neg):
         prob = 0.4
     return prob
 
+#takes in a single article, and compares the words in it to the
+#words in the two corpuses, returning the token probs for that
+#article:
 def token_probs(text,freq_pos,freq_neg,size_pos,size_neg):
 
     word = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)")  #duplicated from count_tokens()
@@ -74,10 +77,46 @@ def token_probs(text,freq_pos,freq_neg,size_pos,size_neg):
     #print token_probs
     return token_probs #and then you need to do abc / abc(a-1)(b-1)(c-1) to that result.
 
-def verdict(token_probs):
-    #bayes says: the combined prob of a, b, and c is (a*b*c) / (a*b*c
-    #+ (1 - a)(1 - b)(1 - c))
-    pass
+#takes in a bunch of token probs, and calculates a total prob of the text countaining those tokens.
+def combined_prob(lst):
+    mult = reduce(lambda x, y: x*y, lst)
+    norms = map(lambda x: 1-x, lst)
+    norms = reduce(lambda x, y: x*y, norms)
+    result = mult / (mult + norms)
+    return result
+
+# def text_prob(token_probs):
+#     #this might be your best bet:
+#     (let ((prod (apply function* probs)))
+#      (/ prod (+ prod (apply function* (mapcar function(lambda (x)
+#                                                                                (- 1 x))
+#                                                    probs)))))
+    
+#     apply: applies function to elements in list
+#     mapcar: apply function (lambda, etc) to each element in probs
+#     lambda: applies the function (- 1 x) to the argument x.
+
+
+#     for x in probs:
+#         1 - x
+
+#     #bayes says: the combined prob of a, b, and c is (a*b*c) / (a*b*c
+#     #+ (1 - a)(1 - b)(1 - c))
+
+#     # thinkbayes says: after we count the frequencies of the words, we
+#     # can compute probs by dividing through with the total number of
+#     # words. this is because the frequencies are proportional to the
+#     # probs. this is just to calculate the probability that a word
+#     # occurs in a text, though, not the prob that it belogongs to a
+#     # category.
+#     pass
+
+# h = prob of hypothesis before data - in this case 0.5 that the article is neg. the prior.
+# d = new data coming in, and updating the probs. probs of tokens.
+# p(h|d) is the prob of h after we have seen the data. this is what we want to compute. the posterior.
+# p(d|h) is the prob of the data under the h, the likelihood.
+# p(d) is prob of data under any h, the normalizing constant.
+
 
 # #should take in the probabilities of all the tokens in a text, and return a verdict.
 # def verdict(token_probs):

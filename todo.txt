@@ -1,3 +1,11 @@
+you can use freq_pos and neg to see what words occur many times
+without being relevant, and then you can cut them away in
+clean.py. 
+
+
+
+
+
 1. get corpus size from db. use the whole bunch of articles, never
 mind whether they are pos or neg. display it on the web page.
 

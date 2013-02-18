@@ -47,8 +47,17 @@ def verdict(text,freq_pos,freq_neg):
     return token_probs #and then you need to do abc / abc(a-1)(b-1)(c-1) to that result.
             
 
-verdict(text,freq_pos,freq_neg)
+#verdict(text,freq_pos,freq_neg)
 
+
+
+#lst = [0.2,0.4,0.6]
+def combined_prob(lst):
+    mult = reduce(lambda x, y: x*y, lst)
+    norms = map(lambda x: 1-x, elt)
+    norms = reduce(lambda x, y: x*y, norms)
+    result = mult / (mult + norms)
+    return result
 
 
 # coding: utf-8

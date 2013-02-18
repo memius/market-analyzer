@@ -39,3 +39,26 @@ def is_article(text):
     else:
         return False
     
+
+
+
+
+
+
+
+# someone else's normalization function. might come in handy:
+def Normalize(self, fraction=1.0):
+    """Normalizes this PMF so the sum of all probs is 1.
+
+    Args:
+        fraction: what the total should be after normalization
+    """
+    total = self.Total()
+    if total == 0.0:
+        raise ValueError('total probability is zero.')
+        logging.warning('Normalize: total probability is zero.')
+        return
+        
+    factor = float(fraction) / total
+    for x in self.d:
+        self.d[x] *= factor

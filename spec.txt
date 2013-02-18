@@ -1,3 +1,62 @@
+the front page is a list of your company picks. display name, and a
+colored bar; green to the left, size dependent on how many positive
+articles. the length of the bar is normalized to the total number of
+articles about that company that day. the lengths for all companies is
+the same. grey in the middle, red to the right. actual numbers in
+white superimposed.
+
+mouseover displays name, ticker, exchange.
+
+the most green percolate to the top, the most red sink to the bottom
+of the list.
+
+there is an 'add company' button that takes you to a search page where
+you can search the dow jones and nasdaq indices. when the results come
+up, there is a button which says 'subscribe'. above the button should
+be a text that makes it clear it will cost five dollars to
+subscribe. clicking the button should make the purchase go through
+immediately, by using google checkout.
+
+clicking on the name of a company in your picks list/watch list gives
+you the titles of the articles for that day, with color and confidence
+on the side. you should be able to click 'expand', which will give you
+the first few lines of each article in addition to the title, and with
+'correction/approved(good enough/ok/true/bullseye/correct' button on
+the side
+
+clicking on a title gives you the whole article, with an 'ok' button
+and a 'correction' button. the correction button becomes two buttons
+on mouse-near; pos in green, and neg in red.
+
+the cost is 25 dollars for the app, and 5 dollars a month for each
+company in your list.
+
+
+
+you should db the frequency list, along with probs for each word. you
+listen for new articles coming in, and when one comes, you count the
+freqs in that article, and increment the freq db. then you calculate
+the probs for those words, and update the db. then you calculate the
+prob for that article, and put that in the db.
+
+when a user comes to the web site, everything he is told comes from
+the db. all the calculating is done by listening loops in the
+background.
+
+the listening loop for articles will perhaps make it easier to avoid
+duplicate articles, because you only need to keep today's articles
+around to compare with. put them in memcache or something later.
+
+with each article, in the db, store its prob and the corpus it belongs
+to (easy calc, but do it anyway - for redundancy, if nothing else).
+
+
+
+
+
+
+
+
 filter out duplicates, collect articles, and make sure every
 correction is stored, so you can run them again and again. 
 
