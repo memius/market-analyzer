@@ -1,3 +1,1206 @@
+home button in company view.
+
+
+it seems this is because of something other than that line of code
+itself. something has caused 'companies' in scrape to be something
+else than it used to be. no longer a query result?
+suddenly, scrape isn't working anymore. error on cursor. "list object
+does not have attribute cursor()."
+
+
+
+see notes on phone about sparse pairs..
+
+try to do windows of five and sparse pairs. it would still be baysian,
+but with better tokens.
+
+your correction is working well enough - your correction is taken as
+gospel right now, and that's fine.
+
+
+
+
+
+
+
+fetch new articles by timestamp, old ones from memcache - this is in analyze.
+
+se om du klarer å legge til trettifem minutter memcache i analyze,
+slik at den varer til neste cron job. du jobber i analyze.pf, og har
+kopiert inn et avsnitt med gammel memcache.
+
+legg til de nyankomne før du lagrer til memcache, og lagre alt til db
+med jenve mellomrom. hent også alt fra db med jevne mellomrom, for å
+sikre at du er a jour.
+
+deretter dupes. 
+
+
+
+
+
+no graphics - the web app should only deliver the data, not the
+presentation - the presentation is the domain of the android app.
+
+the api subscription should be a lot more expensive that the usual
+one.
+
+don't display as default. index.html should not display anything (for
+now, it's ok, though, during development - but NOT during production -
+then, only the android app should display).
+
+
+forskjell i ratio fra siste tidsperiode. - senere.
+
+
+
+
+autofokus i tekstfeltet!
+
+
+du displayer nå artikkeltitler for hvert selskap når de blir klikket
+på (dersom de har artikler).
+
+du jobber i company.html. articles.html har skiftet navn.
+
+
+
+i db'en blir de nye artiklene lagt til i slutten av listen, så de vil
+alltid være ETTER cursor. altså ikke noe problem å bruke cursor slik
+du bruker den nå, uten et flagg som sier 'start over'. dette gjelder
+ting som analyze, som gjøres bare en gang pr. artikkel. hm. gjør det
+det? du analyserer vel alle selskapene om igjen hver eneste gang?
+eller? nei, du gjør ikke det.
+
+du vil altså to ting: du vil ha cursor, som ikke er noe problem, siden
+nye entries alltid legges etter cursor.
+
+legg inn cursors i analyze, clean, dupes også. i main har det nettopp
+skjedd noe (i correction, scrape, clean eller dupes), så da må du vel
+hente på nytt fra db? nei, ikke så lenge de nye får høyere id enn de
+gamle, da vil de fortsatt være bak cursoren.
+
+for det andre vil du lagre de gamle entryene i memcache i ti minutter
+til neste runde, og legge til de nye entryene før du lagrer til
+memcache igjen. husk å legge dem til i db også, ikke bare i
+memcache. og husk å lese fra db av og til, for å være sikker på at
+memchache er korrekt.
+
+
+
+
+analyze fører til 4 - 7% per gang utført! memcache på alle man har fra
+før - du kan jo legge til de nye også, og holde dem i memcache i ti
+minutter, til neste gang.
+dupes fører til 1.5 - 2% reads per ti ganger utført. memcache her
+også, på de gamle - her kan du også legge til de nye.
+n = seconds
+stackoverflowspørsmålene dine - der er er dine egne
+memcachelinjer. viser syntaks for bruk av seconds
+
+
+
+
+
+kjør en article.All() og display length av denne i main, for å se hvor
+mange artikler du har i db'en (online). length var 53 online, altså
+ikke særlig mange.
+
+
+
+reduce read operations by 66%. if not, reduce frequency in
+cron. splitting company display and article display in two will help.
+
+
+when i'm finding current user in the db, i'm not getting his nick and
+email.
+
+you now have articles for each company, and companies for each
+user.
+
+after that, you are ready to start organizing the display of companies
+and articles. do the company page first, i think.
+
+
+to create the article display page, må du bare endre
+den ene linjen som nå henter alle artikler, men som bare skal hente
+artikler for ett selskap. the line is ready, but commented out for
+now.
+
+
+
+
+whenever user logs in, check if he's in the db. if not, put him
+in. every time he buys another subscription, put that in.
+
+
+
+
+
+
+you have put is_prose back in.
+
+no, you can have both for now:
+you must make the program decide which one of the two sentiments it is
+going to use. simply take the one which is the farthest from 0.5.
+
+
+
+
+you need to analyze an article as soon as it arrives - it is pointless
+to display articles without an analysis. perhaps delay the display
+until analyze flag is set? try without for a while and see what it
+looks like.
+
+
+this is how you should retreive articles: articles =
+company.articles.get() articles are attributes of companies. that
+means you must make this work in models.py.
+
+
+
+texts are still not very well cleaned, but save that for later. you
+can clean the html, which you have stored, with the new cleaning
+regime. that means you should stop deleting articles, but just set a
+flag to not display, or just delete their .clean attribute.
+
+you are not getting the text under sub headlines - only the first
+chunk of text under the first heading is captured. for now, this is ok.
+you are getting the entire thing in article.html, you are just failing
+to extract all of it in clean.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+you are now working on the cleaning - to get the text, the whole text
+and nothing but the text. look at stripped_strings. dette er strengt
+tatt optimering, men greit å ha noenlunde greit utseende tekster å
+jobbe med for min egen del.
+
+for every article in db, if not clean flag, clean, then break. do it
+again ten minutes later. this way, you get one at a time, and no
+deadline exceeded.
+
+
+then, make sure you clean a handful of articles at a time, and not the
+same ones. i think this is already in place. it cleans many, but that
+seems to work out ok. it won't clean that many when we start scraping
+regularly anyway. no, now, it's only cleaning 1 at a time. do more at
+a time later.
+
+
+
+du kan gjøre samme trikset i scrape som du har tenkt å gjøre i clean;
+nemlig å lage en loop som tar to, tre stykker (i scrape - bare 1,
+vha. å sette et flagg, antar jeg, eller skrape listen av titler, og så
+gå gjennom den, sette flagg i memcache eller noe slikt?, eller bare ta
+duplikatsjekk på tittellisten?), og deretter breaker, og
+så gjør det hele en gang til noen minutter etter. da må du ha
+duplikatsjekken i orden, altså, slik at du ikke stopper på de samme to
+hele tiden. etterhvert vil du jo skrape den sist ankomne av det
+selskapets artikler, så kanskje bare sjekke at du bare tar den sist
+ankomne (set() føkker rekkelfølgen), og duplikatsjekke om den tittelen
+finnes i db'en? men det kaster du bort en db-query på... memcache?.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hva med en try: encode 5-10 vanligste encodings. except: fuck it, too
+unusual. litt som case.
+
+det er også mulig at problemet er så enkelt som andre linje i
+scriptet, den som sier at det skal være utf-8. kan være at linje 3 er
+den korrekte (med en hash færre).
+
+
+then we're back with the always exiting ascii encoding horror. the
+many fails in fetch are due to ascii. fuck me.
+
+
+right now, scraping the entire html works on one out of ten. the
+others are getting 'except in scrape'. locally and online. it seems
+result.content does not have a type - at least not one that lets
+itself be printed. StringIO lib?
+
+
+you really do want to store html (or soup objects) so that you can
+soup them and clean them at the same time.
+
+have another look at whether you can store result.content (a string)
+in test.py. you SHOULD be able to, since it DOES contain the html
+string for the page, and you are able to soup it.
+
+you don't really need two different storage places for the clean and
+unclean texts, though. the ones with clean flags will be left alone.
+
+start working on clean. let scrape be considered good enough for
+now. improving it is optimization, after all.
+
+store the scrape as a blob? or a string? the string bleeds into the
+html of my own page...
+
+include clean flag in db.
+
+
+
+
+using stripped_strings. most articles are now full of text, but the
+odd one out is 'except in scrape'.
+
+
+
+
+
+
+du har en bs4 side åpen som beskriver hvordan finne all tekst i en
+suppe. men det var for bs3. get_text() skal gjøre samme jobben.
+
+even when not extracting any tags, some articles are just a single
+line. look at which ones they are, and try to figure out why their
+divs don't seem to contain anything.
+valuewalk: jumble, jumble, jumble, jumble (de gjemmer teksten i en
+script-tag.) fikses i fetch, som bare gjør get_text på soup'en.
+abc30: title only - de har teksten i en <span class="storyDateline">
+dailymail: title only - font tags inside p tags NOT inside div. crazy shit.
+
+har du tid til å extracte script, style o.l. rett før linjen text =
+soup.get_text() eller deromkring? eller vil du få deadlineexceeded?
+
+
+
+
+
+
+
+
+
+
+some article texts disappear with divs - only the boilerplate links at
+the bottom of the page are included (valuewalk) deal with this
+later. this is optimization.
+
+
+
+
+
+har spoofet headers. får artikler. bra. men: rekkefølgen på div'ene
+som kommer ut er rar, og det er mange duplikater. f.eks: fetch printer
+div 3, deretter første halvdel av 14, deretter siste halvdel av 17,
+deretter 21, deretter printout fra funksjonen som
+fetch returnerer til (scrape), deretter resten av 14, 15, 16 og første
+halvdel av 17.
+
+
+unngå 403: gjør som eskil gjorde, og fortell at du er firefox sånn og slik.
+
+
+drit i å cleane teksten mer nå. få det du har til å virke online, og
+clean mer etterpå.
+
+du jobber i test.py.
+
+du holder på å prøve å cleane teksten i det du henter den, vha. bs -
+slik at den er ganske godt cleanet før du sender den til
+clean. hvorfor vil du det? fordi jo mer jeg kan gjøre bare vha. bs, jo
+mer robust og elegant er det. clean er noe jeg bruker på noe som er
+veldig rotete - hvis jeg kan gi clean noe som er mindre rotete, så er
+det bra.
+
+akkurat nå får du veldig mange 403, og når du får tekst får du fem
+eksemplarer av den.
+
+
+
+the ids are 506, 516, etc. way too high for the ctr. how to fix? get
+minimum, and then increase? get the range too, by getting the max.
+
+
+
+
+
+third, clean articles - this will take care of documents.write('
+
+third and a half: prose check
+
+fourth, plagiarism check
+
+fifth, analysis.
+
+
+
+
+
+
+
+when this is ready, you can leave the system running. it will then
+gather articles, and you must read them and categorize them
+manually. they will be displayed at the / url, with their buttons. all
+the finished, cleaned and duplicate checked articles will be there.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+first, you are going to see if you can get it to complete without a
+'failed' message. you are going to try two different things in order
+to accomplish this:
+
+1 - you are going to download "related words" to dictionary words from
+dictionary.com; 
+
+2 - you are going to see if you need to have the handler in main, and
+if the redirect in necessary. try to put the handler in scrape.py, and
+drop the ridirect (drop the redir. first).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch an image from a different webpage. display it. add one element
+in the definition of Article() to store the image.
+
+
+just hit reload online (not /scrape) to see if 2 new articles (one per
+company) have popped up. there were new articles. hm.
+
+
+
+btw: try to enclose the content of the article in triple quotes, to
+avoid messing up things in display and elsewhere.
+
+
+
+now, there are articles, even though the cron panel says the cron job
+failed. there are also no errors in the logs.
+
+
+
+
+
+
+
+change scrape back to just taking one article each time. run every
+five minutes or so.
+
+you have changed it to try to get no errors when things don't turn out
+like they should - inserted a continue statement, for
+instance. continue this if it doesn't work on the first attempt.
+
+
+
+so scrape completes when run manually, but the cron job fails to complete.
+
+
+
+run only sites.py, and see what it returns. then run only fetch, and
+see what it returns. you can run similar things that fetch just a
+simple image from a different webpage too. this will expose the bugs
+in your scraping code.
+
+
+una balloona. fetch feiler der. du er her.
+
+
+
+
+
+
+
+
+
+you made the cron (scrape) run online. now, make all the
+normalization, duplication checks and analysis run too. cron job
+without web request, and hope it doesn't time out.
+
+
+
+
+you are now in scrape_old, to try to make that work before you jump to
+scrape. it doesn't - util.is_prose().
+
+
+you are now in scrape. remove everything from there, and take only the
+essentials from scrape_old; that means scrape one article and print it
+on the web page. no storing or processing or analysis or anything
+
+
+
+
+
+
+
+
+scrape_old.py contains everything from scrape. you can now start
+hacking away at scrape, removing all the superfluous stuff that
+happens - only scrape, nothing else, and only the first from each
+company.
+
+the get self method in scrape is 1 request - everything that happens
+in it is 1 request. that means it should do as little as possible. let
+it scrape a few articles (maybe use a counter stored in db to go
+through the various companies - jus one at a time (the counter decides
+which one), and return it to main, which stores it in memcache and
+sends it to another handler (NormalizeHandler, then DuplicateHandler,
+then ProseHandler, or similar). even simpler - main can store it do
+db, and then delete it again.
+
+make a fetch_old.py too.
+
+
+make a new file that only scrapes the first article from each company,
+and only that - no normalization or analysis, just scrape, return and
+hold in memory.
+
+
+
+
+you have removed txt temporarily from fetch, to see if that will fix
+the deadline problem. you could also remove other time consuming
+elements from the chain.
+
+things like the duplicate checking and so on. perhaps scrape
+everything first, and then do all the normalization and duplicate
+checking later? that could solve the problem. especially if you only
+scrape the first article for each company!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+perhaps the fail to recognize each url fetch as one request is due to
+something in fetch.article()? perhaps you shouldn't go via
+fetch.text() before returning from fetch.article()?
+
+
+
+what if you just let the scrape be for now, and work on displaying and
+selling what you already have to different accounts? that would let
+you finish the display bit (no fancy design), the selling bit and the
+login bit.
+
+
+
+
+
+
+you have asked a question to doeiqts on stack. he had the same
+problem, and it seemed to get fixed.
+
+
+
+
+
+you now have a cron job running online. try commenting in the lines
+that fetch companies, and see if that works, if this doesn't.
+
+
+this is what you want:
+https://developers.google.com/appengine/docs/python/taskqueue/overview-push
+your last tab is open to this right now.
+
+
+
+
+so, maybe the task queue is the thing to use, backends might be
+overkill. no, because the problem is with the size of the thing you
+want to do, not starting it - you could start it from cron.
+so:
+a - define your backend in backends.yaml
+b - update backends with the appcfg tool
+c - start the dynamic backend manually with google's admin console.
+only after this will the backend actually run, it seems.
+
+on the other hand: "dynamic backends start automatically when they
+receive a http request", so you could schedule that request in cron,
+and let that start the dynamic backend, which can then run for as long
+as it wants without hitting the limits you are hitting now
+(deadlineexceederror...)
+
+use taskqueue.add(url='<path to handler>', target='<backend name>') in
+the frontend app, but then again:
+
+a taskqueue can run for 10 minutes, so you might not need backends
+after all.
+
+
+
+
+
+
+
+you can target the backend id from cron. use the name of the backend
+as a target in cron.yaml
+
+
+f you're confused about how to actually run code on the backend, your best bet is to configure a task queue to run on that backend with the target parameter, and then get your frontend code to trigger a task on that queue.
+
+
+meget mulig at du veldig enkelt kan starte scripts ("scrape.ssh" or
+whatever syntax) i backends.yaml. det betyr at du bør kjøre som
+backends på tri, IKKE online, gratis, for å trene systemet, og så ta
+deg råd til å kjøre backends online sporadisk og se om du får kunder,
+deretter kjøre oftere for å sikre updatedness i scrapingen.
+
+begynn med en ganske tom /scrape, og print små ting etterhvert. først
+listen over links, så den første artikkelen, så noen flere, så alle. sjekk
+at hvert steg faktisk virker online. cron-jobben starter f.eks hvert
+30. sekund eller noe.
+
+en cron-job starter /scrape! den startes IKKE fra main. scrape viser
+ingenting heller (men du bør selvsagt printe ting manuelt under
+utvikling (drit i å lage en egen scrape.html)).
+
+main skal bare displaye user requests, mens arbeidet foregår i /scrape
+og etterhvert /bayesian, som begge startes vha. cron-jobs.
+
+da må du legge companies og article objects inn i scrape, og fjerne
+dem fra main.
+
+uansett hvordan du bestemmer deg for å gjøre /scrape; backends,
+asynchronous, etc., så blir den startet av en cron-job. (backends
+defineres i backends.yaml).
+
+backends er dyrt (billed by the hour, even if idle), så prøv å gjøre
+det vha. cron og /scrape requests først. gjør det vha. backends hvis
+ikke mulig å dele opp request-loopen i enkeltrequests fra /scrape.
+
+på den annen side: hvis du bruker dynamic backend, og kjører den en
+eller to ganger om dagen (til du begynner å tjene penger), så blir det
+ikke særlig dyrt.
+
+
+
+
+
+
+du leser denne siden, om requests:
+https://developers.google.com/appengine/docs/python/urlfetch/
+og denne, om deadlineexceeded error:
+https://developers.google.com/appengine/docs/python/
+
+or, how about using a cron job to "call a specific url of the
+application" at regular intervals, and make that url (/scrape) run the
+whole for-loop. that was your original idea.
+
+hvis det ikke funker, fuck it, make it a backends.
+
+
+
+
+
+make the html = urllib2.urlopen().read() line in fetch into a
+request() instead. that will hopefully make each of those read
+requests into 1 request that actually counts as 1 request.
+
+or do i have to have a redirect or something to make it count?
+
+
+getting 403 on articles from valuewalk. also when running python in
+terminal. hm.
+
+
+url'ene fra links gir file not found. manuell url går bra, da stopper
+den i return-statementene du har lagt inn. se hva som skjer dersom du
+fjerner returns. da bør du få masse duplikerte artikler, eller
+noe. kanskje de blir filtrert ut og du bare får en (ideell case,
+dersom filtrene mine funker). gjør dette og se hva som skjer!
+
+try this: just do the first urlopen in the for-loop, and then return
+(two return statements; one in each for-loop). see if that works
+online, not just on your computer. then work from there. perhaps next
+step: try fetching only no. 5 in the loop, or something.
+
+how about redirect, and then redirect back? no, that will reset you
+back to the beginning of the for-loop, won't it? 
+
+
+why is urllib2.urlopen() not a http request? it is, but why does it
+not count as 1, but rather as part of a long, big one - where the
+entire for-loop is 1 request?
+
+eller en fullstendig request() med alle nødv. argumenter i linje 88.
+
+or, perhaps even better, in line 73 in fetch:
+    html = urllib2.urlopen(url).read()
+should be made into a request() line, in order to make it count as one
+    request, and therefore split the requests into many, and thereby
+    not use much time per request, and thereby avoid timeouts (dealineexceedederror).
+
+i stedet for linje 88 i scrape kjører du en redirect til /scrape, som
+kjører den ene linjen "article_text = fetch.article(link)", or
+redirecter tilbake til /. dvs at du må kjøre denne redirecten for hver
+selskap, og for hver artikkel, på riktig sted, slik at du får gjort
+dem i korrekt rekkefølge, og får gjort alle.
+
+
+scrapehandler er for stor. den tar jo alle requestene for alle
+artiklene. du må ha en som heter noe sånt som fetchhandler, som tar en
+artikkel av gangen, og som kalles fra fetch.article().
+
+ser det f.eks. slik ut?:
+url = "/fetch"
+result = urllib2.open(url)
+
+DU ER HER:
+in scrape: for each company: for each link, hit the url that fetches that 1
+article. that means each request takes only a little, time, and you
+won't run into deadlineecxeedederrors.
+
+det er scrapeHandler som tar seg av dette. finn ut hvordan du
+initierer scrapeHandler, men uten knapp, unlike CorrectionHandler, som
+initieres av knapp på siden.
+
+DU ER PÅ LINJE 88 i scrape.
+
+
+
+scrape comes up against the DeadlineExceededError. see what that is,
+and if you can modify the deadline. if not, you have to scrape in
+smaller chunks. du må kanskje bruke backends til dette, siden de åpner
+for requests som tar mer enn 60 sekunder. hvis du lar selve appen ta
+seg av slike requests vil det skalere dårlig. på den annen side skal
+det jo ikke skalere - det er jo bare en 'bruker' som gjør disse
+requestene - alle andre brukere vil bare ha display, og gi correction
+feedback.
+
+
+
+se på notater på telefon og i sort bok. du holdt på med å migrere hele
+greia til en enklere versjon, der du i utgangspunktet bare skal hente
+artikler, mener jeg å huske. så bygge på småting en etter en.
+
+
+
+del opp appen i veldig små biter; innlogging, betaling, mer effektiv
+skraping, design, kanskje integrering... bruk nettsiden der du lagde
+konto og betalte fem dollar; gi folk der små oppgaver først, kanskje
+til og med to, tre forskjellige folk til samme oppgave. lag ny
+githubkonto, og lag selv ferdig en side som viser det brukerne ser (og
+legg den ut på github.) få noen til å designe utseendet, og så
+betaling for å abonnere på tilgangen til dataene. så noen til å fikse
+innlogging, slik at folk ser det de skal, og bare det. riktig
+rekkefølge på innlogging og betaling? ja, tror det. nei, kanskje
+ikke. så gjerne effektiv skraping (lag skraping selv først, oppdelt i
+mange requests, som burde funke, i motsetning til det som skjer nå,
+der du får timeout hele tiden fordi alt er en eneste stor
+request). analysen lager du også selv, men du kan be folk lage
+markovian, og kanskje en variant av hyperspace?
+
+ikke vær redd for å ta deg godt betalt for appen; tenk på hvor mye
+penger du bruker bare på mat på vei til jobb. gjerne 40 dollar for
+appen, og 5 dollar i abonnement pr. selskap.
+
+
+note that the logging printouts you have put in are printed in the
+logs. yay!
+
+
+you are in scrape. it will become a file that handles the
+scraping/fetching of articles, and only that. and then redirects to
+/.*, which it already does. see ScrapeHandler in main.
+
+
+make a new file for the fetching, and do only that - give it its own
+url, and put it in cron.yaml.
+
+divide the tasks: first you fetch and store. then, you clean and
+check? hm. must check for duplicates, and i can't store enormous
+amounts of text? i can for a while, if the user never sees the big
+blob of unclean text. i can then normalize and check it, and then
+either remove it, or clean it and overwrite it in the db. then, i can
+calculate probs. nicely divided.
+
+
+
+
+you are debugging importing bs4. you have a stackoverflow page open.
+
+
+
+it's the ones that are not properly printed/formatted - the ones
+without the END tag that don't work. Not to worry, take care of that
+later.
+
+
+
+Error Because of missing httplib2, which is only used for the
+prediction stuff. try to remove it and see what happens. do it on your
+own machine first, and see.
+
+
+you have emptied the uploaded cron, to avoid things happening that
+might cost money.
+
+
+
+
+
+
+you messed up by changing the name of the app from nameoftheapp.... to
+transfarmr. now, it can't access its own data. read up on it, and
+change it permanently, even if you have to change stuff with your ip
+provider to get it right.
+
+
+
+
+cron.yaml is perhaps gold.
+
+
+you need to find a way to schedule things such that all the fetching
+and calculating happens behind the scenes, while the web page only
+displays the contents of the db.
+
+next is making sure the whole cycle isn't initiated each time a user
+accesses the page, (or hits the correction button, which is the same
+thing). that means 
+
+
+
+
+
+
+
+i think perhaps i am storing the new sentiment to db now. that means i
+should look at the flowchart, or make one, and see what needs to
+happen when, and what i need to pull out of the db in order to present
+the new articles properly.
+
+
+next up is to remove dummy sentiment tagging, and actually use the
+user's tagging as correction. 
+
+
+
+you are using comp_arts to see if a company has any articles attached
+to it. it doesn't. dammit.
+
+
+
+you are getting there, but you have a bug. even though the article,
+with content and sentiment is displayed, the article object is a
+'None' object.
+
+
+
+you have a few answers. couldn't get any of them to work tonight, but
+i learned that this syntax is complex, and will profit from being
+researched by you tomorrow. in addition, article.put() will return the
+id:
+
+art_id = art.put()
+art_id yields f.x. 136522L
+Article.get_by_id(136522) #without the L
+
+
+
+
+
+
+
+
+you want to return article.key from index.html, not the whole
+object. you sent the article object there, but you don't need the
+whole thing back. you only need the key in order to be able to fetch
+the object from db so you can manipulate it.
+
+
+<!-- <button type="button" name="**{{ article.key.id
+}}**">Delete!</button> --> or just article.key
+
+this looks promising (talking about how to have a button under each
+element from a list in the template)	:
+http://stackoverflow.com/questions/4059965/google-app-engine-get-entity-key-to-use-in-a-template
+
+i am going to just let the web app fetch articles and such, and store
+them and their attributes. then, let the kivy app access the web app
+and display things, and update their sentiments.
+
+
+uncomment the fetching of new articles for this - you only need old
+articles and words. the user is only ever going to fetch from db,
+never initiate fetching of new articles, after all.
+you are probably going to use the template language for
+appengine, like you have in index.html. read more about that template
+language, and find out how to insert links/buttons. 'input' is a key
+word here, since buttons are called input in html.
+
+put in a link to delete the article as well.
+
+
+
+when this is finished, see if there are two companies, and only one of
+each.
+
+then, uncomment the line in index, and see if you can display the
+articles for each company. you can't, but fuck it. look at it later.
+
+
+
+
+
+
+much later, you can make a duplication check that fetches the ten least
+common words from an article, and compares them to the others in the
+db. if, say, six of them are the same, note that they are possible
+duplicates. the twenty least common words from each article can be its
+dna, an attribute in the db that you can match against other articles.
+
+
+
+
+
+
+
+
+maybe use zencoding-mode for emacs for the html? see carlgroner.me
+(and then the readme at the project page).
+it seems the buttons must be written in html. sigh. well, ok, there
+aren't too many buttons, right, so i'll do that.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ok, så de blir lagret. de blir antakelig ikke duplisert, siden du
+akkurat nå har to fb-entries.
+
+you are now running one to see if the article containing "been
+under fire in recent" is displayed. also, the one containing "bringing
+free data access to messaging". if they are, it means articles are
+stored to db, despite them not being displayed.
+
+so, the selection changes, which means new articles are fetched. but
+are they stored to db?
+
+see how the selection of articles changes when you run it again
+tomorrow. the current ones, from 1300 on wednesday march 6., are at
+the top of tmp.py. you expect them to change if things work; new ones
+will be added.
+
+
+
+
+
+
+
+
+
+
+
+avoid emptying the db. if necessary, have a dummy-insertion
+function. empty db gives you all kinds of list index out of
+range, divide by zero, etc. errors.
+
+one of each category should do the trick, complete with link,
+sentiment, text, etc. def seed_db().
+
+kjør et par ganger til, og se om det blir fylt opp noen positive
+artikler. koden skal funke nå, og jeg har tømt db'en, så det er klart
+for ny oppfylling. startet en før jeg la meg fredag kveld.
+
+
+siden jeg bommet på ctr en gang, og ingen ble tagget som positive ble
+positive_article_texts ikke fylt opp, og derfor ble pos_size 0, og
+derfor ble det division by zero.
+
+når du får tagget noen artikler som positive vil vi ikke lenger ha
+division by zero.
+
+du har slettet artikler fra db, se om det dukker opp noen nye article
+objects to db nå.
+
+
+
+sjekk hvorfor article_objects_to_db ikke blir lagret skikkelig. de er
+tomme i displayet.
+
+
+
+deretter: display positive/neutral/negative korreksjonslinker etter hver
+artikkel.
+
+
+
+
+
+
+
+
+
+
+make some utit tests that check whether the stuff you think is being
+stored is actually being stored. because article_objects_to_db
+certainly ain't.
+
+
+
+
+
+
+
+db'en er god nok. det gjør ingenting at det er en del rusk i
+db'en. ikke før du begynner å optimere.
+
+derfor: begynn med mekanisme for å korrigere manuelt. dvs. at du må
+
+
+
+aller først: lagre article prob til db.DONE.
+
+fjern ord som begynner med " eller '
+
+
+
+
+ordene kommer ut av db'en. bra.
+
+du må fjerne tall outright, og helst boilerplateord som f.eks
+cnnadcreatead183812, fra db.
+
+
+
+
+
+det ser ut til at den går inn i en uendelig loop nå. du prøver å lagre
+words, words freqs, word probs til db.
+
+etter at du har fått til det lagrer du artikkel probs, som du allerede
+har regnet ut, til db.
+
+gjør all inn og ut av db i main. det koster ikke noe ekstra
+prosessortid, og er oversiktlig.
+
+
+
+
+
+
+
+
+
+
+
+after you do the above, you must figure out why a couple of the
+articles are not displayed completely - START is there, but END is
+not. maybe not important, since it's just display? one of them is
+totally empty, though.
+
+
+you need to do a couple of things:
+
+fetch non-normalized text for display.
+
+fetch normalized text for classifier and duplicate check.
+
+that means two entries for each article. ok, do it. just add
+article.normalized.
+
+you also need to do things in the right order.
+you have a db with
+-non-norm articles
+-normalized text
+-neg/pos tag
+-prob
+another db holds:   DU ER HER: putt ting inn i denne db'en.
+-tokens with:
+-prob
+-pos frequency
+-neg frequency
+
+you fetch non-normalized text:
+-normalize it
+-duplicate check it (fetching norm from db)
+-classify it
+-put the results in db.
+
+when a user requests it, you fetch a company's non-norm arts from db:
+-display them, with:
+-frequencies (2green, 10 grey, 0 red)
+-first sentence, eventually title
+
+
+
+
+
+
+
+now, you should build the normalization of the text, for the
+classifier and the duplicate checker.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+good cleaning now, but the counting of articles is broken. counting 9,
+showing 0, then counting 10 and showing 7. is it a real problem, or
+just a fluke?
+
+expand the cleaning to do well on other sites.
+
+work on that only a little, then store the tokens to the db, with pos
+freq, neg freq and prob. if they are unknown, so be it, just store the words.
+
+
+
+
+
+you got a pretty good text by commenting out the stuff looking for
+weird words in remove_outright. put that stuff at the end, then, or
+even back in is_boilerplate.
+
+
+
+
+
+
+you are working in clean.py. you have managed to remove sentences that
+are offensive. next thing is to remove everything that is very
+obviously offensive BEFORE you remove those sentences.
+
+
+
+
+
+
+
+you need to work on cleaning for a bit. you need to have two different
+cleaning schemes; one for the duplicate checker and the classifier,
+and one for the user.
+
+
+objektet er et ord. attributter er freq_pos, freq_neg, prob.
+
+bytt rekkefølge på de to under. lagre ordene til db først, slik at du
+har alt materialet lagret til db, og kan jobbe derfra. tagging fra
+brukerens side er tross alt noe som kan skje lenge etter at artikkelen
+er hentet inn og klassifisert.
+
+next up is tagging the displayed articles with positive, neutral or
+negative, by using links displayed next to each article.
+
+så lagrer du ordene til db, med prob.
+
+da får du et korpus av taggede artikler, og et korpus av ord med probs
+(ikke tilhørighet).
+
+så henter du inn ny artikkel, og henter ordene fra den og legger dem i
+en foreløpig frekvensliste. så henter du frekvensene fra db, og
+oppdaterer den foreløpige frekvenslisten, som du bruker til å regne ut
+artikkelens prob (sammen med korpus-størrelsene, som du også henter
+fra db).
+
+så putter du artikkelen i db, med tilhørighet og prob.
+
+
+
+
+den eneste forandringen en bruker kan gjøre i db'en, er å korrigere
+den automatiske taggingen. (i tillegg til å legge selskaper til sin
+watch list).
+
+
+
 next up is total duplication filter, so that you don't have to empty
 your db all the time. you want to put articles in your db, and
 display them with three buttons/links: positive, neutral,
@@ -19,6 +1222,7 @@ before you break the sentences into tokens, you should remove
 everything that is not a sentence - that is, anything that does not
 end in .,?!: - perhaps avoid ;, since it is used in
 javascript. however, it is also often used in prose.
+
 
 
 

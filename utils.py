@@ -1,11 +1,15 @@
-from google.appengine.api import users
-from google.appengine.ext import db
+# coding: utf-8
 
-import re
+import re, string
 
-class UserPrefs(db.Model):
-    user_id = db.StringProperty()
+def string_normalize(s):
+    for p in string.punctuation:
+        s = s.replace(p, ' ')
+        s = s.lower().strip()
+        s = re.sub("\d+", ' ', s) # remove digits
+        s = re.sub('\s+', ' ', s) # remove whitespace
 
+    return s
 
 def remove_duplicates(lst):
     non_duplicate_lst = []
@@ -15,13 +19,29 @@ def remove_duplicates(lst):
     
     return non_duplicate_lst
 
+#def remove_words_from_db():
+
+def is_number(word):
+    digit = re.compile("\d")
+    lst = re.findall(digit,word)
+    if len(lst) == len(word):
+        return True
+    else:
+        return False
+
+def is_duplicate(elt,lst):
+    if elt in lst:
+        return True
+    else:
+        return False
+
 #checks if the article contains natural language and actual semantic content, or just syntactic invocations:
 def is_prose(text):
     if text is "None" or text is "":
         return False
 
     # the most common non-personal bigrams:
-    #non-prescence of these indicates a non-article.
+    # non-prescence of these indicates a non-article.
     bigrams = ["in the","of the","to the","to be","all the","it is",\
                    "of a","and the","in a","with a","such a","with the",\
                    "is a","will not","is the","this is","by the","out of",\
@@ -39,7 +59,17 @@ def is_prose(text):
     else:
         return False
     
+def sentiment_count(articles):
+    pos_ctr = 0
+    neg_ctr = 0
+    for article in articles:
+        if article.sentiment == 'positive':
+            pos_ctr += 1
+        elif article.sentiment == 'negative':
+            neg_ctr += 1
 
+    return [pos_ctr, neg_ctr]
+            
 
 
 

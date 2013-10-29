@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # coding: utf-8
 
+#should only be started by cron job, NOT by main. should fetch from, and return to, db.
+
 import math, re
 
 # will have a (small) corpus of positive and negative articles. you count the words in them.
@@ -32,57 +34,89 @@ def count_tokens(text):
 # neg = ["down","loss","warning","warns","deep","recession"]
 
 #takes in both frequencies for ONE token, as well as both corpus
-#sizes; it returns the probability that this token is negative.
-def token_probability(freq_pos,freq_neg,size_pos,size_neg):
-    if freq_neg > 1 or freq_pos > 1: 
-        neg_token_presence = min(1, (float(freq_neg) / size_neg))
-        pos_token_presence = min(1, (float(freq_pos) / size_pos))
-        tot_token_presence = neg_token_presence + pos_token_presence
-        neg_prob = min(.99, (float(neg_token_presence) / tot_token_presence))
-        prob = max(.01, neg_prob)
+#sizes; it returns the probability that this token is positive.
+def token_probability(pos_freq,neg_freq,pos_size,neg_size):
+    if pos_freq < 1 and neg_freq < 1: # perhaps higher than 1?
+        prob = 0.5
+
+    if pos_freq >= 1: 
+        pos_token_presence = min(1, (float(pos_freq) / pos_size))
+    else: # pos_freq < 1
+        pos_token_presence = 0.000000001
+
+    if neg_freq >= 1:
+        neg_token_presence = min(1, (float(neg_freq) / neg_size))
     else:
-        prob = 0.4
+        neg_token_presence = 0.000000001
+
+    tot_token_presence = pos_token_presence + neg_token_presence
+    pos_prob = min(.99, (float(pos_token_presence) / tot_token_presence))
+    prob = max(.01, pos_prob) # so it can never be 0
     return prob
 
 #takes in a single article, and compares the words in it to the
 #words in the two corpuses, returning the token probs for that
 #article:
-def token_probs(text,freq_pos,freq_neg,size_pos,size_neg):
+def token_probs(text,pos_freq,neg_freq,pos_size,neg_size):
 
     word = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)")  #duplicated from count_tokens()
-    words = re.findall(word,text)
 
+    words = re.findall(word,text)
+    word_pos_freqs = []
+    word_neg_freqs = []
     token_probs = []
+
     for word in words:
         word = word.strip() #duplicated from count_tokens()
         #print "|"+word+"|",
 
         try:
-            fp = freq_pos[word] 
+            fp = pos_freq[word] 
             #print "positive: ",fp
         except KeyError:
             fp = 0
             #print fp,
 
+
         try:
-            fn = freq_neg[word]
+            fn = neg_freq[word]
             #print "negative: ",fn
         except KeyError:
             fn = 0
             #print fn,
 
-        token_prob = token_probability(fp,fn,size_pos,size_neg)
+        # word_pos_freqs.append(fp)
+        # word_neg_freqs.append(fn)
+
+        token_prob = token_probability(fp,fn,pos_size,neg_size)
         token_probs.append(token_prob)
 
     #print token_probs
-    return token_probs #and then you need to do abc / abc(a-1)(b-1)(c-1) to that result.
+    return token_probs
+#    return words, token_probs, word_pos_freqs, word_neg_freqs #and then you need to do abc / abc(a-1)(b-1)(c-1) to that result. (done in combined_prob).
 
-#takes in a bunch of token probs, and calculates a total prob of the text countaining those tokens.
+#takes in a bunch of token probs, and calculates a total prob of the text containing those tokens.
+# abc / abc(a-1)(b-1)(c-1): 
 def combined_prob(lst):
-    mult = reduce(lambda x, y: x*y, lst)
-    norms = map(lambda x: 1-x, lst)
-    norms = reduce(lambda x, y: x*y, norms)
-    result = mult / (mult + norms)
+#    return 0.5 #debug only
+    mult = reduce(lambda x, y: x*y, lst) # lst = [1,2,3,4] -> (((1*2)*3)*4) -> 24
+    if mult == 0.0:
+        mult = 0.1
+    norms = map(lambda x: 1-x, lst)      # lst = [1,2,3,4] -> [0,1,2,3]
+    norm = reduce(lambda x, y: x*y, norms)
+    if norm == 0.0:
+        norm = 0.1
+
+    #try:
+    result = mult / (mult + norm)
+    # except:
+    #     if mult == 0.0:
+    #         result = 0.1 # this may be very wrong to do, but it fixes division by zero for now.
+    #     elif norms == 0.0:
+    #         result = 0.9
+    #     else:
+    #         result = 0.5
+
     return result
 
 # def text_prob(token_probs):

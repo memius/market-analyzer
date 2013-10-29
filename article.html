@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+    <p>
+      <b> {{ title }} </b> {{ sentiment }}
+    <p>
+      {{ text }}
+    <p>
+      <form action="/correction" method=post>
+	<input type="hidden" name="key" value="{{ id }}">
+        <input type="submit" id="{{ id }}" name="sentiment" value="positive">
+        <input type="submit" id="{{ id }}" name="sentiment" value="neutral">
+        <input type="submit" id="{{ id }}" name="sentiment" value="negative">
+      </form>
+    <p>
+
+  </body>
+</html>

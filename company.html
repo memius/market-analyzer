@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+    <p>
+      <b> {{ name }} </b> ({{ exchange }}),
+      {{ num_of_articles }} articles. {{ pos_rat }} positive, {{
+      neg_rat }} negative.
+    <p>
+      {% for article in articles %}
+      {{ article.sentiment }}
+      <a href="/article/{{ article.key().id() }}">{{ article.title }}</a>
+    <p>
+      {% endfor %}
+    <p>
+      <form action="/unsubscribe" method=post>
+	<input type="hidden" name="key" value="{{ id }}">
+        <input type="submit" name="response" value="Unsubscribe">
+      </form>
+
+  </body>
+</html>
+

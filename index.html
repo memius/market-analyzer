@@ -4,25 +4,29 @@
   </head>
 
   <body>
-    {{user}}
     <p>
+      {{ user.nickname }} [
+      {% for key in user.companies %}
+      {{ key.id() }}, 
+      {% endfor %} ]
+
+    <p>
+    ---
+    <p>
+    {{ user.nickname }}
       <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
     <p>
-      placeholder variable: {{count}}
+      <b> User companies: </b>
     <p>
-
-      {% for company in companies %}
-      {{ company.ticker }}
-      {{ company.name }}
+    {% for pair in keys_names %}
+    <a href="company/{{ pair[0].id() }}">{{ pair[1] }}</a> 
     <p>
-      {% endfor %}
-
-      {% for article in articles %}
-      {{article}}
+    {% endfor %}
     <p>
+      <form action="/find_company" method=post>
+	<input type="submit" value="More Companies">
+      </form>
     <p>
-    <p>
-      {% endfor %}
 
   </body>
 </html>

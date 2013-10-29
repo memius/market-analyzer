@@ -1,280 +1,337 @@
 # coding: utf-8
 
-import cgi, urllib, jinja2, os, logging, itertools, pickle, webapp2, httplib2
+#only displays the finished products that scrape and bayesian have stored to db. and only at users' requests, NOT as cron jobs.
 
-from google.appengine.api import users
-from google.appengine.api import memcache
+import jinja2, os, logging, pickle, webapp2, time, re
+
+from bs4 import BeautifulSoup as bs
+from google.appengine.api import users, urlfetch
 from google.appengine.ext import db
-#from google.appengine.ext import webapp2 see above
-from apiclient.discovery import build
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
-from oauth2client.appengine import StorageByKeyName
-from oauth2client.appengine import CredentialsModel
-from oauth2client.client import OAuth2WebServerFlow
 
-import utils, crawl, sites, fetch, naive_bayes
+import utils, crawl, sites, fetch, naive_bayes, scrape, duplicates, clean, analyze
 
-SCOPE = ('https://www.googleapis.com/auth/devstorage.read_write ' +
-         'https://www.googleapis.com/auth/prediction')
-USER_AGENT = 'try-prediction/1.0' #shouldn't it be 1.4?
-#SECRETS_FILE = 'json/client_secrets.json'
-ID_FILE = 'static/txt/id.txt'
-SECRETS_FILE = 'static/txt/secret.txt'
-DEFAULT_MODEL = 'Language Detection'
+from models import Article, Company, UserPrefs
+
+# class UserPrefs(db.Model):
+#     user_id = db.StringProperty()
 
 logging.basicConfig(filename='logs/main.log', filemode='w', level=logging.DEBUG)
-
-#service = build('prediction', 'v1.4', http=http)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-
-# grandparent
-# class User(db.Model): avoid this - grandparents costs a lot of writes to the db.
-#     nick = db.StringProperty()
-#     companies = 
-
-class Article(db.Model):
-    #content = db.TextProperty()
-    content = db.TextProperty()
-    datetime = db.DateTimeProperty(auto_now_add=True)
-    companies = db.ListProperty(db.Key) #the companies for which the article is relevant
-    url = db.StringProperty()
-    sentiment = db.ByteStringProperty() #negative, positive, neutral
-
-#parent
-class Company(db.Model):
-    name = db.StringProperty() #show this in the web app
-    ticker = db.StringProperty() #show only this in the android app
-    exchange = db.StringProperty()
-    price = db.FloatProperty()
-    movement = db.BooleanProperty()  #whether it went up or down since yesterday. if no value -> no movement.
-    articles = db.ReferenceProperty(Article) #not needed: do this: articles = company.article_set.get()
-    recommendation = db.StringProperty() #'buy', 'hold' or 'sell'
-    confidence = db.FloatProperty() #a number from 0.0 to 1.0
-
-    @property
-    def articles(self):
-        return Article.gql("WHERE companies = :1", self.key()) #the articles that are relevant for the company
-
-def companies_key(companies_name=None):
-  """Constructs a Datastore key for a Companies entity with companies_name."""
-  return db.Key.from_path('Companies', companies_name or 'default_companies')
-
-def articles_key(articles_name=None):
-  return db.Key.from_path('Articles', articles_name or 'default_articles')
-
-
-
-
 class MainPage(webapp2.RequestHandler):
+
     def get(self): 
-        user = users.get_current_user()
-        if user:
-            query = db.GqlQuery("SELECT * FROM UserPrefs WHERE userid = :1", user.user_id())
-            user_id = query.get() #not used for now. used for filtering which companies to show, etc.
+        #timeout = 0.2
+        usr = users.get_current_user()
+        if usr:
+            user_id = usr.user_id()
+            nickname = usr.nickname()
+            email = usr.email()
             auth_url = users.create_logout_url(self.request.uri)
             auth_url_linktext = "Logout"
         else:
-            user_id = "None" 
+            user_id = "Empty user_id"
+            nickname = "Empty nickname"
+            email = "Empty email"
             auth_url = users.create_login_url(self.request.uri)
             auth_url_linktext = "Login"
 
-        # # stores one company to the db:
-        # company = Company(parent=companies_key())
-        # company.name = "Google"
-        # company.ticker = "GOOGL"
-        # company.exchange = "NASDAQ"
-        # company.put()
+        q = UserPrefs.all()
+        q = q.filter("user_id =",user_id)
+        try:
+            [u] = q.fetch(1)
+        except:
+            u = UserPrefs()
+            u.user_id = user_id
+            u.nickname = nickname
+            u.email = email
+            u.put()
 
-        companies = Company.all().ancestor(companies_key())
-        #companies = companies.fetch(60)
-        #db.delete(companies) #removes all company entries from db
 
+        if u.companies == []:
+            apple = Company.all().filter("name =","Apple Inc").get()
+            u.companies.append(apple.key())
+            google = Company.all().filter("name =","Google Inc").get()
+            u.companies.append(google.key())
+            facebook = Company.all().filter("name =","Facebook Inc").get()
+            u.companies.append(facebook.key())
+            u.put()
 
-#       adds articles to the db, relevant to 'companies'.
-#        particles = []
-        for company in companies:
-            links = sites.gf(company.ticker)
-            links =  utils.remove_duplicates(links)
-            for link in links:
-                if link is not "None":
-                    logging.debug('type(link): %s END type(link)', type(link))
-                    article_object = Article(parent = articles_key())  #must have an if not already exists here
+        company_names = []
+        for company_key in u.companies:
+            company = Company.get_by_id(company_key.id())
+            company_names.append(company.name)
 
-                    article_text = fetch.article(link) # returns one long unicode string.
-#                    particles.append(article_text) #NOT needed (articles is fetched from db just below)
-                    logging.debug('type(article_text): %s END type(article_text)', type(article_text))
+# #         # q = Company.all().somehow_no_more_than(20) #this is optimization: do it later
+# #         # companies = q.run()
 
-                    if utils.is_prose(article_text):
-                        article_object.content = article_text
-                        article_object.url = link
-                        #check that the url is not a duplicate. that
-                        #might be enough. not really, though. you
-                        #should check the whole text.
- #                       links = article_objects.filter('url')
- #                       if is_duplicate(link,links)
+# #         # displaying all companies for debugging only:
+#         q = Company.all() #you'll need a 'more' button to display more than these 20
+#         companies = q.fetch(100) #fetch can't be async for now.
 
-                        article_object.companies.append(company.key())
-                        article_object.put()
+# #         ##############db.delete(companies) don't do this either!
 
-        #fetches articles from db:
-        article_objects = Article.all().ancestor(articles_key())
-        positive_article_objects = article_objects.filter('tag =', 'positive')
-        negative_article_objects = article_objects.filter('tag =', 'negative')
-        ten_most_recent_article_objects = article_objects.order('-datetime').fetch(limit=10)
-        #put all articles fetched from db in a list:
-        article_texts = []
-        for article_object in ten_most_recent_article_objects:
-            article_text = article_object.content 
-            article_texts.append(article_text)
+# #         # you need a check here, to see what companies are already
+# #         # user companies!
+#         free_companies = ["Apple Inc", "Google Inc", "Facebook Inc"]
+#         for comp in companies:
+            if company.name == "International Business Machines Corp":
+                company.name = "International Business Machines Corp."
+                company.name_lower = "international business machines corp."
+                company.ticker = "IBM"
+                company.ticker_lower = "ibm"
+#             if comp.name in free_companies and comp.key() not in u.companies:
+#                 u.companies.append(comp.key())
+# # #                comp.user = u #why can't this be usr? usr is a UserPrefs object, isn't it???? No, it's a in-built user object.
+                company.put()
+#                 u.put()
 
-        #finding token frequencies for the whole corpus:
-        long_text = ' '.join(article_texts)
-        freq_pos = naive_bayes.count_tokens(long_text)
-        freq_neg = {"down": 2,"loss": 3,"warning": 2,"warns": 5,"deep": 3,"recession": 7}
-
-        #how big is each corpus:
-        size_pos_neg = Article.all(keys_only=True).count(9000)
-        size_pos = size_pos_neg / 2 #dev only
-        size_neg = size_pos_neg / 2 #dev only
-
-        article_probs = []
-        for article_text in article_texts:
-            # finding probabilities for each word:
-            token_probs = naive_bayes.token_probs(article_text,freq_pos,freq_neg,size_pos,size_neg)
-            # finding prob for whole text:
-            article_prob = naive_bayes.combined_prob(token_probs)
-            article_probs.append(article_prob)
-
-##        db.delete(article_objects) #removes all article entries from db
+#         q = article_objects = Article.all() # should be articles = company.articlestod
+#         q = q.order("-datetime")
+#         q = q.filter("clean =",True)
+#         article_objects = q.fetch(100)
+# #        article_objects = q # debug only
+#         ####db.delete(article_objects) stop doing this - delete attributes instead, run scripts to add new attributes
+        keys_names = zip(u.companies,company_names)
 
         template_values = {
-            'user' : user,
+            'keys_names' : keys_names,
+#            'companies' : companies,
+            'user' : u,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
-            'count' : article_probs,
-            'companies' : companies,
-            'articles': article_texts
             }
 
         template = jinja_environment.get_template('index.html')
         self.response.out.write(template.render(template_values))
 
-# definert på api console, og kan tilsynelatende ikke endres (burde være localhost:8080):
-# redirect url:
-# urn:ietf:wg:oauth:2.0:oob
-# http://localhost
+class CompanyClickHandler(webapp2.RequestHandler):
+    def get(self,company_id): # apparently, it must be company_id, not something else.
+        # r = self.request
+        # company = re.compile("company/(?P<company>.*?)HTTP")
+        # company = re.search(company,unicode(r)).group("company")
+        company = Company.get_by_id(int(company_id))
+        [pos_rat,neg_rat] = utils.sentiment_count(company.articles)
 
-        try:
-            # Read server-side OAuth 2.0 credentials from datastore and
-            # raise an exception if credentials not found.
-      
-            credentials = StorageByKeyName(CredentialsModel, USER_AGENT, 
-                                           'credentials').locked_get()
-            if not credentials or credentials.invalid:
-                # if not user:
-                #     self.redirect("/reset") redirects to Reset class
-                
-                #raise Exception('missing OAuth 2.0 credentials')
-#                secrets = parse_json_file(SECRETS_FILE)
-                client_id = open(ID_FILE, 'r').read().strip()
-                client_secret = open(SECRETS_FILE, 'r').read().strip()
+        # company.name = "Microsoft Corporation"
+        # company.name_lower = "microsoft corporation"
+        # # company.ticker_lower = "goog"
+        # # company.ticker = "GOOG"
+        # company.put()
+         
+        template_values = {
+            'id' : company_id,
+            'pos_rat' : pos_rat,
+            'neg_rat' : neg_rat,
+            'name' : company.name,
+            'exchange' : company.exchange,
+            'articles' : company.articles,
+            'num_of_articles' : company.articles.count()
+            }
 
-#                client_id = secrets['installed']['client_id']
-#                client_secret = secrets['installed']['client_secret']
+        template = jinja_environment.get_template('company.html')
+        self.response.out.write(template.render(template_values))
 
-                flow = OAuth2WebServerFlow(client_id=client_id,
-                                           client_secret=client_secret,
-                                           scope=SCOPE,
-                                           user_agent=USER_AGENT,
-                                           access_type = 'offline',
-                                           approval_prompt='force')
-                callback = self.request.relative_url('/auth_return') #redirects to AuthHandler class
-                authorize_url = flow.step1_get_authorize_url(callback)
-                # Save flow object in memcache for later retrieval on OAuth callback,
-                # and redirect this session to Google's OAuth 2.0 authorization site.
-                logging.info('saving flow for user ' + user.user_id())
-                memcache.set(user.user_id(), pickle.dumps(flow))
-                self.redirect(authorize_url)
+class ArticleClickHandler(webapp2.RequestHandler):
+    def get(self,article_id): 
+        article = Article.get_by_id(int(article_id))
 
+        template_values = {
+            'id' : article.key().id(),
+            'sentiment' : article.sentiment,
+            'title' : article.title,
+            'text' : article.text
+            }
 
-            # Authorize HTTP session with server credentials and obtain  
-            # access to prediction API client library.
-            http = credentials.authorize(httplib2.Http())
-            service = build('prediction', 'v1.4', http=http)
-            papi = service.trainedmodels()
-    
-            # Read and parse JSON model description data.
-            #models = parse_json_file(MODELS_FILE)
-
-            # Get reference to user's selected model.
-            #model_name = self.request.get('model')
-            #model = 'Language Detection'
-            model = 'languages'
-
-            # # Build prediction data (csvInstance) dynamically based on form input.
-            # vals = []
-            # for field in model['fields']:
-            #     label = field['label']
-            # val = str(self.request.get(label))
-            # vals.append(val)
-            # body = {'input' : {'csvInstance' : vals }}
-            # logging.info('model:' + model_name + ' body:' + str(body))
-            vals = ['these','are','some','words','that','i','have','said']
-
-            # Make a prediction and return JSON results to Javascript client.
-            ret = papi.predict(id=model, body=vals).execute()
-            self.response.out.write("yabbadabbadoo")
-            self.response.out.write(json.dumps(ret))
-
-        except Exception, err:
-            # Capture any API errors here and pass response from API back to
-            # Javascript client embedded in a special error indication tag.
-            err_str = str(err)
-            # if err_str[0:len(ERR_TAG)] != ERR_TAG:
-            #     err_str = ERR_TAG + err_str + ERR_END
-            self.response.out.write(err_str)
+        template = jinja_environment.get_template('article.html')
+        self.response.out.write(template.render(template_values))
 
 
+# you need some robustness here: the user can type inc, Inc, Inc., inc.,
+# Incorporated, Corp, corp, etc. i need to be able to handle all of
+# them. maybe normalize the input?
+class FindCompanyHandler(webapp2.RequestHandler):
+    def post(self):
+        
+        template_values = {}
 
-class AuthHandler(webapp2.RequestHandler):
-  '''This class fields OAuth 2.0 web callback for the "Try Prediction" app.'''
+        template = jinja_environment.get_template('find_company.html')
+        self.response.out.write(template.render(template_values))
+        
+    def get(self): # get() identical to post() has to be here because of the redirect from /subscribe.
+        
+        template_values = {}
 
-  @login_required
-  def get(self):
-    user = users.get_current_user()
+        template = jinja_environment.get_template('find_company.html')
+        self.response.out.write(template.render(template_values))
 
-    # Retrieve flow object from memcache.
-    logging.info('retrieving flow for user ' + user.user_id())
-    flow = pickle.loads(memcache.get(user.user_id()))
-    if flow:
-      # Extract newly acquired server credentials, store creds
-      # in datatore for future retrieval and redirect session
-      # back to app's main page.
-      credentials = flow.step2_exchange(self.request.params)
-      StorageByKeyName(CredentialsModel, USER_AGENT,
-                       'credentials').locked_put(credentials)
-      self.redirect('/')
-    else:
-      raise('unable to obtain OAuth 2.0 credentials')
+class FoundCompanyHandler(webapp2.RequestHandler):
+    def post(self):
+        name_ticker = self.request.get('name_ticker')
 
-class Reset(webapp2.RequestHandler):
-  '''This class processes requests to reset the server's OAuth 2.0 
-     credentials. It should only be executed by the application
-     administrator per the app.yaml configuration file.'''
+        q = Company.all().filter("name_lower =",name_ticker.lower()) 
+        company = q.get()
+        if company != None:
+            name = company.name
+            exchange = company.exchange
+            ticker = company.ticker
+        
+        if company == None:
+            q = Company.all().filter("ticker_lower =",name_ticker.lower())
+            company = q.get()
+            if company != None:
+                name = company.name
+                exchange = company.exchange
+                ticker = company.ticker
 
-  @login_required
-  def get(self):
-    # Store empty credentials in the datastore and redirect to main page.
-    StorageByKeyName(CredentialsModel, USER_AGENT,
-                     'credentials').locked_put(None)
-    self.redirect('/')
+        if company == None:
+            url = "https://www.google.com/finance?q=" + name_ticker + "&ei=uxJjUpDELYqrwAPHWA"
 
+            result = urlfetch.fetch(url)
+            if result.status_code == 200:
+                soup = bs(result.content)
+
+                title = soup.title.get_text()
+
+                name = re.compile("(?P<name>.*?):")
+                exchange = re.compile(": (?P<exchange>.*?):")
+                ticker = re.compile(":.*?:(?P<ticker>.*?) quotes & news")
+
+                exchange = re.search(exchange,title).group("exchange")
+                name = re.search(name, title).group("name")
+                ticker = re.search(ticker, title).group("ticker")
+
+                # check here to see if what the user typed in actually gave a result on google finance.
+
+                company = Company()
+                company.name = name
+                company.name_lower = name.lower()
+                company.exchange = exchange
+                company.ticker = ticker
+                company.ticker_lower = ticker.lower()
+
+
+                company.put()
+
+        company_id = company.key().id() # use name instead of id - it's better for the api.
+        template_values = {
+            'name' : name,
+            'id' : company_id,
+            'exchange' : exchange,
+            'ticker' : ticker
+            }
+
+        template = jinja_environment.get_template('found_company.html')
+        self.response.out.write(template.render(template_values))
+
+
+        # self.redirect("company/" + str(company_id))
+
+            # else:
+            #     pass #some error message, and redirect back to text input.
+
+class SubscribeHandler(webapp2.RequestHandler):
+     def post(self):
+        response = self.request.get("response")
+        company_id = self.request.get("key")
+        if response == "Subscribe":
+            company = Company.get_by_id(int(company_id)) # may need to be cast to int, or even str.
+            
+            user = users.get_current_user()
+            user_id = user.user_id()
+            q = UserPrefs.all()
+            u = q.filter("user_id =",user_id).get()
+
+            u.companies.append(company.key())
+            u.put()
+            # company.user = u
+            # company.put()
+
+            self.redirect("company/" + str(company_id))
+            # later, we charge the user for this. (don't charge if the company is one of the free ones.)
+        elif response == "Cancel":
+            self.redirect("/find_company")
+#            self.redirect("/subscribe")
+
+class UnsubscribeHandler(webapp2.RequestHandler):
+     def post(self):
+        response = self.request.get("response")
+        company_id = self.request.get("key")
+        if response == "Unsubscribe":
+            company = Company.get_by_id(int(company_id)) 
+            
+            user = users.get_current_user()
+            user_id = user.user_id()
+            q = UserPrefs.all()
+            u = q.filter("user_id =",user_id).get()
+
+            u.companies.remove(company.key())
+            u.put()
+            # company.user = None # change it to 'remove user from company.users'.
+            # company.put()
+            # and stop charging the user.
+
+            self.redirect("/")
+
+class CorrectionHandler(webapp2.RequestHandler):
+    def post(self):
+        self.response.write(
+            'You clicked:%sEND for article:%sEND' % (self.request.get('sentiment'), self.request.get('key') )
+            )
+        article_object_key = self.request.get("key")
+        article_object = Article.get_by_id(int(article_object_key)) #could be made async, i think.
+        # article__key = db.Key('Article', self.request.get('id'))
+        self.response.write(" article object: %s END article object" % str(article_object))
+        # self.response.write(article_object.content)
+        s = self.request.get('sentiment')
+        article_object.sentiment = str(s) # must be str, not unicode
+        
+        if s == "positive":
+            article_object.mod = 0.9
+        if s == "negative":
+            article_object.mod = -0.9
+
+        article_object.put()
+        self.redirect("article/" + str(article_object_key))
+
+class ScrapeHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('you have scraped some articles')
+        scrape.scrape()
+        #self.redirect("/")
+
+class DuplicateHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('you have removed duplicates')
+        duplicates.companies()
+        duplicates.articles()
+
+class CleanHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('you have cleaned some text')
+        clean.clean()
+
+class AnalyzeHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("you have analyzed all articles")
+        analyze.all_sentiment()
 
 app = webapp2.WSGIApplication([
-        ('/', MainPage),
-        ('/auth_return', AuthHandler),
+#        ('/auth_return', AuthHandler),
+        ('/correction', CorrectionHandler),
+        ('/company/(.*)', CompanyClickHandler),
+        ('/article/(.*)', ArticleClickHandler),
+        ('/find_company',FindCompanyHandler),
+        ('/found_company',FoundCompanyHandler),
+        ('/subscribe', SubscribeHandler),
+        ('/unsubscribe', UnsubscribeHandler),
+        ('/scrape', ScrapeHandler),
+        ('/dupes', DuplicateHandler),
+        ('/clean', CleanHandler),
+        ('/analyze', AnalyzeHandler),
+        ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

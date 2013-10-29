@@ -1,3 +1,44 @@
+to scrape rss, use feedparser (import feedparser)
+reuters has a business news rss feed. so does forbes, financial times,
+cnbc and yahoo finance and international business times, wall street journal.
+
+
+how to add something to path (chardet):
+
+
+
+when you restart the server; make sure the name is the same:
+/business_news_analyzer, not /business_analyzer, for example.
+
+
+in order to get anything into the appengine logs, you have to reload
+the page (at www.transfarmr.dictatr.com).
+
+remember that the time zone is unchangeable in 'logs', and that they
+are 8 hours behind you.
+
+when you get an error on google's infrastructure, check the logs (in
+the left hand side menu, just under dashboard and instances).
+
+
+to update only the cron.yaml:
+/opt/google/google_appengine/appcfg.py update_cron /home/tmh/workspace/business_news_analyzer/
+
+
+
+url for app:
+http://transfarmr.appspot.com
+or 
+http://transfarmr.dictatr.com
+both should work
+
+http://shell.appspot.com/ er et interaktivt skjell for
+appengine. veldig nyttig.
+
+
+
+
+
 import googlevoice for å sende sms'er.
 
 
