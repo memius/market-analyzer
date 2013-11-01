@@ -1,11 +1,36 @@
-home button in company view.
+du har nå startet localhost fra bus_tmp. se hva som mangler der, og
+hent det inn fra de nyeste filene i bus.
+
+kan se ut som om ikke alt fra bs4 og charset er med. forsvunnet
+pga. fuckup med git? hent inn igjen fra _tmp. diffen er lagret i
+/home/tmh/diff.
 
 
-it seems this is because of something other than that line of code
+hva gjorde du den dagen?:
+-many to many mellom user og companies.
+-unsubscribe button
+-add company to user AFTER ok, not before.
+-goog, ikke googl.
+
+skal gjøres
+-fiks ibm (det skal være punktum).
+-fiks slik at det er navn, og ikke keys, som flyttes. hvor var dette?
+
+
+
+
+
+it seems the cursor error is because of something other than that line of code
 itself. something has caused 'companies' in scrape to be something
 else than it used to be. no longer a query result?
 suddenly, scrape isn't working anymore. error on cursor. "list object
 does not have attribute cursor()."
+
+
+
+
+home button in company view.
+
 
 
 
