@@ -1,5 +1,5 @@
-application: nameoftheappgiventogoogleappengine
-version: 1
+application: transfarmr
+version: 3
 runtime: python27
 api_version: 1
 threadsafe: True
@@ -11,6 +11,14 @@ handlers:
 
 - url: /.*
   script: main.app
+
+- url: /scrape
+  script: scrape.app
+  login: admin
+
+- url: /test
+  script: test.app
+  login: admin
 
 
 libraries:
