@@ -34,7 +34,7 @@ def clean():
 #
     articles = Article.all()
     ctr = 1
-    for article in articles: # this will eventually lead to deadline exceeded too.
+    for article in articles: # this will eventually lead to deadline exceeded too. use cursor here as well.
         if ctr > 3:
             break
         else:
@@ -57,14 +57,14 @@ def clean():
             ##strict(sentences)
                 text = ''.join(sentences)        
 
-                if utils.is_prose(text):
-                    article.text = text
-                    article.clean = True
+                # if utils.is_prose(text):
+                article.text = text
+                article.clean = True
             # # else:
             # #     db.delete(article)
             # article.clean = True
 
-                    article.put()
+                article.put()
 
                 #analyze.sentiment(article) # will this lead to deadline exceeded?
 

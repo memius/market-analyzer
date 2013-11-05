@@ -53,6 +53,10 @@ class MainPage(webapp2.RequestHandler):
 
         if u.companies == []:
             apple = Company.all().filter("name =","Apple Inc").get()
+
+# det er fordi det ikke er noe som helst i db'en'.
+# DU ER HER - linjen over finner ikke selskapene . linjen under fører til 'none type object has no attribute key'
+
             u.companies.append(apple.key())
             google = Company.all().filter("name =","Google Inc").get()
             u.companies.append(google.key())
@@ -65,12 +69,9 @@ class MainPage(webapp2.RequestHandler):
             company = Company.get_by_id(company_key.id())
             company_names.append(company.name)
 
-# #         # q = Company.all().somehow_no_more_than(20) #this is optimization: do it later
-# #         # companies = q.run()
-
 # #         # displaying all companies for debugging only:
-#         q = Company.all() #you'll need a 'more' button to display more than these 20
-#         companies = q.fetch(100) #fetch can't be async for now.
+        q = Company.all() #you'll need a 'more' button to display more than these 20
+        companies = q.fetch(100) #fetch can't be async for now.
 
 # #         ##############db.delete(companies) don't do this either!
 
@@ -78,15 +79,22 @@ class MainPage(webapp2.RequestHandler):
 # #         # user companies!
 #         free_companies = ["Apple Inc", "Google Inc", "Facebook Inc"]
 #         for comp in companies:
-            if company.name == "International Business Machines Corp":
-                company.name = "International Business Machines Corp."
-                company.name_lower = "international business machines corp."
-                company.ticker = "IBM"
-                company.ticker_lower = "ibm"
+
+            # if company.name == "International Business Machines Corp":
+            #     company.name = "International Business Machines Corp."
+            #     company.name_lower = "international business machines corp."
+            #     company.ticker = "IBM"
+            #     company.ticker_lower = "ibm"
+            #     company.put()
+
 #             if comp.name in free_companies and comp.key() not in u.companies:
 #                 u.companies.append(comp.key())
 # # #                comp.user = u #why can't this be usr? usr is a UserPrefs object, isn't it???? No, it's a in-built user object.
-                company.put()
+
+
+#                company.put()
+
+
 #                 u.put()
 
 #         q = article_objects = Article.all() # should be articles = company.articlestod
@@ -99,7 +107,7 @@ class MainPage(webapp2.RequestHandler):
 
         template_values = {
             'keys_names' : keys_names,
-#            'companies' : companies,
+            'companies' : companies, #debug only
             'user' : u,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
@@ -209,11 +217,9 @@ class FoundCompanyHandler(webapp2.RequestHandler):
                 company = Company()
                 company.name = name
                 company.name_lower = name.lower()
-                company.exchange = exchange
+                company.exchange = exchange.lower()
                 company.ticker = ticker
                 company.ticker_lower = ticker.lower()
-
-
                 company.put()
 
         company_id = company.key().id() # use name instead of id - it's better for the api.

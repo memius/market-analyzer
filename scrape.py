@@ -13,8 +13,11 @@ from google.appengine.ext import db
 
 from models import Article, Company
 
-def linkz(ticker): # the one for articles.
-    url = "https://www.google.com/finance/company_news?q=NASDAQ%3A" + ticker + "&ei=jXT9UYDqMKT4wAPmUw"
+def linkz(ticker, exchange): # the one for articles.
+    if exchange == "NASDAQ":
+        url = "https://www.google.com/finance/company_news?q=NASDAQ%3A" + ticker + "&ei=jXT9UYDqMKT4wAPmUw"
+    elif exchange == "NYSE":
+        url = "https://www.google.com/finance/company_news?q=NYSE%3A" + ticker + "&ei=cP1zUvCHDdOBwAO5GQ"
     result = urlfetch.fetch(url)
     if result.status_code == 200:
         soup = bs(result.content)
@@ -160,7 +163,7 @@ def fetch(url):
     return html
 
 def process_links(company):
-    links = linkz(company.ticker)
+    links = linkz(company.ticker,company.exchange)
 
     old_titles = company.titles
     titles = [] 
@@ -251,8 +254,8 @@ def scrape():
 
         #some useless commet here
 
-    if len(companies) == chunk_size: # if not, you are at the end, and you don't want a new cursor.
-        company_cursor = companies.cursor() 
-        memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
-
+    # if len(companies) == chunk_size: # if not, you are at the end, and you don't want a new cursor.
+    #     company_cursor = companies.cursor() 
+    #     memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+#else for company in companies
 

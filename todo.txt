@@ -1,35 +1,35 @@
-du har nå startet localhost fra bus_tmp. se hva som mangler der, og
-hent det inn fra de nyeste filene i bus.
+try putting the for company in companies: process_links(company) AFTER
+the if len(companies) statement.
 
-kan se ut som om ikke alt fra bs4 og charset er med. forsvunnet
-pga. fuckup med git? hent inn igjen fra _tmp. diffen er lagret i
-/home/tmh/diff.
+deadline exceeded online. try updating the code, and see what happens.
+
+du skal fikse det slik at linkz() i scrape også tar andre børser enn
+nasdaq.
+if exchange == nyse:
+https://www.google.com/finance/company_news?q=NYSE%3AIBM&ei=cP1zUvCHDdOBwAO5GQ
 
 
-hva gjorde du den dagen?:
--many to many mellom user og companies.
--unsubscribe button
--add company to user AFTER ok, not before.
--goog, ikke googl.
 
-skal gjøres
--fiks ibm (det skal være punktum).
--fiks slik at det er navn, og ikke keys, som flyttes. hvor var dette?
+du lagrer både article.company og company.titles. dette er dobbelt
+lagring, og med motsatt metode. gjør det på 1 måte på 1 sted.
 
 
 
 
 
-it seems the cursor error is because of something other than that line of code
-itself. something has caused 'companies' in scrape to be something
-else than it used to be. no longer a query result?
-suddenly, scrape isn't working anymore. error on cursor. "list object
-does not have attribute cursor()."
 
 
 
 
-home button in company view.
+you need some robustness around whether the name is spelled with our
+without the final dot. there seems to be no consensus amoung the
+coders at nasdaq.
+
+
+
+
+
+
 
 
 
@@ -2085,4 +2085,39 @@ datetimes. urls as well.
 ok. nå spør den brukeren om permissions, som er fremskritt, men når
 den skal redirecte til auth_return, så får jeg 404. dvs. at
 auth_return er definert i f.eks. javascript.
+
+
+
+
+
+
+
+
+
+
+
+hva gjorde du den dagen?:
+-many to many mellom user og companies. apparently ok.
+-unsubscribe button. ok.
+-add company to user AFTER ok, not before. ok.
+-goog, ikke googl. ok.
+
+skal gjøres
+-fiks ibm (det skal være punktum). er det fordi den er på nyse, og
+IKKE på nasdaq? 
+-home link in company view. ok.
+-fiks slik at det er navn, og ikke keys, som flyttes. hvor var dette?
+dette var pairs til index. ok.
+
+
+
+is there a cursor now? does it work as it should?
+was it solved because there were no companies in the db? don't
+remember, but i think it was fixed. at least it went away, but perhaps
+because the cursor is no longer there.
+it seems the cursor error is because of something other than that line of code
+itself. something has caused 'companies' in scrape to be something
+else than it used to be. no longer a query result?
+suddenly, scrape isn't working anymore. error on cursor. "list object
+does not have attribute cursor()."
 

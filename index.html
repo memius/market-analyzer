@@ -13,6 +13,15 @@
     <p>
     ---
     <p>
+      <b> All companies: </b>
+    <p>
+      {% for comp in companies %}
+      {{ comp.exchange }}, {{ comp.name }}
+    <p>
+      {% endfor %} 
+    <p>
+    ---
+    <p>
     {{ user.nickname }}
       <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
     <p>
