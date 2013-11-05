@@ -1,0 +1,25 @@
+cron:
+
+# - description: scrapes articles
+#   url: /scrape
+#   schedule: every 180 minutes
+
+# - description: removes duplicate articles and companies from db
+#   url: /dupes
+#   schedule: every 180 minutes
+
+# - description: cleans up article text for display
+#   url: /clean
+#   schedule: every 170 minutes
+
+# - description: analyzes sentiment of all articles
+#   url: /analyze
+#   schedule: every 180 minutes
+
+# #- description: the whole monolithic shebang
+# #  url: /.*
+# #  schedule: every 1 hours
+
+# # - description: starts backend
+# #   url: /test
+# #   target: test
