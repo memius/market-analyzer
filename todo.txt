@@ -1,8 +1,25 @@
-nå også intermittent deadline på scrape lokalt. hm.
+hverken memcache.delete() eller .flush_all() virker, tilsynelatende.
 
-intermittent cursor error in scrape. try putting the for company in
-companies: process_links(company) AFTER the if len(companies)
-statement.
+aller først: nå har det gått mer enn 180 minutter siden i går
+kveld. prøv /scrape en gang, og se hva som printes i listen som heter c.
+
+if cursor remove does not work, or if you keep having
+deadlineexceederrors, have a look at the deferred article you have
+opened at
+https://developers.google.com/appengine/articles/deferred?csw=1
+
+cursoren blir ikke reset til begynnelsen noe sted. du har et spørsmål
+ute på stack.
+
+
+
+nå printes selskapene du har prosessert i scrape rett før "you have
+scraped...". sjekk om en stund at denne listen faktisk inneholder
+noe. the companies now have 44, 96, 57, 69 and 45 articles. they
+should have more when you run scrape again in a while.
+
+deretter remove c from scrape and main.
+
 
 deadline exceeded online. put cursor in analyze and clean as well.
 
@@ -15,7 +32,7 @@ that only finished articles are displayed.
 
 du lagrer både article.company og company.titles. dette er dobbelt
 lagring, og med motsatt metode. gjør det på 1 måte på 1 sted. m.a.o.:
-hent title fra article.company.
+hent title fra article.company. lagres i process_links i scrape.
 
 
 
@@ -2119,4 +2136,10 @@ https://www.google.com/finance/company_news?q=NYSE%3AIBM&ei=cP1zUvCHDdOBwAO5GQ
 you need some robustness around whether the name is spelled with or
 without the final dot. there seems to be no consensus amoung the
 coders at nasdaq. do i? i just scrape the name, after all.
+
+nå også intermittent deadline på scrape lokalt. hm.
+
+intermittent cursor error in scrape. try putting the for company in
+companies: process_links(company) AFTER the if len(companies)
+statement.
 

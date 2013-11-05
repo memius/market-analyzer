@@ -218,19 +218,34 @@ def scrape():
 
     q = Company.all() # her resettes det til start, ja.
     q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
-    chunk_size = 5
-    companies = q.fetch(chunk_size)
 
     company_cursor = memcache.get("company_cursor")
 
     if company_cursor:
-        companies.with_cursor(start_cursor = company_cursor)
+        q.with_cursor(start_cursor = company_cursor)
         
+    chunk_size = 3
+    companies = q.fetch(chunk_size)
+
+#    c = []
     for company in companies: 
         process_links(company)
+#        c.append(company.name)
 
-    company_cursor = q.cursor() 
-    memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+    if len(companies) < chunk_size:
+#        q = Company.all() this will not reset to the beginning, but to the end...
+        # something that resets, or removes, the cursor here.
+        # k = company_cursor.key()
+        memcache.delete("company_cursor")
+        # memcache.flush_all()
+
+        # company_cursor = q.cursor() 
+        # memcache.add("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+    else:
+        company_cursor = q.cursor() 
+        memcache.set("company_cursor",company_cursor) # set only updates, does not need time limit.
+
+#    return c
 
 
 

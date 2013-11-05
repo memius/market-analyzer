@@ -305,8 +305,9 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 class ScrapeHandler(webapp2.RequestHandler):
     def get(self):
+        c = scrape.scrape()
+        self.response.write(c)
         self.response.write('you have scraped some articles')
-        scrape.scrape()
         #self.redirect("/")
 
 class DuplicateHandler(webapp2.RequestHandler):
