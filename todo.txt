@@ -1,34 +1,21 @@
-try putting the for company in companies: process_links(company) AFTER
-the if len(companies) statement.
+nå også intermittent deadline på scrape lokalt. hm.
 
-deadline exceeded online. try updating the code, and see what happens.
+intermittent cursor error in scrape. try putting the for company in
+companies: process_links(company) AFTER the if len(companies)
+statement.
 
-du skal fikse det slik at linkz() i scrape også tar andre børser enn
-nasdaq.
-if exchange == nyse:
-https://www.google.com/finance/company_news?q=NYSE%3AIBM&ei=cP1zUvCHDdOBwAO5GQ
+deadline exceeded online. put cursor in analyze and clean as well.
+
+
+put in an is clean check (actually is analyzed) in company display, so
+that only finished articles are displayed.
+
 
 
 
 du lagrer både article.company og company.titles. dette er dobbelt
-lagring, og med motsatt metode. gjør det på 1 måte på 1 sted.
-
-
-
-
-
-
-
-
-
-you need some robustness around whether the name is spelled with our
-without the final dot. there seems to be no consensus amoung the
-coders at nasdaq.
-
-
-
-
-
+lagring, og med motsatt metode. gjør det på 1 måte på 1 sted. m.a.o.:
+hent title fra article.company.
 
 
 
@@ -42,7 +29,8 @@ but with better tokens.
 your correction is working well enough - your correction is taken as
 gospel right now, and that's fine.
 
-
+display the result of all four analyses, and keep track of their
+accuracy. build something that does that.
 
 
 
@@ -2120,4 +2108,15 @@ itself. something has caused 'companies' in scrape to be something
 else than it used to be. no longer a query result?
 suddenly, scrape isn't working anymore. error on cursor. "list object
 does not have attribute cursor()."
+
+
+
+du skal fikse det slik at linkz() i scrape også tar andre børser enn
+nasdaq.
+if exchange == nyse:
+https://www.google.com/finance/company_news?q=NYSE%3AIBM&ei=cP1zUvCHDdOBwAO5GQ
+
+you need some robustness around whether the name is spelled with or
+without the final dot. there seems to be no consensus amoung the
+coders at nasdaq. do i? i just scrape the name, after all.
 

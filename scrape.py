@@ -215,30 +215,71 @@ def scrape():
     # company.exchange = "NASDAQ"
     # company.put()
 
-    q = Company.all()
-    q.order("-datetime") # or id? key().id()?
 
+    q = Company.all() # her resettes det til start, ja.
+    q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
     chunk_size = 5
     companies = q.fetch(chunk_size)
 
     company_cursor = memcache.get("company_cursor")
-    # if not company_cursor: NOT needed. if no cursor, it simply starts at the beginning.
 
     if company_cursor:
         companies.with_cursor(start_cursor = company_cursor)
-
-#    all_companies_scraped = True
-#    comp_ctr = 1
+        
     for company in companies: 
-#        if comp_ctr > 300:
-#            break # done for now, come back later (by cron)
-#        else:
-            # if company.finished_scraping == True:
-            #     continue # jump to next company
-            # else:
-        # comp_ctr += 1
         process_links(company)
-#                titles = process_links(company)
+
+    company_cursor = q.cursor() 
+    memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+
+
+
+    # if len(companies) == chunk_size: # if not, you are at the end, and you don't want a new cursor.
+    #     company_cursor = companies.cursor() 
+    #     memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+    #     return
+
+
+
+
+
+#     company_cursor = memcache.get("company_cursor")
+#     # if not company_cursor: NOT needed. if no cursor, it simply starts at the beginning.
+
+#     if company_cursor:
+#         companies.with_cursor(start_cursor = company_cursor)
+#     else:
+#         q = Company.all() # her resettes det til start, ja.
+#         q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
+#         chunk_size = 5
+#         companies = q.fetch(chunk_size)
+        
+#         # resetting cursor:
+#         company_cursor = q.cursor() 
+#         memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+
+# #    all_companies_scraped = True
+# #    comp_ctr = 1
+
+
+#     for company in companies: 
+# #        if comp_ctr > 300:
+# #            break # done for now, come back later (by cron)
+# #        else:
+#             # if company.finished_scraping == True:
+#             #     continue # jump to next company
+#             # else:
+#         # comp_ctr += 1
+#         process_links(company)
+# #                titles = process_links(company)
+
+#     # update cursor:
+#     company_cursor = companies.cursor() 
+#     memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+
+
+
+
 
                 # if titles == []:
                 #     company.finished_scraping = True
@@ -254,8 +295,4 @@ def scrape():
 
         #some useless commet here
 
-    # if len(companies) == chunk_size: # if not, you are at the end, and you don't want a new cursor.
-    #     company_cursor = companies.cursor() 
-    #     memcache.set("company_cursor",company_cursor, 11000) # 10800 == 180 min.
-#else for company in companies
 
