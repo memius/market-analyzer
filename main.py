@@ -50,13 +50,30 @@ class MainPage(webapp2.RequestHandler):
             u.email = email
             u.put()
 
+        # company = Company()
+        # company.name = "Google Inc"
+        # company.name_lower = "google inc"
+        # company.ticker = "GOOG"
+        # company.ticker_lower = "goog"
+        # company.exchange = "NASDAQ"
+        # company.put()
+        # company = Company()
+        # company.name = "Apple Inc"
+        # company.name_lower = "apple inc"
+        # company.ticker = "AAPL"
+        # company.ticker_lower = "aapl"
+        # company.exchange = "NASDAQ"
+        # company.put()
+        # company = Company()
+        # company.name = "Facebook Inc"
+        # company.name_lower = "facebook inc"
+        # company.ticker = "FB"
+        # company.ticker_lower = "fb"
+        # company.exchange = "NASDAQ"
+        # company.put()
 
         if u.companies == []:
             apple = Company.all().filter("name =","Apple Inc").get()
-
-# det er fordi det ikke er noe som helst i db'en'.
-# DU ER HER - linjen over finner ikke selskapene . linjen under fører til 'none type object has no attribute key'
-
             u.companies.append(apple.key())
             google = Company.all().filter("name =","Google Inc").get()
             u.companies.append(google.key())
@@ -305,10 +322,10 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 class ScrapeHandler(webapp2.RequestHandler):
     def get(self):
-        c = scrape.scrape()
-        self.response.write(c)
+        scrape.scrape()
+        # self.response.write(c)
         self.response.write('you have scraped some articles')
-        #self.redirect("/")
+        # self.redirect("/")
 
 class DuplicateHandler(webapp2.RequestHandler):
     def get(self):

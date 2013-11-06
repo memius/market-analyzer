@@ -4,6 +4,8 @@
 
 import utils, naive_bayes
 
+from google.appengine.api import memcache
+
 from models import Article
 
 def sentiment(article_object, article_objects):
@@ -25,14 +27,14 @@ def sentiment(article_object, article_objects):
     #     article_objects = Article.all() 
 
     for article in article_objects:
-        sentiment = article_object.sentiment
+        sentiment = article.sentiment
 
         if sentiment == "positive":
             positive_article_texts.append(article.text)
         elif sentiment == "negative":
             negative_article_texts.append(article.text)
 
-        title_sentiment = article_object.title_sentiment
+        title_sentiment = article.title_sentiment
 
         if title_sentiment == "positive":
             pos_titles.append(article.title)
@@ -72,7 +74,7 @@ def sentiment(article_object, article_objects):
     prob = naive_bayes.combined_prob(token_probs)
     title_prob = naive_bayes.combined_prob(title_token_probs)
 
-    if article_object.mod != None: # this just changes the conclusion - it does not teach the bayes anything.
+    if article_object.mod != None: # this just changes the conclusion - it does not teach the bayes anything until later, when the article is part of a different corpus.
         prob = min(.99, prob + article_object.mod) # from the user's button click - see CorrectionHandler
         prob = max(.01, prob)
         title_prob = min(.99, title_prob + article_object.mod)
@@ -97,9 +99,32 @@ def sentiment(article_object, article_objects):
     article_object.put()
 
 
-def all_sentiment(): #denne kommer til aa foraarsake deadline exceeded!
+def all_sentiment(): 
 
 #fetch the clean but non-analyzed ones from db, and everything else from memcache.
+
+    q = Article.all()
+    q.order("datetime")
+
+    article_cursor = memcache.get("analyze_article_cursor")
+
+    if article_cursor:
+        q.with_cursor(start_cursor = article_cursor)
+
+    chunk_size = 30
+    articles = q.fetch(chunk_size)
+
+    for article in articles: 
+        if article.clean:
+            sentiment(article,articles)
+
+    if len(articles) < chunk_size:
+        memcache.delete("analyze_article_cursor")
+
+    else:
+        article_cursor = q.cursor()
+        memcache.set("analyze_article_cursor", article_cursor)
+
 
  # companies = memcache.get("companies")
  #   if not companies:
@@ -107,10 +132,10 @@ def all_sentiment(): #denne kommer til aa foraarsake deadline exceeded!
  #      memcache.add("companies",companies,30) # n = seconds
 
 
-    articles = Article.all()
-    for article in articles:
-        if article.clean: # must be clean to get at cleaned text
-            sentiment(article, articles)
+    # articles = Article.all() # filter on clean, of course! don't fetch everything!
+    # for article in articles:
+    #     if article.clean: # must be clean to get at cleaned text
+    #         sentiment(article, articles)
 
 
 

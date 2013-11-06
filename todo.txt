@@ -1,38 +1,21 @@
-hverken memcache.delete() eller .flush_all() virker, tilsynelatende.
+put in memcaching of all articles, at least between the iterations in
+chunk, in both clean and analyze. this way, for at least those 30
+times, you don't fetch from db, but from memcache.
 
-aller først: nå har det gått mer enn 180 minutter siden i går
-kveld. prøv /scrape en gang, og se hva som printes i listen som heter c.
+perhaps possible to store old articles in memcache between runs also?
 
-if cursor remove does not work, or if you keep having
-deadlineexceederrors, have a look at the deferred article you have
-opened at
-https://developers.google.com/appengine/articles/deferred?csw=1
-
-cursoren blir ikke reset til begynnelsen noe sted. du har et spørsmål
-ute på stack.
-
-
-
-nå printes selskapene du har prosessert i scrape rett før "you have
-scraped...". sjekk om en stund at denne listen faktisk inneholder
-noe. the companies now have 44, 96, 57, 69 and 45 articles. they
-should have more when you run scrape again in a while.
-
-deretter remove c from scrape and main.
-
-
-deadline exceeded online. put cursor in analyze and clean as well.
 
 
 put in an is clean check (actually is analyzed) in company display, so
 that only finished articles are displayed.
 
-
-
-
 du lagrer både article.company og company.titles. dette er dobbelt
 lagring, og med motsatt metode. gjør det på 1 måte på 1 sted. m.a.o.:
 hent title fra article.company. lagres i process_links i scrape.
+
+still sentiment none, text none, for articles that have been scraped,
+duped, cleaned and analyzed. why?
+
 
 
 
@@ -2142,4 +2125,35 @@ nå også intermittent deadline på scrape lokalt. hm.
 intermittent cursor error in scrape. try putting the for company in
 companies: process_links(company) AFTER the if len(companies)
 statement.
+
+
+
+
+hverken memcache.delete() eller .flush_all() virker, tilsynelatende.
+
+aller først: nå har det gått mer enn 180 minutter siden i går
+kveld. prøv /scrape en gang, og se hva som printes i listen som heter c.
+
+if cursor remove does not work, or if you keep having
+deadlineexceederrors, have a look at the deferred article you have
+opened at
+https://developers.google.com/appengine/articles/deferred?csw=1
+
+cursoren blir ikke reset til begynnelsen noe sted. du har et spørsmål
+ute på stack.
+
+
+
+nå printes selskapene du har prosessert i scrape rett før "you have
+scraped...". sjekk om en stund at denne listen faktisk inneholder
+noe. the companies now have 44, 96, 57, 69 and 45 articles. they
+should have more when you run scrape again in a while.
+
+deretter remove c from scrape and main.
+
+
+
+
+deadline exceeded online. put cursor in analyze and clean as well, and
+perhaps fewer companies/articles per iteration.
 

@@ -10,8 +10,21 @@
       neg_rat }} negative.
     <p>
       {% for article in articles %}
-      {{ article.sentiment }}
       <a href="/article/{{ article.key().id() }}">{{ article.title }}</a>
+    <p>
+      {{ article.url }}
+    <p>
+      {{ article.datetime }}
+    <p>
+      {{ article.clean }}
+    <p>
+      {{ article.sentiment }}
+    <p>
+      {{ article.title_sentiment }}
+    <p>
+      {{ article.prob }}
+    <p>
+      {{ article.title_prob }}
     <p>
       {% endfor %}
     <p>

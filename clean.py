@@ -3,6 +3,7 @@
 import re, string
 
 from bs4 import BeautifulSoup as bs
+from google.appengine.api import memcache
 from google.appengine.ext import db
 
 import utils, analyze
@@ -18,6 +19,45 @@ from models import Article, Company, Counter
 
 def clean():
     
+    q = Article.all()
+    q.order("datetime")
+
+    article_cursor = memcache.get("clean_article_cursor")
+
+    if article_cursor:
+        q.with_cursor(start_cursor = article_cursor)
+
+    chunk_size = 15
+    articles = q.fetch(chunk_size)
+
+    for article in articles:
+        if not article.clean:
+            soup = bs(unicode(article.html))
+
+            text = remove_outright(soup.get_text())
+
+            sentences = sentencify(text)
+            sentences = filter_sentences(sentences)
+            sentences = junk(sentences)
+            # strict(sentences)
+            text = ''.join(sentences)        
+
+            # if utils.is_prose(text):
+            article.text = text
+            article.clean = True
+            # # else:
+            # #     db.delete(article)
+            # article.clean = True
+
+            article.put()
+
+    if len(articles) < chunk_size:
+        memcache.delete("clean_article_cursor")
+
+    else:
+        article_cursor = q.cursor()
+        memcache.set("clean_article_cursor", article_cursor)
+
     # c = Counter()
     # c.count = 1
     # c.put()
@@ -32,41 +72,48 @@ def clean():
     #     c.ctr += 1
     #     c.put()
 #
-    articles = Article.all()
-    ctr = 1
-    for article in articles: # this will eventually lead to deadline exceeded too. use cursor here as well.
-        if ctr > 3:
-            break
-        else:
-            if not article.clean:
-                ctr = ctr+1
-            #text = article.text
-#            soup = article.soup
-                soup = bs(unicode(article.html))
-#             soup = unicode(soup,'utf-8')
-# #            soup = soup.decode('utf-8')
-#             soup = soup.encode('utf-8')
-            #text = soup.get_text()
 
 
-                text = remove_outright(soup.get_text())
 
-                sentences = sentencify(text)
-                sentences = filter_sentences(sentences)
-                sentences = junk(sentences)
-            ##strict(sentences)
-                text = ''.join(sentences)        
+#     articles = Article.all()
+#     ctr = 1
+#     for article in articles: # this will eventually lead to deadline exceeded too. use cursor here as well.
+#         if ctr > 3:
+#             break
+#         else:
+#             if not article.clean:
+#                 ctr = ctr+1
+#             #text = article.text
+# #            soup = article.soup
+#                 soup = bs(unicode(article.html))
+# #             soup = unicode(soup,'utf-8')
+# # #            soup = soup.decode('utf-8')
+# #             soup = soup.encode('utf-8')
+#             #text = soup.get_text()
 
-                # if utils.is_prose(text):
-                article.text = text
-                article.clean = True
-            # # else:
-            # #     db.delete(article)
-            # article.clean = True
 
-                article.put()
+#                 text = remove_outright(soup.get_text())
 
-                #analyze.sentiment(article) # will this lead to deadline exceeded?
+#                 sentences = sentencify(text)
+#                 sentences = filter_sentences(sentences)
+#                 sentences = junk(sentences)
+#             ##strict(sentences)
+#                 text = ''.join(sentences)        
+
+#                 # if utils.is_prose(text):
+#                 article.text = text
+#                 article.clean = True
+#             # # else:
+#             # #     db.delete(article)
+#             # article.clean = True
+
+#                 article.put()
+
+#                 #analyze.sentiment(article) # will this lead to deadline exceeded?
+
+
+
+
 
 
 
