@@ -1,8 +1,76 @@
-put in memcaching of all articles, at least between the iterations in
-chunk, in both clean and analyze. this way, for at least those 30
-times, you don't fetch from db, but from memcache.
+two lists: 
+one cropped by analyze - the ones to clean and analyze next
+time. (cropped by dupes, not changed by clean, cropped by analyze.)
 
-perhaps possible to store old articles in memcache between runs also?
+one NOT cropped by analyze - the one use to check for
+duplicates. (cropped by dupes, not changed by clean or analyze.)
+
+
+
+corrected article ids must be added to the article to analyze id list
+in memcache.
+
+add a line in dupes that eats a little from the old end of the
+dupe check article id list if the list is really long. say, if the list is longer
+than 300, eat 250. (the analyze check list is cropped by analyze every
+time, so only the dupe check list.)
+
+
+
+
+
+irrelevant now?:
+correction cannot update immediately. ok, so only update every hour,
+but run the four (scrape, dupe, clean, analyze) every ten minutes. for
+now, scale this up to where you don't hit the limits.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+har lagt in memcache for articles i scrape.
+
+put in memcaching of all articles. each chunk takes care of its
+own, but you should try to store them between chunks.
+
+each of these can pick up all articles from memcache, because the
+previous one stored the same all articles TO memcache.
+
+you run an update db from time to time, which  fetches
+everything from db - in chunks, with cursor - and compares with all
+articles rfom memcache, updating and adding entries to db as
+needed. NO removing.
+
+dupe takes care of its own removing - updates the db at the same time
+as the memcache (not costly).
+
+
+start with articles. all four programs need to do it.
+
+scrape: fetching company.all, ---	adding articles do this
+clean: article.all, ---       	   	updating articles do this
+analyze: article.all, --- 	 	updating articles do this
+
+dupes: company.all, article.all, --- 	removing from both; only do articles for now.
+
+
+
+company click in main: none ---		adding companies. not now.
+
+
+
+det at sentiment og text var none for alle artiklene var fordi clean
+og analyze ikke hadde tatt alle ennå. nå tar de fler av gangen.
+
 
 
 
@@ -2156,4 +2224,42 @@ deretter remove c from scrape and main.
 
 deadline exceeded online. put cursor in analyze and clean as well, and
 perhaps fewer companies/articles per iteration.
+
+
+
+ok. so now, thins work without errors, but you are not cleaning and
+analyzing older articles. you need something that catches those as
+well, in case they fall through the hoops of memcached recent
+articles.
+
+just run a regular, old style clean and analyze, with or without
+cursor, to get those old ones.
+
+
+how long are article ids stored in memcache? can you use only the id
+list to find dupes? if you store it long enough, and don't delete ids
+from that list, you should be alright.
+
+
+
+
+in dupes, you should only fetch articles from the ids in memcache. no
+need to check all articles. hm. but you need to compare to
+something. you can compare to the articles from a few hours back.
+
+
+it's because dupes removes some of the ones scrape puts in - those are
+the ones that are none objects! d'uh.
+
+let dupes fetch the ids from memcache, and remove them as it removes
+their counterpart articles.
+
+
+
+the error comes only when you + the two lists together. both lists
+do contains something, so what is the problem?
+
+the ids stored in memcache by scrape causes crash in clean if they
+contain previous keys. only new keys => fine. new keys and old keys =>
+article is none type object.
 

@@ -311,6 +311,7 @@ class CorrectionHandler(webapp2.RequestHandler):
         # self.response.write(article_object.content)
         s = self.request.get('sentiment')
         article_object.sentiment = str(s) # must be str, not unicode
+        article_object.title_sentiment = str(s) 
         
         if s == "positive":
             article_object.mod = 0.9
@@ -338,10 +339,20 @@ class CleanHandler(webapp2.RequestHandler):
         self.response.write('you have cleaned some text')
         clean.clean()
 
+class CleanOldHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('you have cleaned some old articles')
+        clean.clean_old_articles()
+
 class AnalyzeHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write("you have analyzed all articles")
         analyze.all_sentiment()
+
+class AnalyzeOldHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("you have analyzed old articles")
+        analyze.all_sentiment_old_articles()
 
 app = webapp2.WSGIApplication([
 #        ('/auth_return', AuthHandler),
@@ -355,7 +366,9 @@ app = webapp2.WSGIApplication([
         ('/scrape', ScrapeHandler),
         ('/dupes', DuplicateHandler),
         ('/clean', CleanHandler),
+        ('/clean_old_articles', CleanOldHandler),
         ('/analyze', AnalyzeHandler),
+        ('/analyze_old_articles', AnalyzeOldHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

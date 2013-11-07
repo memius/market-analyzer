@@ -8,7 +8,7 @@ from google.appengine.ext import db
 
 import utils, analyze
 
-from models import Article, Company, Counter
+from models import Article
 
 #1. display readable text to user - here, you only need to remove boilerplate. DONE.
 #2. deliver clean, unequivocal text to the classifier - here, you need to normalize, remove whitespace, punctuation.
@@ -19,44 +19,60 @@ from models import Article, Company, Counter
 
 def clean():
     
-    q = Article.all()
-    q.order("datetime")
 
-    article_cursor = memcache.get("clean_article_cursor")
 
-    if article_cursor:
-        q.with_cursor(start_cursor = article_cursor)
+    # q = Article.all()
+    # q.order("datetime")
 
-    chunk_size = 15
-    articles = q.fetch(chunk_size)
+    # article_cursor = memcache.get("clean_article_cursor")
 
-    for article in articles:
-        if not article.clean:
+    # if article_cursor:
+    #     q.with_cursor(start_cursor = article_cursor)
+
+    # chunk_size = 15
+    # articles = q.fetch(chunk_size)
+
+    article_ids = memcache.get("article_ids")
+    if article_ids:
+        for article_id in article_ids:
+            article = Article.get_by_id(article_id) 
+
+    # for article in articles:
+    #     if not article.clean:
+
+
             soup = bs(unicode(article.html))
-
             text = remove_outright(soup.get_text())
-
             sentences = sentencify(text)
             sentences = filter_sentences(sentences)
             sentences = junk(sentences)
             # strict(sentences)
             text = ''.join(sentences)        
-
             # if utils.is_prose(text):
             article.text = text
             article.clean = True
             # # else:
             # #     db.delete(article)
             # article.clean = True
-
             article.put()
 
-    if len(articles) < chunk_size:
-        memcache.delete("clean_article_cursor")
+    #         if article_keys:
+    #             article_keys.append(article)
+    #             memcache.set("article_keys", article_keys, 10)
+    #         else:
+    #             memcache.add("article_keys",[article],10)
 
-    else:
-        article_cursor = q.cursor()
-        memcache.set("clean_article_cursor", article_cursor)
+
+    # if len(articles) < chunk_size:
+    #     memcache.delete("clean_article_cursor")
+
+    # else:
+    #     article_cursor = q.cursor()
+    #     memcache.set("clean_article_cursor", article_cursor)
+
+
+
+
 
     # c = Counter()
     # c.count = 1
@@ -120,7 +136,30 @@ def clean():
     # except:
     #     c.ctr = 1
     #     c.put()
-        
+
+
+def clean_old_articles():
+    q = Article.all()
+    q.order("datetime")
+    articles = q.fetch(1000)
+
+    for article in articles:
+        if not article.clean:
+            soup = bs(unicode(article.html))
+            text = remove_outright(soup.get_text())
+            sentences = sentencify(text)
+            sentences = filter_sentences(sentences)
+            sentences = junk(sentences)
+            # strict(sentences)
+            text = ''.join(sentences)        
+            # if utils.is_prose(text):
+            article.text = text
+            article.clean = True
+            # # else:
+            # #     db.delete(article)
+            # article.clean = True
+            article.put()
+
 
 
 #removes offending strings immediately:

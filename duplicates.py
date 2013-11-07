@@ -3,11 +3,14 @@
 #checks for duplicates in the db, and removes them.
 
 from google.appengine.ext import db
+from google.appengine.api import memcache
 
 from models import Article, Company
 
 def companies():
-    companies = Company.all()
+    q = Company.all()
+    q.order("datetime")
+    companies = q.fetch(1000)
     duplicates = []
     checked = []
     for company in companies:
@@ -25,22 +28,29 @@ def companies():
             duplicates.append(company.ticker)
 
 def articles():
-    articles = Article.all()
-    duplicates = []
-    checked = []
-    for article in articles:
-        if article.url in duplicates:
-            db.delete(article)
-        else:
-            duplicates.append(article.url)
-            checked.append(article)
+    article_ids = memcache.get("article_ids")
 
-    duplicates = []
-    for article in checked:
-        if article.title in duplicates: 
-            db.delete(article)
-        else:
-            duplicates.append(article.title)
+    if article_ids:
+        duplicates = []
+        checked = []
+        for article_id in article_ids: # removes the last (newest) in list
+            article = Article.get_by_id(article_id)
+            if article.url in duplicates:
+                db.delete(article)
+                article_ids.remove(article.key().id())
+            else:
+                duplicates.append(article.url)
+                checked.append(article)
+
+        duplicates = []
+        for article in checked:
+            if article.title in duplicates:
+                db.delete(article)
+                article_ids.remove(article.key().id())
+            else:
+                duplicates.append(article.title)
+
+        memcache.set("article_ids", article_ids)
 
     # articles = Article.all()
     # duplicates = []

@@ -177,6 +177,7 @@ def process_links(company):
         return # from this subfunction
 
     link_ctr = 1
+    article_ids = []
     for [title, link] in links: 
         if link_ctr > 200: 
             break # from this links loop
@@ -185,6 +186,10 @@ def process_links(company):
             if link != None and link != "":
                 html = fetch(link)
                 if html != None:
+                    new_titles = old_titles + titles
+                    company.titles = new_titles #this list should be shortened every now and then
+                    company.put() 
+
                     article_object = Article()
                     article_object.title = title
                     titles.remove(title) # when finished, titles = []
@@ -192,12 +197,9 @@ def process_links(company):
                     article_object.url = link
                     article_object.company = company
                     article_object.put() 
+                    article_ids.append(article_object.key().id())
                                 
-                    new_titles = old_titles + titles
-                    company.titles = new_titles #this list should be shortened every now and then
-                    company.put() 
-                    
-    return titles # to tell whether finished or not.
+    return article_ids
 
 
 def scrape():
@@ -224,13 +226,22 @@ def scrape():
     if company_cursor:
         q.with_cursor(start_cursor = company_cursor)
         
-    chunk_size = 3
+    chunk_size = 5
     companies = q.fetch(chunk_size)
 
-#    c = []
+    article_ids = memcache.get("article_ids")    
     for company in companies: 
-        process_links(company)
+        new_article_ids = process_links(company)
+
 #        c.append(company.name)
+        if new_article_ids:
+            if article_ids:
+                article_ids = new_article_ids + article_ids
+                # memcache.delete("article_ids")
+                memcache.set("article_ids", article_ids, 11000) # clean does not update, so store until analyze.
+            else:
+                # memcache.delete("article_ids") # used when soup line in clean gets error.
+                memcache.add("article_ids",new_article_ids,11000)
 
     if len(companies) < chunk_size:
 #        q = Company.all() this will not reset to the beginning, but to the end...
@@ -244,6 +255,7 @@ def scrape():
     else:
         company_cursor = q.cursor() 
         memcache.set("company_cursor",company_cursor) # set only updates, does not need time limit.
+
 
 #    return c
 
