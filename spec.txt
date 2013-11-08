@@ -1,3 +1,13 @@
+free access, $1 per company per month. nice and simple, and easy to
+join. $40 for the android/ios app. betal magnus for å lage ios appen,
+dersom han kan love å gjøre det fort.
+
+
+
+
+
+
+
 the front page is a list of your company picks. display name, and a
 colored bar; green to the left, size dependent on how many positive
 articles. the length of the bar is normalized to the total number of

@@ -139,7 +139,12 @@ class CompanyClickHandler(webapp2.RequestHandler):
         # company = re.compile("company/(?P<company>.*?)HTTP")
         # company = re.search(company,unicode(r)).group("company")
         company = Company.get_by_id(int(company_id))
-        [pos_rat,neg_rat] = utils.sentiment_count(company.articles)
+        articles = [article for article in company.articles if article.clean]
+        [pos_rat,neg_rat] = utils.sentiment_count(articles)
+
+# DU ER HER - finn alle de artiklene som er analysert. is_clean, eller kanskje til og med et analyzed flagg.
+
+
 
         # company.name = "Microsoft Corporation"
         # company.name_lower = "microsoft corporation"
@@ -153,8 +158,8 @@ class CompanyClickHandler(webapp2.RequestHandler):
             'neg_rat' : neg_rat,
             'name' : company.name,
             'exchange' : company.exchange,
-            'articles' : company.articles,
-            'num_of_articles' : company.articles.count()
+            'articles' : articles,
+            'num_of_articles' : len(articles) #company.articles.count()
             }
 
         template = jinja_environment.get_template('company.html')

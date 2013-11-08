@@ -1,19 +1,40 @@
-two lists: 
-one cropped by analyze - the ones to clean and analyze next
-time. (cropped by dupes, not changed by clean, cropped by analyze.)
+tøm søppel og papirkurver.
+stapp heimevernet i kistene.
+støvsug.
+vask klær.
+kjør oppvaskmaskin.
 
-one NOT cropped by analyze - the one use to check for
-duplicates. (cropped by dupes, not changed by clean or analyze.)
+
+
+det som skjer nå er at dersom jeg kjører scrape to ganger på rad, så
+faller artikler ut, og må kjøres vha. scrape_old_articles. slik kan
+man muligens ikke ha det, i alle fall ikke during utvikling. eller
+hva? kanskje? så lenge dupes, clean and analyze alltid kjøres etter
+scrape, og alltid i den rekkefølgen, så må det vel gå bra?
+
+nå virker det som om artikler som har blitt skrapet, men ikke cleaned
+eller analyzed, har article.clean joda, det var bare article.count()
+som ble brukt feil i company click handler.
+
+put in an is clean check (actually is analyzed) in company display, so
+that only finished articles are displayed. company click handler i main.
+
 
 
 
 corrected article ids must be added to the article to analyze id list
-in memcache.
+in memcache. and, i guess, to the duplicate check list? no, i don't
+think so. these are checked, and old, remember. but they could be
+quite new, and on both lists, or on the dup list but not the
+other. no, they can't be on any list, because then they would not be
+displayed.
+
 
 add a line in dupes that eats a little from the old end of the
 dupe check article id list if the list is really long. say, if the list is longer
 than 300, eat 250. (the analyze check list is cropped by analyze every
 time, so only the dupe check list.)
+
 
 
 
@@ -73,9 +94,6 @@ og analyze ikke hadde tatt alle ennå. nå tar de fler av gangen.
 
 
 
-
-put in an is clean check (actually is analyzed) in company display, so
-that only finished articles are displayed.
 
 du lagrer både article.company og company.titles. dette er dobbelt
 lagring, og med motsatt metode. gjør det på 1 måte på 1 sted. m.a.o.:
@@ -2262,4 +2280,17 @@ do contains something, so what is the problem?
 the ids stored in memcache by scrape causes crash in clean if they
 contain previous keys. only new keys => fine. new keys and old keys =>
 article is none type object.
+
+
+
+
+two lists: 
+
+done:
+one cropped by analyze - the ones to clean and analyze next
+time. (added to by scrape, cropped by dupes, not changed by clean, cropped by analyze.)
+
+done:
+one NOT cropped by analyze - the one use to check for
+duplicates. (added to by scrape, cropped by dupes, not changed by clean or analyze.)
 

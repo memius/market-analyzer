@@ -230,6 +230,7 @@ def scrape():
     companies = q.fetch(chunk_size)
 
     article_ids = memcache.get("article_ids")    
+    duplicate_check = memcache.get("duplicate_check")
     for company in companies: 
         new_article_ids = process_links(company)
 
@@ -239,9 +240,18 @@ def scrape():
                 article_ids = new_article_ids + article_ids
                 # memcache.delete("article_ids")
                 memcache.set("article_ids", article_ids, 11000) # clean does not update, so store until analyze.
+                if duplicate_check:
+                    memcache.set("duplicate_check",article_ids, 11000)
+                else:
+                    memcache.add("duplicate_check",article_ids, 11000)
             else:
                 # memcache.delete("article_ids") # used when soup line in clean gets error.
                 memcache.add("article_ids",new_article_ids,11000)
+                if duplicate_check:
+                    memcache.set("duplicate_check",new_article_ids, 11000) # tvilsom.
+                    # pass
+                else:
+                    memcache.add("duplicate_check",new_article_ids, 11000)
 
     if len(companies) < chunk_size:
 #        q = Company.all() this will not reset to the beginning, but to the end...

@@ -29,15 +29,18 @@ def companies():
 
 def articles():
     article_ids = memcache.get("article_ids")
+    duplicate_check = memcache.get("duplicate_check")
 
-    if article_ids:
+    if duplicate_check:
         duplicates = []
         checked = []
-        for article_id in article_ids: # removes the last (newest) in list
+        for article_id in duplicate_check: # removes the last (newest) in list
             article = Article.get_by_id(article_id)
             if article.url in duplicates:
                 db.delete(article)
-                article_ids.remove(article.key().id())
+                duplicate_check.remove(article.key().id())
+                if article_ids:
+                    article_ids.remove(article.key().id())
             else:
                 duplicates.append(article.url)
                 checked.append(article)
@@ -46,11 +49,15 @@ def articles():
         for article in checked:
             if article.title in duplicates:
                 db.delete(article)
-                article_ids.remove(article.key().id())
+                duplicate_check.remove(article.key().id())
+                if article_ids:
+                    article_ids.remove(article.key().id())
             else:
                 duplicates.append(article.title)
 
-        memcache.set("article_ids", article_ids)
+        memcache.set("duplicate_check", duplicate_check)
+        if article_ids:
+            memcache.set("article_ids", article_ids)
 
     # articles = Article.all()
     # duplicates = []

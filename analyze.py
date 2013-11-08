@@ -139,6 +139,9 @@ def all_sentiment():
     # for article in articles: 
         # if article.clean:
             sentiment(article) #,articles)
+            article_ids.remove(article_id)
+
+        memcache.set("article_ids", article_ids)
 
     # if len(articles) < chunk_size:
     #     memcache.delete("analyze_article_cursor")
