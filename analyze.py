@@ -158,9 +158,9 @@ def all_sentiment_old_articles():
 
     ana_old_cursor = memcache.get("ana_old_cursor")
     if ana_old_cursor:
-        q.with_cursor(start_cursor = clean_old_cursor)
+        q.with_cursor(start_cursor = ana_old_cursor)
 
-    chunk_size = 15
+    chunk_size = 8
     articles = q.fetch(chunk_size)
 
     for article in articles: 
