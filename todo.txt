@@ -1,8 +1,37 @@
-tøm søppel og papirkurver.
-stapp heimevernet i kistene.
-støvsug.
-vask klær.
-kjør oppvaskmaskin.
+du kjører analyze old online, og øker chunk size.
+
+holder på å kjøre analyze all. det virker som om det er en memory leak
+der. (det ser ut som alle er clean, siden alle har tekst - det er de
+som har analyzed = true som blir displayet - men vil ikke det si at du
+kan sjekke analyzed == true før du analyserer?)
+
+
+du prøver nå clean old og analyze old uten filter, og på cron hvert minutt.
+
+clean = true, analyzed = true. jeg putter altså ikke inn tekst når jeg
+cleaner, eller noe slikt.
+
+maybe the cursor isn't moving along?
+
+clean old and analyze old worked locally. why not online?
+
+
+
+
+
+
+det er fordi du ikke nullstiller cursoren igjen. du må delete
+cursor. nei, de blir fortsatt ikke cleaned, og færre analyzed, selv om
+jeg sletter cursoren.
+apple: 22 av 231
+google: 15 av 199
+face: 107 av 170
+
+har kjørt clean old og kjører analyze old online nå, men det ser ikke ut til at
+noen blir analyzed. de er cleaned, men blir ikke analyzed.
+apple: 17 av 99
+google: 15 av 74
+face: 37 av 49
 
 
 
@@ -2293,4 +2322,14 @@ time. (added to by scrape, cropped by dupes, not changed by clean, cropped by an
 done:
 one NOT cropped by analyze - the one use to check for
 duplicates. (added to by scrape, cropped by dupes, not changed by clean or analyze.)
+
+
+
+
+
+
+nå er det zombie-id'er i db'en igjen. main støter på det når den
+prøver å hente user companies. hvor er det jeg ikke sletter dem
+skikkelig? det virket som en engangs, som lå igjen fra forrige
+versjons kjøring.
 

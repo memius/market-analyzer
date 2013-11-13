@@ -141,25 +141,40 @@ def clean():
 def clean_old_articles():
     q = Article.all()
     q.order("datetime")
-    articles = q.fetch(1000)
+    
+    # cursor here, if fetch only a few
+    clean_old_cursor = memcache.get("clean_old_cursor")
+    if clean_old_cursor:
+        q.with_cursor(start_cursor = clean_old_cursor)
+
+    chunk_size = 2
+    articles = q.fetch(chunk_size)
 
     for article in articles:
-        if not article.clean:
-            soup = bs(unicode(article.html))
-            text = remove_outright(soup.get_text())
-            sentences = sentencify(text)
-            sentences = filter_sentences(sentences)
-            sentences = junk(sentences)
+#        if article.sentiment == None:
+#        if not article.clean:
+        soup = bs(unicode(article.html))
+        text = remove_outright(soup.get_text())
+        sentences = sentencify(text)
+        sentences = filter_sentences(sentences)
+        sentences = junk(sentences)
             # strict(sentences)
-            text = ''.join(sentences)        
+        text = ''.join(sentences)        
             # if utils.is_prose(text):
-            article.text = text
-            article.clean = True
+        article.text = text
+        article.clean = True
             # # else:
             # #     db.delete(article)
             # article.clean = True
-            article.put()
+        article.put()
 
+    if len(articles) < chunk_size:
+        memcache.delete("clean_old_cursor")
+
+    if clean_old_cursor:
+        memcache.set("clean_old_cursor", clean_old_cursor, 11000)
+    else:
+        memcache.add("clean_old_cursor", clean_old_cursor, 11000)
 
 
 #removes offending strings immediately:

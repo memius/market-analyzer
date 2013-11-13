@@ -77,7 +77,7 @@ def sentiment(article_object):
         title = utils.string_normalize(article_object.title)
 
         memcache.add("values", [text, pos_freq, neg_freq, pos_size, neg_size, \
-                                    title, pos_title_freq, neg_title_freq, pos_title_size, neg_title_size])
+                                    title, pos_title_freq, neg_title_freq, pos_title_size, neg_title_size], 11000)
 
 # ----------------------
 
@@ -112,7 +112,8 @@ def sentiment(article_object):
         article_object.title_sentiment = "negative"
     else:
         article_object.title_sentiment = "neutral"
-    
+
+    article_object.analyzed = True
     article_object.put()
 
 
@@ -141,23 +142,37 @@ def all_sentiment():
             sentiment(article) #,articles)
             article_ids.remove(article_id)
 
-        memcache.set("article_ids", article_ids)
+        memcache.set("article_ids", article_ids, 11000)
 
     # if len(articles) < chunk_size:
     #     memcache.delete("analyze_article_cursor")
 
     # else:
     #     article_cursor = q.cursor()
-    #     memcache.set("analyze_article_cursor", article_cursor)
+    #     memcache.set("analyze_article_cursor", article_cursor, 11000)
 
 
 def all_sentiment_old_articles(): 
     q = Article.all()
     q.order("datetime")
-    articles = q.fetch(1000)
+
+    ana_old_cursor = memcache.get("ana_old_cursor")
+    if ana_old_cursor:
+        q.with_cursor(start_cursor = clean_old_cursor)
+
+    chunk_size = 20
+    articles = q.fetch(chunk_size)
 
     for article in articles: 
-        if article.clean:
+        if not article.analyzed:
+#        if article.clean and not article.sentiment:
             sentiment(article) 
 
 
+    if len(articles) < chunk_size:
+        memcache.delete("ana_old_cursor")
+
+    if ana_old_cursor:
+        memcache.set("ana_old_cursor",ana_old_cursor, 11000)
+    else:
+        memcache.add("ana_old_cursor",ana_old_cursor, 11000)

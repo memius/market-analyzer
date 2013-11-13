@@ -72,6 +72,9 @@ class MainPage(webapp2.RequestHandler):
         # company.exchange = "NASDAQ"
         # company.put()
 
+        # u.companies = []
+        # u.put()
+
         if u.companies == []:
             apple = Company.all().filter("name =","Apple Inc").get()
             u.companies.append(apple.key())
@@ -84,7 +87,10 @@ class MainPage(webapp2.RequestHandler):
         company_names = []
         for company_key in u.companies:
             company = Company.get_by_id(company_key.id())
+            # try: # in case there are zombie ids for that user:
             company_names.append(company.name)
+            # except:
+            #     continue
 
 # #         # displaying all companies for debugging only:
         q = Company.all() #you'll need a 'more' button to display more than these 20
@@ -95,14 +101,15 @@ class MainPage(webapp2.RequestHandler):
 # #         # you need a check here, to see what companies are already
 # #         # user companies!
 #         free_companies = ["Apple Inc", "Google Inc", "Facebook Inc"]
-#         for comp in companies:
 
-            # if company.name == "International Business Machines Corp":
-            #     company.name = "International Business Machines Corp."
-            #     company.name_lower = "international business machines corp."
-            #     company.ticker = "IBM"
-            #     company.ticker_lower = "ibm"
-            #     company.put()
+        # for company in companies:
+        #     if company.ticker == "GE":
+        #         # company.name = "International Business Machines Corp."
+        #         # company.name_lower = "international business machines corp."
+        #         # company.ticker = "IBM"
+        #         # company.ticker_lower = "ibm"
+        #         company.exchange = "NYSE"
+        #         company.put()
 
 #             if comp.name in free_companies and comp.key() not in u.companies:
 #                 u.companies.append(comp.key())
@@ -140,16 +147,18 @@ class CompanyClickHandler(webapp2.RequestHandler):
         # company = re.search(company,unicode(r)).group("company")
         company = Company.get_by_id(int(company_id))
         articles = [article for article in company.articles if article.clean]
+        # articles = [article for article in company.articles]
         [pos_rat,neg_rat] = utils.sentiment_count(articles)
 
-# DU ER HER - finn alle de artiklene som er analysert. is_clean, eller kanskje til og med et analyzed flagg.
-
-
+        # for article in articles:
+        #     article.analyzed = True
+        #     article.put()
 
         # company.name = "Microsoft Corporation"
         # company.name_lower = "microsoft corporation"
-        # # company.ticker_lower = "goog"
-        # # company.ticker = "GOOG"
+        # company.ticker = "GE"
+        # company.ticker_lower = "ge"
+        # company.exchange = "NYSE"
         # company.put()
          
         template_values = {
@@ -159,7 +168,8 @@ class CompanyClickHandler(webapp2.RequestHandler):
             'name' : company.name,
             'exchange' : company.exchange,
             'articles' : articles,
-            'num_of_articles' : len(articles) #company.articles.count()
+            'tot_articles' : company.articles.count(),
+            'num_of_articles' : len(articles) 
             }
 
         template = jinja_environment.get_template('company.html')

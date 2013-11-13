@@ -58,6 +58,7 @@ class Article(db.Model):
     mod = db.FloatProperty() # modification to next probability calculation
 #    normalized = db.TextProperty()
     clean = db.BooleanProperty(False) 
+    analyzed = db.BooleanProperty(False) 
     company = db.ReferenceProperty(Company, collection_name = "articles")
 
 def tokens_key(tokens_name=None):

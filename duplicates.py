@@ -14,6 +14,12 @@ def companies():
     duplicates = []
     checked = []
     for company in companies:
+
+        # if company.name == "General Electric Company":
+        #     company.exchange = "NYSE"
+        #     company.put()
+        #     # db.delete(company)
+
         if company.name in duplicates:
             db.delete(company)
         else:
@@ -55,9 +61,9 @@ def articles():
             else:
                 duplicates.append(article.title)
 
-        memcache.set("duplicate_check", duplicate_check)
+        memcache.set("duplicate_check", duplicate_check, 11000)
         if article_ids:
-            memcache.set("article_ids", article_ids)
+            memcache.set("article_ids", article_ids, 11000)
 
     # articles = Article.all()
     # duplicates = []
