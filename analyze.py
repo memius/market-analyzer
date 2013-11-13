@@ -160,7 +160,7 @@ def all_sentiment_old_articles():
     if ana_old_cursor:
         q.with_cursor(start_cursor = clean_old_cursor)
 
-    chunk_size = 20
+    chunk_size = 15
     articles = q.fetch(chunk_size)
 
     for article in articles: 
