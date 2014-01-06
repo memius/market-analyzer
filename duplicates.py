@@ -23,8 +23,8 @@ def companies():
         #dev only:
 #         #comp_list = ["GOOG","FB","AAPL","GE","TSLA"]
 #         if company.exchange == "NYSE" and company.ticker != "GE":
-# #        if company.exchange == None:
-#             db.delete(company)
+        if company.ticker == "IBM":
+            db.delete(company)
 
 
         if company.name in duplicates:

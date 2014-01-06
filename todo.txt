@@ -1,10 +1,8 @@
 nyse legges inn med små bokstaver.
 
 lag en sjekk - når du subscriber - at du ikke subscriber to ganger til
-samme selskap.
+samme selskap. (apparently, dupes does not remove user companies.)
 
-make a delete button in company view. nei! delete alle som ikke er fb,
-goog, aapl, ge eller tesla.
 
 it needs to look good. it can start as a free service, and then you
 can add android app, payment, api, better looking text and so on. but
@@ -21,16 +19,8 @@ beautiful, so that the first impression, at first glance, of the page,
 is pleasant.
 
 
-how do i delete companies without losing the articles associated? i
-have two facebooks. you need to make a delete button in each company
-view. (development only!)
 
 
-you need to delete the extra companies that have inserted themselves
-into the db after the danish assignment.
-
-
-apparently, dupes does not remove user companies.
 
 
 tips for later:

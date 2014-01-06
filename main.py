@@ -75,7 +75,7 @@ class MainPage(webapp2.RequestHandler):
         # u.companies = []
         # u.put()
 
-        if u.companies == []:
+        if u.companies == []: 
             apple = Company.all().filter("name =","Apple Inc").get()
             u.companies.append(apple.key())
             google = Company.all().filter("name =","Google Inc").get()
@@ -249,7 +249,8 @@ class FoundCompanyHandler(webapp2.RequestHandler):
                 company = Company()
                 company.name = name
                 company.name_lower = name.lower()
-                company.exchange = exchange.lower()
+                company.exchange = exchange
+                company.exchange_lower = exchange.lower()
                 company.ticker = ticker
                 company.ticker_lower = ticker.lower()
                 company.put()
