@@ -138,9 +138,9 @@ def all_sentiment():
             article = Article.get_by_id(article_id) 
 
     # for article in articles: 
-        # if article.clean:
-            sentiment(article) #,articles)
-            article_ids.remove(article_id)
+            if article.clean:
+                sentiment(article) #,articles)
+                article_ids.remove(article_id)
 
         memcache.set("article_ids", article_ids, 11000)
 
@@ -156,6 +156,8 @@ def all_sentiment_old_articles():
     q = Article.all()
     q.order("datetime")
 
+#    memcache.delete("ana_old_cursor") #debug only
+
     ana_old_cursor = memcache.get("ana_old_cursor")
     if ana_old_cursor:
         q.with_cursor(start_cursor = ana_old_cursor)
@@ -167,6 +169,7 @@ def all_sentiment_old_articles():
         if not article.analyzed:
 #        if article.clean and not article.sentiment:
             sentiment(article) 
+#            article.sentiment = "sugar"
 
 
     if len(articles) < chunk_size:

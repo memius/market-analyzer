@@ -369,6 +369,18 @@ class AnalyzeOldHandler(webapp2.RequestHandler):
         self.response.write("you have analyzed old articles")
         analyze.all_sentiment_old_articles()
 
+class CheckHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("checked")
+        ctrs = utils.check()
+
+        template_values = {
+            'ctrs' : ctrs,
+            }
+
+        template = jinja_environment.get_template('check.html')
+        self.response.out.write(template.render(template_values))
+
 app = webapp2.WSGIApplication([
 #        ('/auth_return', AuthHandler),
         ('/correction', CorrectionHandler),
@@ -384,6 +396,7 @@ app = webapp2.WSGIApplication([
         ('/clean_old_articles', CleanOldHandler),
         ('/analyze', AnalyzeHandler),
         ('/analyze_old_articles', AnalyzeOldHandler),
+        ('/check', CheckHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

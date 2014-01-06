@@ -1,3 +1,129 @@
+nyse legges inn med små bokstaver.
+
+lag en sjekk - når du subscriber - at du ikke subscriber to ganger til
+samme selskap.
+
+make a delete button in company view. nei! delete alle som ikke er fb,
+goog, aapl, ge eller tesla.
+
+it needs to look good. it can start as a free service, and then you
+can add android app, payment, api, better looking text and so on. but
+first, and foremost, it needs to look good; it needs to have a central
+scrolling section, and a non-scrolling sidebar on each side. it needs
+to be white, or close to white, and not piss yellow like it is
+now. the font needs to be black for both title and text, with title
+being large and fat, with NO underlining. like foursquare, or whatever
+it was called, the ipad app that gathered articles from here and
+there, and presented them beautifully. your texts need to be beautiful
+as well. you don't need them to be complete, or absolutely free from
+garbage at first, when it's free, when it needs to be basically
+beautiful, so that the first impression, at first glance, of the page,
+is pleasant.
+
+
+how do i delete companies without losing the articles associated? i
+have two facebooks. you need to make a delete button in each company
+view. (development only!)
+
+
+you need to delete the extra companies that have inserted themselves
+into the db after the danish assignment.
+
+
+apparently, dupes does not remove user companies.
+
+
+tips for later:
+til bus-news-an: lagre ordene i en array, tror jeg. deretter, lagre
+ord n, n og n+1, n og n+2, n og n+3 og n og n+4. dette er kanskje den
+mest effektive måten å lagre sparse matrices på. se også på nett om
+det er noen etablerte måter.
+
+look into using split() to splitting the sentences into words. might
+be an efficienty boost here, unless you are already using it.
+
+do you want to store the word pairs, with their frequencies, in the
+db? would that be good when the db gets big? would save a lot of
+processing, but would also cost a lot of read operations. you could
+make the entire thing a dictionary, and store that as one entry,
+though. is a dict as efficient as an array? well, store it as the most
+efficient thing, and only as one thing. try that.
+
+------
+
+
+
+i have commented out /scrape and /test from app.yaml. they are
+probably not needed.
+
+
+no, wait. it's no problem that it removes the ones that are
+dupes. however, it's a problem that it only does anything if there
+already exists a dupe check list, which means it never actually
+checks, because the dupe check list is never made (by dupe).
+
+ok, the problem is that dupes removes the dupe checked articles from
+both duplicate check and from article ids, so that both those lists
+are empty when you get to clean.
+
+btw, what the hell are you using duplicate check for, anyway?
+
+so, you are not really changing duplicate check in scrape, only
+article ids, onto which new article ids are added. seems legit.
+
+clean does not alter article ids. it just changes the clean flag.
+
+analyze removes articles from article ids.
+
+
+
+
+you need to look through the chain: scrape, then dupes, then
+clean. analyze seems to work after clean, but there is a problem
+somewhere before clean. memcache, probably. scrape or dupes is not
+storing properly.
+
+
+
+
+
+
+check.html skal displaye de forskjellige ctrs (ctr[0], etc.) fra
+utils.check.
+
+
+
+lag en kort, enkel rutine som tar absolutt alle artiklene, teller dem,
+og printer resultatet. hvis det funker, og du får samme resultat som
+articles.count(), så utvider du den, slik at den etterhvert kan finne
+alle som har feil i seg, og rette det opp.
+
+siden dette problemet strengt tatt er rydding i databasen så kan du
+drite i det en stund, og bare kjøre videre. jobbe litt med sparse
+pairs, f.eks. (søk nedover etter sparse pairs og nedover.)
+
+
+check is supposed to go through all articles, and set analyzed to
+false if there is no sentiment. this does not do anything. the time it
+takes for it to finish is too short, like with analyze old and clean
+old. they do not hit anything. why???????????????
+
+lag en rutine, basert på analyze all, som går gjennom alle, og sjekker
+både ditt og datt - er det text, har den et selskap, har den
+sentiment? hvis ikke, analyser. hvis ikke selskap - dropp it.
+
+are there zombie ids in articles too?
+
+perhaps wait until all the memcache is empty, and try analyze old
+again. see if i avoid passing the soft memory limit then.
+
+there are as many analyzed:true as there are clean:true in the view,
+so there are obviously articles that have been tagged as analyzed even
+though they are not. (i did that, in main, a while ago. no
+mystery. but it needs to be fixed.)
+
+still absolutely no dice on analyzing old articles. dammit!
+
 du kjører analyze old online, og øker chunk size.
 
 holder på å kjøre analyze all. det virker som om det er en memory leak

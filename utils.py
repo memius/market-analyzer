@@ -2,6 +2,10 @@
 
 import re, string
 
+from google.appengine.api import memcache
+
+from models import Article
+
 def string_normalize(s):
     for p in string.punctuation:
         s = s.replace(p, ' ')
@@ -92,3 +96,36 @@ def Normalize(self, fraction=1.0):
     factor = float(fraction) / total
     for x in self.d:
         self.d[x] *= factor
+
+
+def check():
+    q = Article.all()
+    q.order("datetime")
+
+    # check_cursor = memcache.get("check_cursor")
+    # if check_cursor:
+    #     q.with_cursor(start_cursor = check_cursor)
+
+    chunk_size = 30
+    articles = q.fetch(chunk_size)
+
+    art_ctr = 0
+    l = []
+    for article in articles: 
+        # if not article.sentiment:
+        #     article.analyzed = False
+        #     article.put()
+        art_ctr += 1
+        l.append(".")
+
+    count = len(articles)
+
+    # if len(articles) < chunk_size:
+    #     memcache.delete("check_cursor")
+
+    # if check_cursor:
+    #     memcache.set("check_cursor",check_cursor, 11000)
+    # else:
+    #     memcache.add("check_cursor",check_cursor, 11000)
+
+    return [count,art_ctr,unicode(l)]

@@ -12,13 +12,13 @@ handlers:
 - url: /.*
   script: main.app
 
-- url: /scrape
-  script: scrape.app
-  login: admin
+# - url: /scrape
+#   script: scrape.app
+#   login: admin
 
-- url: /test
-  script: test.app
-  login: admin
+# - url: /test
+#   script: test.app
+#   login: admin
 
 
 libraries:
