@@ -36,114 +36,24 @@ def clean(article):
 
 def clean_all():
 
-    # q = Article.all()
-    # q.order("datetime")
+    # article_ids = memcache.get("article_ids")
+    # if article_ids:
+    #     articles = []
+    #     for article_id in article_ids:
+    #         article = Article.get_by_id(article_id) 
+    #         articles.append(article)
 
-    # article_cursor = memcache.get("clean_article_cursor")
+    #     for article in articles:
+    #         clean(article)
 
-    # if article_cursor:
-    #     q.with_cursor(start_cursor = article_cursor)
-
-    # chunk_size = 15
-    # articles = q.fetch(chunk_size)
-
-    article_ids = memcache.get("article_ids")
-    if article_ids:
-        articles = []
-        for article_id in article_ids:
-            article = Article.get_by_id(article_id) 
-            articles.append(article)
-
-        for article in articles:
-            clean(article)
-
-    else: # hvis article_ids er tom, maa artikler hentes fra db:
-        q = Article.all().filter("clean !=", True) # both None and False
-        articles = q.fetch(20)
+    # else: # hvis article_ids er tom, maa artikler hentes fra db:
+    q = Article.all().filter("clean =", None) # both None and False
+    articles = q.fetch(2)
 #        if articles:
-        for article in articles:
-            clean(article)
-
-    #         if article_keys:
-    #             article_keys.append(article)
-    #             memcache.set("article_keys", article_keys, 10)
-    #         else:
-    #             memcache.add("article_keys",[article],10)
+    for article in articles:
+        clean(article)
 
 
-    # if len(articles) < chunk_size:
-    #     memcache.delete("clean_article_cursor")
-
-    # else:
-    #     article_cursor = q.cursor()
-    #     memcache.set("clean_article_cursor", article_cursor)
-
-
-
-
-
-    # c = Counter()
-    # c.count = 1
-    # c.put()
-
-    # q = Counter.all()
-    # [c] = q.fetch(1) 
-
-    # q = Article.all()
-
-    # try:
-    #     article = q.get_by_id(c.ctr)
-    #     c.ctr += 1
-    #     c.put()
-#
-
-
-
-#     articles = Article.all()
-#     ctr = 1
-#     for article in articles: # this will eventually lead to deadline exceeded too. use cursor here as well.
-#         if ctr > 3:
-#             break
-#         else:
-#             if not article.clean:
-#                 ctr = ctr+1
-#             #text = article.text
-# #            soup = article.soup
-#                 soup = bs(unicode(article.html))
-# #             soup = unicode(soup,'utf-8')
-# # #            soup = soup.decode('utf-8')
-# #             soup = soup.encode('utf-8')
-#             #text = soup.get_text()
-
-
-#                 text = remove_outright(soup.get_text())
-
-#                 sentences = sentencify(text)
-#                 sentences = filter_sentences(sentences)
-#                 sentences = junk(sentences)
-#             ##strict(sentences)
-#                 text = ''.join(sentences)        
-
-#                 # if utils.is_prose(text):
-#                 article.text = text
-#                 article.clean = True
-#             # # else:
-#             # #     db.delete(article)
-#             # article.clean = True
-
-#                 article.put()
-
-#                 #analyze.sentiment(article) # will this lead to deadline exceeded?
-
-
-
-
-
-
-
-    # except:
-    #     c.ctr = 1
-    #     c.put()
 
 
 #removes offending strings immediately:

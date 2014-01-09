@@ -146,7 +146,7 @@ def all_sentiment():
 
     else: # if no memcache
         q = Article.all().filter("clean =", True)
-        articles = q.fetch(200)
+        articles = q.fetch(1)
         for article in articles:
             sentiment(article)
         

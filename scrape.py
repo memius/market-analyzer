@@ -180,17 +180,13 @@ def process_links(company):
     article_ids = []
     for [title, link] in links: 
         if link_ctr > 200: 
-            break # from this links loop
+            return article_ids
+            #break # from this links loop
         elif title in titles:
             link_ctr += 1
             if link != None and link != "":
                 html = fetch(link)
                 if html != None:
-                    # dette er feil - bare lagre en tittel:                    
-                    new_titles = old_titles + title # yes, only that one
-                    company.titles = new_titles #this list should be shortened every now and then
-                    company.put() 
-
                     article_object = Article()
                     article_object.title = title
                     titles.remove(title) # when finished, titles = []
@@ -199,6 +195,10 @@ def process_links(company):
                     article_object.company = company
                     article_object.put() 
                     article_ids.append(article_object.key().id())
+
+    new_titles = old_titles + titles
+    company.titles = new_titles #this list should be shortened every now and then
+    company.put() 
                                 
     return article_ids
 
