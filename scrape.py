@@ -174,7 +174,7 @@ def process_links(company):
     if titles == []:
         # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
         # company.put()
-        return # from this subfunction
+        return [] # from this subfunction
 
     link_ctr = 1
     article_ids = []
@@ -186,7 +186,8 @@ def process_links(company):
             if link != None and link != "":
                 html = fetch(link)
                 if html != None:
-                    new_titles = old_titles + titles
+                    # dette er feil - bare lagre en tittel:                    
+                    new_titles = old_titles + title # yes, only that one
                     company.titles = new_titles #this list should be shortened every now and then
                     company.put() 
 

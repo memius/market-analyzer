@@ -9,7 +9,7 @@ from google.appengine.api import users, urlfetch
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, scrape, duplicates, clean, analyze
+import utils, crawl, sites, fetch, naive_bayes, scrape, duplicates, clean, analyze, janitor
 
 from models import Article, Company, UserPrefs
 
@@ -74,6 +74,22 @@ class MainPage(webapp2.RequestHandler):
 
         # u.companies = []
         # u.put()
+
+
+        #dev only:
+        # c = Company.all().filter("ticker =","IBM").get()
+        # u.companies.remove(c.key())
+        # u.companies = []
+        # u.put()
+
+
+        # dupe check for subscribed companies:
+        duplicates = []
+        for company in u.companies:
+            if company in duplicates:
+                u.companies.remove(company)
+            else:
+                duplicates.append(company)
 
         if u.companies == []: 
             apple = Company.all().filter("name =","Apple Inc").get()
@@ -284,7 +300,10 @@ class SubscribeHandler(webapp2.RequestHandler):
             q = UserPrefs.all()
             u = q.filter("user_id =",user_id).get()
 
-            u.companies.append(company.key())
+            if company.key() not in u.companies:
+                u.companies.append(company.key())
+            # user_comps = u.companies
+            # u.companies = set(user_comps)
             u.put()
             # company.user = u
             # company.put()
@@ -350,10 +369,15 @@ class DuplicateHandler(webapp2.RequestHandler):
         duplicates.companies()
         duplicates.articles()
 
+class JanitorHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('you have gone through many articles, janitoring')
+        janitor.check_all()
+
 class CleanHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('you have cleaned some text')
-        clean.clean()
+        clean.clean_all()
 
 class CleanOldHandler(webapp2.RequestHandler):
     def get(self):
@@ -398,6 +422,7 @@ app = webapp2.WSGIApplication([
         ('/analyze', AnalyzeHandler),
         ('/analyze_old_articles', AnalyzeOldHandler),
         ('/check', CheckHandler),
+        ('/janitor', JanitorHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

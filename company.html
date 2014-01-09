@@ -6,7 +6,8 @@
   <body>
     <p>
       <b> {{ name }} </b> ({{ exchange }}),
-      {{ num_of_articles }} articles of {{ tot_articles }}. {{ pos_rat }} positive, {{
+      Displaying {{ num_of_articles }} cleaned articles of {{
+      tot_articles }} articles about company. {{ pos_rat }} positive, {{
       neg_rat }} negative.
     <p>
       {% for article in articles %}

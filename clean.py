@@ -17,9 +17,24 @@ from models import Article
 #what you show the user should have the origin (forbes, insider monkey, etc) and the title, but not be a link. you should provide the link somewhere else. the thing you show could be called an excerpt, and contain as much text as possible, but not pretty and perfect.
 
 
-def clean():
-    
+def clean(article):
 
+    soup = bs(unicode(article.html))
+    text = remove_outright(soup.get_text())
+    sentences = sentencify(text)
+    sentences = filter_sentences(sentences)
+    sentences = junk(sentences)
+    # # strict(sentences)
+    text = ''.join(sentences)        
+    # # if utils.is_prose(text):
+    article.text = text
+    article.clean = True
+    # # else:
+    # #     db.delete(article)
+    # article.clean = True
+    article.put()
+
+def clean_all():
 
     # q = Article.all()
     # q.order("datetime")
@@ -34,27 +49,20 @@ def clean():
 
     article_ids = memcache.get("article_ids")
     if article_ids:
+        articles = []
         for article_id in article_ids:
             article = Article.get_by_id(article_id) 
+            articles.append(article)
 
-    # for article in articles:
-    #     if not article.clean:
+        for article in articles:
+            clean(article)
 
-
-            soup = bs(unicode(article.html))
-            text = remove_outright(soup.get_text())
-            sentences = sentencify(text)
-            sentences = filter_sentences(sentences)
-            sentences = junk(sentences)
-            # strict(sentences)
-            text = ''.join(sentences)        
-            # if utils.is_prose(text):
-            article.text = text
-            article.clean = True
-            # # else:
-            # #     db.delete(article)
-            # article.clean = True
-            article.put()
+    else: # hvis article_ids er tom, maa artikler hentes fra db:
+        q = Article.all().filter("clean !=", True) # both None and False
+        articles = q.fetch(200)
+#        if articles:
+        for article in articles:
+            clean(article)
 
     #         if article_keys:
     #             article_keys.append(article)
@@ -136,45 +144,6 @@ def clean():
     # except:
     #     c.ctr = 1
     #     c.put()
-
-
-def clean_old_articles():
-    q = Article.all()
-    q.order("datetime")
-    
-    # cursor here, if fetch only a few
-    clean_old_cursor = memcache.get("clean_old_cursor")
-    if clean_old_cursor:
-        q.with_cursor(start_cursor = clean_old_cursor)
-
-    chunk_size = 2
-    articles = q.fetch(chunk_size)
-
-    for article in articles:
-#        if article.sentiment == None:
-#        if not article.clean:
-        soup = bs(unicode(article.html))
-        text = remove_outright(soup.get_text())
-        sentences = sentencify(text)
-        sentences = filter_sentences(sentences)
-        sentences = junk(sentences)
-            # strict(sentences)
-        text = ''.join(sentences)        
-            # if utils.is_prose(text):
-        article.text = text
-        article.clean = True
-            # # else:
-            # #     db.delete(article)
-            # article.clean = True
-        article.put()
-
-    if len(articles) < chunk_size:
-        memcache.delete("clean_old_cursor")
-
-    if clean_old_cursor:
-        memcache.set("clean_old_cursor", clean_old_cursor, 11000)
-    else:
-        memcache.add("clean_old_cursor", clean_old_cursor, 11000)
 
 
 #removes offending strings immediately:

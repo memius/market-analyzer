@@ -1,7 +1,97 @@
-nyse legges inn med små bokstaver.
+problemet er nå at clean ikke cleaner. det betyr at den ikke finner
+noen som skal cleanes. den bruker article_ids, som først lages i scrape.
 
-lag en sjekk - når du subscriber - at du ikke subscriber to ganger til
-samme selskap. (apparently, dupes does not remove user companies.)
+lag maintenance.py, og putt old_clean og old_analyze inn der. den går
+gjennom hele db'en, og sjekker etter anomalies, og retter på dem. ting
+som er clean men ikke analyzed blir analyzed, osv. kjør hver 24 time
+eller noe slikt, i development. hver time i production.
+
+old skal ikke være en del av production. old skal ikke bruke memcache,
+det er jo en 'nødløsning', som skal sjekke gjennom alt.
+
+du kan, i stedet for å bruke old, kommentere ut scrape, og bare kjore
+de andre en stund. da skulle de klare å hale innpå.
+
+display (main) bør ogsa bruke memcache, fordi mange vil bruke servicen
+samtidig. hvordan få de ny-skrapede inn i display, da? lage et flagg
+som heter new, og slette det når du displayer? ja, det kan funke.
+
+
+LISTE OVER HVA SOM FAKTISK SKJER NÅ, MED TILLEGG OM HVA SOM BØR SKJE I FRAMTIDEN:
+
+1.a
+scrape.articles() henter nye artikler. henter article_ids fra
+process_links. henter også gamle article_ids fra memcache, og legger
+dem sammen med de nye fra process_links. hvis ingen gamle, genererer
+en ny bestående bare av de nye.
+
+1.aa
+process_links bruker company.titles. er dette en tvilsom prosedyre?
+bør selskapene lagre slikt? det bør vel heller ligge hos artiklene
+hvile selskaper de tilhører? compnay.titles er IKKE en
+liksom-attributt. der er en ekte, rett fram attributt hos selskapet.
+
+1.aaa
+process_links henter og lagrer <201 artikler, og lagrer id'ene deres i
+article_ids, som returneres til scrape.articles()
+
+1.b
+scrape.articles() genererer også listen duplicate_checks fra memcache,
+eller lager en ny, som også inneholder article_ids.
+
+1.bb
+
+scrape.articles() legger aldri enkelt-id'er til duplicate_check. enten hentes
+den fullstendig fra mem, eller så legges alle id'ene i article_ids til
+den tomme listen. bør ikke duplicate check vokse ogsa? alle article
+ids må jo legges til, selv om den er tom, ikke sant?
+
+1.c
+scrape skal etterhvert flagge nye artikler med new, slik at display
+(main) kan hente bare disse fra db. resten kan hentes fra memcache.
+ved restart vil det ikke være noe i memcache, og display må hente
+alle fra db. det er bra.
+
+2.a
+duplicates.articles() henter article_ids og duplicate_check fra
+memcache. går gjennom alle artikkel-id'ene i article_ids, og ser om
+den også er i duplicate_checks. hvis så; delete fra db, og fjern fra article_ids.
+
+2.aa
+men, vil ikke alltid article ids være forskjellige? når vil de være
+like? i så fall må duplicates.articles() hente fra db, og sammenligne
+tittel og slikt, som før. mange read ops her. hm. kanskje lagre tittel
+i memcache, da.
+
+2.b
+hvis duplicate_checks ikke finnes, lagrer duplicate.articles()
+article_ids som den nye duplicate_check listen. ellers, lagring ok.
+
+2.c
+hvis article_ids heller ikke finnes lagres ingenting.
+
+3.a
+clean henter article_ids fra memcache. bruker disse til å hente
+artikler fra db, og cleane dem. setter deretter cleanflagget til true.
+
+3.aa
+burde det ikke være en flaggsjekk før clean cleaner en artikkel?
+
+3.aaa
+clean må lagre artcle_ids igjen. nei? den har jo ikke forandret på
+listen. nei, men den må refreshe lagringen av den samme listen, med set.memcache.
+
+4.a
+analyze henter article_ids fra memcache. bruker dette til å hente
+artikler fra db. dersom cleanflagget er på, analyseres artikkelen, og
+id'en fjernes fra article_ids.
+
+4.b
+hvis article_ids finnes, lagres de igjen, med set.memcache.
+
+
+
+
 
 
 it needs to look good. it can start as a free service, and then you
@@ -47,10 +137,20 @@ i have commented out /scrape and /test from app.yaml. they are
 probably not needed.
 
 
+does scrape have to run more than once? if so, does the others need to
+run once every time scrape runs?
+
+duplitaces.articles - du har begynt på nytt øverst. les gjennom og se
+om dette gir mening, og sjekk om det funker. hvis det funker skal dupe
+check listen lages, slik at analyze har noe å arbeide med.
+
+
+is this still a problem? i think so.
 no, wait. it's no problem that it removes the ones that are
 dupes. however, it's a problem that it only does anything if there
 already exists a dupe check list, which means it never actually
 checks, because the dupe check list is never made (by dupe).
+
 
 ok, the problem is that dupes removes the dupe checked articles from
 both duplicate check and from article ids, so that both those lists
