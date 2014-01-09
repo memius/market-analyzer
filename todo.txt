@@ -1,3 +1,15 @@
+DU ER HER: split up analyze into several urls that store stuff to memcache.
+
+husk at du nå har en janitor.py, som kjører gjennom alle artikler, en
+av gangen, og ordner opp. MEN: du må sørge for at ALLE artikler, både
+clean og unclean, blir sjekket, og at janitor progresser over dem, og
+ikke henter de samme 5 hver gang. nytt flagg? nei, for da må du en
+gang avflagge? eller må du? nei. de som er sjekket forandrer seg jo
+ikke.
+
+
+
+
 maybe store all unclean articles to memcache, and do 2 at a time?
 remove them from list stored to memcache each time, until list is
 empty, at which time you check the db for unclean again. this sounds

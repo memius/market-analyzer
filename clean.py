@@ -62,7 +62,7 @@ def clean_all():
 
     else: # hvis article_ids er tom, maa artikler hentes fra db:
         q = Article.all().filter("clean =", None) # should have both None and False
-        articles = q.fetch(10)
+        articles = q.fetch(8)
         memcache.add("cleaning", articles)
 
 #removes offending strings immediately:

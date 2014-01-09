@@ -2,9 +2,9 @@ cron:
 
 # seconds are not allowed. only hours|mins|minutes.
 
-# - description: scrapes articles
-#   url: /scrape
-#   schedule: every 180 minutes
+- description: scrapes articles
+  url: /scrape
+  schedule: every 180 minutes
 
 # - description: removes duplicate articles and companies from db
 #   url: /dupes
