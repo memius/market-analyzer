@@ -1,4 +1,14 @@
-DU ER HER: split up analyze into several urls that store stuff to memcache.
+aller føst: ny memcache-organisering, som i clean og janitor.
+
+DU ER HER: split up analyze into several urls that store stuff to
+memcache.
+
+del opp i flere funksjoner i samme fil først, og sjekk
+locally. deretter, flytt disse ut i flere filer, og sjekk online.
+
+
+
+
 
 husk at du nå har en janitor.py, som kjører gjennom alle artikler, en
 av gangen, og ordner opp. MEN: du må sørge for at ALLE artikler, både
