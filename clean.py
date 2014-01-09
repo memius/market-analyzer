@@ -59,7 +59,7 @@ def clean_all():
 
     else: # hvis article_ids er tom, maa artikler hentes fra db:
         q = Article.all().filter("clean !=", True) # both None and False
-        articles = q.fetch(200)
+        articles = q.fetch(20)
 #        if articles:
         for article in articles:
             clean(article)
