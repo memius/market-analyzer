@@ -36,25 +36,34 @@ def clean(article):
 
 def clean_all():
 
-    # article_ids = memcache.get("article_ids")
-    # if article_ids:
-    #     articles = []
-    #     for article_id in article_ids:
-    #         article = Article.get_by_id(article_id) 
-    #         articles.append(article)
+#     # article_ids = memcache.get("article_ids")
+#     # if article_ids:
+#     #     articles = []
+#     #     for article_id in article_ids:
+#     #         article = Article.get_by_id(article_id) 
+#     #         articles.append(article)
 
-    #     for article in articles:
-    #         clean(article)
+#     #     for article in articles:
+#     #         clean(article)
 
-    # else: # hvis article_ids er tom, maa artikler hentes fra db:
-    q = Article.all().filter("clean =", None) # both None and False
-    articles = q.fetch(2)
-#        if articles:
-    for article in articles:
+#     # else: # hvis article_ids er tom, maa artikler hentes fra db:
+#     q = Article.all().filter("clean =", None) # both None and False
+#     articles = q.fetch(2)
+# #        if articles:
+#     for article in articles:
+#         clean(article)
+
+    cleaning = memcache.get("cleaning")
+    if cleaning:
+        article = cleaning.pop() # pop() returns last item, and changes the list in place
         clean(article)
+        # cleaning.remove(article) not needed, because pop removes it for us.
+        memcache.set("cleaning", cleaning)
 
-
-
+    else: # hvis article_ids er tom, maa artikler hentes fra db:
+        q = Article.all().filter("clean =", None) # should have both None and False
+        articles = q.fetch(10)
+        memcache.add("cleaning", articles)
 
 #removes offending strings immediately:
 def remove_outright(text):

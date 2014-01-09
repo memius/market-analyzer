@@ -134,11 +134,11 @@ def all_sentiment():
 
     article_ids = memcache.get("article_ids")
     if article_ids:
-        for article_id in article_ids:
+        for article_id in article_ids: # this must be sharded!
             article = Article.get_by_id(article_id) 
 
     # for article in articles: 
-            if article.clean:
+            if article and article.clean:
                 sentiment(article) #,articles)
                 article_ids.remove(article_id)
 

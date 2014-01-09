@@ -1,11 +1,31 @@
-there is probably an enormous article. comment out lines in clean,
-until only clean = True is left, and see what happens.
+maybe store all unclean articles to memcache, and do 2 at a time?
+remove them from list stored to memcache each time, until list is
+empty, at which time you check the db for unclean again. this sounds
+good!
+
+use the same principle for analyze; fetch filtered from db, store in
+memcache, and work on memcache list until empty, then fetch more
+filtered from db.
+
+
+look into opening up more than one instance, and see how much it
+costs.
+
+you must split up the efforts, and make sure that all the articles are
+cleaned and analyzed before new scrape. clean takes 2, and analyze
+will only take 1, when you get it to work (too much memory now), while
+scrape scrapes several. this means you must run clean and analyze
+several times for each scrape.
 
 
 du har fått clean til å cleane, men analyze bruker for mye
 minne. dvs. at du må dele opp /analyze i /analyze1, /analyze2, etc. de
 gjør en liten del av jobben hver, og lagrer resultatene sine til
 memcache.
+
+
+
+
 
 
 
@@ -23,6 +43,15 @@ det er jo en 'nødløsning', som skal sjekke gjennom alt.
 
 du kan, i stedet for å bruke old, kommentere ut scrape, og bare kjore
 de andre en stund. da skulle de klare å hale innpå.
+
+
+
+
+
+
+
+
+
 
 display (main) bør ogsa bruke memcache, fordi mange vil bruke servicen
 samtidig. hvordan få de ny-skrapede inn i display, da? lage et flagg
