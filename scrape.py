@@ -9,7 +9,7 @@ import urllib2, re, chardet
 
 from bs4 import BeautifulSoup as bs
 from google.appengine.api import urlfetch, memcache
-from google.appengine.ext import db 
+from google.appengine.ext import db  # probably redundant
 
 from models import Article, Company
 
@@ -160,7 +160,9 @@ def fetch(url):
 #     # else:
 #     #     s = "different status code for result in fetch"
     
-    return html
+        return html
+    else:
+        return None
 
 def process_links(company):
     links = linkz(company.ticker,company.exchange)
@@ -179,7 +181,7 @@ def process_links(company):
     link_ctr = 1
     article_ids = []
     for [title, link] in links: 
-        if link_ctr > 200: 
+        if link_ctr > 100:       
             return article_ids
             #break # from this links loop
         elif title in titles:
@@ -204,68 +206,97 @@ def process_links(company):
 
 
 def scrape():
+    q = Company.all()
+    companies = q.fetch(10000) #gradually go to 2, 3, 4, etc. after that, the number of new articles every time you scrape should be small enough that you don't exceed deadline.
+    for company in companies:
+        process_links(company)
 
     # company = Company()
-    # company.name = "IBM"
-    # company.lower = "ibm"
-    # company.ticker = "IBM"
-    # company.exchange = "NASDAQ"
-    # company.put()
-    # company = Company()
-    # company.name = "General Electric Company"
-    # company.lower = "general electric company"
-    # company.ticker = "GE"
+    # company.name = "Microsoft Corporation"
+    # company.name_lower = "microsoft corporation"
+    # company.ticker = "MSFT"
+    # company.ticker_lower = "msft"
     # company.exchange = "NASDAQ"
     # company.put()
 
+    return
 
-    q = Company.all() # her resettes det til start, ja.
-    q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
+#     # company = Company()
+#     # company.name = "General Electric Company"
+#     # company.lower = "general electric company"
+#     # company.ticker = "GE"
+#     # company.exchange = "NASDAQ"
+#     # company.put()
 
-    company_cursor = memcache.get("company_cursor")
+#     q = Company.all() # her resettes det til start, ja.
+#     q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
 
-    if company_cursor:
-        q.with_cursor(start_cursor = company_cursor)
+#     company_cursor = memcache.get("company_cursor")
+
+#     if company_cursor:
+#         q.with_cursor(start_cursor = company_cursor)
         
-    chunk_size = 5
-    companies = q.fetch(chunk_size)
+#     chunk_size = 5
+#     companies = q.fetch(chunk_size)
 
-    article_ids = memcache.get("article_ids")    
-    duplicate_check = memcache.get("duplicate_check")
-    for company in companies: 
-        new_article_ids = process_links(company)
+#     article_ids = memcache.get("article_ids")    
+#     duplicate_check = memcache.get("duplicate_check")
+#     for company in companies: 
+#         new_article_ids = process_links(company)
 
-#        c.append(company.name)
-        if new_article_ids:
-            if article_ids:
-                article_ids = new_article_ids + article_ids
-                # memcache.delete("article_ids")
-                memcache.set("article_ids", article_ids, 11000) # clean does not update, so store until analyze.
-                if duplicate_check:
-                    memcache.set("duplicate_check",article_ids, 11000)
-                else:
-                    memcache.add("duplicate_check",article_ids, 11000)
-            else:
-                # memcache.delete("article_ids") # used when soup line in clean gets error.
-                memcache.add("article_ids",new_article_ids,11000)
-                if duplicate_check:
-                    memcache.set("duplicate_check",new_article_ids, 11000) # tvilsom.
-                    # pass
-                else:
-                    memcache.add("duplicate_check",new_article_ids, 11000)
+# #        c.append(company.name)
+#         if new_article_ids:
+#             if article_ids:
+#                 article_ids = new_article_ids + article_ids
+#                 # memcache.delete("article_ids")
+#                 memcache.set("article_ids", article_ids, 11000) # clean does not update, so store until analyze.
+#                 if duplicate_check:
+#                     memcache.set("duplicate_check",article_ids, 11000)
+#                 else:
+#                     memcache.add("duplicate_check",article_ids, 11000)
+#             else:
+#                 # memcache.delete("article_ids") # used when soup line in clean gets error.
+#                 memcache.add("article_ids",new_article_ids,11000)
+#                 if duplicate_check:
+#                     memcache.set("duplicate_check",new_article_ids, 11000) # tvilsom.
+#                     # pass
+#                 else:
+#                     memcache.add("duplicate_check",new_article_ids, 11000)
 
-    if len(companies) < chunk_size:
-#        q = Company.all() this will not reset to the beginning, but to the end...
-        # something that resets, or removes, the cursor here.
-        # k = company_cursor.key()
-        memcache.delete("company_cursor")
-        # memcache.flush_all()
+#     if len(companies) < chunk_size:
+# #        q = Company.all() this will not reset to the beginning, but to the end...
+#         # something that resets, or removes, the cursor here.
+#         # k = company_cursor.key()
+#         memcache.delete("company_cursor")
+#         # memcache.flush_all()
 
-        # company_cursor = q.cursor() 
-        # memcache.add("company_cursor",company_cursor, 11000) # 10800 == 180 min.
-    else:
-        company_cursor = q.cursor() 
-        memcache.set("company_cursor",company_cursor) # set only updates, does not need time limit.
+#         # company_cursor = q.cursor() 
+#         # memcache.add("company_cursor",company_cursor, 11000) # 10800 == 180 min.
+#     else:
+#         company_cursor = q.cursor() 
+#         memcache.set("company_cursor",company_cursor) # set only updates, does not need time limit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #    return c

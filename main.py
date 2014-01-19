@@ -5,11 +5,11 @@
 import jinja2, os, logging, pickle, webapp2, time, re
 
 from bs4 import BeautifulSoup as bs
-from google.appengine.api import users, urlfetch
+from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, scrape, duplicates, clean, analyze, janitor
+import utils, crawl, sites, fetch, naive_bayes, scrape, duplicates, clean, analyze, janitor, test
 
 from models import Article, Company, UserPrefs
 
@@ -356,11 +356,22 @@ class CorrectionHandler(webapp2.RequestHandler):
         article_object.put()
         self.redirect("article/" + str(article_object_key))
 
+class BackendHandler(webapp2.RequestHandler):
+    def get(self):
+        taskqueue.add(url='/test', target='backendscraping') # , params={})
+        #taskqueue.add(url='/test', target='backend_scraping') # , params={})
+        #scrape.scrape()
+
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        test.test()
+
+
 class ScrapeHandler(webapp2.RequestHandler):
     def get(self):
         scrape.scrape()
         # self.response.write(c)
-        self.response.write('you have scraped some articles')
+#        self.response.write('you have scraped some articles')
         # self.redirect("/")
 
 class DuplicateHandler(webapp2.RequestHandler):
@@ -423,6 +434,8 @@ app = webapp2.WSGIApplication([
         ('/analyze_old_articles', AnalyzeOldHandler),
         ('/check', CheckHandler),
         ('/janitor', JanitorHandler),
+        ('/send_to_backend', BackendHandler),
+        ('/test', TestHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

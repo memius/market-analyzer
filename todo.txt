@@ -1,4 +1,111 @@
-aller føst: ny memcache-organisering, som i clean og janitor.
+remember, if you change code running on a backend, you must run:
+appcfg backends <dir> update [backend] to get it to actualy change.
+
+
+ok, so test is sent to a backend, and it runs without errors. but msft
+is still NOT added to db.
+
+maybe try to edit one of the existing entries? might make a difference
+if you can't think of anything else.
+
+
+
+in cron, test starts scrape.py. (right now, it starts test).
+
+
+
+no handler for /_ah/start in main. will lead to 404,
+presumably. that's ok. all it does is start the backend.
+
+the actual task can start a background thread. so?
+
+as for the task to be put in the queue: ...
+
+
+
+
+
+so, you are now calling scrape.py via calling /_ah/start, which adds
+scrape.scrape() to the taskqueue. however, putting microsoft in
+scrape.py did not result in microsoft being added to db.
+
+so, try it with test.test()
+
+
+
+du trenger ikke å handle kallet til /_ah/start. 404 er helt ok. her er
+det nemlig fortsatt 60 sek deadline. 
+
+det som starter det som trenger å skje er task queue. 
+
+
+remember, you can catch deadlineexceed errors to save progress.
+
+
+ok. det virker. du puttet inn amd i db'en vha. backends! yay! måtte ha
+entry i cron.yaml, backends.yaml og handler i main.py. (selve rutinen
+er i test.py).
+
+
+ok, så cronjobben startet uten errors, og utførte arbeid. men amd ble
+ikke lagret til db. hm.
+
+
+du bør ha en shutdown hook i backenden, slik at state blir saved når
+ting går ned. det skjer jo før eller siden.
+
+
+før du roter mer i hvordan scrape, dupes, clean og analyze fungerer,
+putt dem inn i en backend og se hvordan det løser et par grunnleggende
+problemer!
+
+
+
+
+i think that you have only 1G memory no matter how many memcache lists
+you make, so the more lists you have, the shorter they can be. that
+means you should have 1 list, and let everyone use that list.
+
+perhaps make a list-maker.py, that runs first, and fetches quite a few
+articles from db, and uses cursor. the first one out after that is
+dupes, which looks at the incoming from scrape (which scrape stores to
+memcache, so now we have 2 lists), and at the listmaker's list, to
+check for dupes. 
+
+then, clean takes one from the list and cleans it. then, analyze1 2
+and 3 takes one from the list and analyzes it.
+
+listmaker could fetch from db every hour or so, and then the others
+add and remove from that list as they see fit. dupes should add those
+that are not dupes to the list. clean should do nothing but update the
+list and store one to db. analyze should also just update and store
+one to db. so, back to the old system then. call the two lists
+'old_articles' and 'new_articles' in stead of 'duplicate check' and
+'article ids', which were confusing.
+
+store the entire articles in memcache, so that you don't have to fetch
+them from db one more time to actually access them.
+
+listmaker can't store all the articles - there is no room. you have to
+store a subset of them and use a cursor. but that won't work for
+dupes, which needs all the old ones. or can it get by on just the not
+so old ones? it probably can. so listmaker only has the last couple of
+days' worth of articles. 
+
+this is backend stuff. you should look into backends. frontend stuff
+is user interaction, and this is not that - this is stuff that needs
+to run all the time in the background.
+
+
+
+
+
+
+
+aller føst: ny memcache-organisering i analyze, som i clean og
+janitor. må gjøres i scrape også; den feiler med
+deadlineexceeded. probably helps if the first run only fetches all the
+urls and stores them to memcache (now you have three lists in memcache).
 
 DU ER HER: split up analyze into several urls that store stuff to
 memcache.
@@ -7,6 +114,11 @@ del opp i flere funksjoner i samme fil først, og sjekk
 locally. deretter, flytt disse ut i flere filer, og sjekk online.
 
 
+
+
+
+adjust the time memcache stores clean and janitor. no, don't
+bother. it stays for "as long as possible".
 
 
 

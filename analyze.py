@@ -138,7 +138,7 @@ def all_sentiment():
             article = Article.get_by_id(article_id) 
 
     # for article in articles: 
-            if article and article.clean:
+            if article and article.clean and article.sentiment == None: # not just article.analyzed == None, because you need to get those who 'have been analyzed', but don't have a sentiment even so.
                 sentiment(article) #,articles)
                 article_ids.remove(article_id)
 
