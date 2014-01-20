@@ -12,7 +12,9 @@ handlers:
 - url: /.*
   script: main.app
 
-# you need a handler with login: admin for the backends. here? in cron?
+- url: /send_to_backend
+  script: test.app
+  login: admin
 
 # - url: .*backendscraping.* no, because they cannot be accessed externally, right? dammit.
 #   script: test.app

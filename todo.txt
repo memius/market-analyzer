@@ -1,3 +1,15 @@
+det er i app.yaml at det skjer. her må du definere url'en for det
+interne kallet til backenden. dvs. at du må lese litt om forskjellen
+mellom app.yaml-url'ene og url'ene nederst i main.py. du må antakelig
+også finne et eksempel på en app.yaml
+
+http://stackoverflow.com/questions/9790534/google-app-engine-and-backends-how-to-configure-it-on-development-server
+
+
+so, i've updated the backend with appcfg, and now it shows in the left
+panel. still no msft, though.
+
+
 remember, if you change code running on a backend, you must run:
 appcfg backends <dir> update [backend] to get it to actualy change.
 

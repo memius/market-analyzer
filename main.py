@@ -5,7 +5,7 @@
 import jinja2, os, logging, pickle, webapp2, time, re
 
 from bs4 import BeautifulSoup as bs
-from google.appengine.api import users, urlfetch, taskqueue
+from google.appengine.api import users, urlfetch, taskqueue, backends
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
