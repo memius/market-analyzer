@@ -1,3 +1,7 @@
+added options: dynamic to backengs.yaml
+changed /test to /_ah/start in handler.
+thanks to jimmy kane.
+
 du er nå på dynamic. du vil antakelig til resident.
 
 

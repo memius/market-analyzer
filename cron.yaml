@@ -11,9 +11,9 @@ cron:
 #   schedule: every 14 minutes
 # # but you need this only once. hm. is started automatically when you send a task to a backend.
 
-- description: sends scrape to backend  #(right now: test, not scrape)
-  url: /send_to_backend
-  schedule: every 2 minutes
+# - description: sends scrape to backend  #(right now: test, not scrape)
+#   url: /send_to_backend
+#   schedule: every 2 minutes
 
 # - description: removes duplicate articles and companies from db
 #   url: /dupes
