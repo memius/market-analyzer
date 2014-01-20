@@ -1,3 +1,6 @@
+du er nå på dynamic. du vil antakelig til resident.
+
+
 det er i app.yaml at det skjer. her må du definere url'en for det
 interne kallet til backenden. dvs. at du må lese litt om forskjellen
 mellom app.yaml-url'ene og url'ene nederst i main.py. du må antakelig

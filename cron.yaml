@@ -45,12 +45,12 @@ cron:
 
 
 
-cron
+# cron
 # - description: sends scrape to backend  #(right now: test, not scrape)
 #   url: /send_to_backend
 #   schedule: every 2 minutes
 
-app.yaml
+# app.yaml
 # # - url: /send_to_backend
 # #   script: test.app
 # #   login: admin

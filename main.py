@@ -358,12 +358,13 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 class BackendHandler(webapp2.RequestHandler):
     def get(self):
-        taskqueue.add(url='/test', target='backendscraping') # , params={})
+#        taskqueue.add(url='/test', target='backendscraping') 
+        taskqueue.add(url='/_ah/start', target='backendscraping') # , params={})
         #taskqueue.add(url='/test', target='backend_scraping') # , params={})
         #scrape.scrape()
 
 class TestHandler(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         test.test()
 
 
