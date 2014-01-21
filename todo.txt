@@ -1,3 +1,23 @@
+seems the name of the backend called in logs is the name of the
+previously defined backend. bug?
+
+changed the order of url: /* and url: /send_to_backend. maybe that
+works. also commented out (/scrape, ScrapeHandler) in main, so comment
+that back in if this works, to see if it still works with that in
+there. if not, just remove that handler. you don't need it anymore.
+
+
+kall til /start og til /scrape burde ikke forekomme. heller ikke
+backend_scraping. bare /send_to_backends og backendscraping. har
+byttet til version 2 for å se om residual crap forsvinner.
+
+running with version 2 right now, see if
+resdual calls disappear.
+
+also, watch costs!
+
+legg til clean (ikke dupes). se om det også fungerer.
+
 git commit om et par timer.
 
 (husk at dupes.art ikke virker nå. don't worry about it)

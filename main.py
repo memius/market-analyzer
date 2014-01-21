@@ -429,7 +429,7 @@ app = webapp2.WSGIApplication([
         ('/found_company',FoundCompanyHandler),
         ('/subscribe', SubscribeHandler),
         ('/unsubscribe', UnsubscribeHandler),
-        ('/scrape', ScrapeHandler),
+#        ('/scrape', ScrapeHandler),
         ('/dupes', DuplicateHandler),
         ('/clean', CleanHandler),
         ('/clean_old_articles', CleanOldHandler),

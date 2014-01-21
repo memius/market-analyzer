@@ -2,44 +2,7 @@ cron:
 
 # seconds are not allowed. only hours|mins|minutes.
 
-# - description: scrapes articles
-#   url: /scrape
-#   schedule: every 180 minutes
-
-# - description: runs backends
-#   url: /_ah/start
-#   schedule: every 14 minutes
-# # but you need this only once. hm. is started automatically when you send a task to a backend.
-
 - description: sends scrape to backend  
   url: /send_to_backend
-  schedule: every 20 minutes
-
-# - description: removes duplicate articles and companies from db
-#   url: /dupes
-#   schedule: every 180 minutes
-
-# - description: cleans up article text for display
-#   url: /clean
-#   schedule: every 180 minutes
-
-# - description: analyzes sentiment of new articles
-#   url: /analyze
-#   schedule: every 180 minutes
-
-# - description: analyzes sentiment of all articles
-#   url: /analyze_old_articles
-#   schedule: every 1 minutes
-
-# - description: cleans all articles
-#   url: /clean_old_articles
-#   schedule: every 1 minutes
-
-# #- description: the whole monolithic shebang
-# #  url: /.*
-# #  schedule: every 1 hours
-
-
-
-
+  schedule: every 6 minutes
 

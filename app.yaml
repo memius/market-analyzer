@@ -9,26 +9,12 @@ handlers:
 - url: /stylesheets
   static_dir: static/stylesheets
 
-- url: /.*
-  script: main.app
-
 - url: /send_to_backend
   script: main.app
   login: admin
 
-# - url: .*backendscraping.* no, because they cannot be accessed externally, right? dammit.
-#   script: test.app
-
-# - url: /_ah/start maybe not needed when defining start script for specific backendin backends.yaml
-#   script: test.py
-
-# - url: /scrape
-#   script: scrape.app
-#   login: admin dette er for backends; veldig praktisk
-
-# - url: /test
-#   script: test.app
-#   login: admin
+- url: /.*
+  script: main.app
 
 
 libraries:
