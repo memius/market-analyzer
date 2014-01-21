@@ -13,7 +13,7 @@ handlers:
   script: main.app
 
 - url: /send_to_backend
-  script: test.app
+  script: main.app
   login: admin
 
 # - url: .*backendscraping.* no, because they cannot be accessed externally, right? dammit.

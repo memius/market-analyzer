@@ -5,7 +5,7 @@
 import jinja2, os, logging, pickle, webapp2, time, re
 
 from bs4 import BeautifulSoup as bs
-from google.appengine.api import users, urlfetch, taskqueue, backends
+from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
@@ -360,12 +360,14 @@ class BackendHandler(webapp2.RequestHandler):
     def get(self):
 #        taskqueue.add(url='/test', target='backendscraping') 
         taskqueue.add(url='/test', target='backendscraping') # , params={})
-        #taskqueue.add(url='/test', target='backend_scraping') # , params={})
+        #taskqueue.add(url='/test', target='backendscraping') # , params={})
         #scrape.scrape()
 
 class TestHandler(webapp2.RequestHandler):
     def post(self):
-        test.test()
+        # test.test()
+        scrape.scrape()
+        # duplicates.companies() 
 
 
 class ScrapeHandler(webapp2.RequestHandler):

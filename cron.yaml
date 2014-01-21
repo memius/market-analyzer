@@ -11,9 +11,9 @@ cron:
 #   schedule: every 14 minutes
 # # but you need this only once. hm. is started automatically when you send a task to a backend.
 
-# - description: sends scrape to backend  #(right now: test, not scrape)
-#   url: /send_to_backend
-#   schedule: every 2 minutes
+- description: sends scrape to backend  
+  url: /send_to_backend
+  schedule: every 20 minutes
 
 # - description: removes duplicate articles and companies from db
 #   url: /dupes
@@ -43,40 +43,3 @@ cron:
 
 
 
-
-
-# cron
-# - description: sends scrape to backend  #(right now: test, not scrape)
-#   url: /send_to_backend
-#   schedule: every 2 minutes
-
-# app.yaml
-# # - url: /send_to_backend
-# #   script: test.app
-# #   login: admin
-
-# backends:
-# - name: backendscraping
-#   class: B1
-
-# class BackendHandler(webapp2.RequestHandler):
-#     def get(self):
-#         taskqueue.add(url='/test', target='backendscraping') # , params={})
-#         #taskqueue.add(url='/test', target='backend_scraping') # , params={})
-#         #scrape.scrape()
-
-# class TestHandler(webapp2.RequestHandler):
-#     def get(self):
-#         test.test()
-
-
-# no, not needed:
-#         ('/send_to_backend', BackendHandler),
-#         ('/test', TestHandler),
-
-
-# def test():
-#     company = Company()
-#     company.name = "Advanced Micro Devices, Inc"
-#     company.exchange = "NASDAQ"
-#     company.put()

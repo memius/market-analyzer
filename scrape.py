@@ -202,7 +202,7 @@ def process_links(company):
     company.titles = new_titles #this list should be shortened every now and then
     company.put() 
                                 
-    return article_ids
+#    return article_ids
 
 
 def scrape():
@@ -219,7 +219,7 @@ def scrape():
     # company.exchange = "NASDAQ"
     # company.put()
 
-    return
+#    return
 
 #     # company = Company()
 #     # company.name = "General Electric Company"

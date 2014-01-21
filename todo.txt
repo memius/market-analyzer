@@ -1,3 +1,56 @@
+git commit om et par timer.
+
+(husk at dupes.art ikke virker nå. don't worry about it)
+
+artiklene blir lagt til i db, og det er ingen errors i loggen, men det
+er fem gule spikes i dashboard clustered hver time.
+
+la den gå en stund nå, og se om det er masse errors, og om det dukker
+opp nye artikler. apple displayer 145 av 336. 336 skal gå opp dersom
+dette funker.
+
+
+
+dvoretsky har login: admin på url: /* script: main.app
+
+
+
+there were errors; deadline exceeded. why? apparently, the backend is
+not serving the request - the frontend, or the task queue, is.
+
+perhaps try to make it dynamic again? even though it wasn't really
+dynamic before? perhaps just try to substitute /_ah/start for /test in
+testhandler.
+
+hvordan er din forskjellig fra jimmy kane sin, og aprofatidy sin?
+
+
+
+you are now waiting for backends to have run scrape a few times
+without error.
+
+remember to stop the backend when you are finished for the dday.
+
+
+
+you have to remember to not only change which function is called from
+TestHandler, but also which function is associated in app.yaml (when
+it was test.app and you started scrape from TestHandler, that's why
+scrape timed out - it wasn't associated with backends in app.yaml.
+
+/scrape on backend is getting deadlineexceeded.
+
+also, it displays 'backend_scraping' instead of backendscraping. where
+is that defined? grep says not in business_news_analyzer/
+
+also, /scrape runs by itself, since before i added it to
+backends. maybe remove it from backends and run dupes or something
+else instead.
+
+
+
+
+
 added options: dynamic to backengs.yaml
 changed /test to /_ah/start in handler.
 thanks to jimmy kane.
