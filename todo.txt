@@ -1,3 +1,49 @@
+sjekk hva som skjedde med localhost/scrape. hvis errors, forandre noe
+i scrape. ok. no errors.
+
+
+forandret tilbake til scrape. fortsatt memory leak. aner ikke
+hvorfor. nei, fordi ikke oppdatert backends. alltid huske det.
+
+
+still memory leak. follow the chain, i guess.
+
+
+so there's some kind of huge memory leak. even with only two companies
+edited, you exceed the memory limit. maybe due to bug in code,
+though. corrected it. article_objects instead of articles in test.py.
+
+
+neste steg blir å flytte handlerne for beckend ut av main, slik at
+ikke main blir kalt hele tiden. blir den det, forresten?
+
+
+fortsatt memory leak. gjør noe billig men langvarig. kanskje edit hver
+eneste artikkel eller noe.
+
+
+fortsatt memory leak i analyze. hvorfor bruker den så mye memory?
+fordi den henter alle artiklene fra db selv om den bare skal analyzere 1.
+
+
+you could just use the default queue.
+you could also name each task, thereby avoiding that they are called
+more than once at a time. this way, if they are all lined up in the
+default queue, they will also be performed in order. might be a good idea.
+
+header:
+X-AppEngine-QueueName
+
+default task queue i still used. how to send tasks to analyzing rather
+than to default?
+
+
+now, analyze fetches one article from db, and analyzes it.
+
+there was lots of old crap in the default task queue, which was
+handled by frontend. explains all the mess with ghost calls.
+
+
 nå har jeg for mye memorybruk i analyze. gjør det lavere (først bare
 ved å gjøre færre analyser) og se hva som skjer. det kan virke som om
 kallene til scrape osv. slutter å komme nå når backends har blitt

@@ -9,7 +9,7 @@ from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test
+import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape
 
 from models import Article, Company, UserPrefs
 
@@ -365,17 +365,18 @@ class BackendHandler(webapp2.RequestHandler):
 
 class TestHandler(webapp2.RequestHandler):
     def post(self):
-        analyze.all_sentiment()
+        # scrape.scrape()
+        # analyze.all_sentiment()
         # test.test()
-        # duplicates.companies() 
+        duplicates.companies() 
 
 
-# class ScrapeHandler(webapp2.RequestHandler):
-#     def get(self):
-#         scrape.scrape()
-#         # self.response.write(c)
-# #        self.response.write('you have scraped some articles')
-#         # self.redirect("/")
+class ScrapeHandler(webapp2.RequestHandler):
+    def get(self):
+        scrape.scrape()
+        # self.response.write(c)
+#        self.response.write('you have scraped some articles')
+        # self.redirect("/")
 
 class DuplicateHandler(webapp2.RequestHandler):
     def get(self):
@@ -429,7 +430,7 @@ app = webapp2.WSGIApplication([
         ('/found_company',FoundCompanyHandler),
         ('/subscribe', SubscribeHandler),
         ('/unsubscribe', UnsubscribeHandler),
-#        ('/scrape', ScrapeHandler),
+        ('/scrape', ScrapeHandler),
         ('/dupes', DuplicateHandler),
         ('/clean', CleanHandler),
         ('/clean_old_articles', CleanOldHandler),

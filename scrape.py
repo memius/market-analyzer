@@ -66,8 +66,13 @@ def fetch(url):
 # #    headers = {'User-agent':'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/3.6.12'}
 # #    method = urlfetch.GET
     headers = {'User-Agent' : "Chrome/11.0.696.16"}
-    result = urlfetch.fetch(url, headers)
-    if result.status_code == 200:
+    try:
+        result = urlfetch.fetch(url, headers)
+        status_code = result.status_code
+    except:
+        result = None
+        status_code = 404
+    if status_code == 200:
         html = result.content
         result = chardet.detect(html)
         charenc = result['encoding'] #

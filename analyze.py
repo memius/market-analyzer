@@ -23,7 +23,7 @@ def sentiment(article_object):
 
         q = Article.all()
         q.order("datetime")
-        article_objects = q.fetch(1000)
+        article_objects = q.fetch(4)
         
 
     # finding sizes and frequencies:
