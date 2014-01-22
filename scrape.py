@@ -34,7 +34,7 @@ def linkz(ticker, exchange): # the one for articles.
                     links.append([title,link])
         return links
     else:
-        return ["except in linkz"]
+        return None
 
 # def companies(exchange):
 #     if exchange == 'Nasdaq':
@@ -169,38 +169,39 @@ def process_links(company):
 
     old_titles = company.titles
     titles = [] 
-    for [title,link] in links:
-        titles.append(title)
-    titles = [title for title in titles if title not in old_titles]
+    if links != None:
+        for [title,link] in links:
+            titles.append(title)
+        titles = [title for title in titles if title not in old_titles]
 
-    if titles == []:
+        if titles == []:
         # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
         # company.put()
-        return [] # from this subfunction
+            return [] # from this subfunction
 
-    link_ctr = 1
-    article_ids = []
-    for [title, link] in links: 
-        if link_ctr > 100:       
-            return article_ids
+        link_ctr = 1
+        article_ids = []
+        for [title, link] in links: 
+            if link_ctr > 100:       
+                return article_ids
             #break # from this links loop
-        elif title in titles:
-            link_ctr += 1
-            if link != None and link != "":
-                html = fetch(link)
-                if html != None:
-                    article_object = Article()
-                    article_object.title = title
-                    titles.remove(title) # when finished, titles = []
-                    article_object.html = html
-                    article_object.url = link
-                    article_object.company = company
-                    article_object.put() 
-                    article_ids.append(article_object.key().id())
+            elif title in titles:
+                link_ctr += 1
+                if link != None and link != "":
+                    html = fetch(link)
+                    if html != None:
+                        article_object = Article()
+                        article_object.title = title
+                        titles.remove(title) # when finished, titles = []
+                        article_object.html = html
+                        article_object.url = link
+                        article_object.company = company
+                        article_object.put() 
+                        article_ids.append(article_object.key().id())
 
-    new_titles = old_titles + titles
-    company.titles = new_titles #this list should be shortened every now and then
-    company.put() 
+        new_titles = old_titles + titles
+        company.titles = new_titles #this list should be shortened every now and then
+        company.put() 
                                 
 #    return article_ids
 

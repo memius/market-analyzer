@@ -1,3 +1,81 @@
+nå har jeg for mye memorybruk i analyze. gjør det lavere (først bare
+ved å gjøre færre analyser) og se hva som skjer. det kan virke som om
+kallene til scrape osv. slutter å komme nå når backends har blitt
+oppdatert. probably not, tohugh. ja ja.
+
+de kallene ligger muligens i en gammel task queue som ikke har blitt ferdig.
+
+
+
+
+ok, så nå oppdaterer ikke skikkelig. scrape() blir fortsatt kalt fra
+testhandler, selv om jeg har byttet til analyze. det fremgår av
+loggen, der linje 369 i main, som sier scrape.scrape() er årsaken til
+feilen. 
+
+kanskje fordi jeg må oppdatere backends også, hver jævla
+gang. herregud.
+
+ja, det var tydeligvis det. sukk.
+
+
+one of the examples of how to use a resident backend is a web crawler,
+so that means it shouldn't time out because you are making many web
+requests, right? dammit.
+
+nå har du byttet til analyze i testhandler; se om backendloggen
+slutter å få deadlineexceed, og om /scrape-kallet slutter å dukke opp
+i version3loggen.
+
+
+
+
+
+
+backends loggen viser deadlineexceed, og version 3 loggen viser kall
+som ikke burde være der (/scrape og /_ah/start).
+
+
+jeg lurer på om det er det at scrape sender http requests til
+forskjellige nettsider som gjør at det blir deadlineexceeded
+igjen. alt annet ser nemlig riktig ut. dvs. prøv med analyze i stedet
+for scrape.
+
+
+
+ok, jeg oppdaget i alle fall hvor de gule spikene kom fra. de er i
+loggen til backendscraping - too many values to unpack, under /test.
+
+
+kanskje bare starte fra ny folder? slette alt og begynne på nytt?
+
+
+nei, jeg blingset. jeg så på version 2 logs.
+
+det som skjer nå er at det er ingen errors, men det gjøres kall til
+/start og /scrape, og backenden heter plutselig backend_scraping
+igjen. hvorfor i helvete skjer dette?????? det finnes ingen spor av
+/start, /scrape og backend_scraping igjen i folderen.
+
+
+
+
+
+kanskje det er de 6 minuttene  i cron som forårsaker deadlineexceeded?
+
+se hva som skjer dersom du redefinerer til dynamic i backerds.yaml.
+
+
+
+nei! fortsatt deadlineexceeded! faen! hvorfor!?!?
+
+ser lovende ut nå - riktig backend name i logs, og riktig rekkefølge
+på catch-all i app.yaml. ingen gule spikes so far, og ingen errors i
+log.
+
+
+
+
 seems the name of the backend called in logs is the name of the
 previously defined backend. bug?
 

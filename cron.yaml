@@ -4,5 +4,5 @@ cron:
 
 - description: sends scrape to backend  
   url: /send_to_backend
-  schedule: every 6 minutes
+  schedule: every 15 minutes
 
