@@ -184,7 +184,7 @@ class CompanyClickHandler(webapp2.RequestHandler):
             'name' : company.name,
             'exchange' : company.exchange,
             'articles' : articles,
-            'tot_articles' : company.articles.count(),
+            'tot_articles' : company.articles.count(), # returns 1000 if more than 1000 entries
             'num_of_articles' : len(articles) 
             }
 
@@ -365,10 +365,10 @@ class BackendHandler(webapp2.RequestHandler):
 
 class TestHandler(webapp2.RequestHandler):
     def post(self):
-        # scrape.scrape()
+        scrape.scrape()
         # analyze.all_sentiment()
         # test.test()
-        duplicates.companies() 
+        # duplicates.companies() 
 
 
 class ScrapeHandler(webapp2.RequestHandler):

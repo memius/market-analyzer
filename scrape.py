@@ -178,6 +178,7 @@ def process_links(company):
         for [title,link] in links:
             titles.append(title)
         titles = [title for title in titles if title not in old_titles]
+        new_titles = []
 
         if titles == []:
         # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
@@ -185,13 +186,14 @@ def process_links(company):
             return [] # from this subfunction
 
         link_ctr = 1
-        article_ids = []
+        article_keys = []
         for [title, link] in links: 
-            if link_ctr > 100:       
-                return article_ids
+            if link_ctr > 100: # sanity check. there should normally not be more articles than this per day.
+                return article_keys
             #break # from this links loop
             elif title in titles:
                 link_ctr += 1
+                new_titles.append(title)
                 if link != None and link != "":
                     html = fetch(link)
                     if html != None:
@@ -202,20 +204,22 @@ def process_links(company):
                         article_object.url = link
                         article_object.company = company
                         article_object.put() 
-                        article_ids.append(article_object.key().id())
+                        article_keys.append(article_object.key())
 
-        new_titles = old_titles + titles
+        new_titles = old_titles + new_titles
         company.titles = new_titles #this list should be shortened every now and then
         company.put() 
                                 
-#    return article_ids
+        return article_keys
+    else:
+        return []
 
 
 def scrape():
-    q = Company.all()
-    companies = q.fetch(10000) #gradually go to 2, 3, 4, etc. after that, the number of new articles every time you scrape should be small enough that you don't exceed deadline.
-    for company in companies:
-        process_links(company)
+    # q = Company.all()
+    # companies = q.fetch(10000) 
+    # for company in companies:
+    #     process_links(company)
 
     # company = Company()
     # company.name = "Microsoft Corporation"
@@ -225,49 +229,48 @@ def scrape():
     # company.exchange = "NASDAQ"
     # company.put()
 
-#    return
 
-#     # company = Company()
-#     # company.name = "General Electric Company"
-#     # company.lower = "general electric company"
-#     # company.ticker = "GE"
-#     # company.exchange = "NASDAQ"
-#     # company.put()
 
-#     q = Company.all() # her resettes det til start, ja.
-#     q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
 
-#     company_cursor = memcache.get("company_cursor")
+    q = Company.all() # her resettes det til start, ja.
+    q.order("datetime") # nyeste sist, slik at de er dukker opp etter cursor
+    # company_cursor = memcache.get("company_cursor")
 
-#     if company_cursor:
-#         q.with_cursor(start_cursor = company_cursor)
+    # if company_cursor:
+    #     q.with_cursor(start_cursor = company_cursor)
         
-#     chunk_size = 5
-#     companies = q.fetch(chunk_size)
+#    chunk_size = 5
+    companies = q.fetch(10000) # should be optimized by storing companies in memcache 
 
-#     article_ids = memcache.get("article_ids")    
-#     duplicate_check = memcache.get("duplicate_check")
-#     for company in companies: 
-#         new_article_ids = process_links(company)
+    article_keys = memcache.get("article_keys")    
+#    duplicate_check = memcache.get("duplicate_check")
+    for company in companies: 
+        new_article_keys = process_links(company)
 
-# #        c.append(company.name)
-#         if new_article_ids:
-#             if article_ids:
-#                 article_ids = new_article_ids + article_ids
-#                 # memcache.delete("article_ids")
-#                 memcache.set("article_ids", article_ids, 11000) # clean does not update, so store until analyze.
-#                 if duplicate_check:
-#                     memcache.set("duplicate_check",article_ids, 11000)
-#                 else:
-#                     memcache.add("duplicate_check",article_ids, 11000)
-#             else:
-#                 # memcache.delete("article_ids") # used when soup line in clean gets error.
-#                 memcache.add("article_ids",new_article_ids,11000)
-#                 if duplicate_check:
-#                     memcache.set("duplicate_check",new_article_ids, 11000) # tvilsom.
-#                     # pass
-#                 else:
-#                     memcache.add("duplicate_check",new_article_ids, 11000)
+#        c.append(company.name)
+        if new_article_keys != None:
+            if article_keys != None:
+                article_keys = new_article_keys + article_keys
+                # memcache.delete("article_keys")
+                memcache.set("article_keys", article_keys, 11000) # clean does not update, so store until analyze.
+                # if duplicate_check:
+                #     memcache.set("duplicate_check",article_keys, 11000)
+                # else:
+                #     memcache.add("duplicate_check",article_keys, 11000)
+            else:
+                # memcache.delete("article_keys") # used when soup line in clean gets error.
+                memcache.add("article_keys",new_article_keys,11000)
+                # if duplicate_check:
+                #     memcache.set("duplicate_check",new_article_keys, 11000) # tvilsom.
+                #     # pass
+                # else:
+                #     memcache.add("duplicate_check",new_article_keys, 11000)
+
+
+
+
+
+
 
 #     if len(companies) < chunk_size:
 # #        q = Company.all() this will not reset to the beginning, but to the end...
@@ -275,7 +278,6 @@ def scrape():
 #         # k = company_cursor.key()
 #         memcache.delete("company_cursor")
 #         # memcache.flush_all()
-
 #         # company_cursor = q.cursor() 
 #         # memcache.add("company_cursor",company_cursor, 11000) # 10800 == 180 min.
 #     else:

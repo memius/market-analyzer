@@ -1,3 +1,77 @@
+du har antakelig fikset scrape og dupes. du kjører nå med bare
+scrape. la det gå en times tid, og kjør med dupes også. (i testhandler
+legger du til dupes etter scrape.)
+
+
+
+
+det kan hende at du faktisk kan delete et objekt vha. bare id. du kan
+vha. key, i alle fall. dvs: enten delete vha. id, eller skriv om slik
+at du bruker key, og delete vha. key. du er i duplicates.articles().
+
+
+hvordan hente hele artikler til dupes, slik at du kan slette dem?
+trenger du hele artikkelen? du bør kunne slette vha. bare id.
+
+legg til dupes. bruk memcachen som er stored hos scrape.
+
+(blir dupe check listen laget av dupes? den gjør bare noe dersom den
+listen eksisterer, nemlig. (fra tidligere.))
+
+
+
+
+
+
+
+
+you remove titles from titles in process links. that's why it doesn't
+work as a dupe check. it's always empty. "titles.remove(title)"
+
+
+
+
+kjører med scrape uten errors, eller i alle fall veldig få
+errors. akseptabelt.
+
+det er en grense på 1000 artikler. hvor er den definert? finn ut! det
+er fordi .count() metoden returnerer 1000 dersom flere enn 1000
+entries. ikke noe stort problem. skal vekk i production anyway.
+
+
+
+har forandret scrape. skal uploade den nå. fikk temporær 503 feil for
+en liten stund siden.
+
+
+kjørte uten feil i et par timer. ingen tegn til memory leak. hm. nå
+får jeg prøve å sette tingene opp i rekkefølge. første punkt blir å
+gjøre scrape skikkelig, med memcache for the benefit of the others.
+
+
+
+du har utvidet fra dupes til test på backends. se om den nå kjører
+uten masse feil og memory leak. antakelig er det en memory leak i
+test.py, though.
+
+kanskje prøve med større backend instance. 1g memory eller noe.
+
+
+
+
+
+
+
+kjorer uten feil med lang dupes i backend.
+
+fortsatt enkelte deadlineexceed. men også flere millisekunder uten
+deadlineexceed. så antakelig et kall til en artikkel på nettet som
+feiler?
+
+
+
+
+
 sjekk hva som skjedde med localhost/scrape. hvis errors, forandre noe
 i scrape. ok. no errors.
 

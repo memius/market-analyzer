@@ -40,23 +40,35 @@ def companies():
             duplicates.append(company.ticker)
 
 def articles():
-    article_ids = memcache.get("article_ids")
-    duplicate_check = memcache.get("duplicate_check") # article_ids fra forrige scrape.
+    article_keys = memcache.get("article_keys")
+    duplicate_check = memcache.get("duplicate_check") # article_keys fra forrige scrape.
 
+# dupe check skal inneholde:
+#   i verste fall:
+#     alle fra db - hente derfra hvis ingen dupe check
+#   i beste fall:
+#     de som ble skrapet forrige gang = article keys nå + dupe checks skal lagres som neste dupe check
 
-    #nytt forsøk, etter å ha skriblet på papir:
-    if article_ids:
-        if duplicate_check:
-            for article in article_ids:
-                if article in duplicate_check: # her kaller du en ny funksjon: hente artikler vha. id, og sjekke på tittel og url. skal jeg rett og slett lagre både tittel og url for hver artikkel? nei, det tar for stor plass, tror jeg. har bare en gig. kanskje ikke? jo, sats på det. lagre så lite som mulig.
-                    db.delete(article)
-                    article_ids.remove(article)
-            memcache.set("duplicate_check",duplicate_check)
+    if article_keys != None: # lagret av forrige scrape
+        if duplicate_check != None: # lagret av forrige duplicates
+            for article_key in article_keys:
+                if article_key in duplicate_check:
+                    db.delete(article_key)
+#                    article_keys.remove(article_key)
+                else:
+                    duplicate_check.append(article_key)
+            memcache.set("duplicate_check", duplicate_check)
         else:
-            memcache.add("duplicate_check",article_ids)
-        memcache.set("article_ids", article_ids)
+            duplicate_check = Article.all(keys_only=True) #fetching only the key, not the whole object.
+            for article_key in article_keys:
+                if article_key in duplicate_check:
+                    db.delete(article_key)
+#                    article_keys.remove(article_key)
+                else:
+                    duplicate_check.append(article_key)
+            memcache.add("duplicate_check", article_keys)
     elif duplicate_check:
-        memcache.set("duplicate_check",duplicate_check)
+        memcache.set("duplicate_check", duplicate_check)
 
 
 # -------------------------------------
@@ -64,7 +76,7 @@ def articles():
 
 #     if duplicate_check:
 
-# #        her bør du adde dupe check og art ids. og sjekken bør være om det finnes art ids, ikke dupe checks. 
+# #        her bør du adde dupe check og art keys. og sjekken bør være om det finnes art keys, ikke dupe checks. 
 
 #         duplicates = []
 #         checked = []
@@ -73,8 +85,8 @@ def articles():
 #             if article.url in duplicates:
 #                 db.delete(article)
 #                 duplicate_check.remove(article.key().id())
-#                 if article_ids:
-#                     article_ids.remove(article.key().id())
+#                 if article_keys:
+#                     article_keys.remove(article.key().id())
 #             else:
 #                 duplicates.append(article.url)
 #                 checked.append(article.title)
@@ -85,14 +97,14 @@ def articles():
 #             if title in duplicates:
 #                 db.delete(article)
 #                 duplicate_check.remove(article.key().id())
-#                 if article_ids:
-#                     article_ids.remove(article.key().id())
+#                 if article_keys:
+#                     article_keys.remove(article.key().id())
 #             else:
 #                 duplicates.append(article.title)
 
 #         memcache.set("duplicate_check", duplicate_check, 11000)
-#         if article_ids:
-#             memcache.set("article_ids", article_ids, 11000)
+#         if article_keys:
+#             memcache.set("article_keys", article_keys, 11000)
 
 #     # articles = Article.all()
 #     # duplicates = []
