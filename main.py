@@ -366,6 +366,9 @@ class BackendHandler(webapp2.RequestHandler):
 class TestHandler(webapp2.RequestHandler):
     def post(self):
         scrape.scrape()
+        duplicates.companies()
+#        duplicates.articles()
+
         # analyze.all_sentiment()
         # test.test()
         # duplicates.companies() 
