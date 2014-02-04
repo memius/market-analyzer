@@ -39,9 +39,11 @@ def companies():
         else:
             duplicates.append(company.ticker)
 
+
+# redundant because of titles check in scrape - and wrong, because it checks on keys, which are, of course, unique!
 def articles():
     article_keys = memcache.get("article_keys")
-    duplicate_check = memcache.get("duplicate_check") # article_keys fra forrige scrape.
+    duplicate_check = memcache.get("duplicate_check") 
 
 # dupe check skal inneholde:
 #   i verste fall:
@@ -69,6 +71,23 @@ def articles():
             memcache.add("duplicate_check", article_keys)
     elif duplicate_check:
         memcache.set("duplicate_check", duplicate_check)
+
+
+# not used right now: (use it in the run through all old articles routine that will use a larger instance)
+def all_articles():
+#    q = Article.all(keys_only=True) #fetching only the key, not the whole object.
+# fetch only the titles, and use them for comparison
+    q = Article.all() 
+#    q = Article.all(projection=["title"]) funker ikke. feil med syntaks i doku.
+    article_keys = q.fetch(10000)
+    duplicates = []
+    for article_key in article_keys:
+        if article_key.title in duplicates:
+            db.delete(article_key)
+        else:
+            duplicates.append(article_key.title)
+    
+
 
 
 # -------------------------------------

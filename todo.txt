@@ -1,3 +1,111 @@
+nå er det clean som gjelder, siden short-term dupe check
+(vha. titles) funker. husk at duplicate_check ikke lenger blir
+generert, siden dupes.articles ikke lenger er med.
+
+
+når du er ferdig med clean og analyze (clean new ones og analyze new
+ones):
+all dupes (old dupes) oversteg memory limit. du kan prøve senere med
+større instance. cursor vil ikke funke på dupes, siden du trenger hele
+listen av artikeler på en gang.) du kan starte et større instance, og
+gjøre dupes old, clean old og analyze old vha. den større boksen med
+mer minne. da kan du beholde artiklene i minnet, og kjøre dem gjennom
+alle tre. ingen cursor, ingen memcache, bare alle sammen. trenger bare
+å kjøre en sjelden gang.
+
+when you start reading and analyzing by hand: you should not either
+refresh the page to the same location, so you don't have to scroll
+every time, or you should have only one article on the screen, and
+jump to the next one when you hit one of the analyze buttons.
+
+
+
+
+
+
+
+
+kjører nå for å teste at begge cron'ene går som de skal. sjekk i
+morgen tidlig. neste er å putte inn clean.
+
+
+
+
+
+
+sjekk at all duplicates faktisk deleter vha. key. prøv med hele
+artikkelen og se om det er forskjell. (scrapehandler kjører all
+articles nå).
+
+
+scrape lagrer de som den nettopp har skrapet som article_ids.
+
+ok, fuckit. bare sjekk at scrape faktisk fungerer, drit i all articles
+dupe check. så putter du inn clean.
+
+
+
+nå skraper den ikke lokalt, selv ikke når jeg fjerner 'not' i
+titlessjekken i scrape.
+
+kjør scrape et par ganger, slik at du har duplikatartikler i
+dben. kjør scrapehandler med dupe.all_articles() for å se om de forsvinner.
+
+
+
+la til entry i app.yaml. hvis all dupes nå kjører uten feil; legg til
+send to backend igjen, og forleng tiden på all dupes til en gang
+annenhver time eller noe slikt.
+
+
+tester nå med all_artices og dupe.articles, som ikke var med før
+(bare dupe.companies) veldig kort intervall for all_articles. forleng
+når testet.
+
+
+legg inn en all_articles i duplicates.py. den sjekker alle artikler i
+db'en for duplisitet. den kan bruke dupe check listen? den startes fra
+en separat cron entry som går sjeldnere.
+
+company.titles kan brukes i company view - til å printe alle
+titlene. selve artikkelen hentes ikke fra db før du trykker på
+tittelen.
+
+du kan muligens bruke artikkel-key mer i main, for å unngå å hente
+fulle artikler hele tiden. da trenger du antakelig større instance,
+med mer memory, slik at du kan ha flere (enn to ) lister lagret i
+memcache. 
+
+
+
+
+
+duplicates.articles() sjekker bare nylig innkommende artikeler. den
+sjekker ikke om entries i db'en er dupes.
+
+samme med titles-sjekken i scrape. den sjekker mot hele rekken av
+selskapets titler, men sjekker den om titlene som allerede er i
+tittel-listen er duplikater?
+
+og, viktigere: hvordan er titles-sjekken IKKE redundant i forhold til
+det dupe check gjør nå?
+
+
+
+sjekke at dupes faktisk virker - hvordan? sjekk på dev-serveren, og
+lag printouts. putt noe i en variabel, og la dupes printe det i
+response.write() i dupe-handler i main.
+
+
+
+
+
+
+neste er clean.
+
+
+
+
 du har antakelig fikset scrape og dupes. du kjører nå med bare
 scrape. la det gå en times tid, og kjør med dupes også. (i testhandler
 legger du til dupes etter scrape.)

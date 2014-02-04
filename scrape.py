@@ -183,16 +183,16 @@ def process_links(company):
         if titles == []:
         # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
         # company.put()
-            return [] # from this subfunction
+            return None
 
-        link_ctr = 1
+#        link_ctr = 1
         article_keys = []
         for [title, link] in links: 
-            if link_ctr > 100: # sanity check. there should normally not be more articles than this per day.
-                return article_keys
+#            if link_ctr > 100: # sanity check. there should normally not be more articles than this per day.
+#                return article_keys
             #break # from this links loop
-            elif title in titles:
-                link_ctr += 1
+            if title in titles:
+#                link_ctr += 1
                 new_titles.append(title)
                 if link != None and link != "":
                     html = fetch(link)
@@ -207,12 +207,12 @@ def process_links(company):
                         article_keys.append(article_object.key())
 
         new_titles = old_titles + new_titles
-        company.titles = new_titles #this list should be shortened every now and then
+        company.titles = new_titles #this list should be shortened every now and then - not if it's used for display!
         company.put() 
                                 
         return article_keys
     else:
-        return []
+        return None
 
 
 def scrape():

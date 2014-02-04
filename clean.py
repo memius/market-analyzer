@@ -53,17 +53,22 @@ def clean_all():
 #     for article in articles:
 #         clean(article)
 
-    cleaning = memcache.get("cleaning")
-    if cleaning:
-        article = cleaning.pop() # pop() returns last item, and changes the list in place
-        clean(article)
-        # cleaning.remove(article) not needed, because pop removes it for us.
-        memcache.set("cleaning", cleaning)
+#use article ids, which consists of recently scraped articles that have been duplicate (by title) checked. check their flag - if not clean, clean. some of them will be from the last round, and will be clean already.
 
-    else: # hvis article_ids er tom, maa artikler hentes fra db:
-        q = Article.all().filter("clean =", None) # should have both None and False
-        articles = q.fetch(8)
-        memcache.add("cleaning", articles)
+    article_keys = memcache.get("article_keys")
+    if article_keys:
+        for article_key in article_keys:
+#        article = cleaning.pop() # pop() returns last item, and changes the list in place
+            article = Article.get_by_id(article_key.id())
+            if not article.clean:
+                clean(article)
+        # cleaning.remove(article) not needed, because pop removes it for us.
+        memcache.set("cleaning", article_keys)
+
+    # else: # hvis article_keys er tom, maa artikler hentes fra db:
+    #     q = Article.all().filter("clean =", None) # should have both None and False
+    #     articles = q.fetch(8)
+    #     memcache.add("cleaning", articles)
 
 #removes offending strings immediately:
 def remove_outright(text):

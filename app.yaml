@@ -13,6 +13,10 @@ handlers:
   script: main.app
   login: admin
 
+- url: /all_dupes_backend
+  script: main.app
+  login: admin
+
 - url: /.*
   script: main.app
 

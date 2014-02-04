@@ -119,6 +119,15 @@ def sentiment(article_object):
 
 def all_sentiment(): 
 
+
+
+#LES DETTE: after you analyze them, check the length of dupe check. if > 1000, halve the length. this happens after analyze, which is the last one.
+
+
+
+
+
+
 #fetch the clean but non-analyzed ones from db, and everything else from memcache.
 
     # q = Article.all()

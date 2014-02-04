@@ -367,15 +367,24 @@ class TestHandler(webapp2.RequestHandler):
     def post(self):
         scrape.scrape()
         duplicates.companies()
-#        duplicates.articles()
+        clean.clean_all()
+#        duplicates.articles() redundant because of titles check in scrape.
 
         # analyze.all_sentiment()
         # test.test()
         # duplicates.companies() 
 
+class AllDupesBackendHandler(webapp2.RequestHandler):
+    def get(self):
+        taskqueue.add(url='/all_dupes', target='backendscraping') 
+
+class AllDupesHandler(webapp2.RequestHandler):
+    def post(self):
+        duplicates.all_articles()
 
 class ScrapeHandler(webapp2.RequestHandler):
     def get(self):
+#        duplicates.all_articles()
         scrape.scrape()
         # self.response.write(c)
 #        self.response.write('you have scraped some articles')
@@ -399,8 +408,9 @@ class CleanHandler(webapp2.RequestHandler):
 
 class CleanOldHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('you have cleaned some old articles')
-        clean.clean_old_articles()
+        self.response.write('you have cleaned some articles')
+        clean.clean_all()
+#        clean.clean_old_articles()
 
 class AnalyzeHandler(webapp2.RequestHandler):
     def get(self):
@@ -443,6 +453,8 @@ app = webapp2.WSGIApplication([
         ('/janitor', JanitorHandler),
         ('/send_to_backend', BackendHandler),
         ('/test', TestHandler),
+        ('/all_dupes_backend', AllDupesBackendHandler),
+        ('/all_dupes', AllDupesHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 
