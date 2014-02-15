@@ -1,3 +1,19 @@
+optimering til etter at du er ferdig med analyze: ikke lagre artiklene
+til db både etter scrape, clean and analyze. skrap en artikkel, clean
+den, analyze den, og lagre den til db.
+for article in articles: altså kjøre gjennom alle rutinene (dupe,
+clean, word pairs, analyze) med 1 artikkel, så hoppe
+til neste inkommende artikkel.
+    scrape()
+    clean()
+    word_pairs()
+    analyze()
+
+analyze is next. bruk article ids, og ta deg av de nylige, som nettopp
+har blitt skrapet. (se under for å ta deg av gamle, både i analyze,
+clean and dupes.)
+
+
 nå er det clean som gjelder, siden short-term dupe check
 (vha. titles) funker. husk at duplicate_check ikke lenger blir
 generert, siden dupes.articles ikke lenger er med.
@@ -5,7 +21,15 @@ generert, siden dupes.articles ikke lenger er med.
 
 når du er ferdig med clean og analyze (clean new ones og analyze new
 ones):
-all dupes (old dupes) oversteg memory limit. du kan prøve senere med
+-all clean kan antakelig hente alle keys, og deretter hente hver enkelt
+artikkel (uten cursor eller timeouts - memory use vil være lavt fordi
+det alltid bare er 1 artikkel i minnet.). i dupes kan vi fylle en
+liste med titler sakte (ineffektivt, men så lenge jeg ikke får til
+propositional eller hva det nå heter), og deretter bruke listen med
+titler til dupe checking. her må du muligens bruke cursor. analyze all
+må samle alle ord fra alle artikler. her kan du muligens finne en
+bedre løsning, der du lagrer alle ordpar i en db, og bruker den.
+-all dupes (old dupes) oversteg memory limit. du kan prøve senere med
 større instance. cursor vil ikke funke på dupes, siden du trenger hele
 listen av artikeler på en gang.) du kan starte et større instance, og
 gjøre dupes old, clean old og analyze old vha. den større boksen med

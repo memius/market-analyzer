@@ -2,9 +2,9 @@ cron:
 
 # seconds are not allowed. only hours|mins|minutes.
 
-- description: sends scrape to backend  
-  url: /send_to_backend
-  schedule: every 8 minutes
+# - description: sends scrape to backend  
+#   url: /send_to_backend
+#   schedule: every 8 minutes
 
 # - description: duplicate checks all articles in db
 #   url: /all_dupes_backend

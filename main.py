@@ -93,11 +93,44 @@ class MainPage(webapp2.RequestHandler):
 
         if u.companies == []: 
             apple = Company.all().filter("name =","Apple Inc").get()
-            u.companies.append(apple.key())
+            if apple == None:
+                apple = Company()
+                apple.name = "Apple Inc"
+                apple.name_lower = "apple inc"
+                apple.ticker = "AAPL"
+                apple.ticker_lower = "aapl"
+                apple.exchange = "NASDAQ"
+                apple.exchange_lower = "nasdaq"
+                apple.put()
+            else:
+                u.companies.append(apple.key())
+
             google = Company.all().filter("name =","Google Inc").get()
-            u.companies.append(google.key())
+            if google == None:
+                google = Company()
+                google.name = "Google Inc"
+                google.name_lower = "google inc"
+                google.ticker = "GOOG"
+                google.ticker_lower = "goog"
+                google.exchange = "NASDAQ"
+                google.exchange_lower = "nasdaq"
+                google.put()
+            else:
+                u.companies.append(google.key())
+
             facebook = Company.all().filter("name =","Facebook Inc").get()
-            u.companies.append(facebook.key())
+            if facebook == None:
+                facebook = Company()
+                facebook.name = "Facebook Inc"
+                facebook.name_lower = "facebook inc"
+                facebook.ticker = "FB"
+                facebook.ticker_lower = "fb"
+                facebook.exchange = "NASDAQ"
+                facebook.exchange_lower = "nasdaq"
+                facebook.put()
+            else:
+                u.companies.append(facebook.key())
+
             u.put()
 
         company_names = []

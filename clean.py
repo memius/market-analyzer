@@ -63,7 +63,7 @@ def clean_all():
             if not article.clean:
                 clean(article)
         # cleaning.remove(article) not needed, because pop removes it for us.
-        memcache.set("cleaning", article_keys)
+        memcache.set("article_ids", article_keys)
 
     # else: # hvis article_keys er tom, maa artikler hentes fra db:
     #     q = Article.all().filter("clean =", None) # should have both None and False
