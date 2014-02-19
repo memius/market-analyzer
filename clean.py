@@ -1,5 +1,15 @@
 # coding: utf-8
 
+
+# you should look at individual words - words that contain things like \ or > are obviously not words.
+
+# also, look at the thinking behind indicators. are they whole words, or just letters? perhaps words containing indicators should be cut right out?
+
+# replace html codes &quot; with their real counterparts. you can probably find something for this online.
+
+# class= means it is a rubbish word; class="alignleft' and so on. title= also. alt= too. width= too.
+
+
 import re, string
 
 from bs4 import BeautifulSoup as bs

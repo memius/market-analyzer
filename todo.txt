@@ -1,3 +1,38 @@
+you now have a number of bayes implementations in python open in your
+browser. you, of course, also have your own from analyze.py. see if
+any of these are appropriate to combining all the word probs into an
+article prob (in word_pairs.py).
+
+
+perhaps use numpy for efficiency in calculating large numbers of numbers?
+
+
+fetch 1 article (scrape)
+fetch recently scraped articles from memcache.
+check whether this article has already been seen (dupe check in scrape)
+if already seen, reject.
+if not seen, clean. (clean) and add to recently scraped articles (article_keys in memcache)
+
+DU ER HER (i word_pairs.py): for each word pair in article, try to fetch word pair from db. (word pairs)
+if there, and interesting, put that probability into the calculation for the article prob. straight bayes. (analyze)
+if not seen, assign prob 0.5 and store that word pair to db. no - wait until article is classified, and assign prob to the unseen word pairs - 0.0, 0.5 or 1.0. (put them in a list until done, then store them with their probs).
+article prob is straight up total word pairs prob from bayes (no smoothing or nothing like that. (analyze)
+store article prob to db, along with article, text, title, etc.
+
+dette kan gjøres vha. for key in article_keys, hent article, do everything, article.put(). det er ineffektivt, og tar lang tid, men vil ikke bruke mye memory av gangen.
+
+alle word pairs i alle artikler; dette vil føre til mange read operations!  hm. må unngå. du kan lagre dem i en variable første runde, og hente dem derfra alle de neste gangene. antakelig ikke plass - mer plass i memcache, men muligens ikke plass der heller.
+
+når brukerkorreksjon kommer: hent alle ordparene fra den artikkelen - de er lagret, siden artikkelen er lagret. bruk smoothing factor til å forandre prob for alle ordparene mot 0.0, 1.0 eller 0.5 alt etter hva brukerkorrekjsonen sier. inkrementer teller som kun sier hvor mange manuelle korreksjoner dette ordparet har blitt utsatt for. det er alt du trenger for smoothing factoren.
+
+
+# inkrementer teller som teller antall ganger ordparet har blitt manuelt korrigert. NEI - jeg trenger ikke dette. trenger kun å smoothe manuell korrigering. det er det eneste. 
+
+# NEI - trenger ikke dette: (autoklassifisering endrer ikke probs - kun manuell korreksjon endrer probs) inkrement teller som sier hvor mange ganger hvert ordpar har vært en del av en automatisk klassifisert interessant artikkel; pos / neg men ikke neutral. de som har vært i mange positive eller negative artikler har mer tyngde enn de som bare har vært med i nøytrale artikler. slik bør 'catastrophic loss' bli mer vektet enn 'it is'. må også vektes i forhold til hvor mange ganger ordparet totalt opptrer i korpuset. it is opptrer hele tiden, mens catastropic loss bare opptrer en gang i blant. 'very bad' opptrer ofte. altså en prosentandel av hvor interessant den er i forhold til hvor sjelden den er. graham har skrevet om dette.
+
+
+
+
 optimering til etter at du er ferdig med analyze: ikke lagre artiklene
 til db både etter scrape, clean and analyze. skrap en artikkel, clean
 den, analyze den, og lagre den til db.
@@ -12,6 +47,12 @@ til neste inkommende artikkel.
 analyze is next. bruk article ids, og ta deg av de nylige, som nettopp
 har blitt skrapet. (se under for å ta deg av gamle, både i analyze,
 clean and dupes.)
+
+
+clean: look at indicators - notes top of file; remove words with > \
+etc. outright?
+
+
 
 
 nå er det clean som gjelder, siden short-term dupe check

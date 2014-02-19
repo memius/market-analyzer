@@ -72,7 +72,7 @@ def sentiment(article_object):
 
 
 # DETTE ser korrekt ut (og erik eikeland har verifisert det):
-# smo = 1.0 / (tidl + 1.0) # antall tidligere korreksjoner (det er dette som må vektes; manuelt vs. automatisk)
+# smo = 1.0 / (tidl + 1.0) # tidl = antall tidligere manuelle korreksjoner. 
 # prob = prev + smo * (inc - prev)
 
 # altså; vi lagrer prev og tidl til db. vi får inn inc. regner ut derfra.

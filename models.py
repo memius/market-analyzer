@@ -7,6 +7,12 @@ from google.appengine.ext import db
 class Counter(db.Model):
     ctr = db.IntegerProperty()
 
+class Word_pair(db.Model):
+    first = db.StringProperty()
+    second = db.StringProperty()
+    prob = db.FloatProperty()
+    corrections = db.IntegerProperty()
+
 class Token(db.Model):
     word = db.StringProperty()
     prob = db.FloatProperty()
