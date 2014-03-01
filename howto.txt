@@ -1,3 +1,5 @@
+to update backend: ...?
+
 to scrape rss, use feedparser (import feedparser)
 reuters has a business news rss feed. so does forbes, financial times,
 cnbc and yahoo finance and international business times, wall street journal.

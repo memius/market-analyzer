@@ -173,17 +173,25 @@ def process_links(company):
     links = linkz(company.ticker,company.exchange)
 
     old_titles = company.titles
-    titles = [] 
+#    titles = [] 
     if links != None:
-        for [title,link] in links:
-            titles.append(title)
-        titles = [title for title in titles if title not in old_titles]
+#         for [title,link] in links:
+#             titles.append(title)
+
+# this could be done with a if title not in old_titles check, to avoid 2 loops through the same list: - see 'if title in titles' below
+#         titles = [title for title in titles if title not in old_titles]
+
         new_titles = []
 
-        if titles == []:
-        # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
-        # company.put()
-            return None
+#         if titles == []:
+#         # company.finished_scraping = True # denne slaar inn for tidlig, siden den kommer foer alle artiklene er tatt
+#         # company.put()
+
+# DU ER HER - this is probably why nothing is stored:
+# denne burde returnere article keys, siden mekanismen er at titles gradvis tømmes, og er tom når man er ferdig:
+#             return None
+
+
 
 #        link_ctr = 1
         article_keys = []
@@ -191,20 +199,26 @@ def process_links(company):
 #            if link_ctr > 100: # sanity check. there should normally not be more articles than this per day.
 #                return article_keys
             #break # from this links loop
-            if title in titles:
+
+#this is where you should do if titles not in old_titles instead:
+            if title not in old_titles:
+
 #                link_ctr += 1
-                new_titles.append(title)
+
                 if link != None and link != "":
                     html = fetch(link)
                     if html != None:
-                        article_object = Article()
-                        article_object.title = title
-                        titles.remove(title) # when finished, titles = []
-                        article_object.html = html
-                        article_object.url = link
-                        article_object.company = company
-                        article_object.put() 
-                        article_keys.append(article_object.key())
+                        article = Article()
+                        article.title = title
+#                        titles.remove(title) # when finished, titles = []
+                        article.html = html
+                        article.url = link
+                        article.company = company
+#                        article.clean = False
+
+                        article.put() 
+                        article_keys.append(article.key())
+                        new_titles.append(title)
 
         new_titles = old_titles + new_titles
         company.titles = new_titles #this list should be shortened every now and then - not if it's used for display!
@@ -213,7 +227,6 @@ def process_links(company):
         return article_keys
     else:
         return None
-
 
 def scrape():
     # q = Company.all()

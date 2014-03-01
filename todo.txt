@@ -1,3 +1,29 @@
+no errors, scraping locally.
+
+
+
+no errors, but no articles scraped either. so, nothing is
+stored. nothing found?
+
+du har sjekket scrape, og det ser ok ut midt på natten. sjekk en gang
+til.
+
+du er i scrape. det virker som om du har en bug i if titles = []
+return None - du skal jo returnere article keys :)
+
+
+
+
+sørg for at scrape-clean gir non-error results locally. så ser du hva
+som skjer med word_pairs. du må muligens gå gjennom hele chainen.
+
+
+det virker som om articles er none type objects etter at de har blitt
+skrapet av scrape. hvorfor lagres de ikke skikkelig?
+
+
+
+
 you now have a number of bayes implementations in python open in your
 browser. you, of course, also have your own from analyze.py. see if
 any of these are appropriate to combining all the word probs into an

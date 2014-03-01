@@ -9,7 +9,7 @@ from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape
+import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape, word_pairs
 
 from models import Article, Company, UserPrefs
 
@@ -389,6 +389,12 @@ class CorrectionHandler(webapp2.RequestHandler):
         article_object.put()
         self.redirect("article/" + str(article_object_key))
 
+
+
+class WordPairHandler(webapp2.RequestHandler):
+    def get(self):
+        word_pairs.word_pairs()
+
 class BackendHandler(webapp2.RequestHandler):
     def get(self):
 #        taskqueue.add(url='/test', target='backendscraping') 
@@ -399,9 +405,10 @@ class BackendHandler(webapp2.RequestHandler):
 class TestHandler(webapp2.RequestHandler):
     def post(self):
         scrape.scrape()
-        duplicates.companies()
-        clean.clean_all()
-#        duplicates.articles() redundant because of titles check in scrape.
+#        duplicates.companies()
+#        clean.clean_all()
+##        duplicates.articles() redundant because of titles check in scrape.
+#        word_pairs.word_pairs()
 
         # analyze.all_sentiment()
         # test.test()
@@ -415,7 +422,7 @@ class AllDupesHandler(webapp2.RequestHandler):
     def post(self):
         duplicates.all_articles()
 
-class ScrapeHandler(webapp2.RequestHandler):
+class ScrapeHandler(webapp2.RequestHandler): # needed locally
     def get(self):
 #        duplicates.all_articles()
         scrape.scrape()
@@ -488,6 +495,7 @@ app = webapp2.WSGIApplication([
         ('/test', TestHandler),
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),
+        ('/word_pairs', WordPairHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 
