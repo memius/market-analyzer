@@ -63,7 +63,7 @@ def articles():
         else:
             duplicate_check = Article.all(keys_only=True) #fetching only the key, not the whole object.
             for article_key in article_keys:
-                if article_key in duplicate_check:
+                if article_key in duplicate_check: # NEI! bruk titles, IKKE keys. keys er ALDRI identiske.
                     db.delete(article_key)
 #                    article_keys.remove(article_key)
                 else:

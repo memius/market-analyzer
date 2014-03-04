@@ -406,9 +406,9 @@ class TestHandler(webapp2.RequestHandler):
     def post(self):
         scrape.scrape()
 #        duplicates.companies()
-#        clean.clean_all()
+        clean.clean_all()
 ##        duplicates.articles() redundant because of titles check in scrape.
-#        word_pairs.word_pairs()
+        word_pairs.word_pairs()
 
         # analyze.all_sentiment()
         # test.test()

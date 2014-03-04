@@ -44,7 +44,8 @@ def clean(article):
     # article.clean = True
     article.put()
 
-def clean_all():
+def clean_all(): # only cleans recently scraped articles ("article_keys" from memcache)
+
 
 #     # article_ids = memcache.get("article_ids")
 #     # if article_ids:
@@ -70,10 +71,11 @@ def clean_all():
         for article_key in article_keys:
 #        article = cleaning.pop() # pop() returns last item, and changes the list in place
             article = Article.get_by_id(article_key.id())
-            if not article.clean:
-                clean(article)
+            if article != None:
+                if not article.clean:
+                    clean(article)
         # cleaning.remove(article) not needed, because pop removes it for us.
-        memcache.set("article_ids", article_keys)
+        memcache.set("article_keys", article_keys)
 
     # else: # hvis article_keys er tom, maa artikler hentes fra db:
     #     q = Article.all().filter("clean =", None) # should have both None and False

@@ -1,4 +1,45 @@
-no errors, scraping locally.
+ser ut til at numpy funker online.
+
+dvs. at du kan restrukturere word pairs til å bruke numpy arrays.
+
+
+
+
+
+
+testing a smaller, faster word_pairs (only for testing, because
+wrong!) in order to see if i can use numpy. find some calculation that
+numpy can perform, or some numbers you can put in an array.
+
+
+then, when numpy works both locally and online, you try to make word
+pairs more efficient, using numpy. put all the words from text in an
+array, and extract word pairs from that, rather than doing lots of
+stuff in the loop.
+
+the word pairs are a little bit like synapses... can i use that for something?
+
+
+
+
+word_pairs seems to take forever (almost). more efficiency, please!
+
+nå lagrer du text ett sted, og alle word pairs et annet sted. dette er
+ineffektivt. kanskje bruke numpy til å putte alle incoming words i
+arrays, og lagre probs og pair mates i arrayen.
+
+in file:
+import numpy
+
+in app.yaml:
+libraries:
+-name: numpy
+ version: 1.6.1 (or newer)
+
+
+article.text = numpy array. hm. what can an array contain? can it
+contain probs and pair mates?
+
 
 
 
