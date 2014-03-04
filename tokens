@@ -1,0 +1,34 @@
+pg's definition of tokens:
+
+``A Plan for Spam'' uses a very simple definition of a token. Letters,
+digits, dashes, apostrophes, and dollar signs are constituent
+characters, and everything else is a token separator. I also ignored
+case.
+
+Now I have a more complicated definition of a token: Case is
+preserved.
+
+Exclamation points are constituent characters.
+
+Periods and commas are constituents if they occur between two
+digits. This lets me get ip addresses and prices intact.
+
+A price range like $20-25 yields two tokens, $20 and $25.
+
+
+you should do this with the title:
+Tokens that occur within the To, From, Subject, and Return-Path lines,
+or within urls, get marked accordingly. E.g. ``foo'' in the Subject
+line becomes ``Subject*foo''. (The asterisk could be any character you
+don't allow as a constituent.)
+
+
+pg recognizes about 200K tokens.
+
+when you see something new, check if there is something similar already (you see Free!! and already have FREE!!).
+
+if a token occurs only in one corpus, give it .0002 or .9998. if it occurs
+more than e.g. 10 times, give it .0001 or .9999. you may want to scale much more than this two-step scale.
+
+instead of using the 15 most interesting, you could use all tokens that are, say < .01 or > .99.
+

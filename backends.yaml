@@ -1,0 +1,3 @@
+backends:
+  - name: backendscraping
+    class: B1
