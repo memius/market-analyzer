@@ -3,11 +3,42 @@
 # -*- coding: utf-8 -*-
 
 
+# extract word pairs from article. done
+# look up their counterparts in db.
+# collect probs from db for each word pair.
+# update frequencies in db (do this later, gather in list? what is faster?). probably store later, in final cleanup.
+# put unseen word pairs in unseen list.
+# combine probs to yeld article prob. graham.
+#
+# store unseen word pairs with prob 0.5 if article == neutral, 0.01 if
+# article == neg and .99 if pos, and increment frequencies for the
+# ones already there.
+
+# how about using map() for this? will it be more efficient? 
+
+#du vil antakelig bruke lister, og slices for å adressere de riktige
+#bitene av listen for å få ordpar. akkurat som i numpy, bare at her
+#kan du sammenligne for equality.
+
+#du vil bare bruke de 15 beste, så derfor regner du ikke sammen
+#underveis, men putter i liste, og kjører bayes() på listen til slutt.
+
+# ikke bruk memcache, bare få det til å virke, slik det gjorde, bare
+# sakte. bedre hvis du kan, med slices og andretriks.
+
+# mulig dict er enda bedre enn list når du har en 3d struktur med
+# probs til hvert ordpar.  hvert ord skal bare lagres en gang som
+# first, så det andre ordet i ordparet er en av en rekke ord som
+# kommer etter first-ordet. probs er da en tredje dimensjon som ligger
+# bakenfor hvert av second-ordene.
+
+# skal de puttes inn kronoligisk eller alfabetisk eller etter prob? antakelig etter prob.
+
 from google.appengine.api import memcache
 
 ## from google.appengine.ext import db
 
-import numpy as np
+#import numpy as np
 
 from models import Article, Word_pair
 
@@ -21,10 +52,13 @@ def word_pairs():
             if article != None:
                 if article.clean:
                     text = article.text
-                    words = text.split()
-#                    num_of_word_pairs = (len(words) * 5) - 10
+                    words = text.split() # split strips white space implicitly
+
+ #                   words = np.array(words) # a 1d array
+
+                    num_of_word_pairs = (len(words) * 5) - 10
                     unseen_word_pairs = []
-                    running_total = 0.5
+#                    running_total = 0.5
                     for n in range(3): #len(words) - 5): testing ONLY!
                         window = words[-6:] # the last six words in the text
                         one = window[:2]
@@ -33,71 +67,100 @@ def word_pairs():
                         four = window[:1] + window[4:5]
                         five = window[:1] + window[5:6] # all windows are complete, since we go backwards
 
+#                    pairs = memcache.get("most_interesting_pairs") #a 2d array containing first, second, prob
+                    # ctr = 1 # naar ctr ruller, saa ruller første ord, og andre ord blir satt tilbake.
 
-put all words in array. for all word pairs in array, check if they are among the 10000 most used (interesting) words, which are stored in memcache. if so, use that prob. if not, ignore for now, and give article prob and store later (unless known, and uninteresting, or among the rarer words, in which case, just increment frequency).
+                    # i = 0
+                    # j = 2
+                    # k = 1
 
-keep the 5000 most interesting and frequent words in memory.
-extract word pairs from article
-compare the word pairs to the memory list
-assign probs from memory list, ignore others.
-combine probs to yeld article prob.
-store new word pairs, and increment frequencies for the ones already there.
+                    # x = 0
+                    # y = 2
+                    # z = 3
 
-compare equality with slices:
-1d array of words from article:
-one = a[:2]
-two = a[0:3:2]
-three = a[0:4:3]
-four = a[0:5:4]
-etc.
-2d array of word pairs from memcache.
-einz = b[:2]
-zwei = b[2:4]
-drei = b[4:6]
-etc.
-
-for n in range(n):
-    result = a[i,j,k] == b[x,y] # [True, True]
-    if equal, use that prob
-    else wait until article finished, then whatever.
-    i,j,k += 1
-    x,y +=2
+#                     for n in range(n):
 
 
+# # np.any(np.equal(a,[1,2]).all(1)) ?
 
-paul graham:
-only consider words with frequency < 5
-if a word occurs only in one corpus, assign .01 or .99.
-use number of articles rather than total (word) length of corpus.
-the 15 most interesting tokens in each article is used (farthest from .5).
-words you have never seen before get a prob of .5.
-the combined prob is NOT the average. if sex yields .97 and sexy yields .99, their combined prob is .9997, NOT .98. så da blir det et regnestykke som er litt mer vanskelig enn running total + wp.prob.
+# # du er her: nei, du skal ikke sammenligne med ETT par fra memcache - du skal sjekke om ordparet dit is in memcache:
+# #                        any(np.equal(a,[1,2]).all(1))
+#                         if any(np.equal(pairs, words[i,j,k]).all(1)):
 
-prob a and prob b:
+# string comparison is not implemented in numpy arrays. maybe you have to translate to utf-8 bytes? oh, the horror.
 
-ab / (ab + (1 - a)(1 - b))
+# np.char.strip(words)
 
-example: .60 and .72:
+# i may actually want a dict for the strings with their probs. dammit. numpy arrays aren't meant for ' strings, since, they are not of the same length.
 
-(.6)(.72) / ((.6)(.72) + (1 - .6)(1 - .72))
+# probably, holding the most interesting ones in memory can save me a lot of time. try just that.
 
-so:
+# where does that list get compiled and stored? in cleanup? not here, so wait; don't use it here until it exists.
 
-r = running_total
-p = wp.prob
-running_total = (r * p) / ((r * p) ((1 - r) * (1 - p)))
+# #                        if (words[i,j,k] == pairs[x,y]).all():
+#                             prob = pairs[y,z]
+#                             running_total = bayes(prob,running_total)
+
+#                         else: #wait until article finished, then whatever.
+#                             unseen_pairs.append(words[i,j,k])
+
+#                     ctr += 1
+#                     i,j,k += 1 
+#                     x,y,z += 3
 
 
-                        foo = []
+
+# keep the 5000 most interesting and frequent words in memory. kanskje i final cleanup, eller i en egen fil.
+
+# compare equality with slices:
+# 1d array of words from article:
+# one = a[:2]
+# two = a[0:3:2]
+# three = a[0:4:3]
+# four = a[0:5:4]
+# etc.
+# 2d array of word pairs from memcache. (with probs)
+# einz = b[0:2]
+# zwei = b[3:5]
+# drei = b[6:8]
+# etc.
+
+# have a final cleanup file, that takes care of storing stuff to db. perhaps also storing the most used to memcache (but this is not changed after word_pairs.py, so somewhere else). this is after word pair has completed. word pairs should be quick and simple, and only quickly deliver a classification of the articles at hand, without any thinking or calculation (other than straight up combined prob). no fetching from, or storing to, db in word_pairs.py.
+
+
+# paul graham:
+# only consider words with frequency > 5
+# if a word occurs only in one corpus, assign .01 or .99.
+# use number of articles rather than total (word) length of corpus.
+# the 15 most interesting tokens in each article is used (farthest from .5).
+# words you have never seen before are ignored.
+# combined prob:
+
+# prob a and prob b:
+
+# ab / (ab + (1 - a)(1 - b))
+
+# example: .60 and .72:
+
+# (.6)(.72) / ((.6)(.72) + (1 - .6)(1 - .72))
+
+# so:
+
+# r = running_total
+# p = wp.prob
+# running_total = (r * p) / ((r * p) ((1 - r) * (1 - p)))
+
+
+                        probs = []
                         for word_pair in [one,two,three,four,five]:
-                            q = Word_pair.all().filter("first =", word_pair[0])
+                            q = Word_pair.all().filter("first =", word_pair[0]) # dict fra memcache er muligens mye bedre her.
                             wp = q.filter("second =",word_pair[1]).get()
 
                             if wp == None:
                                 unseen_word_pairs.append(word_pair)
                             else:
                                 if wp.prob > 0.9 or wp.prob < 0.1:
-                            # probs.append(wp.prob) ikke append, men regn sammen underveis.
+                                    probs.append(wp.prob) 
 # z = np.zeros(16)
 # t = z.reshape((4,4))
 # p = t + 0.5 # gir en 4*4 array der alle verdiene == 0.5
@@ -105,24 +168,34 @@ running_total = (r * p) / ((r * p) ((1 - r) * (1 - p)))
     
 # DU ER HER - putt tallene i en numpy array, og gjør average under, bare for å teste at numpy funker. sjekk online også.
   #                              running_total = running_total + wp.prob
-                                    foo.append(wp.prob)
+                                    #foo.append(wp.prob)
 # you'll want ' to keep the x most used word pairs in memcache, and refer to them. their probs don't ' change unless the size of the corpus changes noticeably, or there is a correction involving them. keep incrementing their frequencies whenever they are encountered, and then check to see if the frequency relative to the size of the corpus changes by more than, say, 10%.
                         words.pop() # removes the last word
 
 #                    running_total = running_total / num_of_word_pairs
-                    bar = np.array(foo)
-                    r = float(np.average(bar))
-                    article.prob = r
+#                    bar = np.array(foo)
+#                    r = float(np.average(bar))
+                    combined_prob = bayes(probs)
+                    article.prob = combined_prob
                     article.put()
+
+                    # move this to final cleanup.
                     for word_pair in unseen_word_pairs: # commented out ONLY for testing!
                         wp = Word_pair()
                         wp.first = word_pair[0]
                         wp.second = word_pair[1]
-                        wp.prob = running_total # the word pair is simply given the article's prob
+                        wp.prob = combined_prob # the word pair is simply given the article's prob
                         wp.corrections = 0
                         wp.put()
 # word pairs må fjerne article keys fra article_keys etterhvert som den blir ferdig med dem. dette for å unngå at den analyserer artikler om og om igjen. word pairs gjør det siden den er sist i rekken. 
 
+
+def bayes(probs):
+    # map to list:
+    # grahams ab 1-b, etc.
+    running_total = 0.5 # ONLY testing
+    return running_total
+    
 
 
 def test(text):
