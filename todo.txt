@@ -1,3 +1,52 @@
+correction er veldig enkelt: du tar old prob fra db og new prob fra
+correction (0.001 eller .999, iKKE 0.0, for å unngå uforutsette
+0-problemer). dersom 0 tidligere corrections, article.prob =
+new_prob. hvis ikke, så bruker du smoothing factoren din på old prob
+og new prob. take previous_corrections_ctr into account!
+
+så sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
+word pair probs. hvis ikke, make it du so. denne går vel alltid
+gjennom alt, ikke noe vits i å gå gjennom bare de ferske her.
+
+deretter bør jeg gjøre ferdig janitor, som dupe checker og cleaner
+alt. og klassifiserer (word pairs), men IKKE analyserer. dupe
+checkeren kan se omtrent ut som den gjør, men bare hente titles i
+stedet for å sammenlige keys (som er helt feil), og putte titles i en
+liste sammen med keys, og så kjøre over hele den listen, eller
+noe. mulig du slipper a lage ny liste, men kan delete allerede i
+loopen der du henter titles. ja, det kan du.
+
+nar du er ferdig med janitor, og db'en er ryddig, cleanet,
+klassifisert og analysert, kan du begynne å manuelt klassifisere
+artikler. ta et par tusen.
+
+deretter må du få på plass ads.
+
+så må du fjerne loginkravet. bare ha login-link på siden.
+
+så launcher du i det øyeblikket du kan launche.
+
+
+
+
+
+
+forkortet funker. prøver lengre.
+
+nå har du forkortet. hvis dette heller ikke funker, se om bare scrape
+og clean funker uten word pairs. da ligger feilene i word pair.
+
+hvis ikke /test har kjørt snart, så prøv med forkortet word pairs -
+bare to selskaper, og bare noen få ordpar.
+
+
+du har forlatt numpy. du bruker nå den gamle word pairs, som tar lang
+tid.
+
+du startet nettopp en /send_to_backend kl. 14.13.40, og du venter på
+at /test skal dukke opp i loggen til backends. hvor lang tid tok det?
+
+
 ser ut til at numpy funker online.
 
 dvs. at du kan restrukturere word pairs til å bruke numpy arrays.

@@ -1,3 +1,21 @@
+husk å starte backenden med startknappen.
+
+games for tabs/phones have payment thresholds built in. når spenningen
+er høy, og mestringen er høy, er villigheten til å betale høy. dette
+kan jeg utnytte. ja, jeg blir kynisk når nav prøver å ta alle pengene
+mine. sukk.
+
+brudd i en påbegynt oppgave skaper en trang til å fullføre (betale for
+å fullføre).
+
+folk betaler også for å komme raskere fram i spillet.
+
+betale for å slippe reklame. 
+
+betale for å få mer info, eller mer kompleks fremstilling av info.
+
+betaling for mer convenience.
+
 
 
 
@@ -15,7 +33,12 @@ $.50/month per company.
 you can have more in-depth analyses; $.50/month per company.
 
 
+---------
 
+senere kan du legge inn mekanismer som overvåker hvor og når folk
+spiller (dette blir vel i app-versjonen, da, eller i browseren også?
+cookies). dette kan gi deg verdifull info om hvordan forbedre
+tjenesten, eller skreddersy den til brukernes preferanser.
 
 
 ------------
@@ -38,4 +61,7 @@ kanskje vha. page ranks.
 risikohåndtering: levere sentiment analyse (stemningsanalyse) av
 spesifikke geopolitiske områder til tjenesten. også generelt; all
 source, all regions, "nå har stemningen surnet rundt korea".
+
+
+
 

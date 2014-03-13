@@ -65,7 +65,9 @@ class Article(db.Model):
 #    normalized = db.TextProperty()
     clean = db.BooleanProperty(False) 
     analyzed = db.BooleanProperty(False) 
+    corr_ctr = db.IntegerProperty(0)
     company = db.ReferenceProperty(Company, collection_name = "articles")
+    
 
 def tokens_key(tokens_name=None):
   return db.Key.from_path('Tokens', tokens_name or 'default_tokens')

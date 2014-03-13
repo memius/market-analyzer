@@ -231,6 +231,7 @@ class ArticleClickHandler(webapp2.RequestHandler):
         template_values = {
             'id' : article.key().id(),
             'sentiment' : article.sentiment,
+            'prob' : article.prob,
             'title' : article.title,
             'text' : article.text
             }
@@ -378,14 +379,41 @@ class CorrectionHandler(webapp2.RequestHandler):
         self.response.write(" article object: %s END article object" % str(article_object))
         # self.response.write(article_object.content)
         s = self.request.get('sentiment')
-        article_object.sentiment = str(s) # must be str, not unicode
-        article_object.title_sentiment = str(s) 
+
+
         
         if s == "positive":
-            article_object.mod = 0.9
-        if s == "negative":
-            article_object.mod = -0.9
+            new_prob = .999
 
+        elif s == "negative":
+            new_prob = .001
+
+        elif s == "neutral":
+            new_prob = .5
+
+        corrections = article_object.corr_ctr # kjoer en if ctr == 0 paa denne. if so, ignore old prob.
+        if corrections == 0 or corrections == None:
+            corrections = 0
+            article_object.prob = new_prob
+        else:
+            old_prob = article_object.prob
+            smoothed = 1.0 / (corrections + 1.0) # verified by e.e.
+            prob = old_prob + smoothed * (new_prob - old_prob)
+            article_object.prob = prob
+
+        if article_object.prob > .9:
+            article_object.sentiment = "positive"
+            article_object.title_sentiment = "positive"
+        elif article_object.prob < .1:
+            article_object.sentiment = "negative"
+            article_object.title_sentiment = "negative"
+        else:
+            article_object.sentiment = "neutral"
+            article_object.title_sentiment = "neutral"
+
+        article_object.analyzed = True
+        corrections += 1
+        article_object.corr_ctr = corrections
         article_object.put()
         self.redirect("article/" + str(article_object_key))
 

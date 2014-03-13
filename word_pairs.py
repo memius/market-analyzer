@@ -47,7 +47,7 @@ from models import Article, Word_pair
 def word_pairs():
     article_keys = memcache.get("article_keys")
     if article_keys:
-        for key in article_keys: #[:2]: #testing ONLY! ordinarily the whole list
+        for key in article_keys[:2]: #testing ONLY! ordinarily the whole list
             article = Article.get_by_id(key.id())
             if article != None:
                 if article.clean:
@@ -59,7 +59,7 @@ def word_pairs():
                     num_of_word_pairs = (len(words) * 5) - 10
                     unseen_word_pairs = []
 #                    running_total = 0.5
-                    for n in range(3): #len(words) - 5): testing ONLY!
+                    for n in range(len(words) - 5): #testing ONLY!
                         window = words[-6:] # the last six words in the text
                         one = window[:2]
                         two = window[:1] + window[2:3]
