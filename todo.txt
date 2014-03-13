@@ -1,12 +1,6 @@
-correction er veldig enkelt: du tar old prob fra db og new prob fra
-correction (0.001 eller .999, iKKE 0.0, for å unngå uforutsette
-0-problemer). dersom 0 tidligere corrections, article.prob =
-new_prob. hvis ikke, så bruker du smoothing factoren din på old prob
-og new prob. take previous_corrections_ctr into account!
-
-så sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
-word pair probs. hvis ikke, make it du so. denne går vel alltid
-gjennom alt, ikke noe vits i å gå gjennom bare de ferske her.
+nå sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
+word pair probs. hvis ikke, make it do so. ikke noe vits i å gå
+gjennom bare de ferske her.
 
 deretter bør jeg gjøre ferdig janitor, som dupe checker og cleaner
 alt. og klassifiserer (word pairs), men IKKE analyserer. dupe
@@ -3302,4 +3296,13 @@ nå er det zombie-id'er i db'en igjen. main støter på det når den
 prøver å hente user companies. hvor er det jeg ikke sletter dem
 skikkelig? det virket som en engangs, som lå igjen fra forrige
 versjons kjøring.
+
+
+
+
+correction er veldig enkelt: du tar old prob fra db og new prob fra
+correction (0.001 eller .999, iKKE 0.0, for å unngå uforutsette
+0-problemer). dersom 0 tidligere corrections, article.prob =
+new_prob. hvis ikke, så bruker du smoothing factoren din på old prob
+og new prob. take previous_corrections_ctr into account!
 
