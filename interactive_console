@@ -1,0 +1,92 @@
+count tokens:
+
+import math, re, logging
+
+def count_tokens(word_pairs):
+    frequencies = dict()
+    if word_pairs != []:
+        pairs = [' '.join(pair) for sublist in word_pairs for pair in sublist]
+        for pair in pairs:
+            if pair in frequencies: 
+                value = frequencies.get(pair)
+                frequencies[pair] = value + 1
+            else:
+                frequencies[pair] = 1
+    print frequencies
+
+count_tokens([[["word", "pair"],["also", "pair"]],[["next", "one"],["also", "next"]],[["also", "next"],["about", "time"]]])
+
+yields: {'about time': 1, 'also next': 2, 'also pair': 1, 'next one': 1, 'word pair': 1}
+
+-----
+
+
+token probs and token probability:
+
+def token_probs(word_pairs,pos_freq,neg_freq,pos_size,neg_size):
+    token_probs = []
+    pairs = [' '.join(pair) for pair in word_pairs]
+    for pair in pairs:
+        try:
+            fp = pos_freq[pair]
+        except KeyError:
+            fp = 0
+        try:
+            fn = neg_freq[pair]
+        except KeyError:
+            fn = 0
+
+        token_prob = token_probability(fp,fn,pos_size,neg_size)
+        token_probs.append(token_prob)
+
+    print token_probs
+
+def token_probability(pos_freq,neg_freq,pos_size,neg_size):
+    if pos_freq > 1 and neg_freq < 1:
+        prob = .99
+    elif pos_freq < 1 and neg_freq > 5: notice > 1 rather than > 5 in this line
+        prob = .01
+    elif pos_freq > 5 and neg_freq > 5:
+        pos_token_presence = min(1, (float(pos_freq) / pos_size))
+        neg_token_presence = min(1, (float(neg_freq) / neg_size))
+        tot_token_presence = pos_token_presence + neg_token_presence
+        pos_prob = min(.99, (float(pos_token_presence) / tot_token_presence))
+        prob = max(.01, pos_prob) # so it can never be 0
+    else:
+        prob = 0.5
+
+    return prob
+
+
+wp = [["word","pair"],["also","pair"],["also", "pair"],["not","again"]]
+pos_freq = {'word pair': 1, 'also pair': 2}
+neg_freq = {'not again': 1}
+pos_size = 23
+neg_size = 22
+token_probs(wp,pos_freq,neg_freq,pos_size,neg_size)
+
+yields: [0.5, 0.99, 0.99, 0.5]
+
+-------
+
+combined prob:
+
+def combined_prob(lst):
+    mult = reduce(lambda x, y: x*y, lst) # lst = [1,2,3,4] -> (((1*2)*3)*4) -> 24
+    if mult == 0.0:
+        mult = 0.1
+    norms = map(lambda x: 1-x, lst)      # lst = [1,2,3,4] -> [0,1,2,3]
+    norm = reduce(lambda x, y: x*y, norms)
+    if norm == 0.0:
+        norm = 0.1
+
+    result = mult / (mult + norm)
+    
+    print result
+
+
+combined_prob([0.5,0.5,0.5,0.99,0.882,0.2])
+
+yields: 0.9946
+
+----
