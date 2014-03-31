@@ -3,97 +3,74 @@
 
 #should only be started by cron job, NOT by main. should fetch from, and return to, db.
 
-import math, re
+import math, re, logging
 
-# will have a (small) corpus of positive and negative articles. you count the words in them.
-# you use these frequencies, as well as the sizes of the corpuses, to determine the bayesian probability that the word is negative. you will also put words into, and remove words from, two lists of positive and negative words. this list will be updated each time trained.
+logging.getLogger().setLevel(logging.DEBUG)
 
 #counts the token frequency in one corpus, and stores all tokens, with their frequencies, in a dict:
-def count_tokens(text):
-    #non-whitespace characters followed by a space, period, question mark or exclamation mark:
-    token = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)") 
-    #token = re.compile("\w+") not satisfactory
-    tokens = re.findall(token,text)
+# triple list example:
+# [[["word", "pair"],["also", "pair"]],[["next", "one"],["also", "next"]]]
+def count_tokens(word_pairs): # [['once','upon'],['once','a'], etc. ]
     frequencies = dict()
-    for word in tokens:
-        word = word.strip()
-        #ignore case
-        #print "|"+word+"|",
-        if word in frequencies:
-            value = frequencies.get(word)
-            #print 'incrementing\n'
-            frequencies[word] = value+1
-        else:
-            #print 'new word\n'
-            frequencies[word] = 1
+    if word_pairs != []:
 
-    #print 'frequencies: ',frequencies
+        s = "some string to rule them all"
+        logging.debug("word pairs: %s", s)
+
+        pairs = [' '.join(pair) for sublist in word_pairs for pair in sublist] # each pair one string, triple list.
+#        logger.debug('pairs: ',str(pairs))
+        for pair in pairs:
+            if pair in frequencies: 
+                value = frequencies.get(pair)
+                frequencies[pair] = value + 1
+            else:
+                frequencies[pair] = 1
     return frequencies
+
 
 # pos = ["good","winning","up","rising","win","large"]
 # neg = ["down","loss","warning","warns","deep","recession"]
 
 #takes in both frequencies for ONE token, as well as both corpus
 #sizes; it returns the probability that this token is positive.
+# double list example:
+# [["word","pair"],["also","pair"],["also", "pair"],["not","again"]]
 def token_probability(pos_freq,neg_freq,pos_size,neg_size):
-    if pos_freq < 1 and neg_freq < 1: # perhaps higher than 1?
+    if pos_freq > 5 and neg_freq < 1:
+        prob = .99
+    elif pos_freq < 1 and neg_freq > 5:
+        prob = .01
+    elif pos_freq > 5 and neg_freq > 5:
+        pos_token_presence = min(1, (float(pos_freq) / pos_size))
+        neg_token_presence = min(1, (float(neg_freq) / neg_size))
+        tot_token_presence = pos_token_presence + neg_token_presence
+        pos_prob = min(.99, (float(pos_token_presence) / tot_token_presence))
+        prob = max(.01, pos_prob) # so it can never be 0
+    else:  # if pos_freq < 1 and neg_freq < 1, so not in any corpus
         prob = 0.5
 
-    if pos_freq >= 1: 
-        pos_token_presence = min(1, (float(pos_freq) / pos_size))
-    else: # pos_freq < 1
-        pos_token_presence = 0.000000001
-
-    if neg_freq >= 1:
-        neg_token_presence = min(1, (float(neg_freq) / neg_size))
-    else:
-        neg_token_presence = 0.000000001
-
-    tot_token_presence = pos_token_presence + neg_token_presence
-    pos_prob = min(.99, (float(pos_token_presence) / tot_token_presence))
-    prob = max(.01, pos_prob) # so it can never be 0
     return prob
 
 #takes in a single article, and compares the words in it to the
 #words in the two corpuses, returning the token probs for that
 #article:
-def token_probs(text,pos_freq,neg_freq,pos_size,neg_size):
-
-    word = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)")  #duplicated from count_tokens()
-
-    words = re.findall(word,text)
-    word_pos_freqs = []
-    word_neg_freqs = []
+def token_probs(word_pairs,pos_freq,neg_freq,pos_size,neg_size):
     token_probs = []
-
-    for word in words:
-        word = word.strip() #duplicated from count_tokens()
-        #print "|"+word+"|",
-
+    pairs = [' '.join(pair) for pair in word_pairs] # each word pair as one string from double list
+    for pair in pairs:
         try:
-            fp = pos_freq[word] 
-            #print "positive: ",fp
+            fp = pos_freq[pair] # it's correct also for titles, because pos_title_freqs is the argument
         except KeyError:
             fp = 0
-            #print fp,
-
-
         try:
-            fn = neg_freq[word]
-            #print "negative: ",fn
+            fn = neg_freq[pair]
         except KeyError:
             fn = 0
-            #print fn,
-
-        # word_pos_freqs.append(fp)
-        # word_neg_freqs.append(fn)
 
         token_prob = token_probability(fp,fn,pos_size,neg_size)
         token_probs.append(token_prob)
 
-    #print token_probs
     return token_probs
-#    return words, token_probs, word_pos_freqs, word_neg_freqs #and then you need to do abc / abc(a-1)(b-1)(c-1) to that result. (done in combined_prob).
 
 #takes in a bunch of token probs, and calculates a total prob of the text containing those tokens.
 # abc / abc(a-1)(b-1)(c-1): 

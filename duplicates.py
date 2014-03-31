@@ -79,9 +79,9 @@ def all_articles():
 # fetch only the titles, and use them for comparison
     q = Article.all() 
 #    q = Article.all(projection=["title"]) funker ikke. feil med syntaks i doku.
-    article_keys = q.fetch(10000)
+    article_keys = q.fetch(10000) # this is just wrong! you are not fetching the keys here.
     duplicates = []
-    for article_key in article_keys:
+    for article_key in article_keys: # this is also just wrong - never dupe check on keys - they are all different!
         if article_key.title in duplicates:
             db.delete(article_key)
         else:

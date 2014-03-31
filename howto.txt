@@ -1,3 +1,41 @@
+----
+
+make local logs persistent:
+
+/opt/google/google_appengine/dev_appserver.py
+--logs_path=/home/tmh/workspace/business_news_analyzer/logs/bna_log /home/tmh/workspace/business_news_analyzer/
+
+
+
+
+
+----
+
+
+how to run code online:
+-write code and test it locally
+
+-change get to post where needed (probably in main, at least one place).
+
+run in terminal:
+-/workspace/business_news_analyzer$ /opt/google/google_appengine/appcfg.py update /home/tmh/workspace/business_news_analyzer/
+
+-/workspace/business_news_analyzer$ /opt/google/google_appengine/appcfg.py backends /home/tmh/workspace/business_news_analyzer/ update
+
+go to:
+https://appengine.google.com/queues?&app_id=s~transfarmr&version_id=backendscraping.374738626398313004
+and delete all tasks in the queue. 
+
+go to 'backends' and press 'start' to start backend.
+
+go to transfarmr.dictatr.com/"whatever url is bound to run what you
+want to test"
+
+-------------
+
+
+
+
 to update backend: ...?
 
 to scrape rss, use feedparser (import feedparser)

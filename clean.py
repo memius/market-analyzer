@@ -1,6 +1,13 @@
 # coding: utf-8
 
 
+
+    # #non-whitespace characters followed by a space, period, question mark or exclamation mark:
+    # # should have words ending in  quotations, commas too.
+    # token = re.compile("[^\.,\?!;:]\S+?(?= |\.|,|\?|!|;|:)") 
+
+
+
 # you should look at individual words - words that contain things like \ or > are obviously not words.
 
 # also, look at the thinking behind indicators. are they whole words, or just letters? perhaps words containing indicators should be cut right out?
@@ -35,7 +42,7 @@ def clean(article):
     sentences = filter_sentences(sentences)
     sentences = junk(sentences)
     # # strict(sentences)
-    text = ''.join(sentences)        
+    text = ' '.join(sentences)        
     # # if utils.is_prose(text):
     article.text = text
     article.clean = True

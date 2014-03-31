@@ -2,7 +2,7 @@
 
 #only displays the finished products that scrape and bayesian have stored to db. and only at users' requests, NOT as cron jobs.
 
-import jinja2, os, logging, pickle, webapp2, time, re
+import jinja2, os, logging, pickle, webapp2, time, re, logging
 
 from bs4 import BeautifulSoup as bs
 from google.appengine.api import users, urlfetch, taskqueue
@@ -13,10 +13,12 @@ import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, jani
 
 from models import Article, Company, UserPrefs
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 # class UserPrefs(db.Model):
 #     user_id = db.StringProperty()
 
-logging.basicConfig(filename='logs/main.log', filemode='w', level=logging.DEBUG)
+#logging.basicConfig(filename='logs/main.log', filemode='w', level=logging.DEBUG)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -25,6 +27,9 @@ class MainPage(webapp2.RequestHandler):
 
     def get(self): 
         #timeout = 0.2
+
+        logging.debug("a cold beer in the sun")
+
         usr = users.get_current_user()
         if usr:
             user_id = usr.user_id()
@@ -431,14 +436,16 @@ class BackendHandler(webapp2.RequestHandler):
         #scrape.scrape()
 
 class TestHandler(webapp2.RequestHandler):
-    def post(self):
-        scrape.scrape()
-#        duplicates.companies()
-        clean.clean_all()
-##        duplicates.articles() redundant because of titles check in scrape.
-        word_pairs.word_pairs()
+#    def post(self):
+    def get(self):
+#         scrape.scrape()
+# #        duplicates.companies()
+#         clean.clean_all()
+# ##        duplicates.articles() redundant because of titles check in scrape.
+#         word_pairs = word_pairs.recent_word_pairs()
+#         word_pairs.word_pair_probs(word_pairs)
 
-        # analyze.all_sentiment()
+        analyze.sentiment()
         # test.test()
         # duplicates.companies() 
 
