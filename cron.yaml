@@ -6,6 +6,8 @@ cron:
 #   url: /send_to_backend
 #   schedule: every 8 minutes
 
+# janitor here
+
 # - description: duplicate checks all articles in db
 #   url: /all_dupes_backend
 #   schedule: every 2 hours

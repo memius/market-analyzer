@@ -2,6 +2,8 @@
 # coding: utf-8
 # -*- coding: utf-8 -*-
 
+import logging
+
 import clean, analyze, utils
 
 from google.appengine.ext import db
@@ -9,6 +11,7 @@ from google.appengine.api import memcache
 
 from models import Article
 
+logging.getLogger().setLevel(logging.DEBUG)
 
 # hva med å bare hive inn alle article keys som "article_keys" i
 # memcache. da vil jo alle artikler bli behandlet av de som henter
@@ -29,34 +32,62 @@ def check(article):
     # article = Article.get_by_id(640002)
     # db.delete(article)
 
+    clean.clean_all() # clean all articles in db - nice to start with this before the special cases below.
+
+    changed = False
+
     if article.clean and not utils.is_prose(article.text):
         clean.clean(article)
+        changed = True
     if article.clean == False:
         clean.clean(article)
+        changed = True
     if article.clean == None:
         clean.clean(article)
+        changed = True
     if article.clean == True and article.sentiment == None:
-        analyze.sentiment(article)
-            #clean.clean(article)
+        # classify article
+        # analyze.sentiment(article) no
+        changed = True
 
     if article.analyzed and article.sentiment == None:
-        analyze.sentiment(article)
+        # as above
+        # analyze.sentiment(article)
+        changed = True
 
+    if changed:
+        # logging.debug("changed")
+        article.put()
 
-#FORGET JANITOR FOR NOW; LET CLEAN AND ANALYZE DO THE JOB.
-#FORGET JANITOR FOR NOW; LET CLEAN AND ANALYZE DO THE JOB.
+    article_keys = memcache.get("article_keys")
+    if article_keys and len(article_keys) > 1000:
+        memcache.set("article_keys", article_keys[:500])
+
 
 def check_all():
-    maintenance = memcache.get("maintenance")
-    if maintenance:
-        article = maintenance.pop() # last element is removed in place
-        check(article)
-        memcache.set("maintenance", maintenance)
-    else:
-        q = Article.all().filter("clean =", None) # now, it doesn't check those with clean == True!
-        articles = q.fetch(8)
-        memcache.add("articles", articles)
-        
+    q = Article.all(keys_only=True)
+    # q.order("datetime") no datetime in keys
+    article_keys = q.fetch(10000)
+
+    # maintenance = memcache.get("maintenance")
+    # if maintenance:
+    #     article = maintenance.pop() # last element is removed in place
+    #     check(article)
+    #     memcache.set("maintenance", maintenance)
+    # else:
+    #     q = Article.all().filter("clean =", None) # now, it doesn't check those with clean == True!
+    #     articles = q.fetch(8)
+    #     memcache.add("articles", articles)
+
+    duplicates = []
+    for key in article_keys:
+        article = Article().get_by_id(key.id())
+
+        if article.title in duplicates:
+            db.delete(article)
+        else:
+            duplicates.append(article.title)
+            check(article)
 
 
 def clean_old_articles():

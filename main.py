@@ -2,14 +2,14 @@
 
 #only displays the finished products that scrape and bayesian have stored to db. and only at users' requests, NOT as cron jobs.
 
-import jinja2, os, logging, pickle, webapp2, time, re, logging
+import jinja2, os, logging, pickle, webapp2, time, re
 
 from bs4 import BeautifulSoup as bs
 from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape, word_pairs
+import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape, classify
 
 from models import Article, Company, UserPrefs
 
@@ -27,9 +27,7 @@ class MainPage(webapp2.RequestHandler):
 
     def get(self): 
         #timeout = 0.2
-
-        logging.debug("a cold beer in the sun")
-
+        # logging.debug("a cold beer in the sun")
         usr = users.get_current_user()
         if usr:
             user_id = usr.user_id()
@@ -424,9 +422,9 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 
 
-class WordPairHandler(webapp2.RequestHandler):
+class ClassifyHandler(webapp2.RequestHandler):
     def get(self):
-        word_pairs.word_pairs()
+        classify.word_pairs()
 
 class BackendHandler(webapp2.RequestHandler):
     def get(self):
@@ -435,19 +433,26 @@ class BackendHandler(webapp2.RequestHandler):
         #taskqueue.add(url='/test', target='backendscraping') # , params={})
         #scrape.scrape()
 
+class JanitorBackendHandler(webapp2,RequestHandler):
+    def get(self):
+        taskqueue.add(url='/janitor', target='backendjanitor')
+
 class TestHandler(webapp2.RequestHandler):
+    def post(self): # online
+#    def get(self): # local
+         scrape.scrape()
+         duplicates.companies()
+         duplicates.articles() # strictly speaking redundant because of title check in scrape, but whatever.
+         clean.clean_recent() # clean recent from memcache from scrape
+         word_pairs = classify.recent_word_pairs()
+         classify.classify(word_pairs)
+
+class JanitorHandler(webapp2.RequestHandler):
 #    def post(self):
     def get(self):
-#         scrape.scrape()
-# #        duplicates.companies()
-#         clean.clean_all()
-# ##        duplicates.articles() redundant because of titles check in scrape.
-#         word_pairs = word_pairs.recent_word_pairs()
-#         word_pairs.word_pair_probs(word_pairs)
-
+        self.response.write('you have gone through many articles, janitoring')
         analyze.sentiment()
-        # test.test()
-        # duplicates.companies() 
+        janitor.check_all()
 
 class AllDupesBackendHandler(webapp2.RequestHandler):
     def get(self):
@@ -471,15 +476,10 @@ class DuplicateHandler(webapp2.RequestHandler):
         duplicates.companies()
         duplicates.articles()
 
-class JanitorHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('you have gone through many articles, janitoring')
-        janitor.check_all()
-
 class CleanHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('you have cleaned some text')
-        clean.clean_all()
+        clean.clean_recent()
 
 class CleanOldHandler(webapp2.RequestHandler):
     def get(self):
@@ -490,12 +490,7 @@ class CleanOldHandler(webapp2.RequestHandler):
 class AnalyzeHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write("you have analyzed all articles")
-        analyze.all_sentiment()
-
-class AnalyzeOldHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write("you have analyzed old articles")
-        analyze.all_sentiment_old_articles()
+        analyze.sentiment()
 
 class CheckHandler(webapp2.RequestHandler):
     def get(self):
@@ -523,14 +518,13 @@ app = webapp2.WSGIApplication([
         ('/clean', CleanHandler),
         ('/clean_old_articles', CleanOldHandler),
         ('/analyze', AnalyzeHandler),
-        ('/analyze_old_articles', AnalyzeOldHandler),
         ('/check', CheckHandler),
         ('/janitor', JanitorHandler),
         ('/send_to_backend', BackendHandler),
         ('/test', TestHandler),
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),
-        ('/word_pairs', WordPairHandler),
+        ('/classify', ClassifyHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 

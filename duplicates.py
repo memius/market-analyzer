@@ -54,24 +54,35 @@ def articles():
     if article_keys != None: # lagret av forrige scrape
         if duplicate_check != None: # lagret av forrige duplicates
             for article_key in article_keys:
-                if article_key in duplicate_check:
-                    db.delete(article_key)
-#                    article_keys.remove(article_key)
-                else:
-                    duplicate_check.append(article_key)
+                article = Article.get_by_id(article_key.id())
+                if article != None:
+                    if article.title in duplicate_check:
+                        db.delete(article)
+                        article_keys.remove(article_key)
+                    else:
+                        duplicate_check.append(article.title)
             memcache.set("duplicate_check", duplicate_check)
+            memcache.set("article_keys", article_keys)
         else:
-            duplicate_check = Article.all(keys_only=True) #fetching only the key, not the whole object.
+            q = Article.all(keys_only=True)
+            # q.order("datetime") no datetime on keys
+            keys = q.fetch(500)
+            duplicate_check = []
+            for key in keys:
+                article = Article.get_by_id(key.id())
+                duplicate_check.append(article.title)
+
             for article_key in article_keys:
-                if article_key in duplicate_check: # NEI! bruk titles, IKKE keys. keys er ALDRI identiske.
-                    db.delete(article_key)
-#                    article_keys.remove(article_key)
+                article = Article.get_by_id(key.id())
+                if article.title in duplicate_check: 
+                    db.delete(article)
+                    article_keys.remove(article_key)
                 else:
-                    duplicate_check.append(article_key)
+                    duplicate_check.append(article.title)
             memcache.add("duplicate_check", article_keys)
+            memcache.set("article_keys", article_keys)
     elif duplicate_check:
         memcache.set("duplicate_check", duplicate_check)
-
 
 # not used right now: (use it in the run through all old articles routine that will use a larger instance)
 def all_articles():

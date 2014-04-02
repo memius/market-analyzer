@@ -8,10 +8,11 @@ class Counter(db.Model):
     ctr = db.IntegerProperty()
 
 class Word_pair(db.Model):
-    first = db.StringProperty()
-    second = db.StringProperty()
+#    first = db.StringProperty()
+#    second = db.StringProperty()
+    words = db.StringProperty()
     prob = db.FloatProperty()
-    corrections = db.IntegerProperty()
+#    corrections = db.IntegerProperty()
 
 class Token(db.Model):
     word = db.StringProperty()

@@ -1,187 +1,70 @@
-den interaktive konsollen er nyttig! lim inn kode og se resultat av kjøring.
+write the cron for this, and add to backends:
 
+the order is now that this happens every hour or so:
+scrape
+dupe
+clean
+clasify
 
-and again, even after i made the count tokens and token probs
-different, since pos corpus is a triple list and wp is a double list.
+and janitor happens every day or so:
+janitor.check_all (includes clean_all and dupe check all)
+analyze all
 
-why is it empty? look at the chain again. this is a simple bug.
 
-local logs er jo et konsept du bør utforske. trenger definitivt logger
-lokalt, slik at jeg kan se hva som skjer. det blir for dumt å hele
-tiden gjette på hva som er problemet.
 
+clean cleaner bare alle dersom article_keys ikke finnes. når skal den
+cleane alle? det er bare å forandre else'en. men det bor være en egen
+funksjon, som blir kalt sjeldnere enn clean recent.
 
-back to  reduce with empty sequence (mult = lambda...). 
+altså clean_recent og clean_all.
 
-fuck the logs. made sure a string was actually constructed from the
-triple list. waiting for backend to run now.
+scrape skraper, og dupes fjerner, men clean gjør ingenting. har lagt
+inn at den henter fra db, men ingenting skjer. sov på det.
 
+article_keys må forkortes et eller annet sted. blir det gjort? if >
+500 eller noe?
 
 
-added logs showing what word pairs and pairs look like, to see why
-they are still lists within.
+nytt problem: google forandrer (selvfølgelig) url'en, men det kan
+synes som om url'en fram til ei= er nok. gjør litt testing av det.
 
+du har gjort ferdig classify. sjekk at det virker uten feil online
+også. men sjekk at ting skrapes fortsatt, med ny url-form.
 
-unhashable type, list, when checking whether pair is in
-frequencies. that means there are more nested lists than i think,
-because we are still not out of lists and into the string.
 
-now waiting for /test to run. have run send to backend. word pairs
-should come out properly from naive bayes now. without errors.
+legg inn email om hvor mange som er skrapet. legg i egen folder i
+gmail. viktig info, spesielt hvis ingenting blir skrapet.
 
 
-mult = reduce(lambda... gets empty sequence with no initial
-value.comes from prob = combined probs(token probs), which comes from
-token_probs(), which perhaps returns an empty list.
 
-yes, it does. so, it's probably in there, then, not in the frequencies
-that come in. or, well, it may well be, actually, since that would
-lead to the empty list.
+analyze tar alle artikler.
+word pairs tar recent.
+clean tar recent.
+dupe tar recent.
 
+dvs. at janitor må dupe checke alle,
+deretter sjekke at alle har alle relevante attributter.
+deretter cleane alle,
+deretter klassifisere alle.
+så tar analyze seg av å analysere alle.
 
-
-have put the two back together. getting two 'send to backend' when
-hitting that url. waiting for 'test' to complete
-
-
-put the two back together and see what happens.
-
-hva med å lagre dict'en som en enhet til db? models.dict something. a
-little slow, but much better than generating it once for each
-article. may be able to store in memory when moving to larger
-instances. hm. should do that now, then. if i store it in memory, i
-need to put the two functions back together. certainly doable. might
-get a memory exceeded if small instance. or not, since backends have
-more memory than frontend instances. ok, so put back together, and see
-what happens.
-
-
-det er fordi dict'ene med frequencies er store:
-Values may not be more than 1000000 bytes in length; received 1356755
-bytes fra gather stats, line 162. too much to add to
-memcache. dammit. 1.3 times what's allowed. make smaller, compress,
-something.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-nå har jeg byttet ut fetch all articles med fetch keys only i både
-gather stats og i all sentiment. ser akkurat nå på gather stats. så må
-jeg bytte hvilken som blir kalt i main, og se på all sentiments.
-
-
-
-
-still memory exceed after fetcging only keys in analyze. find another
-way to reduce memory. dette er når du kjorer all sentiment, forresten,
-så keys only i gather stats har ingenting med saken å gjøre. men det
-er en fetch all articles i all sentiment også.
-
-
-antakelig hent keys only, og hent en av gangen. det burde redusere memory
-bruken.
-
-
-
-nå er det exceeded soft private memory limit på /test. antakelig fordi
-den har alle artiklene i minnet. hm.
-
-
-
-send to backend starter 2 test, og hver av dem tar bare 5ms. hm. det
-var pga 405 feil, som betyr feil metode, som betyr get i stedet for
-post.
-
-
-
-
-
-
-du har fikset analyze sentiment, og delt den i to. nå kjører den
-online. vent en stund, og se om det er aktivitet (du har slettet task
-queue). hvis ikke, start igjen. start igjen uansett, og se om det bare
-dukker opp en task i loggene. det skal det. en send to backend, og en test.
-
-
-
-del sentiment() i to; en som bruker positive_corpus og
-negative_corpus, samler alle values, frequencies osv., og en som
-bruker wp og de samlede verdiene, og går gjennom alle artikel,r og
-regner ut prob for den enkelte artikkelen.
-
-den skal i alle fall finne prob for alle artikler i db. lagre
-frequencies etc. i memcache, og gå gjennom hver artikkel. altså
-tilbake til values in og ut av memcache.
-
-
-
-
-sentiment tar 1 artikkel, og bestemmer prob'en til den
-artikkelen, basert på hele korpusets word pair probs. hva om du i
-stedet for å lagre hver enkelt til db lagrer i en liste, og lagrer til
-db til slutt? det er i alle fall rot i sentiment, siden indenderingen
-er både og. den begynner som en som bare tenker på alle artiklene, og
-slutter som en som vil lagre en enkelt artikkel.
-
-token_probs tar in wp, i stedet for positive og negative corpus. den
-skal ta alt, altså begge korpusene, og ikke bare wp, som er for en
-eneste artikkel.
-
-
-
-
-krøll i rekken med laging av dictionary med frequencies, og word pair
-liste. legg inn kjørestatements i bunnen av disse filene: analyze,
-word pairs, naive bayes. evt. trekk ut funksjonene til en
-testfil. print hva som lages, så du får vite hvordan det ser ut.
-
-du trenger å se hvordan word pairs ser ut, og hvordan frequencies ser
-ut.
-
-dersom de ser greie ut med dine teststrenger, så er det noen malformed
-entries i db'en.
-
-
-
-
-
-
-den første halvdelen av word pairs() trekker ut ordpar. gjør den til
-en funksjon, og putt den midterste delen, som kalkulerer probs, i en
-funksjon, og putt den siste fjerdedelen, som lagrer unseen pairs, i
-final cleanup. da kan analyze bruke den første til å trekke ut ordpar
-når den bygger de to korpusene.
-
-analyze ser ok ut, bortsett fra at den skal levere ordpar til naive
-bayes. du er i naive bayes.
-
-nå sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
-word pair probs. hvis ikke, make it do so. ikke noe vits i å gå
-gjennom bare de ferske her.
 
 deretter bør jeg gjøre ferdig janitor, som dupe checker og cleaner
-alt. og klassifiserer (word pairs), men IKKE analyserer. dupe
+alt. og klassifiserer (word pairs), men IKKE analyserer. 
+
+dupe
 checkeren kan se omtrent ut som den gjør, men bare hente titles i
 stedet for å sammenlige keys (som er helt feil), og putte titles i en
 liste sammen med keys, og så kjøre over hele den listen, eller
 noe. mulig du slipper a lage ny liste, men kan delete allerede i
 loopen der du henter titles. ja, det kan du.
+
+
+
+
+
+
+
 
 nar du er ferdig med janitor, og db'en er ryddig, cleanet,
 klassifisert og analysert, kan du begynne å manuelt klassifisere
@@ -3478,4 +3361,180 @@ correction (0.001 eller .999, iKKE 0.0, for å unngå uforutsette
 0-problemer). dersom 0 tidligere corrections, article.prob =
 new_prob. hvis ikke, så bruker du smoothing factoren din på old prob
 og new prob. take previous_corrections_ctr into account!
+
+
+
+
+yess!! test now runs without errors. and with logs, even :)
+
+
+har endelig fått til å logge med argumenter til konsoll lokalt. nå kan
+du se hvordan listene og dictene ser ut når de kommer til combined probs.
+
+
+den interaktive konsollen er nyttig! lim inn kode og se resultat av kjøring.
+
+
+and again, even after i made the count tokens and token probs
+different, since pos corpus is a triple list and wp is a double list.
+
+why is it empty? look at the chain again. this is a simple bug.
+
+local logs er jo et konsept du bør utforske. trenger definitivt logger
+lokalt, slik at jeg kan se hva som skjer. det blir for dumt å hele
+tiden gjette på hva som er problemet.
+
+
+back to  reduce with empty sequence (mult = lambda...). 
+
+fuck the logs. made sure a string was actually constructed from the
+triple list. waiting for backend to run now.
+
+
+
+added logs showing what word pairs and pairs look like, to see why
+they are still lists within.
+
+
+unhashable type, list, when checking whether pair is in
+frequencies. that means there are more nested lists than i think,
+because we are still not out of lists and into the string.
+
+now waiting for /test to run. have run send to backend. word pairs
+should come out properly from naive bayes now. without errors.
+
+
+mult = reduce(lambda... gets empty sequence with no initial
+value.comes from prob = combined probs(token probs), which comes from
+token_probs(), which perhaps returns an empty list.
+
+yes, it does. so, it's probably in there, then, not in the frequencies
+that come in. or, well, it may well be, actually, since that would
+lead to the empty list.
+
+
+
+have put the two back together. getting two 'send to backend' when
+hitting that url. waiting for 'test' to complete
+
+
+put the two back together and see what happens.
+
+hva med å lagre dict'en som en enhet til db? models.dict something. a
+little slow, but much better than generating it once for each
+article. may be able to store in memory when moving to larger
+instances. hm. should do that now, then. if i store it in memory, i
+need to put the two functions back together. certainly doable. might
+get a memory exceeded if small instance. or not, since backends have
+more memory than frontend instances. ok, so put back together, and see
+what happens.
+
+
+det er fordi dict'ene med frequencies er store:
+Values may not be more than 1000000 bytes in length; received 1356755
+bytes fra gather stats, line 162. too much to add to
+memcache. dammit. 1.3 times what's allowed. make smaller, compress,
+something.
+
+
+
+
+nå har jeg byttet ut fetch all articles med fetch keys only i både
+gather stats og i all sentiment. ser akkurat nå på gather stats. så må
+jeg bytte hvilken som blir kalt i main, og se på all sentiments.
+
+
+
+
+still memory exceed after fetcging only keys in analyze. find another
+way to reduce memory. dette er når du kjorer all sentiment, forresten,
+så keys only i gather stats har ingenting med saken å gjøre. men det
+er en fetch all articles i all sentiment også.
+
+
+antakelig hent keys only, og hent en av gangen. det burde redusere memory
+bruken.
+
+
+
+nå er det exceeded soft private memory limit på /test. antakelig fordi
+den har alle artiklene i minnet. hm.
+
+
+
+send to backend starter 2 test, og hver av dem tar bare 5ms. hm. det
+var pga 405 feil, som betyr feil metode, som betyr get i stedet for
+post.
+
+
+
+
+
+
+du har fikset analyze sentiment, og delt den i to. nå kjører den
+online. vent en stund, og se om det er aktivitet (du har slettet task
+queue). hvis ikke, start igjen. start igjen uansett, og se om det bare
+dukker opp en task i loggene. det skal det. en send to backend, og en test.
+
+
+
+del sentiment() i to; en som bruker positive_corpus og
+negative_corpus, samler alle values, frequencies osv., og en som
+bruker wp og de samlede verdiene, og går gjennom alle artikel,r og
+regner ut prob for den enkelte artikkelen.
+
+den skal i alle fall finne prob for alle artikler i db. lagre
+frequencies etc. i memcache, og gå gjennom hver artikkel. altså
+tilbake til values in og ut av memcache.
+
+
+
+
+
+
+
+sentiment tar 1 artikkel, og bestemmer prob'en til den
+artikkelen, basert på hele korpusets word pair probs. hva om du i
+stedet for å lagre hver enkelt til db lagrer i en liste, og lagrer til
+db til slutt? det er i alle fall rot i sentiment, siden indenderingen
+er både og. den begynner som en som bare tenker på alle artiklene, og
+slutter som en som vil lagre en enkelt artikkel.
+
+token_probs tar in wp, i stedet for positive og negative corpus. den
+skal ta alt, altså begge korpusene, og ikke bare wp, som er for en
+eneste artikkel.
+
+
+
+
+krøll i rekken med laging av dictionary med frequencies, og word pair
+liste. legg inn kjørestatements i bunnen av disse filene: analyze,
+word pairs, naive bayes. evt. trekk ut funksjonene til en
+testfil. print hva som lages, så du får vite hvordan det ser ut.
+
+du trenger å se hvordan word pairs ser ut, og hvordan frequencies ser
+ut.
+
+dersom de ser greie ut med dine teststrenger, så er det noen malformed
+entries i db'en.
+
+
+
+
+
+
+
+
+den første halvdelen av word pairs() trekker ut ordpar. gjør den til
+en funksjon, og putt den midterste delen, som kalkulerer probs, i en
+funksjon, og putt den siste fjerdedelen, som lagrer unseen pairs, i
+final cleanup. da kan analyze bruke den første til å trekke ut ordpar
+når den bygger de to korpusene.
+
+analyze ser ok ut, bortsett fra at den skal levere ordpar til naive
+bayes. du er i naive bayes.
+
+nå sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
+word pair probs. hvis ikke, make it do so. ikke noe vits i å gå
+gjennom bare de ferske her.
 

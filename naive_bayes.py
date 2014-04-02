@@ -13,13 +13,11 @@ logging.getLogger().setLevel(logging.DEBUG)
 def count_tokens(word_pairs): # [['once','upon'],['once','a'], etc. ]
     frequencies = dict()
     if word_pairs != []:
-
-        s = "some string to rule them all"
-        logging.debug("word pairs: %s", s)
-
+#        logging.debug("word pairs: %s", word_pairs)
         pairs = [' '.join(pair) for sublist in word_pairs for pair in sublist] # each pair one string, triple list.
 #        logger.debug('pairs: ',str(pairs))
         for pair in pairs:
+#            logging.debug("pairs: %s", pairs)
             if pair in frequencies: 
                 value = frequencies.get(pair)
                 frequencies[pair] = value + 1
@@ -70,6 +68,7 @@ def token_probs(word_pairs,pos_freq,neg_freq,pos_size,neg_size):
         token_prob = token_probability(fp,fn,pos_size,neg_size)
         token_probs.append(token_prob)
 
+#    logging.debug("token probs: %s", token_probs)
     return token_probs
 
 #takes in a bunch of token probs, and calculates a total prob of the text containing those tokens.
@@ -94,6 +93,7 @@ def combined_prob(lst):
     #     else:
     #         result = 0.5
 
+    # logging.debug("combined prob: %s", result)
     return result
 
 # def text_prob(token_probs):

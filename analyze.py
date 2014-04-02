@@ -2,11 +2,13 @@
 # coding: utf-8
 # -*- coding: utf-8 -*-
 
-import utils, naive_bayes, word_pairs
+import utils, naive_bayes, classify, logging
 
 from google.appengine.api import memcache
 
 from models import Article
+
+logging.getLogger().setLevel(logging.DEBUG)
 
 # naar hvert selskap faar noen hundre artikler kan man begynne aa beregne
 # probs paa kun selskapets artikler - da vil antakelig accuracyen gaa
@@ -95,7 +97,7 @@ def sentiment():
 
 #gather stats henter aldri fra memcache, den bare lagrer til:
     q = Article.all(keys_only=True)
-    q.order("datetime")
+    # q.order("datetime") no datetime on keys
     article_keys = q.fetch(10000)
 
     # finding sizes and frequencies:
@@ -112,11 +114,12 @@ def sentiment():
 
 
     for key in article_keys:
+        # logging.debug("key: %s", key)
         article = Article.get_by_id(key.id()) 
-
+        # logging.debug("title: %s", article.title) 
         sentiment = article.sentiment
 
-        wp = word_pairs.word_pairs(article.text) 
+        wp = classify.word_pairs(article.text) 
         if sentiment == "positive":
             positive_corpus.append(wp)
         elif sentiment == "negative":
@@ -124,7 +127,7 @@ def sentiment():
 
         title_sentiment = article.title_sentiment
         
-        title_word_pairs = word_pairs.word_pairs(article.title) 
+        title_word_pairs = classify.word_pairs(article.title) 
         if title_sentiment == "positive":
             pos_title_corpus.append(title_word_pairs)
                 #pos_titles.append(article.title)
@@ -185,11 +188,29 @@ def sentiment():
 #---
 
 
-    token_probs = naive_bayes.token_probs(wp,pos_freq,neg_freq,pos_size,neg_size)
-    title_token_probs = naive_bayes.token_probs(title_word_pairs,pos_title_freq,neg_title_freq,pos_title_size,neg_title_size)
+    # must happen in same function as above gathering of stats, in order to have access to the stats for each article:
+    for key in article_keys:
+        # logging.debug("key: %s", key)
+        article = Article.get_by_id(key.id()) 
+        # logging.debug("title: %s", article.title) 
+        if article.corr_ctr == None or article.corr_ctr == 0: # has NOT been manually classified.
+            wp = classify.word_pairs(article.text) 
+            title_word_pairs = classify.word_pairs(article.title) 
 
-    prob = naive_bayes.combined_prob(token_probs)
-    title_prob = naive_bayes.combined_prob(title_token_probs)
+            token_probs = naive_bayes.token_probs(wp,pos_freq,neg_freq,pos_size,neg_size)
+            title_token_probs = naive_bayes.token_probs(title_word_pairs,pos_title_freq,neg_title_freq,pos_title_size,neg_title_size)
+
+            if token_probs != []:
+                prob = naive_bayes.combined_prob(token_probs)
+            # logging.debug("prob: %s", prob)
+            else:
+                prob = 0.5
+
+            if title_token_probs != []:
+                title_prob = naive_bayes.combined_prob(title_token_probs)
+            # logging.debug("title_prob: %s", title_prob)
+            else:
+                prob = 0.5
 
     # if article_object.mod != None: # this just changes the conclusion - it does not teach the bayes anything until later, when the article is part of a different corpus.
     #     prob = min(.99, prob + article_object.mod) # from the user's button click - see CorrectionHandler
@@ -199,29 +220,29 @@ def sentiment():
 
 #       return prob, title_prob
 
-    article.prob = prob
-    if prob >= 0.9:
-        article.sentiment = "positive"
-    elif prob <= 0.1:
-        article.sentiment = "negative"
-    else:
-        article.sentiment = "neutral"
+            article.prob = prob
+            if prob >= 0.9:
+                article.sentiment = "positive"
+            elif prob <= 0.1:
+                article.sentiment = "negative"
+            else:
+                article.sentiment = "neutral"
 
-    article.title_prob = title_prob
-    if title_prob >= 0.9:
-        article.title_sentiment = "positive"
-    elif title_prob <= 0.1:
-        article.title_sentiment = "negative"
-    else:
-        article.title_sentiment = "neutral"
+            article.title_prob = title_prob
+            if title_prob >= 0.9:
+                article.title_sentiment = "positive"
+            elif title_prob <= 0.1:
+                article.title_sentiment = "negative"
+            else:
+                article.title_sentiment = "neutral"
 
-    article.analyzed = True
-    article.put()
+            article.analyzed = True
+            article.put()
 
 
 # def all_sentiment(): 
 #     q = Article.all(keys_only=True)
-#     q.order("datetime")
+#     # q.order("datetime")
 #     article_keys = q.fetch(10000)
 
 #     for key in article_keys:
@@ -229,8 +250,8 @@ def sentiment():
 
 # #commented out only for testing!:
 # #        if article.corr_ctr != None and article.corr_ctr != 0: # it hasn't been corrected by hand
-#         wp = word_pairs.word_pairs(article.text) 
-#         title_word_pairs = word_pairs.word_pairs(article.title)
+#         wp = classify.word_pairs(article.text) 
+#         title_word_pairs = classify.word_pairs(article.title)
 #         prob, title_prob = sentiment(wp,title_word_pairs)
 
 

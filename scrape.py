@@ -5,7 +5,7 @@
 
 # #started by cron-job. fetches articles from web, and stores them to db.
 
-import urllib2, re, chardet
+import urllib2, re, chardet, logging
 
 from bs4 import BeautifulSoup as bs
 from google.appengine.api import urlfetch, memcache
@@ -13,11 +13,15 @@ from google.appengine.ext import db  # probably redundant
 
 from models import Article, Company
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 def linkz(ticker, exchange): # the one for articles.
     if exchange == "NASDAQ":
-        url = "https://www.google.com/finance/company_news?q=NASDAQ%3A" + ticker + "&ei=jXT9UYDqMKT4wAPmUw"
+        url = "https://www.google.com/finance/company_news?q=NASDAQ%3A" + ticker + "&ei="
+        # "https://www.google.com/finance/company_news?q=NASDAQ%3AAAPL&ei=jXT9UYDqMKT4wAPmUw"
+        # "https://www.google.com/finance/company_news?q=NASDAQ%3AAAPL&ei=Rcw5U-jcN6WJwAPYwwE"
     elif exchange == "NYSE":
-        url = "https://www.google.com/finance/company_news?q=NYSE%3A" + ticker + "&ei=cP1zUvCHDdOBwAO5GQ"
+        url = "https://www.google.com/finance/company_news?q=NYSE%3A" + ticker + "&ei="
     result = urlfetch.fetch(url)
     if result.status_code == 200:
         soup = bs(result.content)
@@ -210,6 +214,7 @@ def process_links(company):
                     if html != None:
                         article = Article()
                         article.title = title
+                        logging.debug("title: %s", title)
 #                        titles.remove(title) # when finished, titles = []
                         article.html = html
                         article.url = link
@@ -258,6 +263,7 @@ def scrape():
     article_keys = memcache.get("article_keys")    
 #    duplicate_check = memcache.get("duplicate_check")
     for company in companies: 
+        logging.debug("one more company")
         new_article_keys = process_links(company)
 
 #        c.append(company.name)
