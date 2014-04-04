@@ -199,6 +199,7 @@ def process_links(company):
 
 #        link_ctr = 1
         article_keys = []
+        # scrape_ctr = 0
         for [title, link] in links: 
 #            if link_ctr > 100: # sanity check. there should normally not be more articles than this per day.
 #                return article_keys
@@ -214,7 +215,7 @@ def process_links(company):
                     if html != None:
                         article = Article()
                         article.title = title
-                        logging.debug("title: %s", title)
+                        # logging.debug("title: %s", title)
 #                        titles.remove(title) # when finished, titles = []
                         article.html = html
                         article.url = link
@@ -222,12 +223,15 @@ def process_links(company):
 #                        article.clean = False
 
                         article.put() 
+                        # scrape_ctr += 1
                         article_keys.append(article.key())
                         new_titles.append(title)
 
         new_titles = old_titles + new_titles
         company.titles = new_titles #this list should be shortened every now and then - not if it's used for display!
         company.put() 
+
+        # logging.debug("scraped %s articles", scrape_ctr)
                                 
         return article_keys
     else:
@@ -262,13 +266,15 @@ def scrape():
 
     article_keys = memcache.get("article_keys")    
 #    duplicate_check = memcache.get("duplicate_check")
+    scrape_ctr = 0
     for company in companies: 
-        logging.debug("one more company")
+        # logging.debug("one more company")
         new_article_keys = process_links(company)
+        scrape_ctr += len(new_article_keys)
 
 #        c.append(company.name)
-        if new_article_keys != None:
-            if article_keys != None:
+        if new_article_keys:
+            if article_keys:
                 article_keys = new_article_keys + article_keys
                 # memcache.delete("article_keys")
                 memcache.set("article_keys", article_keys, 11000) # clean does not update, so store until analyze.
@@ -285,7 +291,8 @@ def scrape():
                 # else:
                 #     memcache.add("duplicate_check",new_article_keys, 11000)
 
-
+    logging.debug("scraped %s articles", scrape_ctr)
+    # logging.debug("scrape() article keys: %s", article_keys[:3])
 
 
 

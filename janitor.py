@@ -32,37 +32,28 @@ def check(article):
     # article = Article.get_by_id(640002)
     # db.delete(article)
 
-    clean.clean_all() # clean all articles in db - nice to start with this before the special cases below.
-
     changed = False
 
+    if not article.clean:
+        clean.clean(article)
+        changed = True
     if article.clean and not utils.is_prose(article.text):
         clean.clean(article)
         changed = True
-    if article.clean == False:
-        clean.clean(article)
-        changed = True
-    if article.clean == None:
-        clean.clean(article)
-        changed = True
-    if article.clean == True and article.sentiment == None:
-        # classify article
-        # analyze.sentiment(article) no
-        changed = True
+    # if article.clean and article.sentiment == None:
+    #     # classify article
+    #     # analyze.sentiment(article) no
+    #     changed = True
 
-    if article.analyzed and article.sentiment == None:
-        # as above
-        # analyze.sentiment(article)
-        changed = True
+    # if article.analyzed and article.sentiment == None:
+    #     # as above
+    #     # analyze.sentiment(article)
+    #     changed = True
 
     if changed:
-        # logging.debug("changed")
         article.put()
 
-    article_keys = memcache.get("article_keys")
-    if article_keys and len(article_keys) > 1000:
-        memcache.set("article_keys", article_keys[:500])
-
+    return changed
 
 def check_all():
     q = Article.all(keys_only=True)
@@ -80,6 +71,7 @@ def check_all():
     #     memcache.add("articles", articles)
 
     duplicates = []
+    changed_ctr = 0
     for key in article_keys:
         article = Article().get_by_id(key.id())
 
@@ -87,8 +79,14 @@ def check_all():
             db.delete(article)
         else:
             duplicates.append(article.title)
-            check(article)
+            changed = check(article)
+            if changed:
+                changed_ctr += 1
 
+    logging.debug("janitored %s articles", changed_ctr)
+    article_keys = memcache.get("article_keys")
+    if article_keys and len(article_keys) > 1000:
+        memcache.set("article_keys", article_keys[:500])
 
 def clean_old_articles():
     q = Article.all()

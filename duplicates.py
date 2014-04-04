@@ -2,18 +2,27 @@
 
 #checks for duplicates in the db, and removes them.
 
+import logging
+
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
 from models import Article, Company
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 def companies():
-    q = Company.all()
-    q.order("datetime")
-    companies = q.fetch(1000)
+    q = Company.all(keys_only=True)
+    # q.order("datetime") no datetime on keys
+    company_keys = q.fetch(1000)
     duplicates = []
     checked = []
-    for company in companies:
+    delete_ctr = 0
+    for key in company_keys:
+        company = Company.get_by_id(key.id())
+        # logging.debug("company key id: %s", key.id())
+        # logging.debug("company key name: %s", key.name())
+        # logging.debug("company name: %s", company.name())
 
         # if company.name == "General Electric Company":
         #     company.exchange = "NYSE"
@@ -28,6 +37,7 @@ def companies():
 
         if company.name in duplicates:
             db.delete(company)
+            delete_ctr += 1
         else:
             duplicates.append(company.name)
             checked.append(company)
@@ -36,13 +46,16 @@ def companies():
     for company in checked:
         if company.ticker in duplicates:
             db.delete(company)
+            delete_ctr += 1
         else:
             duplicates.append(company.ticker)
 
+    logging.debug("deleted %s duplicate companies", delete_ctr)
 
 # redundant because of titles check in scrape - and wrong, because it checks on keys, which are, of course, unique!
 def articles():
     article_keys = memcache.get("article_keys")
+    # logging.debug("dupe() article keys: %s", article_keys[:3])
     duplicate_check = memcache.get("duplicate_check") 
 
 # dupe check skal inneholde:
@@ -51,14 +64,16 @@ def articles():
 #   i beste fall:
 #     de som ble skrapet forrige gang = article keys nå + dupe checks skal lagres som neste dupe check
 
-    if article_keys != None: # lagret av forrige scrape
-        if duplicate_check != None: # lagret av forrige duplicates
+    delete_ctr = 0
+    if article_keys: # lagret av forrige scrape
+        if duplicate_check: # lagret av forrige duplicates
             for article_key in article_keys:
                 article = Article.get_by_id(article_key.id())
-                if article != None:
+                if article:
                     if article.title in duplicate_check:
                         db.delete(article)
                         article_keys.remove(article_key)
+                        delete_ctr += 1
                     else:
                         duplicate_check.append(article.title)
             memcache.set("duplicate_check", duplicate_check)
@@ -73,16 +88,23 @@ def articles():
                 duplicate_check.append(article.title)
 
             for article_key in article_keys:
+
+                # no, this doesn't work; the key.name() is different from the object.name() - you can make this a lot more efficient by using 'name' instead of 'title', because 'name' can be accessed directly from the key (key.name()) - you don't have to fetch the whole article! test this by logging a company name - they already have names.
+
                 article = Article.get_by_id(key.id())
-                if article.title in duplicate_check: 
-                    db.delete(article)
-                    article_keys.remove(article_key)
-                else:
-                    duplicate_check.append(article.title)
+                if article:
+                    if article.title in duplicate_check: 
+                        db.delete(article)
+                        article_keys.remove(article_key)
+                        delete_ctr += 1
+                    else:
+                        duplicate_check.append(article.title)
             memcache.add("duplicate_check", article_keys)
             memcache.set("article_keys", article_keys)
     elif duplicate_check:
         memcache.set("duplicate_check", duplicate_check)
+
+    logging.debug("deleted %s duplicate articles", delete_ctr)
 
 # not used right now: (use it in the run through all old articles routine that will use a larger instance)
 def all_articles():

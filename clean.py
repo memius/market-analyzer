@@ -17,7 +17,7 @@
 # class= means it is a rubbish word; class="alignleft' and so on. title= also. alt= too. width= too.
 
 
-import re, string
+import re, string, logging
 
 from bs4 import BeautifulSoup as bs
 from google.appengine.api import memcache
@@ -26,6 +26,8 @@ from google.appengine.ext import db
 import utils, analyze
 
 from models import Article
+
+logging.getLogger().setLevel(logging.DEBUG)
 
 #1. display readable text to user - here, you only need to remove boilerplate. DONE.
 #2. deliver clean, unequivocal text to the classifier - here, you need to normalize, remove whitespace, punctuation.
@@ -74,6 +76,8 @@ def clean_recent(): # only cleans recently scraped articles ("article_keys" from
 #use article ids, which consists of recently scraped articles that have been duplicate (by title) checked. check their flag - if not clean, clean. some of them will be from the last round, and will be clean already.
 
     article_keys = memcache.get("article_keys")
+    # logging.debug("clean() article keys: %s", article_keys[:3])
+    clean_ctr = 0
     if article_keys:
         for article_key in article_keys:
 #        article = cleaning.pop() # pop() returns last item, and changes the list in place
@@ -81,19 +85,19 @@ def clean_recent(): # only cleans recently scraped articles ("article_keys" from
             if article != None:
                 if article.clean != True:
                     clean(article)
+                    clean_ctr += 1
         # cleaning.remove(article) not needed, because pop removes it for us.
         memcache.set("article_keys", article_keys)
 
+    logging.debug("cleaned %s articles", clean_ctr)
 
-def clean_all():
-    q = Article.all(keys_only=True)
-        # q.order("datetime") no datetime on keys
-    keys = q.fetch(500)
-    for key in keys:
-        article = Article.get_by_id(key.id())
-        if article != None:
-            if article.clean != True:
-                clean(article)
+
+# def clean_all(keys):
+#     for key in keys:
+#         article = Article.get_by_id(key.id())
+#         if article != None:
+#             if article.clean != True:
+#                 clean(article)
 
 
     # else: # hvis article_keys er tom, maa artikler hentes fra db:

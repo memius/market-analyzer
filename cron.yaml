@@ -2,11 +2,14 @@ cron:
 
 # seconds are not allowed. only hours|mins|minutes.
 
-# - description: sends scrape (and others) to backend  
-#   url: /send_to_backend
-#   schedule: every 8 minutes
+- description: sends scrape, dupe, clean and classify to backendscraping
+  url: /send_to_backend
+  schedule: every 20 mins
 
-# janitor here
+- description: sends analyze and janitor to backendscraping
+  url: /janitorbackend
+  schedule: every 6 hours
+
 
 # - description: duplicate checks all articles in db
 #   url: /all_dupes_backend

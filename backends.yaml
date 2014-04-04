@@ -2,5 +2,5 @@ backends:
   - name: backendscraping
     class: B1
 
-  - name: backendjanitor
-    class: B1
+  # - name: backendjanitor
+  #   class: B1

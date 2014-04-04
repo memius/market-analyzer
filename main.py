@@ -433,9 +433,9 @@ class BackendHandler(webapp2.RequestHandler):
         #taskqueue.add(url='/test', target='backendscraping') # , params={})
         #scrape.scrape()
 
-class JanitorBackendHandler(webapp2,RequestHandler):
-    def get(self):
-        taskqueue.add(url='/janitor', target='backendjanitor')
+class JanitorBackendHandler(webapp2.RequestHandler):
+    def get(self): # local
+        taskqueue.add(url='/janitor', target='backendscraping')
 
 class TestHandler(webapp2.RequestHandler):
     def post(self): # online
@@ -444,13 +444,14 @@ class TestHandler(webapp2.RequestHandler):
          duplicates.companies()
          duplicates.articles() # strictly speaking redundant because of title check in scrape, but whatever.
          clean.clean_recent() # clean recent from memcache from scrape
-         word_pairs = classify.recent_word_pairs()
-         classify.classify(word_pairs)
+         keys_word_pairs = classify.recent_word_pairs()
+         logging.debug("word pairs just before classify(): %s",keys_word_pairs[:7])
+         classify.classify(keys_word_pairs)
 
 class JanitorHandler(webapp2.RequestHandler):
-#    def post(self):
-    def get(self):
-        self.response.write('you have gone through many articles, janitoring')
+    def post(self):
+#    def get(self): # local
+#        self.response.write('you have gone through many articles, janitoring')
         analyze.sentiment()
         janitor.check_all()
 
@@ -521,6 +522,7 @@ app = webapp2.WSGIApplication([
         ('/check', CheckHandler),
         ('/janitor', JanitorHandler),
         ('/send_to_backend', BackendHandler),
+        ('/janitorbackend', JanitorBackendHandler),
         ('/test', TestHandler),
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),

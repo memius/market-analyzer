@@ -38,28 +38,33 @@ from models import Article, Word_pair
 
 logging.getLogger().setLevel(logging.DEBUG)
 
+# returns keys and word pairs for recently scraped, dupe checked and cleaned articles
 def recent_word_pairs():
     article_keys = memcache.get("article_keys")
-    wp = []
+    # logging.debug("recent word pairs() article keys: %s", article_keys[:3])
+    kwp = []
     if article_keys:
         for key in article_keys: 
             article = Article.get_by_id(key.id())
-            if article != None:
+            if article:
                 if article.clean:
                     text = article.text # later, you'll want to do this with titles as well, and see if equally good.
-                    if text != None:
-                        wp.append(word_pairs(text))
+                    if text:
+                        kwp.append([key, word_pairs(text)])
 
-        return wp
+    # logging.debug("kwp[:3]: %s", kwp[:3])
+    return kwp
 
 
+# returns word pairs for 1 article
 def word_pairs(text):
     # titles are often shorter than six words, so this will return empty list for those. fix.
-    if text != None:
+    if text:
+        # logging.debug("inside word pairs if")
         words = text.split() # split strips white space implicitly
         num_of_word_pairs = (len(words) * 5) - 10
         word_pairs = []
-        for n in range(len(words) - 5): 
+        for n in range(len(words) - 5): # does NOT yield error when fewer than 6 words
             window = words[-6:] # the last six words in the text
             one = window[:2]
             two = window[:1] + window[2:3]
@@ -89,43 +94,60 @@ def word_pairs(text):
 
             words.pop() # removes the last word
 
+        # logging.debug("word pairs() returning word pairs: %s", word_pairs[:3])
         return word_pairs
 
 
 
+# classifies several articles:
+def classify(keys_word_pairs):
+    classify_ctr = 0
 
-def classify(word_pairs):
-    probs = []
-    unseen_word_pairs = []
+# du får inn en trippel liste, som inneholder ordparene for mange artikler. kjor en for-loop gjennom alle artiklene, og lagre hver enkelt artikkel. akkurat nå lagrer du en artikkel som du ikke har definert en gang.
 
-    if word_pairs != [] and isinstance(word_pairs[0], str):
-        pairs = [' '.join(pair) for pair in word_pairs]
-        for word_pair in pairs:
-            # logging.debug("word_pair: %s", word_pair)
-            wp = Word_pair.all().filter("words =", word_pair).get() # dict fra memcache er muligens mye bedre her.
-            # logging.debug("wp: %s", wp)
+    for [key, word_pairs] in keys_word_pairs:
+        probs = []
+        unseen_pairs = []
+        if word_pairs: #and isinstance(word_pairs[0], str):
+            first_pair = word_pairs[0]
+            logging.debug("first pair: %s",first_pair)
+            first_word = first_pair[0]
+            logging.debug("first word: %s",first_word)
+            if isinstance(first_word, unicode):
+                pairs = [' '.join(pair) for pair in word_pairs] # each pair 1 string, double list
+                # pairs = [' '.join(pair) for sublist in word_pairs for pair in sublist] # each pair 1 string, triple list.
+                for word_pair in pairs:
+                    logging.debug("word_pair: %s", word_pair)
+                    wp = Word_pair.all().filter("words =", word_pair).get() # dict fra memcache er muligens mye bedre her.
+                    logging.debug("wp: %s", wp)
 
-            if wp == None:
-                unseen_pairs.append(word_pair)
-            else:
-                if wp.prob > 0.9 or wp.prob < 0.1:
-                    probs.append(wp.prob) 
+                    if wp:
+                        if wp.prob > 0.9 or wp.prob < 0.1:
+                            probs.append(wp.prob) 
+                        else:
+                            unseen_pairs.append(word_pair)                    
 
-        article.prob = bayes(probs)
-        article.put()
+                prob = bayes(probs)
+                article = Article.get_by_id(key.id())
+                article.prob = prob
+                article.put()
+                classify_ctr += 1
 
-        store_unseen_pairs(unseen_pairs, combined_prob)
+                store_unseen_pairs(unseen_pairs, prob)
 
+
+    logging.debug("classified %s articles",classify_ctr)
 
 def store_unseen_pairs(unseen_pairs, combined_prob):
     # move this to final cleanup.
-    for word_pair in unseen_word_pairs: # commented out ONLY for testing!
+    unseen_ctr = 0
+    for word_pair in unseen_pairs: 
         wp = Word_pair()
-        wp.first = word_pair[0]
-        wp.second = word_pair[1]
+        wp.words = ' '.join(word_pair)
         wp.prob = combined_prob # the word pair is simply given the article's prob
-        wp.corrections = 0
         wp.put()
+        unseen_ctr += 1
+    logging.debug("stored %s unseen word pairs", unseen_ctr)
 
 
 def bayes(probs):

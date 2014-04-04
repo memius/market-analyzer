@@ -1,3 +1,98 @@
+du er i classify - der er det rot. se merknaden i funksjnonen.
+
+
+i think i found it - checking whether the first element OF the first
+element is a string, since the first element is a word pair.
+
+find out why nothing is being classified. is it because everything has
+been analyzed? but the recently scraped haven't been... hm.
+
+what exactly is the difference between classify and analyze now?
+
+running both on bacekndscraping now. seems to work.
+
+b1 worked, with analyzing one article. there will not be much more
+memory use with more than one.
+
+
+b4 worked for janitor. when janitor does not have a lot of things to
+do, a small instance is enough. put it in with scraper, and see if it
+thrives there. but test b2 and b1 alone first.
+
+
+
+let cron be as it should, and run them manually when you want to see
+the results.
+
+you need to send a stop signal to the backend when it has finished
+working, or you will pay for continuous uptime. simply go to url
+/_ah/stop after completion.
+
+backend: b1 and b4. try b4_1G, then b4, then b2, then b1.
+
+classify: does not find anything to classify.
+
+dupe: does not dupe check everything that comes in (probably because
+of title check in scrape? no, because that's before they get scraped).
+
+clean: does not clean scraped articles.
+
+increased daily limit to $20.
+
+
+
+
+
+they work without errors. try a smaller janitorinstance, and run the
+scraping on the same instance. or turn them off in between. maybe a b8
+that only runs twice a day, and you only pay for two hours of that (16
+hours of uptime). or a b4.
+
+
+after a couple of runs, it's already obvious that nothing is being
+cleaned, and, perhaps as a result, nothing is being classified.
+
+now started cron jobs for both backends. leave them on for a day or
+two, and see what develops. started thursday 3. april at 20:33.
+
+
+both parts of janitor worked. now checking if they work together. if
+they do, put in cron jobs, and run the whole thing for a day, and see
+how much resources it uses, and what it scrapes and analyzes.
+
+
+janitor check worked. checking analyze now.
+
+you may have to delete all word pairs from db. errors occur in indexes
+because they were stored in the wrong format (first and second instead
+of words).
+
+you have increased the daily limit to $10.
+
+
+kjører nå online med debuglogging i classify for å se hvorfor den ikke
+klassifiserer noe.
+
+har lagt inn triple lists i classify. ser nå om det funker, slik at
+det blir klassifisert noen artikler i slutten av /test.
+
+har delt janitor i to. dvs. halvert hva den gjør. må lage en janitor2
+eller noe.
+
+tok for lang tid også med b8 instance på backendjanitor. dele opp i
+mindre biter?
+
+mulig du bare skal fjerne duplicates.articles(). den trengs ikke pga
+title check i scrape. duplicates.companies trengs.
+
+
+prøv med større backend-instance. mer memory til janitor. da blir den
+kanskje ikke slått av av google.
+
+
+nonetype not iterable i naive linje 57 når online. bacendjanitor.
+
+
 write the cron for this, and add to backends:
 
 the order is now that this happens every hour or so:

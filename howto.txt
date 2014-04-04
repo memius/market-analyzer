@@ -1,3 +1,10 @@
+---
+
+when it says "there was a problem updating your indexes" it probably means your
+quota is full.
+
+
+
 ----
 
 make local logs persistent:
