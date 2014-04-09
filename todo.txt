@@ -1,3 +1,23 @@
+	display titler, og la dem korrigere tittel-sentiment. la dem
+	klikke titlene og faa se hele artikkelen, og sette tekst-sentiment
+
+bruk google analytics for å se hva brukerne dine gjør.
+
+keys word pairs er tom idet man går inn i classify. hvorfor er den
+tom? den er også tom når ting har blitt skrapet.
+
+nå kan det virke som om clean heller ikke tar noen, selv om det har
+blitt skrapet ting.
+
+
+
+er det en eller annen logikksetning som mangler eller er motsatt i
+classify? det skal jo være: dersom den er nylig skrapet, og cleanet,
+så klassifiserer vi.
+
+
+
+
 du er i classify - der er det rot. se merknaden i funksjnonen.
 
 

@@ -124,8 +124,8 @@ def classify(keys_word_pairs):
                     if wp:
                         if wp.prob > 0.9 or wp.prob < 0.1:
                             probs.append(wp.prob) 
-                        else:
-                            unseen_pairs.append(word_pair)                    
+                    else:
+                        unseen_pairs.append(word_pair)                    
 
                 prob = bayes(probs)
                 article = Article.get_by_id(key.id())
