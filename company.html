@@ -33,6 +33,13 @@
     <p>
       {{ article.text }}
     <p>
+      <form action="/correction" method=post>
+	<input type="hidden" name="key" value="{{ article.key().id() }}">
+        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="positive">
+        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="neutral">
+        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="negative">
+      </form>
+    <p>
       {% endfor %}
     <p>
       <form action="/unsubscribe" method=post>

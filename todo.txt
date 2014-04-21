@@ -1,3 +1,22 @@
+you need to install the sdk. do it on a box. fresh ubuntu. use the
+home folder from tri. use the box machine. its hardware is better.
+
+
+display titler, sentiment, title sentiment og begge probsene.
+først bare oppdaterer du, slik at du ser at sentimentene forandrer
+seg. siden gjør du slik at de som har blitt klassifisert ikke
+displayes.
+
+du forandrer begge sentimentene - du ser bare på tittelen, og hvis det
+er nok, så trykker du på knappen. siden kan du displaye tekst også.
+
+kan hende du skal fjerne refreshingen når du er trygg på at ting skjer
+slik du vil. det vil spare tid mellom hvert knappetrykk.
+
+
+
+
+
 	display titler, og la dem korrigere tittel-sentiment. la dem
 	klikke titlene og faa se hele artikkelen, og sette tekst-sentiment
 
