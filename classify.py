@@ -153,6 +153,10 @@ def store_unseen_pairs(unseen_pairs, combined_prob):
 def bayes(probs):
     total = .5
 
+    probs = interesting(probs)
+
+    for prob in probs:
+        total = (total * prob) / ((total * prob) + ((1 - total) * (1 - prob)))
 
     return total
 

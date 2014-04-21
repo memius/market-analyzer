@@ -441,7 +441,16 @@ class JanitorBackendHandler(webapp2.RequestHandler):
 
 class TestHandler(webapp2.RequestHandler):
     def post(self): # online
-        pass
+#    def get(self): # local
+         scrape.scrape()
+         duplicates.companies()
+         duplicates.articles() # strictly speaking redundant because of title check in scrape, but whatever.
+         clean.clean_recent() # clean recent from memcache from scrape
+         keys_word_pairs = classify.recent_word_pairs()
+         if keys_word_pairs:
+             logging.debug("keys word pairs just before classify(): %s",keys_word_pairs[0][1][:5])
+         classify.classify(keys_word_pairs)
+
 class JanitorHandler(webapp2.RequestHandler):
     def post(self):
 #    def get(self): # local
