@@ -199,6 +199,8 @@ class CompanyClickHandler(webapp2.RequestHandler):
         # company = re.search(company,unicode(r)).group("company")
         company = Company.get_by_id(int(company_id))
         articles = [article for article in company.articles if article.clean]
+        # for article in articles:
+        #     article = Article.get_by_id(int(article_id))
         # articles = [article for article in company.articles]
         [pos_rat,neg_rat] = utils.sentiment_count(articles)
 
