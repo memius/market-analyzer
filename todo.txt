@@ -1,3 +1,14 @@
+kanskje redirecte til en placeholder-side, som inneholder script som
+går tilbake 3 sider og refresher. klarer jeg det uten knapp?
+
+problemet er å gå tilbake og refreshe den forrige siden etter at
+korrigeringen har skjedd.
+
+
+now, when you click on a correction button, you are taken to the
+article page. you need to change it so you stay on the company page.
+
+
 you need to install the sdk. do it on a box. fresh ubuntu. use the
 home folder from tri. use the box machine. its hardware is better.
 

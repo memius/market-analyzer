@@ -12,38 +12,20 @@
     <p>
       {% for article in articles %}
       <a href="/article/{{ article.key().id() }}">{{ article.title }}</a>
-    <p>
-      {{ article.url }}
-    <p>
-      {{ article.datetime }}
-    <p>
-      Clean:{{ article.clean }}
-    <p>
-      Analyzed:{{ article.analyzed }}
-    <p>
-      {{ article.key().id() }}
-    <p>
       {{ article.sentiment }}
-    <p>
-      {{ article.title_sentiment }}
-    <p>
       {{ article.prob }}
-    <p>
-      {{ article.title_prob }}
-    <p>
-      {{ article.text }}
     <p>
       <form action="/correction" method=post>
 	<input type="hidden" name="key" value="{{ article.key().id() }}">
-        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="positive">
-        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="neutral">
-        <input type="submit" id="{{ article.key().id() }}" name="sentiment" value="negative">
+        <input type="submit" name="sentiment" value="positive">
+        <input type="submit" name="sentiment" value="neutral">
+        <input type="submit" name="sentiment" value="negative">
       </form>
     <p>
       {% endfor %}
     <p>
       <form action="/unsubscribe" method=post>
-	<input type="hidden" name="key" value="{{ id }}">
+	<input type="hidden" name="key" value="{{ company_id }}">
         <input type="submit" name="response" value="Unsubscribe">
       </form>
     <p>

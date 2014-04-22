@@ -216,7 +216,7 @@ class CompanyClickHandler(webapp2.RequestHandler):
         # company.put()
          
         template_values = {
-            'id' : company_id,
+            'company_id' : company_id,
             'pos_rat' : pos_rat,
             'neg_rat' : neg_rat,
             'name' : company.name,
@@ -375,36 +375,30 @@ class UnsubscribeHandler(webapp2.RequestHandler):
 
 class CorrectionHandler(webapp2.RequestHandler):
     def post(self):
-        self.response.write(
-            'You clicked:%sEND for article:%sEND' % (self.request.get('sentiment'), self.request.get('key') )
-            )
-        article_object_key = self.request.get("key")
-        article_object = Article.get_by_id(int(article_object_key)) #could be made async, i think.
-        # article__key = db.Key('Article', self.request.get('id'))
+#        self.response.write(
+#            'You clicked:%sEND for article:%sEND' % (self.request.get('sentiment'), self.request.get('key') )
+#            )
+        article_object_id = self.request.get("key") # apparently MUST be "key". wtf?
+        article_object = Article.get_by_id(int(article_object_id)) #could be made async, i think.
         self.response.write(" article object: %s END article object" % str(article_object))
-        # self.response.write(article_object.content)
         s = self.request.get('sentiment')
-
-
-        
         if s == "positive":
             new_prob = .999
-
         elif s == "negative":
             new_prob = .001
-
         elif s == "neutral":
             new_prob = .5
-
         corrections = article_object.corr_ctr # kjoer en if ctr == 0 paa denne. if so, ignore old prob.
         if corrections == 0 or corrections == None:
             corrections = 0
             article_object.prob = new_prob
+            article_object.title_prob = new_prob
         else:
             old_prob = article_object.prob
             smoothed = 1.0 / (corrections + 1.0) # verified by e.e.
             prob = old_prob + smoothed * (new_prob - old_prob)
             article_object.prob = prob
+            article_object.title_prob = prob
 
         if article_object.prob > .9:
             article_object.sentiment = "positive"
@@ -420,7 +414,10 @@ class CorrectionHandler(webapp2.RequestHandler):
         corrections += 1
         article_object.corr_ctr = corrections
         article_object.put()
-        self.redirect("article/" + str(article_object_key))
+#        self.redirect("article/" + str(article_object_id))
+#        window.history.go(-2)
+#        company_id = self.request.get("company_id")
+        self.redirect("/goldberg")
 
 
 
@@ -452,11 +449,18 @@ class TestHandler(webapp2.RequestHandler):
          classify.classify(keys_word_pairs)
 
 class JanitorHandler(webapp2.RequestHandler):
-    def post(self):
-#    def get(self): # local
+#    def post(self):
+    def get(self): # local
 #        self.response.write('you have gone through many articles, janitoring')
         analyze.sentiment()
         janitor.check_all()
+
+class GoldbergHandler(webapp2.RequestHandler):
+#    def post(self):
+    def get(self): # local
+        template_values = { }
+        template = jinja_environment.get_template('goldberg.html')
+        self.response.out.write(template.render(template_values))
 
 class AllDupesBackendHandler(webapp2.RequestHandler):
     def get(self):
@@ -530,6 +534,7 @@ app = webapp2.WSGIApplication([
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),
         ('/classify', ClassifyHandler),
+        ('/goldberg', GoldbergHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
 
