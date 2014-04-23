@@ -77,17 +77,23 @@ def clean_recent(): # only cleans recently scraped articles ("article_keys" from
 
     article_keys = memcache.get("article_keys")
     # logging.debug("clean() article keys: %s", article_keys[:3])
+    # logging.debug("in clean")
     clean_ctr = 0
     if article_keys:
+        logging.debug("article keys exist")
         for article_key in article_keys:
 #        article = cleaning.pop() # pop() returns last item, and changes the list in place
             article = Article.get_by_id(article_key.id())
             if article != None:
-                if article.clean != True:
+                if not article.clean:
                     clean(article)
                     clean_ctr += 1
         # cleaning.remove(article) not needed, because pop removes it for us.
         memcache.set("article_keys", article_keys)
+        logging.debug("article keys set")
+
+    else:
+        logging.debug("article keys do NOT exist in clean")
 
     logging.debug("cleaned %s articles", clean_ctr)
 

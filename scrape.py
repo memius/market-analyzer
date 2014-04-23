@@ -263,11 +263,12 @@ def scrape():
         
 #    chunk_size = 5
     companies = q.fetch(10000) # should be optimized by storing companies in memcache 
+    logging.debug("all companies: %s", companies)
 
-    article_keys = memcache.get("article_keys")    
 #    duplicate_check = memcache.get("duplicate_check")
     scrape_ctr = 0
     for company in companies: 
+        article_keys = memcache.get("article_keys")    
         # logging.debug("one more company")
         new_article_keys = process_links(company)
         scrape_ctr += len(new_article_keys)
@@ -275,6 +276,7 @@ def scrape():
 #        c.append(company.name)
         if new_article_keys:
             if article_keys:
+                logging.debug("article keys exist in scrape")
                 article_keys = new_article_keys + article_keys
                 # memcache.delete("article_keys")
                 memcache.set("article_keys", article_keys, 11000) # clean does not update, so store until analyze.
@@ -283,6 +285,7 @@ def scrape():
                 # else:
                 #     memcache.add("duplicate_check",article_keys, 11000)
             else:
+                logging.debug("article keys do NOT exist in scrape")
                 # memcache.delete("article_keys") # used when soup line in clean gets error.
                 memcache.add("article_keys",new_article_keys,11000)
                 # if duplicate_check:

@@ -1,3 +1,38 @@
+D 2014-04-23 21:39:30.715 article keys do NOT exist in scrape
+D 2014-04-23 21:39:48.896 article keys do NOT exist in scrape
+D 2014-04-23 21:40:34.068 article keys do NOT exist in scrape
+D 2014-04-23 21:41:27.065 article keys do NOT exist in scrape
+D 2014-04-23 21:41:34.777 scraped 4 articles
+D 2014-04-23 21:41:34.963 deleted 0 duplicate companies
+D 2014-04-23 21:41:34.968 article keys do NOT exist in dupes
+D 2014-04-23 21:41:34.970 deleted 0 duplicate articles
+D 2014-04-23 21:41:34.972 article keys does NOT exist
+D 2014-04-23 21:41:34.972 cleaned 0 articles
+D 2014-04-23 21:41:34.974 classified 0 articles
+
+
+
+still doesn't clean after scraping and duping.
+
+worked with b4. try b2. anyway, look into making it a dynamic backend,
+which shuts down in between.
+
+
+
+husk at den behandler alle selskapene, ikke bare dine brukerselskaper.
+
+you are getting none type not iterable on line 57 in naive
+bayes. also, you are using too much memory, even on a b2 instance. try
+a b4 after you have fixed the none type problem. prehaps just a test
+for none.
+
+
+
+you may be able to use ellipsis to truncate the text output (for the
+text of the articles)
+
+
+
 kanskje redirecte til en placeholder-side, som inneholder script som
 går tilbake 3 sider og refresher. klarer jeg det uten knapp?
 

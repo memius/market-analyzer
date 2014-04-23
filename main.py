@@ -449,15 +449,14 @@ class TestHandler(webapp2.RequestHandler):
          classify.classify(keys_word_pairs)
 
 class JanitorHandler(webapp2.RequestHandler):
-#    def post(self):
-    def get(self): # local
+    def post(self): # online
+#    def get(self): # local
 #        self.response.write('you have gone through many articles, janitoring')
         analyze.sentiment()
         janitor.check_all()
 
 class GoldbergHandler(webapp2.RequestHandler):
-#    def post(self):
-    def get(self): # local
+    def get(self): # local and online
         template_values = { }
         template = jinja_environment.get_template('goldberg.html')
         self.response.out.write(template.render(template_values))

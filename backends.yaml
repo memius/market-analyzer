@@ -1,6 +1,6 @@
 backends:
   - name: backendscraping
-    class: B1
+    class: B2
 
   # - name: backendjanitor
   #   class: B1

@@ -119,11 +119,15 @@ def sentiment():
         # logging.debug("title: %s", article.title) 
         sentiment = article.sentiment
 
+        # logging.debug("before positive corpus")
+
         wp = classify.word_pairs(article.text) 
         if sentiment == "positive":
             positive_corpus.append(wp)
         elif sentiment == "negative":
             negative_corpus.append(wp)
+
+        # logging.debug("after positive corpus")
 
         title_sentiment = article.title_sentiment
         
@@ -133,6 +137,10 @@ def sentiment():
                 #pos_titles.append(article.title)
         elif title_sentiment == "negative":
             neg_title_corpus.append(title_word_pairs)
+
+        # logging.debug("before negative corpus")
+
+    # logging.debug("after corpuses")
 
     pos_size = len(positive_corpus) # number of articles, which is what you want.
     neg_size = len(negative_corpus)
@@ -195,24 +203,26 @@ def sentiment():
         article = Article.get_by_id(key.id()) 
         # logging.debug("title: %s", article.title) 
         if article.corr_ctr == None or article.corr_ctr == 0: # has NOT been manually classified.
-            if article.clean and not article.analyzed:
+            if article.clean: # and not article.analyzed: yes, we do want every article!
+                # logging.debug("title: %s", article.title) 
                 wp = classify.word_pairs(article.text) 
                 title_word_pairs = classify.word_pairs(article.title) 
 
-                token_probs = naive_bayes.token_probs(wp,pos_freq,neg_freq,pos_size,neg_size)
-                title_token_probs = naive_bayes.token_probs(title_word_pairs,pos_title_freq,neg_title_freq,pos_title_size,neg_title_size)
+                if wp != None:
+                    token_probs = naive_bayes.token_probs(wp,pos_freq,neg_freq,pos_size,neg_size)
+                    title_token_probs = naive_bayes.token_probs(title_word_pairs,pos_title_freq,neg_title_freq,pos_title_size,neg_title_size)
 
-                if token_probs != []:
-                    prob = naive_bayes.combined_prob(token_probs)
-            # logging.debug("prob: %s", prob)
-                else:
-                    prob = 0.5
+                    if token_probs != []:
+                        prob = naive_bayes.combined_prob(token_probs)
+                    # logging.debug("prob: %s", prob)
+                    else:
+                        prob = 0.5
 
-                if title_token_probs != []:
-                    title_prob = naive_bayes.combined_prob(title_token_probs)
-            # logging.debug("title_prob: %s", title_prob)
-                else:
-                    prob = 0.5
+                    if title_token_probs != []:
+                        title_prob = naive_bayes.combined_prob(title_token_probs)
+                    # logging.debug("title_prob: %s", title_prob)
+                    else:
+                        title_prob = 0.5
 
     # if article_object.mod != None: # this just changes the conclusion - it does not teach the bayes anything until later, when the article is part of a different corpus.
     #     prob = min(.99, prob + article_object.mod) # from the user's button click - see CorrectionHandler
@@ -222,25 +232,26 @@ def sentiment():
 
 #       return prob, title_prob
 
-                article.prob = prob
-                if prob >= 0.9:
-                    article.sentiment = "positive"
-                elif prob <= 0.1:
-                    article.sentiment = "negative"
-                else:
-                    article.sentiment = "neutral"
+                    article.prob = prob
+                    if prob >= 0.9:
+                        article.sentiment = "positive"
+                    elif prob <= 0.1:
+                        article.sentiment = "negative"
+                    else:
+                        article.sentiment = "neutral"
 
-                article.title_prob = title_prob
-                if title_prob >= 0.9:
-                    article.title_sentiment = "positive"
-                elif title_prob <= 0.1:
-                    article.title_sentiment = "negative"
-                else:
-                    article.title_sentiment = "neutral"
+                    article.title_prob = title_prob
+                    if title_prob >= 0.9:
+                        article.title_sentiment = "positive"
+                    elif title_prob <= 0.1:
+                        article.title_sentiment = "negative"
+                    else:
+                        article.title_sentiment = "neutral"
 
-                article.analyzed = True
-                article.put()
-                analyze_ctr += 1
+                    article.analyzed = True
+                    article.put()
+                    analyze_ctr += 1
+                    # logging.debug("analyze ctr: %s", analyze_ctr)
 
     logging.debug("analyzed %s articles", analyze_ctr)
 

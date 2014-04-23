@@ -8,7 +8,7 @@ cron:
 
 - description: sends analyze and janitor to backendscraping
   url: /janitorbackend
-  schedule: every 6 hours
+  schedule: every 12 hours
 
 
 # - description: duplicate checks all articles in db

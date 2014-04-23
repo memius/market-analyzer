@@ -53,20 +53,22 @@ def token_probability(pos_freq,neg_freq,pos_size,neg_size):
 #words in the two corpuses, returning the token probs for that
 #article:
 def token_probs(word_pairs,pos_freq,neg_freq,pos_size,neg_size):
+    # logging.debug("word pairs in token probs: %s", word_pairs)
     token_probs = []
-    pairs = [' '.join(pair) for pair in word_pairs] # each word pair as one string from double list
-    for pair in pairs:
-        try:
-            fp = pos_freq[pair] # it's correct also for titles, because pos_title_freqs is the argument
-        except KeyError:
-            fp = 0
-        try:
-            fn = neg_freq[pair]
-        except KeyError:
-            fn = 0
+    if word_pairs != None:
+        pairs = [' '.join(pair) for pair in word_pairs] # each word pair as one string from double list
+        for pair in pairs:
+            try:
+                fp = pos_freq[pair] # correct also for titles, because pos_title_freqs is the argument
+            except KeyError:
+                fp = 0
+            try:
+                fn = neg_freq[pair]
+            except KeyError:
+                fn = 0
 
-        token_prob = token_probability(fp,fn,pos_size,neg_size)
-        token_probs.append(token_prob)
+            token_prob = token_probability(fp,fn,pos_size,neg_size)
+            token_probs.append(token_prob)
 
 #    logging.debug("token probs: %s", token_probs)
     return token_probs
