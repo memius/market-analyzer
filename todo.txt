@@ -2,6 +2,10 @@ may 13th: apple 468 companies, google 324, facebook 405, ibm 151, amd
 198, walmart 14.
 
 
+sjekker hvor mange artikler som skrapes for hvert selskap. det er noe
+som ikke funker der. wmt har bare 14 artikler.
+
+
 legg til antall pos og neg for hvert selskap i front page
 view. variableen blir da if variable, then "/ 8" og "\ 3", som blir
 sendt til .html-filen, og conveniently ikke blir vist dersom det ikke

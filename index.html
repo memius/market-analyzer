@@ -15,6 +15,12 @@
     <p>
       <b> All companies: </b>
     <p>
+      {% for pair in comp_keys_names %}
+    <a href="company/{{ pair[0].id() }}">{{ pair[1] }}: <b> {{ pair[2]
+    }} {{ pair[3] }} </b> </a> 
+    <p>
+    {% endfor %}
+    <p>
       {% for comp in companies %}
       {{ comp.exchange }}, {{ comp.name }}
     <p>

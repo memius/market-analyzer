@@ -148,6 +148,20 @@ class MainPage(webapp2.RequestHandler):
         q = Company.all() #you'll need a 'more' button to display more than these 20
         companies = q.fetch(100) #fetch can't be async for now.
 
+        comp_keys_names = []
+        for company in companies:
+            articles = [article for article in company.articles if article.clean]
+            [pos_rat,neg_rat] = utils.sentiment_count(articles)
+            if pos_rat > 0:
+                pos_str = "&#8593; " + str(pos_rat)
+            else:
+                pos_str = ""
+            if neg_rat > 0:
+                neg_str = "&#8595; " + str(neg_rat)
+            else:
+                neg_str = ""
+            comp_keys_names.append([company.key(),company.ticker,pos_str,neg_str])
+
 # #         ##############db.delete(companies) don't do this either!
 
 # #         # you need a check here, to see what companies are already
@@ -182,6 +196,7 @@ class MainPage(webapp2.RequestHandler):
         keys_names = zip(u.companies,company_names)
 
         template_values = {
+            'comp_keys_names' : comp_keys_names,
             'keys_names' : keys_names,
             'companies' : companies, #debug only
             'user' : u,
@@ -422,9 +437,9 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 
 
-class ClassifyHandler(webapp2.RequestHandler):
-    def get(self):
-        classify.word_pairs()
+# class ClassifyHandler(webapp2.RequestHandler):
+#     def get(self):
+#         classify.word_pairs()
 
 class BackendHandler(webapp2.RequestHandler):
     def get(self):
@@ -533,7 +548,7 @@ app = webapp2.WSGIApplication([
         ('/test', TestHandler),
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),
-        ('/classify', ClassifyHandler),
+#        ('/classify', ClassifyHandler),
         ('/goldberg', GoldbergHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production

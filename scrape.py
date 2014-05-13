@@ -277,6 +277,7 @@ def scrape():
         article_keys = memcache.get("article_keys")    
         # logging.debug("one more company")
         new_article_keys = process_links(company)
+        logging.debug("scraped %s links for %s", len(new_article_keys), company.name)
         scrape_ctr += len(new_article_keys)
 
 #        c.append(company.name)
