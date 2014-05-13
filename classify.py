@@ -44,6 +44,7 @@ def recent_word_pairs():
     # logging.debug("recent word pairs() article keys: %s", article_keys[:3])
     kwp = []
     if article_keys:
+        #logging.debug("article keys exist in classify")
         for key in article_keys: 
             article = Article.get_by_id(key.id())
             if article:
@@ -51,6 +52,9 @@ def recent_word_pairs():
                     text = article.text # later, you'll want to do this with titles as well, and see if equally good.
                     if text:
                         kwp.append([key, word_pairs(text)])
+
+    # else:
+    #     logging.debug("article keys do NOT exist in classify")
 
     # logging.debug("kwp[:3]: %s", kwp[:3])
     return kwp
@@ -110,24 +114,24 @@ def classify(keys_word_pairs):
         unseen_pairs = []
         if word_pairs: #and isinstance(word_pairs[0], str):
             first_pair = word_pairs[0]
-            logging.debug("first pair: %s",first_pair)
+            # logging.debug("first pair: %s",first_pair)
             first_word = first_pair[0]
-            logging.debug("first word: %s",first_word)
+            # logging.debug("first word: %s",first_word)
             if isinstance(first_word, unicode):
                 pairs = [' '.join(pair) for pair in word_pairs] # each pair 1 string, double list
                 # pairs = [' '.join(pair) for sublist in word_pairs for pair in sublist] # each pair 1 string, triple list.
                 for word_pair in pairs:
-                    logging.debug("word_pair: %s", word_pair)
+                    # logging.debug("word_pair: %s", word_pair)
                     wp = Word_pair.all().filter("words =", word_pair).get() # dict fra memcache er muligens mye bedre her.
-                    logging.debug("wp: %s", wp)
+                    # logging.debug("wp: %s", wp)
 
                     if wp:
-                        if wp.prob > 0.9 or wp.prob < 0.1:
+                        if wp.prob > 0.7 or wp.prob < 0.3:
                             probs.append(wp.prob) 
                     else:
                         unseen_pairs.append(word_pair)                    
 
-                prob = bayes(probs)
+                prob = bayes(probs) # takes care of the 20
                 article = Article.get_by_id(key.id())
                 article.prob = prob
                 article.put()
@@ -147,7 +151,7 @@ def store_unseen_pairs(unseen_pairs, combined_prob):
         wp.prob = combined_prob # the word pair is simply given the article's prob
         wp.put()
         unseen_ctr += 1
-    logging.debug("stored %s unseen word pairs", unseen_ctr)
+    # logging.debug("stored %s unseen word pairs", unseen_ctr)
 
 
 def bayes(probs):

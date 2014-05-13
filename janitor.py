@@ -40,6 +40,11 @@ def check(article):
     if article.clean and not utils.is_prose(article.text):
         clean.clean(article)
         changed = True
+
+# check that there is a title prob and title sentiment. if not, give it the regular one.
+
+# you need only check if article.sentiment or article.title_sentiment is None. if so, use a simpler version of classify.classify() (without keys) that takes only word pairs, and use word pairs and that to classify the article in question.
+
     # if article.clean and article.sentiment == None:
     #     # classify article
     #     # analyze.sentiment(article) no
@@ -72,11 +77,13 @@ def check_all():
 
     duplicates = []
     changed_ctr = 0
+    dupe_ctr = 0
     for key in article_keys:
         article = Article().get_by_id(key.id())
 
         if article.title in duplicates:
             db.delete(article)
+            dupe_ctr += 1
         else:
             duplicates.append(article.title)
             changed = check(article)
@@ -84,6 +91,7 @@ def check_all():
                 changed_ctr += 1
 
     logging.debug("janitored %s articles", changed_ctr)
+    logging.debug("janitor dupe removed %s articles", dupe_ctr)
     article_keys = memcache.get("article_keys")
     if article_keys and len(article_keys) > 1000:
         memcache.set("article_keys", article_keys[:500])

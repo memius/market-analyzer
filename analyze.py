@@ -66,15 +66,15 @@ def sentiment():
 
 
 # inc(oming) = 1.0 (pos)
-# tidl = 0 (ganger): 0, 1, 2, 3, 4, osv.
-# prev = 0.5 (prob)
 # smo = 1.0 / (tidl + 1.0): 1.0, 0.5, 0.33, 0.25, osv.
 #                           2.0, 1.0, 0.66, osv.
 
 
 
 # DETTE ser korrekt ut (og erik eikeland har verifisert det):
-# smo = 1.0 / (tidl + 1.0) # tidl = antall tidligere manuelle korreksjoner. 
+# tidl = f.eks. 0 (ganger): 0, 1, 2, 3, 4, osv.
+# prev = f.eks. 0.5 (prob)
+# smo = 1.0 / (tidl + 1.0)
 # prob = prev + smo * (inc - prev)
 
 # altså; vi lagrer prev og tidl til db. vi får inn inc. regner ut derfra.
@@ -216,12 +216,14 @@ def sentiment():
                         prob = naive_bayes.combined_prob(token_probs)
                     # logging.debug("prob: %s", prob)
                     else:
+                        logging.debug("no token probs in analyze")
                         prob = 0.5
 
                     if title_token_probs != []:
                         title_prob = naive_bayes.combined_prob(title_token_probs)
                     # logging.debug("title_prob: %s", title_prob)
                     else:
+                        # logging.debug("!")
                         title_prob = 0.5
 
     # if article_object.mod != None: # this just changes the conclusion - it does not teach the bayes anything until later, when the article is part of a different corpus.
@@ -233,17 +235,17 @@ def sentiment():
 #       return prob, title_prob
 
                     article.prob = prob
-                    if prob >= 0.9:
+                    if prob >= 0.7:
                         article.sentiment = "positive"
-                    elif prob <= 0.1:
+                    elif prob <= 0.3:
                         article.sentiment = "negative"
                     else:
                         article.sentiment = "neutral"
 
                     article.title_prob = title_prob
-                    if title_prob >= 0.9:
+                    if title_prob >= 0.7:
                         article.title_sentiment = "positive"
-                    elif title_prob <= 0.1:
+                    elif title_prob <= 0.3:
                         article.title_sentiment = "negative"
                     else:
                         article.title_sentiment = "neutral"
@@ -252,6 +254,9 @@ def sentiment():
                     article.put()
                     analyze_ctr += 1
                     # logging.debug("analyze ctr: %s", analyze_ctr)
+
+                # else:
+                #     logging.debug("|")
 
     logging.debug("analyzed %s articles", analyze_ctr)
 

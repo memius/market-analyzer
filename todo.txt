@@ -1,243 +1,118 @@
-D 2014-04-23 21:39:30.715 article keys do NOT exist in scrape
-D 2014-04-23 21:39:48.896 article keys do NOT exist in scrape
-D 2014-04-23 21:40:34.068 article keys do NOT exist in scrape
-D 2014-04-23 21:41:27.065 article keys do NOT exist in scrape
-D 2014-04-23 21:41:34.777 scraped 4 articles
-D 2014-04-23 21:41:34.963 deleted 0 duplicate companies
-D 2014-04-23 21:41:34.968 article keys do NOT exist in dupes
-D 2014-04-23 21:41:34.970 deleted 0 duplicate articles
-D 2014-04-23 21:41:34.972 article keys does NOT exist
-D 2014-04-23 21:41:34.972 cleaned 0 articles
-D 2014-04-23 21:41:34.974 classified 0 articles
+may 13th: apple 468 companies, google 324, facebook 405, ibm 151, amd
+198, walmart 14.
+
+
+legg til antall pos og neg for hvert selskap i front page
+view. variableen blir da if variable, then "/ 8" og "\ 3", som blir
+sendt til .html-filen, og conveniently ikke blir vist dersom det ikke
+er noe der.
+
+selskapene må være clickable. da kommer du til selskapsview, der du
+skal vise clickable artikkeltitler, probs og korreksjonsknapper, med
+--- mellom hver artikkel.
+
+klikker du, kommer du til artikkelview, der du kan se prob, title
+prob, antall korreksjoner, korreksjonsknapper.
 
 
 
-still doesn't clean after scraping and duping.
 
-worked with b4. try b2. anyway, look into making it a dynamic backend,
-which shuts down in between.
+du må skifte nettadresse for siden.
+du må ha en feedback@bna.com adresse som havner i en egen folder hos gmail.
 
 
+
+
+mechanism where word pairs get 0.5 prob must be looked at.
+
+
+display on front page:
+fat blue slash, fat red bacslash.
+hourly, daily, weekly
+good - only positive in period (no red backslashes are shown.)
+bad - only neg in period. (no blues.)
+ugly - many of both in period.
+only ticker, not whole name.
+when company is clicked; more complete statistics on how many of each
+postivie over the various periods, and how this relates to the normal
+for the previous periods (smoothing factor used to calculate this).
+also, stock price change for periods, of course. 
+all companies for free, portfolio for modest subscription.
+alerts on pos/neg articles for modest subscription. hourly for day
+traders (more expensive), daily for swing traders, weekly for
+hobbyists (cheap). how will a weekly 'alert' work? can it be said to
+be an alert? just an update, perhaps? that would be part of the
+portfolio. so perhaps only real time alerts.
+
+paypal and bitcoin donations on all pages, or just front page? on the
+most visited pages also.
+
+don't remove login - just rearrange so that if account (cookie check),
+display portfolio, if no account or cookie, display all companies.
+
+legg til '-------' mellom selskapene, slik at det er åpenbart hvilket
+selskap correctionknappene tilhører.
+
+
+
+
+varsel om positiv/negativ artikkel er selvsagt en betalt
+tjeneste. nødvendig for daytradere!
+
+remove login, and tidy up what is
+displayed. skal displaye trenden for det selskapet right on the front page.
+
+deretter må du få på plass ads.
+
+legg til donations, i bitcoins og til paypal.
+
+deretter legger du til correlation with stock price. see what happens
+to each company every hour, and compare that with the sentiment of -
+and number of - and frequency of - previous articles.
+
+etter det er å få det til å se penere ut.
+
+then login and paid portfolio subscriptions.
+
+bruk google analytics for å se hva brukerne dine gjør.
+
+
+
+
+there's a lot of "neutral 0.5". there should be more variation if the
+probs are truly being calculated? or do i need to correct more
+articles by hand to get that?
 
 husk at den behandler alle selskapene, ikke bare dine brukerselskaper.
-
-you are getting none type not iterable on line 57 in naive
-bayes. also, you are using too much memory, even on a b2 instance. try
-a b4 after you have fixed the none type problem. prehaps just a test
-for none.
-
-
 
 you may be able to use ellipsis to truncate the text output (for the
 text of the articles)
 
-
-
-kanskje redirecte til en placeholder-side, som inneholder script som
-går tilbake 3 sider og refresher. klarer jeg det uten knapp?
-
-problemet er å gå tilbake og refreshe den forrige siden etter at
-korrigeringen har skjedd.
-
-
-now, when you click on a correction button, you are taken to the
-article page. you need to change it so you stay on the company page.
-
-
-you need to install the sdk. do it on a box. fresh ubuntu. use the
-home folder from tri. use the box machine. its hardware is better.
-
-
-display titler, sentiment, title sentiment og begge probsene.
-først bare oppdaterer du, slik at du ser at sentimentene forandrer
-seg. siden gjør du slik at de som har blitt klassifisert ikke
-displayes.
-
-du forandrer begge sentimentene - du ser bare på tittelen, og hvis det
-er nok, så trykker du på knappen. siden kan du displaye tekst også.
-
-kan hende du skal fjerne refreshingen når du er trygg på at ting skjer
-slik du vil. det vil spare tid mellom hvert knappetrykk.
+display titler, og la dem korrigere tittel-sentiment. la dem
+klikke titlene og faa se hele artikkelen, og sette tekst-sentiment
 
 
 
 
 
-	display titler, og la dem korrigere tittel-sentiment. la dem
-	klikke titlene og faa se hele artikkelen, og sette tekst-sentiment
-
-bruk google analytics for å se hva brukerne dine gjør.
-
-keys word pairs er tom idet man går inn i classify. hvorfor er den
-tom? den er også tom når ting har blitt skrapet.
-
-nå kan det virke som om clean heller ikke tar noen, selv om det har
-blitt skrapet ting.
-
-
-
-er det en eller annen logikksetning som mangler eller er motsatt i
-classify? det skal jo være: dersom den er nylig skrapet, og cleanet,
-så klassifiserer vi.
-
-
-
-
-du er i classify - der er det rot. se merknaden i funksjnonen.
-
-
-i think i found it - checking whether the first element OF the first
-element is a string, since the first element is a word pair.
-
-find out why nothing is being classified. is it because everything has
-been analyzed? but the recently scraped haven't been... hm.
-
-what exactly is the difference between classify and analyze now?
-
-running both on bacekndscraping now. seems to work.
-
-b1 worked, with analyzing one article. there will not be much more
-memory use with more than one.
-
-
-b4 worked for janitor. when janitor does not have a lot of things to
-do, a small instance is enough. put it in with scraper, and see if it
-thrives there. but test b2 and b1 alone first.
-
-
-
-let cron be as it should, and run them manually when you want to see
-the results.
-
+nei: de går jo på samme backend begge to:
+worked with b4. try b2. anyway, look into making it a dynamic backend,
+which shuts down in between.
 you need to send a stop signal to the backend when it has finished
 working, or you will pay for continuous uptime. simply go to url
 /_ah/stop after completion.
 
-backend: b1 and b4. try b4_1G, then b4, then b2, then b1.
-
-classify: does not find anything to classify.
-
-dupe: does not dupe check everything that comes in (probably because
-of title check in scrape? no, because that's before they get scraped).
-
-clean: does not clean scraped articles.
-
-increased daily limit to $20.
 
 
 
 
+then, a better duplicate checker - the plagiarism checker.
 
-they work without errors. try a smaller janitorinstance, and run the
-scraping on the same instance. or turn them off in between. maybe a b8
-that only runs twice a day, and you only pay for two hours of that (16
-hours of uptime). or a b4.
-
-
-after a couple of runs, it's already obvious that nothing is being
-cleaned, and, perhaps as a result, nothing is being classified.
-
-now started cron jobs for both backends. leave them on for a day or
-two, and see what develops. started thursday 3. april at 20:33.
-
-
-both parts of janitor worked. now checking if they work together. if
-they do, put in cron jobs, and run the whole thing for a day, and see
-how much resources it uses, and what it scrapes and analyzes.
-
-
-janitor check worked. checking analyze now.
-
-you may have to delete all word pairs from db. errors occur in indexes
-because they were stored in the wrong format (first and second instead
-of words).
-
-you have increased the daily limit to $10.
-
-
-kjører nå online med debuglogging i classify for å se hvorfor den ikke
-klassifiserer noe.
-
-har lagt inn triple lists i classify. ser nå om det funker, slik at
-det blir klassifisert noen artikler i slutten av /test.
-
-har delt janitor i to. dvs. halvert hva den gjør. må lage en janitor2
-eller noe.
-
-tok for lang tid også med b8 instance på backendjanitor. dele opp i
-mindre biter?
-
-mulig du bare skal fjerne duplicates.articles(). den trengs ikke pga
-title check i scrape. duplicates.companies trengs.
-
-
-prøv med større backend-instance. mer memory til janitor. da blir den
-kanskje ikke slått av av google.
-
-
-nonetype not iterable i naive linje 57 når online. bacendjanitor.
-
-
-write the cron for this, and add to backends:
-
-the order is now that this happens every hour or so:
-scrape
-dupe
-clean
-clasify
-
-and janitor happens every day or so:
-janitor.check_all (includes clean_all and dupe check all)
-analyze all
+then, api?
 
 
 
-clean cleaner bare alle dersom article_keys ikke finnes. når skal den
-cleane alle? det er bare å forandre else'en. men det bor være en egen
-funksjon, som blir kalt sjeldnere enn clean recent.
-
-altså clean_recent og clean_all.
-
-scrape skraper, og dupes fjerner, men clean gjør ingenting. har lagt
-inn at den henter fra db, men ingenting skjer. sov på det.
-
-article_keys må forkortes et eller annet sted. blir det gjort? if >
-500 eller noe?
-
-
-nytt problem: google forandrer (selvfølgelig) url'en, men det kan
-synes som om url'en fram til ei= er nok. gjør litt testing av det.
-
-du har gjort ferdig classify. sjekk at det virker uten feil online
-også. men sjekk at ting skrapes fortsatt, med ny url-form.
-
-
-legg inn email om hvor mange som er skrapet. legg i egen folder i
-gmail. viktig info, spesielt hvis ingenting blir skrapet.
-
-
-
-analyze tar alle artikler.
-word pairs tar recent.
-clean tar recent.
-dupe tar recent.
-
-dvs. at janitor må dupe checke alle,
-deretter sjekke at alle har alle relevante attributter.
-deretter cleane alle,
-deretter klassifisere alle.
-så tar analyze seg av å analysere alle.
-
-
-deretter bør jeg gjøre ferdig janitor, som dupe checker og cleaner
-alt. og klassifiserer (word pairs), men IKKE analyserer. 
-
-dupe
-checkeren kan se omtrent ut som den gjør, men bare hente titles i
-stedet for å sammenlige keys (som er helt feil), og putte titles i en
-liste sammen med keys, og så kjøre over hele den listen, eller
-noe. mulig du slipper a lage ny liste, men kan delete allerede i
-loopen der du henter titles. ja, det kan du.
+--------
 
 
 
@@ -246,15 +121,6 @@ loopen der du henter titles. ja, det kan du.
 
 
 
-nar du er ferdig med janitor, og db'en er ryddig, cleanet,
-klassifisert og analysert, kan du begynne å manuelt klassifisere
-artikler. ta et par tusen.
-
-deretter må du få på plass ads.
-
-så må du fjerne loginkravet. bare ha login-link på siden.
-
-så launcher du i det øyeblikket du kan launche.
 
 
 
@@ -3717,4 +3583,256 @@ bayes. du er i naive bayes.
 nå sjekker du at analyze går gjennom alle de gamle, og oppdaterer alle
 word pair probs. hvis ikke, make it do so. ikke noe vits i å gå
 gjennom bare de ferske her.
+
+
+
+
+
+
+det var fordi jeg brukte add i stedet for set til memcache. set
+overskriver uansett, så den må brukes.
+
+hver gang en ny artikkel opptrer, så kommer "new article keys added to
+memcache". deretter kommer "x articles scraped". men deretter er det
+ingen spor av disse artiklene! hvor blir det av nøklene som skulle
+ligge i memcache? er det 11000 som er feil?
+
+
+so, even though i add them in scrape since they don't exist, they
+don't exist later either. because of add instead of set? dunno.
+
+D 2014-04-23 21:39:30.715 article keys do NOT exist in scrape
+D 2014-04-23 21:39:48.896 article keys do NOT exist in scrape
+D 2014-04-23 21:40:34.068 article keys do NOT exist in scrape
+D 2014-04-23 21:41:27.065 article keys do NOT exist in scrape
+D 2014-04-23 21:41:34.777 scraped 4 articles
+D 2014-04-23 21:41:34.963 deleted 0 duplicate companies
+D 2014-04-23 21:41:34.968 article keys do NOT exist in dupes
+D 2014-04-23 21:41:34.970 deleted 0 duplicate articles
+D 2014-04-23 21:41:34.972 article keys does NOT exist
+D 2014-04-23 21:41:34.972 cleaned 0 articles
+D 2014-04-23 21:41:34.974 classified 0 articles
+
+
+
+still doesn't clean after scraping and duping.
+
+
+
+
+you are getting none type not iterable on line 57 in naive
+bayes. also, you are using too much memory, even on a b2 instance. try
+a b4 after you have fixed the none type problem. prehaps just a test
+for none.
+
+kanskje redirecte til en placeholder-side, som inneholder script som
+går tilbake 3 sider og refresher. klarer jeg det uten knapp?
+
+problemet er å gå tilbake og refreshe den forrige siden etter at
+korrigeringen har skjedd.
+
+
+now, when you click on a correction button, you are taken to the
+article page. you need to change it so you stay on the company page.
+
+
+you need to install the sdk. do it on a box. fresh ubuntu. use the
+home folder from tri. use the box machine. its hardware is better.
+
+
+display titler, sentiment, title sentiment og begge probsene.
+først bare oppdaterer du, slik at du ser at sentimentene forandrer
+seg. siden gjør du slik at de som har blitt klassifisert ikke
+displayes.
+
+du forandrer begge sentimentene - du ser bare på tittelen, og hvis det
+er nok, så trykker du på knappen. siden kan du displaye tekst også.
+
+kan hende du skal fjerne refreshingen når du er trygg på at ting skjer
+slik du vil. det vil spare tid mellom hvert knappetrykk.
+
+
+
+
+
+keys word pairs er tom idet man går inn i classify. hvorfor er den
+tom? den er også tom når ting har blitt skrapet.
+
+nå kan det virke som om clean heller ikke tar noen, selv om det har
+blitt skrapet ting.
+
+
+
+er det en eller annen logikksetning som mangler eller er motsatt i
+classify? det skal jo være: dersom den er nylig skrapet, og cleanet,
+så klassifiserer vi.
+
+
+
+
+du er i classify - der er det rot. se merknaden i funksjnonen.
+
+
+i think i found it - checking whether the first element OF the first
+element is a string, since the first element is a word pair.
+
+find out why nothing is being classified. is it because everything has
+been analyzed? but the recently scraped haven't been... hm.
+
+what exactly is the difference between classify and analyze now?
+
+running both on bacekndscraping now. seems to work.
+
+b1 worked, with analyzing one article. there will not be much more
+memory use with more than one.
+
+
+b4 worked for janitor. when janitor does not have a lot of things to
+do, a small instance is enough. put it in with scraper, and see if it
+thrives there. but test b2 and b1 alone first.
+
+
+
+let cron be as it should, and run them manually when you want to see
+the results.
+
+
+
+
+
+backend: b1 and b4. try b4_1G, then b4, then b2, then b1.
+
+classify: does not find anything to classify.
+
+dupe: does not dupe check everything that comes in (probably because
+of title check in scrape? no, because that's before they get scraped).
+
+clean: does not clean scraped articles.
+
+increased daily limit to $20.
+
+
+
+
+
+they work without errors. try a smaller janitorinstance, and run the
+scraping on the same instance. or turn them off in between. maybe a b8
+that only runs twice a day, and you only pay for two hours of that (16
+hours of uptime). or a b4.
+
+
+after a couple of runs, it's already obvious that nothing is being
+cleaned, and, perhaps as a result, nothing is being classified.
+
+now started cron jobs for both backends. leave them on for a day or
+two, and see what develops. started thursday 3. april at 20:33.
+
+
+both parts of janitor worked. now checking if they work together. if
+they do, put in cron jobs, and run the whole thing for a day, and see
+how much resources it uses, and what it scrapes and analyzes.
+
+
+janitor check worked. checking analyze now.
+
+you may have to delete all word pairs from db. errors occur in indexes
+because they were stored in the wrong format (first and second instead
+of words).
+
+you have increased the daily limit to $10.
+
+
+kjører nå online med debuglogging i classify for å se hvorfor den ikke
+klassifiserer noe.
+
+har lagt inn triple lists i classify. ser nå om det funker, slik at
+det blir klassifisert noen artikler i slutten av /test.
+
+har delt janitor i to. dvs. halvert hva den gjør. må lage en janitor2
+eller noe.
+
+tok for lang tid også med b8 instance på backendjanitor. dele opp i
+mindre biter?
+
+mulig du bare skal fjerne duplicates.articles(). den trengs ikke pga
+title check i scrape. duplicates.companies trengs.
+
+
+prøv med større backend-instance. mer memory til janitor. da blir den
+kanskje ikke slått av av google.
+
+
+nonetype not iterable i naive linje 57 når online. bacendjanitor.
+
+
+write the cron for this, and add to backends:
+
+the order is now that this happens every hour or so:
+scrape
+dupe
+clean
+clasify
+
+and janitor happens every day or so:
+janitor.check_all (includes clean_all and dupe check all)
+analyze all
+
+
+
+clean cleaner bare alle dersom article_keys ikke finnes. når skal den
+cleane alle? det er bare å forandre else'en. men det bor være en egen
+funksjon, som blir kalt sjeldnere enn clean recent.
+
+altså clean_recent og clean_all.
+
+scrape skraper, og dupes fjerner, men clean gjør ingenting. har lagt
+inn at den henter fra db, men ingenting skjer. sov på det.
+
+
+
+
+nytt problem: google forandrer (selvfølgelig) url'en, men det kan
+synes som om url'en fram til ei= er nok. gjør litt testing av det.
+
+du har gjort ferdig classify. sjekk at det virker uten feil online
+også. men sjekk at ting skrapes fortsatt, med ny url-form.
+
+
+legg inn email om hvor mange som er skrapet. legg i egen folder i
+gmail. viktig info, spesielt hvis ingenting blir skrapet.
+
+
+
+analyze tar alle artikler.
+word pairs tar recent.
+clean tar recent.
+dupe tar recent.
+
+dvs. at janitor må dupe checke alle,
+deretter sjekke at alle har alle relevante attributter.
+deretter cleane alle,
+deretter klassifisere alle.
+så tar analyze seg av å analysere alle.
+
+
+deretter bør jeg gjøre ferdig janitor, som dupe checker og cleaner
+alt. og klassifiserer (word pairs), men IKKE analyserer. 
+
+dupe
+checkeren kan se omtrent ut som den gjør, men bare hente titles i
+stedet for å sammenlige keys (som er helt feil), og putte titles i en
+liste sammen med keys, og så kjøre over hele den listen, eller
+noe. mulig du slipper a lage ny liste, men kan delete allerede i
+loopen der du henter titles. ja, det kan du.
+
+
+
+
+
+
+
+
+nar du er ferdig med janitor, og db'en er ryddig, cleanet,
+klassifisert og analysert, kan du begynne å manuelt klassifisere
+artikler. ta et par tusen.
 

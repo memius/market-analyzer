@@ -66,7 +66,7 @@ def articles():
 
     delete_ctr = 0
     if article_keys: # lagret av forrige scrape
-        logging.debug("article keys exist in dupes")
+        # logging.debug("article keys exist in dupes")
         if duplicate_check: # lagret av forrige duplicates
             for article_key in article_keys:
                 article = Article.get_by_id(article_key.id())
@@ -100,10 +100,10 @@ def articles():
                         delete_ctr += 1
                     else:
                         duplicate_check.append(article.title)
-            memcache.add("duplicate_check", article_keys)
+            memcache.set("duplicate_check", article_keys)
             memcache.set("article_keys", article_keys)
     elif duplicate_check:
-        logging.debug("article keys do NOT exist in dupes")
+        # logging.debug("article keys do NOT exist in dupes")
         memcache.set("duplicate_check", duplicate_check)
 
     logging.debug("deleted %s duplicate articles", delete_ctr)

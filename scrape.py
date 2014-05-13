@@ -263,11 +263,17 @@ def scrape():
         
 #    chunk_size = 5
     companies = q.fetch(10000) # should be optimized by storing companies in memcache 
-    logging.debug("all companies: %s", companies)
 
 #    duplicate_check = memcache.get("duplicate_check")
     scrape_ctr = 0
+
+    # bongo = "bongo"
+    # bingi = "bingi"
+    # memcache.add("bongo bongo", bongo)
+    # memcache.set("bingi bingi", bingi)
+
     for company in companies: 
+        # logging.debug("company: %s", company.name)
         article_keys = memcache.get("article_keys")    
         # logging.debug("one more company")
         new_article_keys = process_links(company)
@@ -276,7 +282,7 @@ def scrape():
 #        c.append(company.name)
         if new_article_keys:
             if article_keys:
-                logging.debug("article keys exist in scrape")
+                # logging.debug("article keys exist in scrape")
                 article_keys = new_article_keys + article_keys
                 # memcache.delete("article_keys")
                 memcache.set("article_keys", article_keys, 11000) # clean does not update, so store until analyze.
@@ -285,14 +291,35 @@ def scrape():
                 # else:
                 #     memcache.add("duplicate_check",article_keys, 11000)
             else:
-                logging.debug("article keys do NOT exist in scrape")
+                # logging.debug("article keys do NOT exist in scrape")
                 # memcache.delete("article_keys") # used when soup line in clean gets error.
-                memcache.add("article_keys",new_article_keys,11000)
+                memcache.set("article_keys",new_article_keys,11000) # SET works. ADD does not.
+                # logging.debug("new article keys added to memcache")
+
                 # if duplicate_check:
                 #     memcache.set("duplicate_check",new_article_keys, 11000) # tvilsom.
                 #     # pass
                 # else:
                 #     memcache.add("duplicate_check",new_article_keys, 11000)
+
+        else: # no new articles
+            # logging.debug("NO new articles")
+            if article_keys:
+                memcache.set("article_keys",article_keys)
+
+    # a = memcache.get("bongo bongo")
+    # if a:
+    #     logging.debug("bongo bongo")
+
+    # b = memcache.get("bingi bingi")
+    # if b:
+    #     logging.debug("bingi bingi")
+
+    # ak = memcache.get("article_keys")
+    # if ak:
+    #     logging.debug("ak exists in scrape")
+    # else:
+    #     logging.debug("ak does NOT exist in scrape")
 
     logging.debug("scraped %s articles", scrape_ctr)
     # logging.debug("scrape() article keys: %s", article_keys[:3])
