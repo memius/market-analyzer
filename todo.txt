@@ -1,3 +1,7 @@
+now, the counter accumulates earlier counts as well. you have to reset
+the counter to zero each time janitor runs.
+
+
 for old stat count, try to insert it into analyze. if not, go through
 companies one by one, and count stats for each article that belongs.
 

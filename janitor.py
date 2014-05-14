@@ -4,7 +4,7 @@
 
 import logging
 
-import clean, analyze, utils
+import clean, analyze, utils, stats
 
 from google.appengine.ext import db
 from google.appengine.api import memcache
@@ -80,15 +80,15 @@ def check_all_articles():
     dupe_ctr = 0
     for key in article_keys:
         article = Article().get_by_id(key.id())
-
-        if article.title in duplicates:
-            db.delete(article)
-            dupe_ctr += 1
-        else:
-            duplicates.append(article.title)
-            changed = check(article)
-            if changed:
-                changed_ctr += 1
+        if article == None:
+            if article.title in duplicates:
+                db.delete(article)
+                dupe_ctr += 1
+            else:
+                duplicates.append(article.title)
+                changed = check(article)
+                if changed:
+                    changed_ctr += 1
 
         
 
