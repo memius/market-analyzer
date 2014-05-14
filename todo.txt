@@ -1,3 +1,21 @@
+for old stat count, try to insert it into analyze. if not, go through
+companies one by one, and count stats for each article that belongs.
+
+
+janitor is supposed to update stats for all articles. it
+doesn't. facebook is not updated, and apple is WRONGLY updated - it
+has none, but is displayed as having some.
+
+it's not that apple gets fb's stats. it's something else.
+
+
+you need to count stats in janitor also, and then all of them, not
+just recent ones.
+
+you should look at whether the utils.sentiment_count is efficient -
+perhaps no need to gather all the articles into one list, and use a
+lot of memory on that.
+
 may 13th: apple 468 companies, google 324, facebook 405, ibm 151, amd
 198, walmart 14.
 

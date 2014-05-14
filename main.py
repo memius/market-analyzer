@@ -9,7 +9,7 @@ from google.appengine.api import users, urlfetch, taskqueue
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
-import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape, classify
+import utils, crawl, sites, fetch, naive_bayes, duplicates, clean, analyze, janitor, test, scrape, classify, stats
 
 from models import Article, Company, UserPrefs
 
@@ -136,13 +136,13 @@ class MainPage(webapp2.RequestHandler):
 
             u.put()
 
-        company_names = []
-        for company_key in u.companies:
-            company = Company.get_by_id(company_key.id())
-            # try: # in case there are zombie ids for that user:
-            company_names.append(company.name)
-            # except:
-            #     continue
+        # company_names = []
+        # for company_key in u.companies:
+        #     company = Company.get_by_id(company_key.id())
+        #     # try: # in case there are zombie ids for that user:
+        #     company_names.append(company.name)
+        #     # except:
+        #     #     continue
 
 # #         # displaying all companies for debugging only:
         q = Company.all() #you'll need a 'more' button to display more than these 20
@@ -150,17 +150,17 @@ class MainPage(webapp2.RequestHandler):
 
         comp_keys_names = []
         for company in companies:
-            articles = [article for article in company.articles if article.clean]
-            [pos_rat,neg_rat] = utils.sentiment_count(articles)
-            if pos_rat > 0:
-                pos_str = "&#8593; " + str(pos_rat)
+            # articles = [article for article in company.articles if article.clean]
+            # [pos_rat,neg_rat] = utils.sentiment_count(articles)
+            if company.pos_ctr > 0:
+                pos_str = "&#8593; " + str(company.pos_ctr)
             else:
-                pos_str = ""
-            if neg_rat > 0:
-                neg_str = "&#8595; " + str(neg_rat)
+                pos_str = "giraffe"
+            if company.neg_ctr > 0:
+                neg_str = "&#8595; " + str(company.neg_ctr)
             else:
-                neg_str = ""
-            comp_keys_names.append([company.key(),company.ticker,pos_str,neg_str])
+                neg_str = "zebra"
+            comp_keys_names.append([company.key(), company.ticker, pos_str, neg_str])
 
 # #         ##############db.delete(companies) don't do this either!
 
@@ -193,12 +193,9 @@ class MainPage(webapp2.RequestHandler):
 #         article_objects = q.fetch(100)
 # #        article_objects = q # debug only
 #         ####db.delete(article_objects) stop doing this - delete attributes instead, run scripts to add new attributes
-        keys_names = zip(u.companies,company_names)
-
+        # keys_names = zip(u.companies,company_names)
         template_values = {
             'comp_keys_names' : comp_keys_names,
-            'keys_names' : keys_names,
-            'companies' : companies, #debug only
             'user' : u,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
@@ -463,13 +460,20 @@ class TestHandler(webapp2.RequestHandler):
          # if keys_word_pairs:
          #     logging.debug("keys word pairs just before classify(): %s",keys_word_pairs[0][1][:5])
          classify.classify(keys_word_pairs)
+         stats.count_recent_stats() 
 
 class JanitorHandler(webapp2.RequestHandler):
-    def post(self): # online
-#    def get(self): # local
+#    def post(self): # online
+    def get(self): # local
 #        self.response.write('you have gone through many articles, janitoring')
-        janitor.check_all()
+        janitor.check_all_articles()
+        janitor.update_stats()
         analyze.sentiment()
+
+class StatsHandler(webapp2.RequestHandler):
+#    def post(self): 
+    def get(self): 
+        stats.count_recent_stats()
 
 class GoldbergHandler(webapp2.RequestHandler):
     def get(self): # local and online
@@ -548,6 +552,7 @@ app = webapp2.WSGIApplication([
         ('/test', TestHandler),
         ('/all_dupes_backend', AllDupesBackendHandler),
         ('/all_dupes', AllDupesHandler),
+        ('/stats', StatsHandler),
 #        ('/classify', ClassifyHandler),
         ('/goldberg', GoldbergHandler),
         ('/.*', MainPage),

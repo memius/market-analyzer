@@ -60,7 +60,7 @@ def check(article):
 
     return changed
 
-def check_all():
+def check_all_articles():
     q = Article.all(keys_only=True)
     # q.order("datetime") no datetime in keys
     article_keys = q.fetch(10000)
@@ -90,11 +90,16 @@ def check_all():
             if changed:
                 changed_ctr += 1
 
+        
+
     logging.debug("janitored %s articles", changed_ctr)
     logging.debug("janitor dupe removed %s articles", dupe_ctr)
     article_keys = memcache.get("article_keys")
     if article_keys and len(article_keys) > 1000:
         memcache.set("article_keys", article_keys[:500])
+
+def update_stats():
+    stats.count_all_stats() # true means also old articles
 
 def clean_old_articles():
     q = Article.all()

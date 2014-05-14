@@ -40,6 +40,8 @@ class Company(db.Model):
     movement = db.BooleanProperty()  #whether it went up or down since yesterday. if no value -> no movement.
 #    articles = db.ReferenceProperty(Article) #not needed: do this: articles = company.articles.get()
     titles = db.StringListProperty()
+    pos_ctr = db.IntegerProperty(0)
+    neg_ctr = db.IntegerProperty(0)
     finished_scraping = db.BooleanProperty(False)
 #    user = db.ReferenceProperty(UserPrefs, collection_name = "companies")
 #    recommendation = db.StringProperty() #'buy', 'hold' or 'sell'

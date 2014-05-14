@@ -90,8 +90,6 @@ def articles():
 
             for article_key in article_keys:
 
-                # no, this doesn't work; the key.name() is different from the object.name() - you can make this a lot more efficient by using 'name' instead of 'title', because 'name' can be accessed directly from the key (key.name()) - you don't have to fetch the whole article! test this by logging a company name - they already have names.
-
                 article = Article.get_by_id(key.id())
                 if article:
                     if article.title in duplicate_check: 
