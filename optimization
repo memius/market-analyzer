@@ -1,0 +1,4 @@
+you should look at whether the utils.sentiment_count is efficient -
+perhaps no need to gather all the articles into one list, and use a
+lot of memory on that.
+

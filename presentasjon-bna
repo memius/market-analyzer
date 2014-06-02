@@ -1,0 +1,28 @@
+Produktet, Business News Analyzer, er en webapp som automatisk leser
+nyhetsartikler om selskaper, og forteller hvilke artikler som er
+positive og negative for aksjekursen. Kjøp/salg-konklusjonen overlates
+til kunden selv.
+
+Teknologien bak er ren statistikk analyse. Det er ingen faktisk
+forståelse av teksten i artiklene. På fagspråket kalles dette
+sentiment analysis, eller stemningsanalyse, og er en velkjent
+teknologi.
+
+Markedet er i første omgang hobbyspekulanter som handler på
+amerikanske børser, og som er villige til å bruke noen få dollar i
+måneden for å abonnere på en portefølje med selskapsanalyser.
+
+Systemet trenger tilbakemeldinger i form av korreksjoner fra kundene
+for å opprettholde nøyaktigheten. Det vil si at webappen i
+utgangspunktet bør være gratis, og tilby ekstratjenester som
+porteføljer, fravær av reklame, samt mer avanserte analyser, mot
+betaling.
+
+Kundene bruker webappen ved å gå til websiden i nettleseren sin, eller
+på sikt å installere en mobilapp. Mobilappen er ikke
+utviklet. Webappen er oppe og går, men trenger en del forandringer før
+den kan lanseres.
+
+For å komme i mål med dette prosjektet trenger jeg å kunne lønne meg
+selv i seks måneder til, eller mer. Jeg er alene om prosjektet, og har
+ingen andre utgifter.
