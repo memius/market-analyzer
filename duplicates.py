@@ -78,7 +78,7 @@ def articles():
                     else:
                         duplicate_check.append(article.title)
             memcache.set("duplicate_check", duplicate_check)
-            memcache.set("article_keys", article_keys)
+            memcache.set("article_keys", article_keys, 7200)
         else:
             q = Article.all(keys_only=True)
             # q.order("datetime") no datetime on keys
@@ -98,11 +98,11 @@ def articles():
                         delete_ctr += 1
                     else:
                         duplicate_check.append(article.title)
-            memcache.set("duplicate_check", article_keys)
-            memcache.set("article_keys", article_keys)
+            memcache.set("duplicate_check", article_keys, 7200)
+            memcache.set("article_keys", article_keys, 7200)
     elif duplicate_check:
         # logging.debug("article keys do NOT exist in dupes")
-        memcache.set("duplicate_check", duplicate_check)
+        memcache.set("duplicate_check", duplicate_check, 7200)
 
     logging.debug("deleted %s duplicate articles", delete_ctr)
 

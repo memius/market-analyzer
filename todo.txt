@@ -1,24 +1,74 @@
-now, the counter accumulates earlier counts as well. you have to reset
-the counter to zero each time janitor runs.
+they claim to have 'nailed' sentiment analysis, to 85%:
+https://gigaom.com/2013/10/03/stanford-researchers-to-open-source-model-they-say-has-nailed-sentiment-analysis/
+
+sortable column er kanskje mer trøbbel enn jeg trodde. hvis jeg ikke
+får det til i dag, så prøver jeg å få til login vs. ikke logget inn i
+morgen.
+
+http://stackoverflow.com/questions/5283559/load-javascript-in-google-app-engine
+viser i alle fall hvordan du loader .js til appengine. du må nok bruke
+js.
+
+you can probably use this library: 
+
+http://www.kryogenix.org/code/browser/sorttable/
 
 
-for old stat count, try to insert it into analyze. if not, go through
-companies one by one, and count stats for each article that belongs.
 
 
-janitor is supposed to update stats for all articles. it
-doesn't. facebook is not updated, and apple is WRONGLY updated - it
-has none, but is displayed as having some.
+det skal være slik; dersom du ikke er logget inn, så får du en
+simulert portefølje, der du kan legge til selskaper. dette blir ikke
+husket. dersom du er logget inn har du en ekte portefølje. det er slik
+det virker i dag. det er ok. du trenger kanskje ikke gjøre så mye.
 
-it's not that apple gets fb's stats. it's something else.
+deretter ads.
+
+dette er det du trenger til demo tirsdag om to uker.
 
 
-you need to count stats in janitor also, and then all of them, not
-just recent ones.
 
-you should look at whether the utils.sentiment_count is efficient -
-perhaps no need to gather all the articles into one list, and use a
-lot of memory on that.
+maybe not javascript. it's doable in html5 sortable columns.
+
+use javascript, and sort column. select is NOT the right way to
+go. use this: 
+
+http://datatables.net/examples/advanced_init/html5-data-attributes.html
+
+
+
+apparently, nothing is scraped any longer. local. they are scraped
+online. but only updated every 20 minutes? or every six hours? check
+to see that wal-mart has 9 pos and 3 neg, not just 3 pos.
+
+
+to drop-down menyer:
+positve/negative/controversial
+last 24 hours/ last 7 days/ last 30 days
+
+deretter donations, deretter ads.
+
+progression:
+free access to all companies.
+free portfolio of seven companies with registration.
+pay to get rid of ads.
+pay for alerts.
+pay for unlimited portfolio.
+
+no app, just site optimized for phone access.
+
+list of companies top left
+ad banner bottom
+donation buttons low right
+
+
+hva om neutral ikke er en fail-kategori nå? dvs. at alle neutralene
+trekker mot at alle nye og ukategoriserte er neutral så lenge de
+fleste er neutral. da trener den på en måte alle nye til å være
+neutral.
+
+the numbers don't quite add up. it deletes more articles than it
+scrapes, and classifies more than it scrapes.
+
 
 may 13th: apple 468 companies, google 324, facebook 405, ibm 151, amd
 198, walmart 14.
@@ -28,14 +78,13 @@ sjekker hvor mange artikler som skrapes for hvert selskap. det er noe
 som ikke funker der. wmt har bare 14 artikler.
 
 
-legg til antall pos og neg for hvert selskap i front page
-view. variableen blir da if variable, then "/ 8" og "\ 3", som blir
-sendt til .html-filen, og conveniently ikke blir vist dersom det ikke
-er noe der.
-
 selskapene må være clickable. da kommer du til selskapsview, der du
 skal vise clickable artikkeltitler, probs og korreksjonsknapper, med
 --- mellom hver artikkel.
+when company is clicked; more complete statistics on how many of each
+postivie over the various periods, and how this relates to the normal
+for the previous periods (smoothing factor used to calculate this).
+also, stock price change for periods, of course. 
 
 klikker du, kommer du til artikkelview, der du kan se prob, title
 prob, antall korreksjoner, korreksjonsknapper.
@@ -49,7 +98,7 @@ du må ha en feedback@bna.com adresse som havner i en egen folder hos gmail.
 
 
 
-mechanism where word pairs get 0.5 prob must be looked at.
+
 
 
 display on front page:
@@ -59,10 +108,8 @@ good - only positive in period (no red backslashes are shown.)
 bad - only neg in period. (no blues.)
 ugly - many of both in period.
 only ticker, not whole name.
-when company is clicked; more complete statistics on how many of each
-postivie over the various periods, and how this relates to the normal
-for the previous periods (smoothing factor used to calculate this).
-also, stock price change for periods, of course. 
+
+
 all companies for free, portfolio for modest subscription.
 alerts on pos/neg articles for modest subscription. hourly for day
 traders (more expensive), daily for swing traders, weekly for
@@ -70,8 +117,11 @@ hobbyists (cheap). how will a weekly 'alert' work? can it be said to
 be an alert? just an update, perhaps? that would be part of the
 portfolio. so perhaps only real time alerts.
 
-paypal and bitcoin donations on all pages, or just front page? on the
-most visited pages also.
+ad banner at bottom of page unless logged in with paid
+subscription. (you can pay for no ads - very cheap).
+
+paypal, flattr and bitcoin donations on all pages, or just front page?
+on the most visited pages also.
 
 don't remove login - just rearrange so that if account (cookie check),
 display portfolio, if no account or cookie, display all companies.
@@ -3862,3 +3912,28 @@ nar du er ferdig med janitor, og db'en er ryddig, cleanet,
 klassifisert og analysert, kan du begynne å manuelt klassifisere
 artikler. ta et par tusen.
 
+
+
+
+
+now, the counter accumulates earlier counts as well. you have to reset
+the counter to zero each time janitor runs.
+
+
+for old stat count, try to insert it into analyze. if not, go through
+companies one by one, and count stats for each article that belongs.
+
+
+janitor is supposed to update stats for all articles. it
+doesn't. facebook is not updated, and apple is WRONGLY updated - it
+has none, but is displayed as having some.
+
+it's not that apple gets fb's stats. it's something else.
+
+
+you need to count stats in janitor also, and then all of them, not
+just recent ones.
+
+
+
+mechanism where word pairs get 0.5 prob must be looked at. seems ok.

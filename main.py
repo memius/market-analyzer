@@ -155,11 +155,11 @@ class MainPage(webapp2.RequestHandler):
             if company.pos_ctr > 0:
                 pos_str = "&#8593; " + str(company.pos_ctr)
             else:
-                pos_str = "giraffe"
+                pos_str = "&#8593; 000"
             if company.neg_ctr > 0:
                 neg_str = "&#8595; " + str(company.neg_ctr)
             else:
-                neg_str = "zebra"
+                neg_str = "&#8595; 000"
             comp_keys_names.append([company.key(), company.ticker, pos_str, neg_str])
 
 # #         ##############db.delete(companies) don't do this either!

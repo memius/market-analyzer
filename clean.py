@@ -89,7 +89,7 @@ def clean_recent(): # only cleans recently scraped articles ("article_keys" from
                     clean(article)
                     clean_ctr += 1
         # cleaning.remove(article) not needed, because pop removes it for us.
-        memcache.set("article_keys", article_keys)
+        memcache.set("article_keys", article_keys, 7200)
         # logging.debug("article keys set")
 
     # else:

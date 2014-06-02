@@ -52,6 +52,7 @@ def recent_word_pairs():
                     text = article.text # later, you'll want to do this with titles as well, and see if equally good.
                     if text:
                         kwp.append([key, word_pairs(text)])
+        memcache.set("article_keys",article_keys, 7200)
 
     # else:
     #     logging.debug("article keys do NOT exist in classify")

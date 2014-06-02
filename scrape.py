@@ -286,7 +286,7 @@ def scrape():
                 # logging.debug("article keys exist in scrape")
                 article_keys = new_article_keys + article_keys
                 # memcache.delete("article_keys")
-                memcache.set("article_keys", article_keys, 11000) # clean does not update, so store until analyze.
+                memcache.set("article_keys", article_keys, 7200) # clean does not update, so store until analyze.
                 # if duplicate_check:
                 #     memcache.set("duplicate_check",article_keys, 11000)
                 # else:
@@ -294,7 +294,7 @@ def scrape():
             else:
                 # logging.debug("article keys do NOT exist in scrape")
                 # memcache.delete("article_keys") # used when soup line in clean gets error.
-                memcache.set("article_keys",new_article_keys,11000) # SET works. ADD does not.
+                memcache.set("article_keys",new_article_keys, 7200) # SET works. ADD does not.
                 # logging.debug("new article keys added to memcache")
 
                 # if duplicate_check:

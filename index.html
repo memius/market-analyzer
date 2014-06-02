@@ -5,24 +5,27 @@
 
   <body>
     <p>
-      {{ user.nickname }} [
-      {% for key in user.companies %}
-      {{ key.id() }}, 
-      {% endfor %} ]
+      {{ user.nickname }} 
 
-    <p>
-    ---
     <p>
       {% for pair in comp_keys_names %}
     <a href="company/{{ pair[0].id() }}">{{ pair[1] }}: <b> {{ pair[2]
-    }} {{ pair[3] }} </b> </a> 
+    }} {{ pair[3] }} </b> </a>       
+
+    <form method="post">
+      <select name="scope">
+	<select>
+	  <option value="Positive">Positive</option>
+	  <option value="Negative">Negative</option>
+	  <option value="Controversial">Controversial</option>
+	</select>
+    </form>
+
     <p>
     {% endfor %}
-    ---
     <p>
       <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
     <p>
-    ---
     <form action="/find_company" method=post>
       <input type="submit" value="More Companies">
     </form>
