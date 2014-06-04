@@ -2,3 +2,14 @@ body {
   font-family: Verdana, Helvetica, sans-serif;
   background-color: #FFFFFF;
 }
+h3 {
+    width: 400px;
+}
+
+div {
+    width: 400px;
+    height: 503;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
