@@ -2,24 +2,29 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
-
+    <b>BNA<font color='red' size='1'>ALPHA</font></b>
+<select>
+  <option value="Last 24 hours">Last 24 hours</option>
+  <option value="Last 7 days">Last 7 days</option>
+  <option value="Last 4 weeks">Last 4 weeks</option>
+</select>
   <body>
-    <p>
-      {{ user.nickname }} 
 
     <p>
       {% for pair in comp_keys_names %}
-    <a href="company/{{ pair[0].id() }}">{{ pair[1] }}: <b> {{ pair[2]
-    }} {{ pair[3] }} </b> </a>       
+    <a href="company/{{ pair[0].id() }}">{{ pair[1] }}: </a> 
+    <b> <font color="blue"> {{ pair[2] }} </font> {{ pair[3]
+    }} <font color="red"> {{ pair[4] }} </font> {{ pair[5]}} </b> 
 
     <p>
     {% endfor %}
     <p>
-      <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
-    <p>
     <form action="/find_company" method=post>
       <input type="submit" value="More Companies">
     </form>
+    <p>
+      {{ user.nickname }} 
+      <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
     <p>
 
   </body>

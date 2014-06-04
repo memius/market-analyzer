@@ -1,6 +1,51 @@
 they claim to have 'nailed' sentiment analysis, to 85%:
 https://gigaom.com/2013/10/03/stanford-researchers-to-open-source-model-they-say-has-nailed-sentiment-analysis/
 
+
+
+-lag presentasjon til even (og tore, hans partner).
+
+-forretnignsmodell - ads, login, portefølje se progresjon
+ under. viktig at gratis først, fordi trenger brukerinput, i form av
+ korreksjoner til analysen. brukerne må gi tilbakemelding på om
+ analysen er nøyaktig eller ikke. derfor trenger jeg brukere, derfor
+ må det være gratis. 
+
+-problemstilling: brukerne trenger info for å ta ja/nei
+ beslutninger. denne tjenesten konsentrerer mange nyhetsartikler fra
+ google finance (skal bygges ut), og gir pos/neg oversikt. ofte vil
+ det være nøytrale artikler.
+
+-demo: gå inn på siden, se listen over selskaper. logg in, se din
+ portefølje, se simulert portefølje dersom du ikke er logget inn. se
+ artikler for selskap, se en artikkel. korriger artikkel. fortell at
+ dette vil gjøre analysen mer nøyaktig for brukeren.
+
+-personlige portefølje. fortell om email alerts, phone app
+
+-alerts. forskjellige tids-scopes, timer, dager, uker.
+
+
+
+
+fuck sortable column. get the letters black, and the arrows red and
+blue. and the background white.
+
+also, make sure the articles are comfortably readable in the article
+view. make it look like that ipad-app that aggregates articles. maybe
+use elements html5. to make it appear in the middle column.
+
+test it on your phone.
+
+kanskje også forskjellen mellom logget inn og ikke. vis alle når ikke,
+og portefølje når logget inn.
+
+og ads?
+
+
+
+
+
 sortable column er kanskje mer trøbbel enn jeg trodde. hvis jeg ikke
 får det til i dag, så prøver jeg å få til login vs. ikke logget inn i
 morgen.
@@ -33,12 +78,6 @@ use javascript, and sort column. select is NOT the right way to
 go. use this: 
 
 http://datatables.net/examples/advanced_init/html5-data-attributes.html
-
-
-
-apparently, nothing is scraped any longer. local. they are scraped
-online. but only updated every 20 minutes? or every six hours? check
-to see that wal-mart has 9 pos and 3 neg, not just 3 pos.
 
 
 to drop-down menyer:

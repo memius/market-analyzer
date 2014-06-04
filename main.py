@@ -153,14 +153,18 @@ class MainPage(webapp2.RequestHandler):
             # articles = [article for article in company.articles if article.clean]
             # [pos_rat,neg_rat] = utils.sentiment_count(articles)
             if company.pos_ctr > 0:
-                pos_str = "&#8593; " + str(company.pos_ctr)
+                pos_arrow = "&#8593; "
+                pos_str = str(company.pos_ctr)
             else:
-                pos_str = "&#8593; 000"
+                pos_arrow = "&#8593; "
+                pos_str = "000"
             if company.neg_ctr > 0:
-                neg_str = "&#8595; " + str(company.neg_ctr)
+                neg_arrow = "&#8595; "
+                neg_str = str(company.neg_ctr)
             else:
-                neg_str = "&#8595; 000"
-            comp_keys_names.append([company.key(), company.ticker, pos_str, neg_str])
+                neg_arrow = "&#8595; "
+                neg_str = "000"
+            comp_keys_names.append([company.key(), company.ticker, pos_arrow, pos_str, neg_arrow, neg_str])
 
 # #         ##############db.delete(companies) don't do this either!
 
