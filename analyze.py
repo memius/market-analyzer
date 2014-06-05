@@ -235,17 +235,17 @@ def sentiment():
 #       return prob, title_prob
 
                     article.prob = prob
-                    if prob >= 0.7:
+                    if prob > 0.55:
                         article.sentiment = "positive"
-                    elif prob <= 0.3:
+                    elif prob < 0.45:
                         article.sentiment = "negative"
                     else:
                         article.sentiment = "neutral"
 
                     article.title_prob = title_prob
-                    if title_prob >= 0.7:
+                    if title_prob > 0.55:
                         article.title_sentiment = "positive"
-                    elif title_prob <= 0.3:
+                    elif title_prob < 0.45:
                         article.title_sentiment = "negative"
                     else:
                         article.title_sentiment = "neutral"

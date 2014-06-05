@@ -8,6 +8,7 @@
 import urllib2, re, chardet, logging
 
 from bs4 import BeautifulSoup as bs
+
 from google.appengine.api import urlfetch, memcache
 from google.appengine.ext import db  # probably redundant
 
@@ -39,6 +40,31 @@ def linkz(ticker, exchange): # the one for articles.
         return links
     else:
         return None
+
+def yahoo_linkz(ticker):
+    url = "http://finance.yahoo.com/q/h?s=" + ticker + "&t="
+    result = urlfetch.fetch(url)
+    if result.status_code == 200:
+        soup = bs(result.content)
+        
+        div_class = re.compile(".*yfi_quote_headline.*")
+        divs = soup.find_all("div", {"class" : div_class})
+        divs = set(divs)
+        links = []
+        for div in divs:
+            for link in div.find_all("a"):
+                title = link.get_text()
+                link = link.get("href")
+                if link is not None and title is not "" and title is not "Older Headlines": # doesn't quite work
+                    links.append([title,link])
+        return links
+    else:
+        return None
+
+
+
+# won't work locally. too much hassle:
+# yahoo_linkz("ibm")
 
 # def companies(exchange):
 #     if exchange == 'Nasdaq':
@@ -175,6 +201,9 @@ def fetch(url):
 
 def process_links(company):
     links = linkz(company.ticker,company.exchange)
+    # logging.debug("google links: %s",links)
+    yahoo_links = yahoo_linkz(company.ticker)
+    # logging.debug("yahoo links: %s",yahoo_links)
 
     old_titles = company.titles
 #    titles = [] 

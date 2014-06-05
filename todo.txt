@@ -2,6 +2,28 @@ they claim to have 'nailed' sentiment analysis, to 85%:
 https://gigaom.com/2013/10/03/stanford-researchers-to-open-source-model-they-say-has-nailed-sentiment-analysis/
 
 
+sett deg ned og lat som om du snakker om bna, med laptop. vis på
+skjerm, og snakk om forretnignsmodell (gratis, ads, gratis portefølje
+med tilbud om alerts, etc. for betaling.), problemstilling.
+
+
+til alphalaunch er kanskje det eneste du trenger nå forskjell mellom
+pålogget og avlogget. ads, donations, scope og kjapp oppdatering er
+ting som kan komme senere.
+
+
+
+
+-empty nickname blir lagret som bruker når du ikke har noen
+ bruker. linje 49 i main. dvs. at empty nickname har en portefølje. du
+ bruker u.companies flere ganger. hm.
+
+-get dollar amounts back in the articles.
+
+-når folk har korrigert, må antallet pos og neg på forsiden oppdatere
+ seg! det er oppdatert på selskapssiden, men ikke på forsiden. nå
+ skjer det ikke før tyve minutter senere, i count recent stats.
+
 
 -lag presentasjon til even (og tore, hans partner).
 

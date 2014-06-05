@@ -1,15 +1,11 @@
 body {
-  font-family: Verdana, Helvetica, sans-serif;
-  background-color: #FFFFFF;
-}
-h3 {
-    width: 400px;
+    font-family: Verdana, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    text-align: left;
+    margin: 0 auto;
+    width: 480px;
+    font-size: 16
 }
 
-div {
-    width: 400px;
-    height: 503;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+
 

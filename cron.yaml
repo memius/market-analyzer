@@ -4,7 +4,7 @@ cron:
 
 - description: sends scrape, dupe, clean and classify to backendscraping
   url: /send_to_backend
-  schedule: every 20 mins
+  schedule: every 8 minutes
 
 - description: sends analyze and janitor to backendscraping
   url: /janitorbackend

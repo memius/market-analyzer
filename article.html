@@ -4,13 +4,16 @@
   </head>
 
   <body>
-    <h3>
-    <b> {{ title }} </h3>
+    <h1>
+    <b> {{ title }} </h1>
+
     {{ sentiment }} {{ prob }} </b>
     <p>
+
     <div>
       {{ text }}
     </div>
+    <p>
       <form action="/correction" method=post>
 	<input type="hidden" name="key" value="{{ id }}">
         <input type="submit" id="{{ id }}" name="sentiment" value="positive">

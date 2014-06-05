@@ -127,7 +127,7 @@ def classify(keys_word_pairs):
                     # logging.debug("wp: %s", wp)
 
                     if wp:
-                        if wp.prob > 0.7 or wp.prob < 0.3:
+                        if wp.prob > 0.55 or wp.prob < 0.45:
                             probs.append(wp.prob) 
                     else:
                         unseen_pairs.append(word_pair)                    

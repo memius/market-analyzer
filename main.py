@@ -156,14 +156,14 @@ class MainPage(webapp2.RequestHandler):
                 pos_arrow = "&#8593; "
                 pos_str = str(company.pos_ctr)
             else:
-                pos_arrow = "&#8593; "
-                pos_str = "000"
+                pos_arrow = ""
+                pos_str = ""
             if company.neg_ctr > 0:
                 neg_arrow = "&#8595; "
                 neg_str = str(company.neg_ctr)
             else:
-                neg_arrow = "&#8595; "
-                neg_str = "000"
+                neg_arrow = ""
+                neg_str = ""
             comp_keys_names.append([company.key(), company.ticker, pos_arrow, pos_str, neg_arrow, neg_str])
 
 # #         ##############db.delete(companies) don't do this either!
@@ -417,10 +417,10 @@ class CorrectionHandler(webapp2.RequestHandler):
             article_object.prob = prob
             article_object.title_prob = prob
 
-        if article_object.prob > .9:
+        if article_object.prob > .55:
             article_object.sentiment = "positive"
             article_object.title_sentiment = "positive"
-        elif article_object.prob < .1:
+        elif article_object.prob < .45:
             article_object.sentiment = "negative"
             article_object.title_sentiment = "negative"
         else:
@@ -438,9 +438,10 @@ class CorrectionHandler(webapp2.RequestHandler):
 
 
 
-# class ClassifyHandler(webapp2.RequestHandler):
-#     def get(self):
-#         classify.word_pairs()
+class ClassifyHandler(webapp2.RequestHandler):
+    def get(self):
+        keys_word_pairs = classify.recent_word_pairs()
+        classify.classify(keys_word_pairs)
 
 class BackendHandler(webapp2.RequestHandler):
     def get(self):
@@ -467,8 +468,8 @@ class TestHandler(webapp2.RequestHandler):
          stats.count_recent_stats() 
 
 class JanitorHandler(webapp2.RequestHandler):
-#    def post(self): # online
-    def get(self): # local
+    def post(self): # online
+#    def get(self): # local
 #        self.response.write('you have gone through many articles, janitoring')
         janitor.check_all_articles()
         janitor.update_stats()
