@@ -33,25 +33,43 @@ class MainPage(webapp2.RequestHandler):
             user_id = usr.user_id()
             nickname = usr.nickname()
             email = usr.email()
+
             auth_url = users.create_logout_url(self.request.uri)
             auth_url_linktext = "Logout"
+
+            q = UserPrefs.all()
+            q = q.filter("user_id =",user_id)
+            [u] = q.fetch(1)
+
+            nick = u.nickname # else, it's "" from above
+
+            keys = u.companies
+            companies = []
+            for key in keys:
+                company = Company.get_by_id(int(key.id()))
+                companies.append(company)
+
+            duplicates = []
+            for company in u.companies:
+                if company in duplicates:
+                    u.companies.remove(company)
+                else:
+                    duplicates.append(company)
+
         else:
-            user_id = "Empty user_id"
-            nickname = "Empty nickname"
-            email = "Empty email"
+
             auth_url = users.create_login_url(self.request.uri)
             auth_url_linktext = "Login"
 
-        q = UserPrefs.all()
-        q = q.filter("user_id =",user_id)
-        try:
-            [u] = q.fetch(1)
-        except:
-            u = UserPrefs()
-            u.user_id = user_id
-            u.nickname = nickname
-            u.email = email
-            u.put()
+            q = Company.all() #you'll need a 'more' button to display more than these 20
+            companies = q.fetch(1000) #fetch can't be async for now.
+            nick = ""
+
+            # u = UserPrefs()
+            # u.user_id = user_id
+            # u.nickname = nickname
+            # u.email = email
+            # u.put()
 
         # company = Company()
         # company.name = "Google Inc"
@@ -87,54 +105,49 @@ class MainPage(webapp2.RequestHandler):
 
 
         # dupe check for subscribed companies:
-        duplicates = []
-        for company in u.companies:
-            if company in duplicates:
-                u.companies.remove(company)
-            else:
-                duplicates.append(company)
 
-        if u.companies == []: 
-            apple = Company.all().filter("name =","Apple Inc").get()
-            if apple == None:
-                apple = Company()
-                apple.name = "Apple Inc"
-                apple.name_lower = "apple inc"
-                apple.ticker = "AAPL"
-                apple.ticker_lower = "aapl"
-                apple.exchange = "NASDAQ"
-                apple.exchange_lower = "nasdaq"
-                apple.put()
-            else:
-                u.companies.append(apple.key())
 
-            google = Company.all().filter("name =","Google Inc").get()
-            if google == None:
-                google = Company()
-                google.name = "Google Inc"
-                google.name_lower = "google inc"
-                google.ticker = "GOOG"
-                google.ticker_lower = "goog"
-                google.exchange = "NASDAQ"
-                google.exchange_lower = "nasdaq"
-                google.put()
-            else:
-                u.companies.append(google.key())
+        # if u.companies == []: 
+        #     apple = Company.all().filter("name =","Apple Inc").get()
+        #     if apple == None:
+        #         apple = Company()
+        #         apple.name = "Apple Inc"
+        #         apple.name_lower = "apple inc"
+        #         apple.ticker = "AAPL"
+        #         apple.ticker_lower = "aapl"
+        #         apple.exchange = "NASDAQ"
+        #         apple.exchange_lower = "nasdaq"
+        #         apple.put()
+        #     else:
+        #         u.companies.append(apple.key())
 
-            facebook = Company.all().filter("name =","Facebook Inc").get()
-            if facebook == None:
-                facebook = Company()
-                facebook.name = "Facebook Inc"
-                facebook.name_lower = "facebook inc"
-                facebook.ticker = "FB"
-                facebook.ticker_lower = "fb"
-                facebook.exchange = "NASDAQ"
-                facebook.exchange_lower = "nasdaq"
-                facebook.put()
-            else:
-                u.companies.append(facebook.key())
+        #     google = Company.all().filter("name =","Google Inc").get()
+        #     if google == None:
+        #         google = Company()
+        #         google.name = "Google Inc"
+        #         google.name_lower = "google inc"
+        #         google.ticker = "GOOG"
+        #         google.ticker_lower = "goog"
+        #         google.exchange = "NASDAQ"
+        #         google.exchange_lower = "nasdaq"
+        #         google.put()
+        #     else:
+        #         u.companies.append(google.key())
 
-            u.put()
+        #     facebook = Company.all().filter("name =","Facebook Inc").get()
+        #     if facebook == None:
+        #         facebook = Company()
+        #         facebook.name = "Facebook Inc"
+        #         facebook.name_lower = "facebook inc"
+        #         facebook.ticker = "FB"
+        #         facebook.ticker_lower = "fb"
+        #         facebook.exchange = "NASDAQ"
+        #         facebook.exchange_lower = "nasdaq"
+        #         facebook.put()
+        #     else:
+        #         u.companies.append(facebook.key())
+
+        #     u.put()
 
         # company_names = []
         # for company_key in u.companies:
@@ -145,8 +158,8 @@ class MainPage(webapp2.RequestHandler):
         #     #     continue
 
 # #         # displaying all companies for debugging only:
-        q = Company.all() #you'll need a 'more' button to display more than these 20
-        companies = q.fetch(100) #fetch can't be async for now.
+
+
 
         comp_keys_names = []
         for company in companies:
@@ -198,9 +211,10 @@ class MainPage(webapp2.RequestHandler):
 # #        article_objects = q # debug only
 #         ####db.delete(article_objects) stop doing this - delete attributes instead, run scripts to add new attributes
         # keys_names = zip(u.companies,company_names)
+
         template_values = {
             'comp_keys_names' : comp_keys_names,
-            'user' : u,
+            'nick' : nick,
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
             }

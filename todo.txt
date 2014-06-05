@@ -12,6 +12,14 @@ pålogget og avlogget. ads, donations, scope og kjapp oppdatering er
 ting som kan komme senere.
 
 
+-"" printes i index i stedet for username.
+-du har ingen user når du ikke er logget på, og du ser alle
+ selskapene.
+-du har ingen liksomportefølje når du ikke er logget på.
+-når du sjekker for duplicates, så sjekk om du har en user først. kun
+ dersom du har en bruker sjekker du dupe.
+
+
 
 
 -empty nickname blir lagret som bruker når du ikke har noen
