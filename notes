@@ -1,0 +1,133 @@
+you might want to only use the title, for four reasons. you get a
+sentence with proper words. no junk. and, you have to store less. and
+you don't have to follow any links from google/yahoo. you only scrape
+from them directly. and, of course, it's a lot less work for the
+computer.
+
+
+
+---
+sizes are stored in one location, globally accessible.
+
+corpus_size, pos_size, neg_size.
+
+you store word pairs, with probability, pos_freq and neg_freq.
+---
+word	  	  prob 	      pos_freq		neg_freq
+
+a jackpot	  0.2	      112		5
+---
+
+whenever a title is classified, the sizes and frequencies are
+updated, and the word pair probability is recalculated. all the word
+pairs in that title have their probabilities updated. this means you
+don't have to go through all the titles again and again, only the
+word pairs for every new title!
+
+when a title is RE-classified, it's pretty much the same thing. if
+it goes from neutral to positive, its pos_freq is updated, the
+corpus_size is not, and every word pair in that title has its prob
+recalculated.
+
+the updated probs for all the word pairs in the title is used
+to calculate the title prabability, which is stored with the title
+title.
+---
+
+
+
+
+
+
+
+maybe the diminishing returns from more votes should be heightened? i
+mean, that vote number two and three should mean more. the diminishing
+should be slower, is what i'm trying to say.
+
+the voting should be a swipe, like at hot or not, or tinder. you swipe
+left for negative articles, and right for positive articles. this is
+addictive, and you should be served the next articles immediately upon
+swiping.
+
+
+
+
+
+from a4 sheet of paper on desk:
+
+incoming: either taken from article's prob, or from correction smoothed, so, trust that it's 0.0-1.0.
+
+stat's point = 1.0 since you want to multiply the first number by 1
+
+word pairs come in with previous probs, and are simply multiplied together.
+
+no need for normalizing or max/min check.
+
+this total number is then fed into the simple formula, and given to
+the article (and all the unseen word pairs) as their prob.
+
+
+P(Pos | "total disaster") is the probability that an article is
+positive, given that the word pair "total disaster" occurs in it (and
+that this is the only thing you know about the article).
+
+P("total disaster" | Pos) is the frequency of "total disaster" in the
+positive corpus.
+
+P(Pos) is 0.5
+
+P("total disaster") is the frequency of the word pair "total disaster"
+in the entire corpus.
+
+thus: P(Pos|"total disaster") = (P("total disaster" | Pos) * P(Pos)) /
+P("total disaster")
+
+let's say you have a corpus of 1000 word pairs; 500 positive and 500
+negative. let's say the word pair "total disaster" occurs 15 times in
+the corpus; 13 times in the negative corpus, and twice in the positive
+corpus.
+
+that means:
+P("total disaster" | Pos) = 2 / 500 = 0.004
+P(Pos) = 500 / 1000 = 0.5
+P("total disaster") = 15 / 1000 = 0.015
+
+thus: P(Pos | "total disaster") = (0.004 * 0.5) / 0.015 = 0.1333333...
+
+in other words: the word pair "total disaster" strongly suggests that
+the article in which it occurs is negative.
+
+
+
+end sheet of paper
+---
+
+
+from another a4 sheet of paper on desk:
+
+scrape: if article keys, add new keys to that. if not, create them with
+new keys. store incoming articles.
+
+clean: if article keys: check clean. if not clean, clean. simple. this
+fails because articles fetched by keys is None.
+
+word pairs: if article keys and clean, analyze. simple. fail for the
+same reason as above.
+
+are the articles in article keys not properly stored in scrape?
+
+are keys put into article_keys by scrape that should not be/ are not
+stored?
+
+! is get by id not working? (are you using key, not id?)
+
+! see whether you really want article_object.clean=False. i think you do.
+
+! dette burde funke lokalt, så sjekk at scrape henter og lagrer (til
+  alle companies, ikke bare subscribed).
+
+lurer på om scrape ikke henter og lagrer lenger?
+
+
+end second sheet of paper
+---
