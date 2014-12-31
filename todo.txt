@@ -1,5 +1,143 @@
-they claim to have 'nailed' sentiment analysis, to 85%:
+dette ser du på etter launch: they claim to have 'nailed' sentiment
+analysis, to 85%:
 https://gigaom.com/2013/10/03/stanford-researchers-to-open-source-model-they-say-has-nailed-sentiment-analysis/
+
+
+
+når en ny bruker kommer inn, og får de tre defaultselskapene i
+porteføljen sin, så skal det være en tekst over som sier "this is your
+startert portfolio. you can add and remove companies."
+
+når du ikke har noe i databasen, f.eks. når du starter på nytt lokalt,
+så skal det stå "you don't have any companies yet", og lignende.
+
+du får starterporteføljen også hvis du ikke er logget inn, og du kan
+forandre den, men
+ingenting av det du gjør lagres til neste gang. hvordan gjøre dette
+uten default bruker? hm.
+
+
+
+
+
+
+
+fix usr i main. ikke bruk usr hvis den ikke er der.
+ikke lag liksombruker for å putte ting i ham.
+
+fix no new conclusions for gsachs.
+
+
+
+
+altså, todo nå, asap:
+
+nå har du trøbbel med bug for tom db. u is NoneType when restart local.
+
+DU ER HER: -implementer ett scope - det kan antakelig gjøres enkelt, ved å styre
+queryen på dato. antakelig i main. det ligger i pos_ctr og neg_ctr,
+som blir lagret hvorhen? der det blir lagret er det en mulighet til å
+lagre tre forskjellige scopes. men hvor er det? hvilken fil? it's in
+stats.py
+
+-store conclusions to db. if classify runs often enough, you can let
+that handle the update to the article's conclusion, instead of letting
+the correction click do it. for now, don't.
+
+-use users' email to alert when pos article arrives. or just a sound
+in the browser. user's choice. only if logged in.
+
+-use adsense to put ads along top and right margin.
+
+-put donation buttons for bitcoin, paypal and/or flattr on home page.
+
+-sort companies list on home page. (probably javascript).
+
+-make it so that when you are not logged in, you see all companies,
+and when you are, you see your portfolio. you are almost there?
+
+-let users unsubscribe to companies.
+
+-scrape prices, and store to db. google finance has real-time data
+from nasdaq and nyse. updates once per second.
+
+-use prices to correct conclusions, using price change from one hour
+before to one hour after. later, compare with trough, and look for
+dips to a deeper level in the trough. later ,use several hours, and
+see what works best.
+
+-calculate accuracy. use both prices and corrections. if BOTH read,
+and not corrected (but not NOT read and not corrected), (by hand or
+price) 24 hours after appearence, conclusion is assumed to be correct.
+
+-google analytics på plass.
+
+
+later: se øverst i spec - la folk lese artiklene på de sidene der de er laget.
+
+
+
+to before launch:
+-correlate prices with conclusions. (store conclusions with timestamps
+to db.)
+-bruk dette til å regne ut accuracy. putt accuracy på home page, og
+fortell at korrigering fører til bedre accuracy. "every time one of
+you corrects a few articles, the accuracy goes up."
+-sort companies according to going up, going down, volatile.
+-have a graph for 'going up', 'going down'? same info as you have now.
+-top 10 important news (those that will probably have the biggest
+impact on price (this is simply prob score).
+-største avvik fra selskapets egen normalfordeling mellom
+pos/neg/neut. dvs. at noe dramatisk har skjedd, eller er i ferd med å
+skje, med selskapet.
+-varsel ved pos nyheter, neg nyheter, avvik fra normal, flest pos,
+flest neg, kanskje også rett og slett plutselig kursavvik.
+-ads.
+-donations.
+-logg inn -> portefølje. først unlimited, så implementerer du hele
+limit-biten senere. så slipper du å gjøre det før launch.
+-varsel for ny pos nyhet, ny neg nyhet.
+
+
+rett etter launch: overføre scrape til egen server, og gjøre det litt
+oftere. du trenger en til scrape og en til janitor. så kan du
+oppjustere frekvens etterpå. slik det er nå så går de litt i veien for
+hverandre.
+
+later:
+-lag kanal for hvor kursen bør ligge. del denne kanalen inn i
+femdeler, f.eks. gi varsel dersom kursen beveger seg inn i en femdel
+den ikke burde bevege seg inn i. du bruker kanalen som korrelasjon for
+konklusjonene - dersom den beveger seg opp ut av kanalen er det en
+.999-nyhet. dersom opp bare en femdel er det bare en .6-nyhet?
+-biggest divergence between conclusion and price -> varsel. this can
+also be a graph on the home page.
+-top 10 companies most sensitive to news.
+
+
+
+mulig salgskanal er til plattformer, a la netfonds, men i usa. kan
+selge til mange, pass på å unngå eksklusivitet. da kan du drite i
+blogg. det bør du kanskje gjøre uansett.
+
+kundene dine er ikke koselige communityfolk, som leser bloggen din og
+korrigerer flittig. de er late og utålmodige, og vil ha konklusjoner
+kjapt. de er day traders, ikke pensjonister. pensjonister trenger ikke
+info så kjapt som det du leverer. de vil heller lese i fred og ro, og
+gjøre seg opp sine egne meninger. folk som investerer i ting de har
+greie på også. det er bare day trading spekulantene som trenger dette.
+
+
+
+"counted stats for 1 articles" - det virker som om den aldri tar mer
+enn en. har du glemt en loop i stats?
+
+
+don't do this: it can wait. run the presentation a couple of times in stead.
+-du skal ikke kunne subscribe dersom du ikke er logget på. men du skal
+ kunne legge til selskaper til den totale mengden selskaper. DU ER HER.
+ dvs. at add company skal gjøre to forskjellige ting, alt etter om du
+ er innlogget eller ikke.
 
 
 sett deg ned og lat som om du snakker om bna, med laptop. vis på
@@ -7,30 +145,17 @@ skjerm, og snakk om forretnignsmodell (gratis, ads, gratis portefølje
 med tilbud om alerts, etc. for betaling.), problemstilling.
 
 
-til alphalaunch er kanskje det eneste du trenger nå forskjell mellom
-pålogget og avlogget. ads, donations, scope og kjapp oppdatering er
-ting som kan komme senere.
 
 
--"" printes i index i stedet for username.
--du har ingen user når du ikke er logget på, og du ser alle
- selskapene.
--du har ingen liksomportefølje når du ikke er logget på.
--når du sjekker for duplicates, så sjekk om du har en user først. kun
- dersom du har en bruker sjekker du dupe.
-
-
-
-
--empty nickname blir lagret som bruker når du ikke har noen
- bruker. linje 49 i main. dvs. at empty nickname har en portefølje. du
- bruker u.companies flere ganger. hm.
 
 -get dollar amounts back in the articles.
 
 -når folk har korrigert, må antallet pos og neg på forsiden oppdatere
  seg! det er oppdatert på selskapssiden, men ikke på forsiden. nå
- skjer det ikke før tyve minutter senere, i count recent stats.
+ skjer det ikke før tyve minutter senere, i count recent
+ stats. kanskje dette bare blir et problem når folk trykker back? så
+ da kan du bruke dataene fra company view? men folk kan ta en mer
+ roundabout rute tilbake også... hm.
 
 
 -lag presentasjon til even (og tore, hans partner).
@@ -177,6 +302,23 @@ good - only positive in period (no red backslashes are shown.)
 bad - only neg in period. (no blues.)
 ugly - many of both in period.
 only ticker, not whole name.
+
+
+use discrepancies between projected changes and actual changes as
+warnings: my conclusions say it will go up, but it is not going up, or
+not as fast as i project, therefore, there is an opportunity for
+arbitrage, or shorting. never mind the accuracy. get some turks to do
+the hand-corrections. can you trust them, though? no.
+
+log all conclusions, and compare them with stock price movements from
+one hour before the news was scraped until one day after. use this to
+correct. this means only one time scope.
+and month and week
+after. use this to ...
+
+
+
+
 
 
 all companies for free, portfolio for modest subscription.
@@ -4006,3 +4148,10 @@ just recent ones.
 
 
 mechanism where word pairs get 0.5 prob must be looked at. seems ok.
+----
+
+
+-empty nickname blir lagret som bruker når du ikke har noen
+ bruker. linje 49 i main. dvs. at empty nickname har en portefølje. du
+ bruker u.companies flere ganger. hm.
+

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 
-import logging
+import logging, datetime
 
 from google.appengine.api import memcache
 from google.appengine.ext import db
@@ -30,17 +30,39 @@ def count_recent_stats():
             article = Article.get_by_id(article_key.id())
             if article != None and article.sentiment != "neutral":
                 company = article.company # expensive, but ok for now - optimize later
-                if company.pos_ctr == None:
-                    company.pos_ctr = 0
-                if company.neg_ctr == None:
-                    company.neg_ctr = 0
 
-                if article.sentiment == 'positive':
-                    # pos_ctr += 1
-                    company.pos_ctr += 1
-                elif article.sentiment == 'negative':
-                    # neg_ctr += 1
-                    company.neg_ctr += 1
+                logging.debug("datetime.datetime.now(): %s", datetime.datetime.now())
+                logging.debug("article.datetime: %s", article.datetime)
+                if datetime.datetime.now() - article.datetime < datetime.timedelta(hours = 24):
+                    if company.pos_ctr_day == None:
+                        company.pos_ctr_day = 0
+                    if company.neg_ctr_day == None:
+                        company.neg_ctr_day = 0
+                    if article.sentiment == 'positive':
+                        company.pos_ctr_day += 1
+                    elif article.sentiment == 'negative':
+                        company.neg_ctr_day += 1
+
+                elif True:
+                    if company.pos_ctr_week == None:
+                        company.pos_ctr_week = 0
+                    if company.neg_ctr_week == None:
+                        company.neg_ctr_week = 0
+                    if article.sentiment == 'positive':
+                        company.pos_ctr_week += 1
+                    elif article.sentiment == 'negative':
+                        company.neg_ctr_week += 1
+
+                elif True:
+                    if company.pos_ctr_month == None:
+                        company.pos_ctr_month = 0
+                    if company.neg_ctr_month == None:
+                        company.neg_ctr_month = 0
+                    if article.sentiment == 'positive':
+                        company.pos_ctr_month += 1
+                    elif article.sentiment == 'negative':
+                        company.neg_ctr_month += 1
+
 
                 company.put() # expensive to do this once for each article, but ok, because few articles each time.
                     

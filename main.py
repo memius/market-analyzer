@@ -29,32 +29,40 @@ class MainPage(webapp2.RequestHandler):
         #timeout = 0.2
         # logging.debug("a cold beer in the sun")
         usr = users.get_current_user()
-        if usr:
-            user_id = usr.user_id()
-            nickname = usr.nickname()
-            email = usr.email()
+        logging.debug("usr: %s", usr)
+        if False:
+            pass
+#         if usr:
+#             user_id = usr.user_id()
+#             nickname = usr.nickname()
+#             email = usr.email()
 
-            auth_url = users.create_logout_url(self.request.uri)
-            auth_url_linktext = "Logout"
+#             auth_url = users.create_logout_url(self.request.uri)
+#             auth_url_linktext = "Logout"
 
-            q = UserPrefs.all()
-            q = q.filter("user_id =",user_id)
-            [u] = q.fetch(1)
+#             q = UserPrefs.all()
+#             q = q.filter("user_id =",user_id)
+# #            try: # if machine restarts, there will be nothing on localhost 
+#             [u] = q.fetch(1)
 
-            nick = u.nickname # else, it's "" from above
+#you need the try except or something similar because the db might be empty (restart machine local).
 
-            keys = u.companies
-            companies = []
-            for key in keys:
-                company = Company.get_by_id(int(key.id()))
-                companies.append(company)
+#             nick = u.nickname # else, it's "" from above
+#             # except:
+#             #     u = 
 
-            duplicates = []
-            for company in u.companies:
-                if company in duplicates:
-                    u.companies.remove(company)
-                else:
-                    duplicates.append(company)
+#             keys = u.companies
+#             companies = []
+#             for key in keys:
+#                 company = Company.get_by_id(int(key.id()))
+#                 companies.append(company)
+
+#             duplicates = []
+#             for company in u.companies:
+#                 if company in duplicates:
+#                     u.companies.remove(company)
+#                 else:
+#                     duplicates.append(company)
 
         else:
 
@@ -163,6 +171,14 @@ class MainPage(webapp2.RequestHandler):
 
         comp_keys_names = []
         for company in companies:
+
+
+
+
+# her sjekker du en variabel som returneres av menyvalget. defaulten her er også week. 
+# resultatet bestemmer hvilken ctr som blir ctr; if scope == "day": (pos_ctr = pos_ctr_day, neg_ctr = neg_ctr_day).
+
+
             # articles = [article for article in company.articles if article.clean]
             # [pos_rat,neg_rat] = utils.sentiment_count(articles)
             if company.pos_ctr > 0:
@@ -372,6 +388,11 @@ class SubscribeHandler(webapp2.RequestHandler):
 
             if company.key() not in u.companies:
                 u.companies.append(company.key())
+
+u is NoneType in the line above.
+
+you have to have a response here in case the db is empty, which it will be if you restart your machine. also, above, in line 46.
+
             # user_comps = u.companies
             # u.companies = set(user_comps)
             u.put()
