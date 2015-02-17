@@ -1,284 +1,83 @@
-how about simply linking to the article's own site? that should not be
-a problem, and would give my customers the text in a well presented
-manner. feedly does it, so why not me? i have nothing to lose on
-letting them read the thing at another site. i just need them to come
-back and use the correct-button on the titles page.
+store the pics with left-ctr and right-ctr, which tells us how many
+times they have been found hotter depending on which side they have
+been on.
 
+store some pics with letters on them, and make sure they end up in
+alphabetical order after you have ranked them.
 
+home page: two pics, rank them.
 
+log in: use facebook. default is profile pic.(is this easier than
+having them upload? dunno.)
 
-you really should offer rewards (not cash, but free subscriptions,
-free absence of ads, etc.) for correcting many articles. "anyone who
-corrects 1000 articles manually gets ..."
+click on the worst pic, it dissappears. or even swipe it with the
+mouse.
 
-make a forum (with ads) where people can discuss the site, the news,
-the companies, investing and whatever.
+javascript for this? probably not needed for the essentials. just
+reuse from bna.
 
+---
 
-free, but with ads. small, secure income. easy. pay for extras, such
-as alerts and more advanced analyses.
 
-how about first month free, $1/month, or even $5/month. as many
-companies as you want. you can elect to not pay, but then your
-preferences and your portfolio are not remembered.
+who'shotter.com
 
-app is really redundant. apps are evil, and unnecessary.
+you are shown two pictures on the home page. no need to register or anything. ads.
 
-free access, $1 per company per month. nice and simple, and easy to
-join. $40 for the android/ios app. betal magnus for å lage ios appen,
-dersom han kan love å gjøre det fort.
+you click on the one you think is hotter. the hotter one stays on the
+screen, and another one appears. you can change this in the setting,
+and get two new faces each time if you want.
 
+in the app version, you swipe away the one least hot, and the hottest
+stays on the screen. the screen is, of course, held in landscape mode
+for this.
 
+yes, non-users can also help rank people.
 
+people are then put in categories from 1 to 10, where 10% of the
+population lives in each group, 10 being the best looking people.
 
+you also have a rank (perhaps only in pro/premium (bad names), where
+you are number 1 or number 234 in the ranking of who's hottest.
 
+as a user, you will only see people from your own category. is this
+too harsh? remember to tell them to upload better pictures if they
+want to up themselves a category.
 
+tips for pics:
+face the camera, look into the camera, smile, be in focus and well lit.
 
-the front page is a list of your company picks. display name, and a
-colored bar; green to the left, size dependent on how many positive
-articles. the length of the bar is normalized to the total number of
-articles about that company that day. the lengths for all companies is
-the same. grey in the middle, red to the right. actual numbers in
-white superimposed.
+you can, of course, declare your interest in someone, and if they like
+you too, your details are exchanged so that you can chat.
 
-mouseover displays name, ticker, exchange.
+javascript to click the pics, or just python? i can probably manage
+with just python. launch a private alpha for my friends and ask them
+to upload pics, site can be ugly, without any frills or good graphics,
+just the functionality.
 
-the most green percolate to the top, the most red sink to the bottom
-of the list.
+i can probably outsource the functionality to india, but do i want to?
+probably not. the functionality is very simple. use
+transfarmr.dictatr.com and just upload a new version.
 
-there is an 'add company' button that takes you to a search page where
-you can search the dow jones and nasdaq indices. when the results come
-up, there is a button which says 'subscribe'. above the button should
-be a text that makes it clear it will cost five dollars to
-subscribe. clicking the button should make the purchase go through
-immediately, by using google checkout.
+get whoshotter.com from domeneshop, get rid of tmhagen.org.
 
-clicking on the name of a company in your picks list/watch list gives
-you the titles of the articles for that day, with color and confidence
-on the side. you should be able to click 'expand', which will give you
-the first few lines of each article in addition to the title, and with
-'correction/approved(good enough/ok/true/bullseye/correct' button on
-the side
+when you first upload a picture, people are going to be asked to
+compare you to a random face from category 5, then a 9 or a 2. when
+you have established the category you belong in, you will be compared
+to the middle face there, and then a lower or higher face, and
+eventually, you will be placed. until your face is placed in the
+rankng, you are only thrown about, being compared to various faces.
 
-clicking on a title gives you the whole article, with an 'ok' button
-and a 'correction' button. the correction button becomes two buttons
-on mouse-near; pos in green, and neg in red.
+if there is a round-robin, it is accepted until resolved. you put the
+faces involved in the round-robin at the rank of the lowest ranked
+member involved.
 
-the cost is 25 dollars for the app, and 5 dollars a month for each
-company in your list.
+when you first come to the page without being a user, you are shown
+two faces, one from the 10 category, and one from the 5
+category. then, you are shown various other obvious choices, to please
+your ego, and to assess your ability to assess faces. if you are four
+years old, or crazy, your responses will be all over the place, and
+your assesor rating will be lowered.
 
 
 
-you should db the frequency list, along with probs for each word. you
-listen for new articles coming in, and when one comes, you count the
-freqs in that article, and increment the freq db. then you calculate
-the probs for those words, and update the db. then you calculate the
-prob for that article, and put that in the db.
 
-when a user comes to the web site, everything he is told comes from
-the db. all the calculating is done by listening loops in the
-background.
-
-the listening loop for articles will perhaps make it easier to avoid
-duplicate articles, because you only need to keep today's articles
-around to compare with. put them in memcache or something later.
-
-with each article, in the db, store its prob and the corpus it belongs
-to (easy calc, but do it anyway - for redundancy, if nothing else).
-
-
-
-
-
-
-
-
-filter out duplicates, collect articles, and make sure every
-correction is stored, so you can run them again and again. 
-
-
-
-
-
-
-
-
-
-
-
-
-the you can
-plug in a simple bayesian or markovian, and see what works. forget
-about google predict. work on this over christmas, while the family is
-away. take time off from work before or after christmas, depending on
-when they leave for france.
-
-
-ensemble is better. you have access to implementations of svm, maxent
-and naive bayes. combine the three for a 3-4% accuracy boost.
-
-well, it's now after christmas. you work in a couple of weeks. do it
-now.
-
-
-
-konklusjonen er positive (company specific news) eller negative
-(company specific news). ikke up eller down, fordi det er et lag til
-med analyse for å bestemme om positive nyheter gjør at kursen går opp
-eller ned. slettes ikke buy eller sell, fordi det utgjør enda et lag
-med analyse.
-
-'the app will tell you if the news specific to a particular company
-are mostly positive, or mostly negative. it will also tell you its
-confidence level that its conclusion is sound.'
-
-
-tweetdeck, eller en samling av forskjellige finanstweets, er en bra
-addon til google finance. fra twitter får man tidligere, og mer
-personlige, umiddelbare nyheter.
-
-etterhvert vil du antakelig hente inn nyheter fra finance.yahoo.com i
-tillegg til google.com/finance, i tilfelle google legger ned finance,
-eller de er ute en dag, eller yahoo har bedre eller flere nyheter.
-
-
-hver bruker får fem gratis selskaper han kan følge.
-
-du har en egen side med ambiguous articles. her blir artiklene
-presentert med tittel og litt tekst, slik som hos feedly. når brukeren
-klikker på tittelen eller teksten blir han tatt med til url'en, og får
-lese hele artikkelen. han kan trykke på positive eller negative i alle
-bildene.
-
-du lar tittel være en av attributtene til selskapet, og presenterer
-den i bold, med litt større skrift, slik som hos feedly. fin, friendly
-font, slik som hos feedly. se om alle, eller de fleste bruker 'title'
-som id i div'en til tittelen. det er godt mulig det bare er et par,
-tre forskjellige måter dette blir gjort på. eller kanskje seks, syv?
-samma, det. du fikser det også.
-
-ambiguous articles viser tre artikler, og de forsvinner etterhvert som
-en eller flere mennesker har vurdert dem. artikler som har en
-confindence under en treshold havner her.
-
-bruk bare pos og neg, drit i neutral. ikke tren neutral. artikler
-under en threshold havner i neutral. eller kanskje du må trene
-neutral, bare hold antall trente artikler i neutral nede på nivå med
-de to andre?
-
-du må også sørge for at antall trente artikler i pos og neg er omtrent
-likt.
-
-du henter nyhetene fra google finance, og nøkkeltall fra yahoo
-finance. eller kanskje google finance?
-http://www.gummy-stuff.org/Yahoo-data.htm
-
-
-hver bruker må ha sin portfolio med selskaper han følger. disse har
-han betalt for, og disse får han news analyser av.
-
-han har en home page, der hans selskaper er vist. 'the portfolio'.
-
-han kan klikke 'pick companies' for å komme til en side der alle
-selskaper er listet, og han kan klikke på ett, eller merke flere, for
-å legge dem til i portfolioen. selskapene er vist med både navn og
-ticker, så man kan søke på begge. de er vist med verdi, volum,
-oppgang/nedgang siste uke/dag, slik at man kan vurdere - og sortere -
-dem ut fra disse tallene.
-
-hent selskaper ikke bare fra nse, men også ose, lse, nikkei,
-osv. appen er ikke børsavhengig, og skal kunne brukes av alle overalt.
-
-
-
-
-
-husk å catre til det asiatiske markedet. bruk asiatiske news sites, og
-ha med asiatiske selskaper og børser.
-
-du navigerer til siden.
-
-dersom du er logget inn i google blir du hilst på, og sendt rett inn
-(hvis ikke må du logge inn).
-
-der inne ser du dine picks. stl og aapl.
-
-du ser en dial etter hver av disse. den viser sell/buy/hold med graden
-av confidence.
-
-du kan klikke på dialen, og få se artiklene som danner grunnlaget for
-analysen.
-
-etter hver artikkel er det en buy- og en sell-, men ikke en
-hold--knapp. dersom du trykker på en av dem blir artikkelen trent som
-det tilsvarende. etterhvert må det komme en not-sell og en
-not-buy-knapp.
-
-
-tjenesten henter nye artikler hver gang brukeren oppdaterer siden. den
-siler og analyserer artiklene fortløpende, og pusher resultatene med
-en gang den er ferdig.
-
-hver kvarter er bedre, men vanskeligere. gjør det etterpå. selv om du
-ikke refresher browseren vil anbefalingen altså forandre seg som et
-resultat av ny analyse i bakgrunnen. men bare hvert kvarter. dette er
-godt nok i begynnelsen.
-
-
-
--crawler: ser på alle artikler på en side.
-
--grovsiler: finner ut om de er duplikater av ting du har.
-
--siler: finner ut om de er relevante for hvert selskap. crm binær. samme
- rutine, med to chs-filer for hvert selskap.
-
--lagrer: leverer relevante artikler til db'en til tjenesten. her kan
- det oppstå duplikater dersom en artikkel er relevant for flere
- selskaper. det er greit? skal jeg heller lage en stor db med
- relevante artikler, og la selskap(er) være en av attributtene.
-
--analysator: henter artikler fra db'en, og finner ut om de er positive
-eller negative eller nøytrale for hvert selskap.
-
--presentør: viser anbefalingen, knappene og de relevante artiklene til
- brukeren.
-
-
-
-
-
-
-dashboard for customer:
--list of stocks.
-
--a dial that shows the confidence of the conclusion 0%-100% not just a
- 'sell' or 'buy' tag/button.
-
--when you click on the dial, you can see the news it's based on. each
- article has a 'buy' button and a 'sell' button. when you click these,
- the article is tranied as what you clicked. if you click one, then
- the other, the article should be trained as the other a few times, or
- something like that.
-
--en tekstfil med avsnitt med søketermer for hvert selskap. 
-
--del inn i skraping, lagring, henting, relevansvurdering(stl/not),
- boilerplate-extraction, analyse(sell/buy), presentasjon...
-
-du kan IKKE lagre alle artikler som finnes. du må sile ut de relevante
-først, og da putter du dem i den korrekte db'en. du trenger altså bare
-en db pr. selskap, ikke en sentral db for alle artikler.
-
-det er mengden (hypotetiske) penger tjent på de anbefalte handlingene
-som er målet på hvor accurate analysen av nyheten var. dvs. at vi
-kjører simulering av handel, samme som bank db'en min (kall den noe
-annet), og måler hvor mye penger vi ville tjent på den eller den
-handlingen (alle tre må måles). dersom mengden penger tjent på å gjøre
-noe annet enn det som ble anbefalt er større, trener man om
-igjen. bruk keyword --refute, som finnes, eller kommer til å finnes, i
-crm.
-
-selektorene i gyris filer kan komprimeres til noen få lange
-funksjoner, med mange elif'er. tror jeg. det er mulig det vil lage
-krøll, og at if'ene må kjøres på riktig avis for å funke.
