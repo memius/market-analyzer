@@ -3,37 +3,26 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <h1>
-    <b>BNA <font color='red' size='1'> ALPHA</font></b>
+    <b>Who's Hotter!</b>
   </h1>
     <p>
 
-      <select>
-	<option value="Last 24 hours">Last 24 hours</option>
-	<option value="Last 7 days">Last 7 days</option>
-	<option value="Last 4 weeks">Last 4 weeks</option>
-      </select>
-
-i index.html velger du at week skal være default
-
-
       <body>
     <p>
-      {% for pair in comp_keys_names %}
-    <a href="company/{{ pair[0].id() }}">{{ pair[1] }}: </a> 
-    <b> <font color="blue"> {{ pair[2] }} </font> {{ pair[3]
-    }} <font color="red"> {{ pair[4] }} </font> {{ pair[5]}} </b> 
+      <img> {{pic}} </img>
+    <p>
+
+      <form action="/add_picture" enctype="multipart/form-data" method="post">
+        <div><label>Upload your picture:</label></div>
+        <div><input type="file" name="img"/></div>
+        <input type="submit" value="Upload"></form>
 
     <p>
-    {% endfor %}
-    <p>
-    <form action="/find_company" method=post>
-      <input type="submit" value="Add a company">
-    </form>
-    <p>
-      {{ nick }} 
       <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
     <p>
 
-  </body>
+
+      </body>
 </html>
+
 

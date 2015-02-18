@@ -1,3 +1,86 @@
+du har fått til user. nå lagrer du et user objekt når folk logger inn,
+dersom du ikke har lagret det før.
+
+du lagrer også bilde når det lastes opp. tror jeg.
+
+neste er å vise bildet når du er logget inn.
+
+ self.response.out.write('<div><img src="/img?img_id=%s"></img>' %
+                                    greeting.key())
+
+må omarbeides til ditt format.
+
+
+
+user is not defined. du må få på plass login først. bare ta helt
+basic, kanskje google litt først, men basically bare brukernavn og
+passord, lagre til db, og bruk det som appengine.current.user()
+
+
+
+
+
+you are working on uploading images:
+this gives you the answer:
+https://cloud.google.com/appengine/docs/python/images/usingimages
+
+your current login is with google. you want them to be able to log in
+with facebook. do you? yes, why not. with google too, though, in case
+they want to be anonymous, or just an ordinary login, where they
+define username and password and that's that. you need all three, and
+perhaps twitter as well. just use the google one first, and asap add
+an ordinary one.
+
+you are going to need to be able to send people their passwords as
+well. then, you have to make them give you their email.
+
+
+
+you need to have an actual image in the db, not a static link to a
+folder on your home machine. start work on the usr db. just change the
+one you have for the usrs already, and add fields gradually. first,
+without image, of course.
+
+
+change the db format to store users, pics, rank, leftctr,
+rightctr. take the pics from a folder containing pics of all the
+letters.
+
+
+first, you need to remove links to whatever files are active now. you
+need to just have a blank home page, maybe with some text for sanity.
+
+this means changing the main.py, i guess, and removing all the links
+at the bottom. maybe that should do it.
+
+
+
+store the pics with left-ctr and right-ctr, which tells us how many
+times they have been found hotter depending on which side they have
+been on.
+
+store some pics with letters on them, and make sure they end up in
+alphabetical order after you have ranked them.
+
+
+
+
+
+
+
+
+
+-----
+
+
+
+
+
+
+
+
+
+
 dette ser du på etter launch: they claim to have 'nailed' sentiment
 analysis, to 85%:
 https://gigaom.com/2013/10/03/stanford-researchers-to-open-source-model-they-say-has-nailed-sentiment-analysis/

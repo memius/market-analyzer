@@ -9,10 +9,6 @@ handlers:
 - url: /stylesheets
   static_dir: static/stylesheets
 
-- url: /send_to_backend
-  script: main.app
-  login: admin
-
 - url: /.*
   script: main.app
 
@@ -21,5 +17,3 @@ libraries:
 - name: jinja2
   version: latest 
 
-- name: numpy
-  version: latest

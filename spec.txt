@@ -1,11 +1,13 @@
-store the pics with left-ctr and right-ctr, which tells us how many
-times they have been found hotter depending on which side they have
-been on.
-
-store some pics with letters on them, and make sure they end up in
-alphabetical order after you have ranked them.
-
-home page: two pics, rank them.
+make it really simple; let the home page have two pics, rank them. if
+you log in, and upload a picture, you get to click on 'profile', which
+will only show you your name, your picture and your rank. maybe some
+tips on how to improve the picture. if you are not logged in, you are
+shown two pictures, and the one you click on disappears. (should i
+call it who's uglier instead? no, that's not a positive image. should
+i let them click on the pretty one? yes, and then two other pictures
+come up. then, later, for the phone app, you let them swipe away the
+ugly one. at the same time, or only a little later, you must allow
+them to change modes, so they don't get confused.
 
 log in: use facebook. default is profile pic.(is this easier than
 having them upload? dunno.)
