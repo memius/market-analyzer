@@ -1,0 +1,226 @@
+---
+
+when it says "there was a problem updating your indexes" it probably means your
+quota is full.
+
+
+
+----
+
+make local logs persistent:
+
+/opt/google/google_appengine/dev_appserver.py
+--logs_path=/home/tmh/workspace/business_news_analyzer/logs/bna_log /home/tmh/workspace/business_news_analyzer/
+
+
+
+
+
+----
+
+
+how to run code online:
+-write code and test it locally
+
+-change get to post where needed (probably in main, at least one place).
+
+run in terminal:
+-/workspace/business_news_analyzer$ /opt/google/google_appengine/appcfg.py update /home/tmh/workspace/business_news_analyzer/
+
+-/workspace/business_news_analyzer$ /opt/google/google_appengine/appcfg.py backends /home/tmh/workspace/business_news_analyzer/ update
+
+go to:
+https://appengine.google.com/queues?&app_id=s~transfarmr&version_id=backendscraping.374738626398313004
+and delete all tasks in the queue. 
+
+go to 'backends' and press 'start' to start backend.
+
+go to transfarmr.dictatr.com/"whatever url is bound to run what you
+want to test"
+
+-------------
+
+
+
+
+to update backend: ...?
+
+to scrape rss, use feedparser (import feedparser)
+reuters has a business news rss feed. so does forbes, financial times,
+cnbc and yahoo finance and international business times, wall street journal.
+
+
+how to add something to path (chardet):
+
+
+
+when you restart the server; make sure the name is the same:
+/business_news_analyzer, not /business_analyzer, for example.
+
+
+in order to get anything into the appengine logs, you have to reload
+the page (at www.transfarmr.dictatr.com).
+
+remember that the time zone is unchangeable in 'logs', and that they
+are 8 hours behind you.
+
+when you get an error on google's infrastructure, check the logs (in
+the left hand side menu, just under dashboard and instances).
+
+
+to update only the cron.yaml:
+/opt/google/google_appengine/appcfg.py update_cron /home/tmh/workspace/business_news_analyzer/
+
+
+
+url for app:
+http://transfarmr.appspot.com
+or 
+http://transfarmr.dictatr.com
+both should work
+
+http://shell.appspot.com/ er et interaktivt skjell for
+appengine. veldig nyttig.
+
+
+
+
+
+import googlevoice for å sende sms'er.
+
+
+
+
+
+
+for å installere prediction api:
+du må sudo dpkg -i to forskjellige pakker fra:
+http://code.google.com/p/google-api-python-client/downloads/detail?name=python-google-api-python-client_1.0c2-1_all.deb&can=2&q=
+
+api-python-client og python-oauth2client
+
+
+muligens også:
+sudo pip install --upgrade google-api-python-client
+
+
+
+
+
+
+
+
+for å installere appengine:
+
+last ned filen, og ekstraher den. putt den i /opt/google/ folderen.
+
+
+
+
+for å få google appengine til å bruke python2.5:
+
+forandre første linje i dev_appserver.py til:
+
+#!/usr/bin/env python2.5
+
+
+
+
+for å slippe å skrive /opt/google/google_appengine/dev_appserver.py
+hver gang:
+
+emacs .bashrc, og legg til
+
+export PATH=$PATH:/opt/google/google_appengine/
+
+på slutten av filen.
+
+reload .bashrc med:
+
+source .bashrc
+
+
+
+
+
+
+start server:
+
+/opt/google/google_appengine/dev_appserver.py /home/tmh/workspace/helloworldappengine/
+
+
+update app:
+
+/opt/google/google_appengine/appcfg.py update helloworldappengine/
+
+to ensure appengine does not read from indices that haven't been
+updated yet, give each new update a version number, and have that
+version go live only after some time.
+
+
+update indexes only (avoids same problem as above):
+
+/opt/google/google_appengine/appcfg.py update_indexes helloworldappengine/
+
+
+update, but stay on old version:
+
+
+
+
+
+uploading data (not for high replication data store):
+
+https://developers.google.com/appengine/docs/python/tools/uploadingdata
+
+
+
+
+
+for å installere python2.5:
+
+wget http://python.org/ftp/python/X.X.X/Python-X.X.X.tgz
+tar xvfz Python-X.X.X.tgz
+cd Python-X.X.X
+./configure --prefix=/opt/pythonX.X
+make
+sudo make install
+
+sikkert lurt:
+sudo apt-get build-dep python2.5
+
+
+
+
+for å få på plass python-beautifulsoup for python2.5:
+
+skaff deg setuptools, som antakelig inneholder easy_install (setuptools
+er på 0.6.11 pr. juli 2012):
+
+wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.X.tar.gz
+tar xvfz setuptools-0X.tar.gz
+cd setuptools-0.X
+sudo python2.5 setup.py install
+
+sudo easy_install-2.5 -f http://www.crummy.com/software/BeautifulSoup/bs3/download//3.x/ -U "BeautifulSoup==3.0.7a"
+
+sudo easy_install-2.5 BeautifulSoup #bare kanskje nødvendig
+
+
+for å fjerne python 2.5: fjern alt som har med python 2.5 å gjøre fra
+/usr/bin og usr/local/bin.
+
+for å installere bs4:
+
+...
+
+
+
+
+
+andre ting som må installeres:
+python-gflags, python-bs4, gitk(?), 
+
+
+
+
