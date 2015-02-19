@@ -5,7 +5,7 @@
 import jinja2, os, logging, pickle, webapp2, time, re
 
 from bs4 import BeautifulSoup as bs
-from google.appengine.api import users, urlfetch, taskqueue
+from google.appengine.api import users, urlfetch, taskqueue, images
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required #must be webapp, not webapp2
 
@@ -298,7 +298,8 @@ class MainPage(webapp2.RequestHandler):
         template_values = {
 #            'nick' : nick,
 #            'pic' : user_object.pic,
-            'pic' : user_object.key().id(),
+#            'pic' : user_object.key().id(),
+            'pic' : user_object.key(),
             'auth_url' : auth_url,
             'auth_url_linktext' : auth_url_linktext,
             }

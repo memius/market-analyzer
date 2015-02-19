@@ -1,3 +1,22 @@
+kanskje du er nodt til å ha en egen url for å hente bilder. "for å
+gjøre det enkelt" som det het et sted i teksten. sukk. javel, jeg får
+lage en egen handler, med en egen url som heter /img, og hente img_id
+når jeg går til den url'en, osv. laters, though.
+
+
+/img er url'en som er definert i handleren nederst. den skal vi ikke
+bruke, siden vi ikke har en egen handler for images.
+
+img_id er noe de bruker når man skal ha en egen url, så den er også
+ut.
+
+hvordan er da syntaksen for src for bildet? bare {{pic}}, eller
+"{{pic}}", eller hva? og hva er pic? er det user.picture, eller
+user.key() eller user.key().id()? ...
+
+
+
+
 du har fått til user. nå lagrer du et user objekt når folk logger inn,
 dersom du ikke har lagret det før.
 
