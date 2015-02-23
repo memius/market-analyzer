@@ -1,3 +1,11 @@
+of course, i want the url for the user's profile, with image and
+everything, to be slash and his key, or key id. and that's it. no
+/img, just /key, or even /id. that should show me that user's image. 
+
+i can add username and stuff later, but just get the image up first.
+
+you must also have a gender field in the db.
+
 kanskje du er nodt til å ha en egen url for å hente bilder. "for å
 gjøre det enkelt" som det het et sted i teksten. sukk. javel, jeg får
 lage en egen handler, med en egen url som heter /img, og hente img_id

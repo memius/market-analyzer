@@ -70,10 +70,6 @@ class MainPage(webapp2.RequestHandler):
             
 
 
-        else:
-            auth_url = users.create_login_url(self.request.uri)
-            auth_url_linktext = "Login"
-
 
 #         logging.debug("usr: %s", usr)
 #         if False:
@@ -295,13 +291,23 @@ class MainPage(webapp2.RequestHandler):
 
 
 
-        template_values = {
+            template_values = {
 #            'nick' : nick,
 #            'pic' : user_object.pic,
 #            'pic' : user_object.key().id(),
-            'pic' : user_object.key(),
-            'auth_url' : auth_url,
-            'auth_url_linktext' : auth_url_linktext,
+                'user_key' : user_object.key(),
+                'auth_url' : auth_url,
+                'auth_url_linktext' : auth_url_linktext,
+            }
+
+        # if no user:
+        else:
+            auth_url = users.create_login_url(self.request.uri)
+            auth_url_linktext = "Login"
+
+            template_values = {
+                'auth_url' : auth_url,
+                'auth_url_linktext' : auth_url_linktext,
             }
 
         template = jinja_environment.get_template('index.html')
@@ -656,6 +662,15 @@ class AddPictureHandler(webapp2.RequestHandler):
 #        self.redirect(self.request.uri)
         self.redirect("/")
 
+class Image(webapp2.RequestHandler):
+    def get(self):
+        greeting = db.get(self.request.get('img_id'))
+        if greeting.avatar:
+            self.response.headers['Content-Type'] = 'image/png'
+            self.response.out.write(greeting.avatar)
+        else:
+            self.response.out.write('No image')
+
 app = webapp2.WSGIApplication([
 #        ('/auth_return', AuthHandler),
 #         ('/correction', CorrectionHandler),
@@ -681,6 +696,7 @@ app = webapp2.WSGIApplication([
 # #        ('/classify', ClassifyHandler),
 #         ('/goldberg', GoldbergHandler),
 #        ('/login', LoginHandler),
+        ('/img',Image),
         ('/add_picture', AddPictureHandler),
         ('/.*', MainPage),
         ], debug=True) #remove debug in production
